@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="960" viewBox="0 0 1920 960">
+  <defs>
+    <radialGradient id="wash" cx="72%" cy="0%" r="90%">
+      <stop offset="0%" stop-color="#fff3ea"/>
+      <stop offset="55%" stop-color="#fbfaf8"/>
+      <stop offset="100%" stop-color="#fbfaf8"/>
+    </radialGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#1b1a16" fill-opacity="0.08"/>
+    </pattern>
+    <mask id="dotmask">
+      <rect width="1920" height="960" fill="url(#washmask)"/>
+      <radialGradient id="washmask" cx="70%" cy="0%" r="80%">
+        <stop offset="0%" stop-color="#fff"/>
+        <stop offset="60%" stop-color="#000"/>
+      </radialGradient>
+    </mask>
+  </defs>
+
+  <rect width="1920" height="960" fill="url(#wash)"/>
+  <rect width="1920" height="960" fill="url(#dots)" mask="url(#dotmask)"/>
+
+  <text x="160" y="430" font-family="Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, sans-serif" font-size="118" font-weight="780" letter-spacing="-4" fill="#0c0b08">Bridger<tspan fill="#ec5e1f">.</tspan></text>
+  <text x="166" y="510" font-family="Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, sans-serif" font-size="40" font-weight="600" letter-spacing="-1" fill="#1b1a16">Design System Sync</text>
+  <text x="166" y="575" font-family="Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, sans-serif" font-size="27" font-weight="400" fill="#79766e">GitHub 공개 레포에서 토큰 + 40개 컴포넌트를 Figma로 동기화</text>
+
+  <g transform="translate(166, 640)">
+    <rect width="232" height="44" rx="4" fill="#ec5e1f"/>
+    <text x="116" y="29" text-anchor="middle" font-family="Pretendard Variable, sans-serif" font-size="16" font-weight="600" fill="#ffffff">Variables + Components</text>
+
+    <rect x="252" width="180" height="44" rx="4" fill="#ffffff" stroke="#ddd9cf"/>
+    <text x="342" y="29" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="14" font-weight="600" fill="#423f38">Light / Dark</text>
+  </g>
+
+  <g transform="translate(1180, 230)">
+    <rect width="560" height="500" rx="10" fill="#ffffff" stroke="#ddd9cf"/>
+
+    <rect x="28" y="32" width="120" height="26" rx="3" fill="#fff1e8"/>
+    <text x="44" y="50" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#ec5e1f">PERSIMMON</text>
+    <rect x="160" y="32" width="60" height="26" rx="3" fill="#f4f3ef"/>
+    <text x="172" y="50" font-family="JetBrains Mono, monospace" font-size="13" font-weight="600" fill="#423f38">GET</text>
+
+    <rect x="28" y="84" width="504" height="1" fill="#eceae3"/>
+
+    <circle cx="40" cy="124" r="5" fill="#1f9d57"/>
+    <text x="60" y="130" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" fill="#0c0b08">weather_now</text>
+    <text x="460" y="130" font-family="JetBrains Mono, monospace" font-size="14" fill="#79766e">142ms</text>
+
+    <circle cx="40" cy="166" r="5" fill="#c9820f"/>
+    <text x="60" y="172" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" fill="#0c0b08">realty_trade</text>
+    <text x="452" y="172" font-family="JetBrains Mono, monospace" font-size="14" fill="#c9820f">키 등록</text>
+
+    <circle cx="40" cy="208" r="5" fill="#1f9d57"/>
+    <text x="60" y="214" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" fill="#0c0b08">bok_rate</text>
+    <text x="462" y="214" font-family="JetBrains Mono, monospace" font-size="14" fill="#79766e">88ms</text>
+
+    <rect x="28" y="248" width="504" height="1" fill="#eceae3"/>
+
+    <rect x="28" y="280" width="240" height="84" rx="6" fill="#f8f7f4"/>
+    <text x="44" y="312" font-family="JetBrains Mono, monospace" font-size="12" font-weight="650" fill="#79766e">월 호출</text>
+    <text x="44" y="346" font-family="Pretendard Variable, sans-serif" font-size="28" font-weight="700" fill="#0c0b08">128,402</text>
+
+    <rect x="292" y="280" width="240" height="84" rx="6" fill="#f8f7f4"/>
+    <text x="308" y="312" font-family="JetBrains Mono, monospace" font-size="12" font-weight="650" fill="#79766e">오류율</text>
+    <text x="308" y="346" font-family="Pretendard Variable, sans-serif" font-size="28" font-weight="700" fill="#0c0b08">0.21%</text>
+
+    <rect x="28" y="392" width="320" height="40" rx="4" fill="#ec5e1f"/>
+    <text x="188" y="417" text-anchor="middle" font-family="Pretendard Variable, sans-serif" font-size="15" font-weight="600" fill="#ffffff">키 등록</text>
+    <rect x="360" y="392" width="100" height="40" rx="4" fill="#f4f3ef"/>
+    <text x="410" y="417" text-anchor="middle" font-family="Pretendard Variable, sans-serif" font-size="15" font-weight="600" fill="#1b1a16">취소</text>
+  </g>
+</svg>

@@ -40,6 +40,10 @@ jobs:
         working-directory: figma
         run: npm run validate
 
+      - name: E2E (headless plugin run against mocked Figma API)
+        working-directory: figma
+        run: npm run e2e
+
       - name: Detect changes to generated artifact
         id: diff
         run: |

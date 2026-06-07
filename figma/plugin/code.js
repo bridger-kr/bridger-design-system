@@ -174,8 +174,11 @@ function bindFill(node, ref) {
     const path = ref.slice(1, -1);
     const v = varMap[path];
     if (v) {
-      const fills = [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 } }];
-      node.fills = figma.variables.setBoundVariableForPaint(fills[0], 'color', v) ? [figma.variables.setBoundVariableForPaint(fills[0], 'color', v)] : fills;
+      // Confirmed pattern (tokens-studio / cloudflare-kumo): start from a base
+      // SOLID paint, bind the variable, then assign the returned bound paint.
+      let paint = { type: 'SOLID', color: { r: 0, g: 0, b: 0 } };
+      paint = figma.variables.setBoundVariableForPaint(paint, 'color', v);
+      node.fills = [paint];
       return;
     }
   }
@@ -296,11 +299,6 @@ function buildNode(def) {
   return node;
 }
 
-function bindTextStyle(node, styleName) {
-  const ts = figma.getLocalTextStyles().find((s) => s.name === styleName);
-  if (ts) node.textStyleId = ts.id;
-}
-
 async function buildComponents(spec) {
   ui(`컴포넌트 ${spec.components.length}종 생성 중…`, 'dim');
   // page
@@ -315,27 +313,30 @@ async function buildComponents(spec) {
     const variants = [];
     for (const vDef of comp.variants) {
       const inst = buildNode(vDef.node);
-      // variant name in Figma form: "Prop=Value, Prop2=Value2"
       inst.name = vDef.props
         ? Object.keys(vDef.props).map((k) => `${k}=${vDef.props[k]}`).join(', ')
         : 'Default';
       const c = figma.createComponentFromNode(inst);
+      page.appendChild(c);
       variants.push(c);
     }
+
     let set;
     if (variants.length > 1) {
+      let vx = 0;
+      for (const v of variants) {
+        v.x = vx;
+        v.y = 0;
+        vx += v.width + 24;
+      }
       set = figma.combineAsVariants(variants, page);
+      page.appendChild(set);
+      set.layoutMode = 'NONE';
     } else {
       set = variants[0];
     }
     set.name = comp.name;
-    set.layoutMode = 'HORIZONTAL';
-    set.itemSpacing = 24;
-    set.paddingTop = set.paddingBottom = set.paddingLeft = set.paddingRight = 24;
-    set.primaryAxisSizingMode = 'AUTO';
-    set.counterAxisSizingMode = 'AUTO';
 
-    // grid placement
     if (x + set.width > MAXW) { x = 0; y += rowH + GAP; rowH = 0; }
     set.x = x; set.y = y;
     x += set.width + GAP;
@@ -343,7 +344,7 @@ async function buildComponents(spec) {
     count += 1;
     ui(`  ✓ ${comp.name}`, 'ok');
   }
-  figma.viewport.scrollAndZoomIntoView(page.children);
+  if (page.children.length) figma.viewport.scrollAndZoomIntoView(page.children);
   ui(`✓ ${count}개 컴포넌트`, 'ok');
 }
 

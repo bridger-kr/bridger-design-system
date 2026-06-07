@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="28" fill="#fbfaf8"/>
+  <rect x="0.5" y="0.5" width="127" height="127" rx="27.5" fill="none" stroke="#ddd9cf"/>
+  <text x="22" y="80" font-family="Pretendard Variable, Pretendard, -apple-system, BlinkMacSystemFont, sans-serif" font-size="46" font-weight="780" letter-spacing="-2" fill="#0c0b08">Br</text>
+  <circle cx="92" cy="74" r="7" fill="#ec5e1f"/>
+</svg>
