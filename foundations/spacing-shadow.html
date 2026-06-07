@@ -1,0 +1,26 @@
+<!-- @dsCard group="Spacing" viewport="700x210" name="Elevation" subtitle="Structure from hairlines — shadow only for layers that truly float" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 30px 28px; font-family: var(--dt-font-sans); }
+  .row { display: flex; gap: 24px; align-items: flex-start; justify-content: space-between; }
+  .item { display: grid; gap: 12px; justify-items: center; }
+  .box { width: 104px; height: 66px; background: var(--dt-surface); border-radius: var(--dt-radius-md); }
+  .lab { text-align: center; }
+  .lab b { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-ink-strong); font-weight: 600; }
+  .lab span { display: block; font-size: 11px; color: var(--dt-muted); margin-top: 3px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="box-shadow:var(--dt-card-rest)"></div><div class="lab"><b>rest</b><span>bordered plane</span></div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--dt-card-hover)"></div><div class="lab"><b>hover</b><span>earns a hint</span></div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--dt-ring-strong),var(--dt-shadow-md)"></div><div class="lab"><b>md</b><span>dropdown</span></div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--dt-shadow-lg)"></div><div class="lab"><b>lg</b><span>toast</span></div></div>
+    <div class="item"><div class="box" style="box-shadow:var(--dt-shadow-xl)"></div><div class="lab"><b>xl</b><span>modal</span></div></div>
+  </div>
+</body>
+</html>

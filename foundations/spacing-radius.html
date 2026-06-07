@@ -1,0 +1,26 @@
+<!-- @dsCard group="Spacing" viewport="700x170" name="Radius" subtitle="3 sm · 4 md · 6 lg · 8 xl · 10 2xl · full — crisp, hairline-defined" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 26px; font-family: var(--dt-font-sans); }
+  .row { display: flex; gap: 22px; align-items: flex-end; }
+  .item { display: grid; gap: 10px; justify-items: center; }
+  .box { width: 80px; height: 60px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); }
+  .lab { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .lab b { color: var(--dt-ink-strong); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item"><div class="box" style="border-radius:var(--dt-radius-sm)"></div><div class="lab"><b>sm</b> 3</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--dt-radius-md)"></div><div class="lab"><b>md</b> 4</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--dt-radius-lg)"></div><div class="lab"><b>lg</b> 6</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--dt-radius-xl)"></div><div class="lab"><b>xl</b> 8</div></div>
+    <div class="item"><div class="box" style="border-radius:var(--dt-radius-2xl)"></div><div class="lab"><b>2xl</b> 10</div></div>
+    <div class="item"><div class="box" style="width:60px; border-radius:var(--dt-radius-full)"></div><div class="lab"><b>full</b> pill</div></div>
+  </div>
+</body>
+</html>

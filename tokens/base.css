@@ -1,0 +1,147 @@
+/* ============================================================
+   Bridger — Base elements + shared primitive vocabulary  (v2)
+   Light-first. Premium SaaS depth: hairline ring + layered soft shadow.
+============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--dt-paper);
+  color: var(--dt-ink);
+  font-family: var(--dt-font-sans);
+  font-size: var(--dt-body-size);
+  line-height: var(--dt-body-leading);
+  font-weight: var(--dt-body-weight);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss06", "cv11", "tnum";
+  word-break: keep-all;
+  line-break: strict;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: color-mix(in srgb, var(--dt-accent) 18%, transparent); color: var(--dt-ink-strong); }
+:focus-visible { outline: 2px solid var(--dt-accent); outline-offset: 2px; border-radius: var(--dt-radius-sm); }
+
+h1, h2, h3, h4 { margin: 0; color: var(--dt-ink-strong); text-wrap: balance; letter-spacing: 0; }
+h1 { font-size: var(--dt-h1-size); line-height: var(--dt-h1-leading); letter-spacing: var(--dt-h1-tracking); font-weight: var(--dt-h1-weight); }
+h2 { font-size: var(--dt-h2-size); line-height: var(--dt-h2-leading); letter-spacing: var(--dt-h2-tracking); font-weight: var(--dt-h2-weight); }
+h3 { font-size: var(--dt-h3-size); line-height: var(--dt-h3-leading); letter-spacing: var(--dt-h3-tracking); font-weight: var(--dt-h3-weight); }
+p, li { text-wrap: pretty; margin: 0; }
+
+a { color: var(--dt-accent); text-decoration: none; transition: color var(--dt-motion-fast); }
+a:hover { color: var(--dt-accent-strong); }
+
+code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mono-size); }
+
+.mono { font-family: var(--dt-font-mono); }
+.tabular { font-variant-numeric: tabular-nums; }
+
+/* ── Layout shell ── */
+.dt-shell { margin-inline: auto; width: 100%; max-width: 1200px; padding-inline: 20px; }
+@media (min-width: 640px) { .dt-shell { padding-inline: 28px; } }
+@media (min-width: 1024px) { .dt-shell { padding-inline: 40px; } }
+.dt-section { padding-block: var(--dt-space-7); }
+
+/* ── Badges (status / classification) — crisp tags, not cushiony pills.
+   Small radius + hairline so they read as instrument labels. ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 8px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0;
+  border-radius: var(--dt-radius-sm);
+  background: var(--dt-surface-sunken); color: var(--dt-muted-strong);
+  box-shadow: inset 0 0 0 1px var(--dt-border-strong);
+  transition: background-color var(--dt-motion-fast);
+}
+.badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-accent) 32%, transparent); }
+.badge-info    { background: var(--dt-tint-cobalt);  color: var(--dt-cobalt); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-cobalt) 32%, transparent); }
+.badge-success { background: var(--dt-tint-success); color: var(--dt-success); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-success) 32%, transparent); }
+.badge-warning { background: var(--dt-tint-warning); color: var(--dt-warning); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-warning) 32%, transparent); }
+.badge-danger  { background: var(--dt-tint-danger);  color: var(--dt-danger); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-danger) 32%, transparent); }
+
+/* ── Cards — bordered planes. At rest they sit on a hairline, no lift. ── */
+.card {
+  background: var(--dt-surface); color: var(--dt-ink);
+  border-radius: var(--dt-radius-lg);
+  box-shadow: var(--dt-card-rest);
+  transition: box-shadow var(--dt-motion), transform var(--dt-motion);
+}
+.card:hover { box-shadow: var(--dt-card-hover); }
+.card-muted  { background: var(--dt-surface-sunken); border: 1px solid var(--dt-border); border-radius: var(--dt-radius-lg); }
+.card-raised { background: var(--dt-surface-raised); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-card-float); }
+.glass-card {
+  background: var(--dt-glass-bg);
+  backdrop-filter: var(--dt-glass-blur); -webkit-backdrop-filter: var(--dt-glass-blur);
+  border: 1px solid var(--dt-border); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-sm);
+}
+
+/* ── Buttons ── */
+/* Buttons build from FILLS on a height grid (40 / 36px), never outlines.
+   Hover = background-color shift; press = subtle scale. No translate-lift. */
+.btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 40px; padding: 0 16px; font-size: 14px; font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-md);
+  background: var(--dt-accent); color: var(--dt-accent-ink); border: none;
+  box-shadow: var(--dt-shadow-xs);
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-motion-fast), transform var(--dt-motion-fast);
+}
+.btn-primary:hover { background: var(--dt-accent-strong); }
+.btn-primary:active { transform: scale(var(--dt-press-scale)); }
+
+.btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 40px; padding: 0 16px; font-size: 14px; font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-md);
+  background: var(--dt-surface-sunken); color: var(--dt-ink-strong); border: none;
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-motion-fast), transform var(--dt-motion-fast);
+}
+.btn-secondary:hover { background: color-mix(in srgb, var(--dt-surface-sunken) 90%, var(--dt-ink)); }
+.btn-secondary:active { transform: scale(var(--dt-press-scale)); }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 36px; padding: 0 12px; font-size: 14px; font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-md);
+  background: transparent; color: var(--dt-muted-strong); border: none;
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-motion-fast), color var(--dt-motion-fast);
+}
+.btn-ghost:hover { background: var(--dt-tint-muted); color: var(--dt-ink-strong); }
+
+/* ── Form fields — filled, no outline. Focus lifts to white + accent ring. ── */
+.dt-field {
+  background: var(--dt-surface-sunken); border: none;
+  border-radius: var(--dt-radius-md);
+  transition: background-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast);
+}
+.dt-field:focus, .dt-field:focus-within { background: var(--dt-surface); box-shadow: var(--dt-shadow-focus); outline: none; }
+.dt-field-invalid { box-shadow: 0 0 0 1.5px var(--dt-danger); }
+
+/* ── Spec strip ── */
+.spec-strip {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 7px 15px; border-radius: var(--dt-radius-full);
+  background: var(--dt-surface); box-shadow: var(--dt-ring), var(--dt-shadow-xs);
+  font-size: 12px; color: var(--dt-muted);
+}
+.spec-strip-item { display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
+.spec-strip-sep  { display: inline-block; width: 1px; height: 12px; background: var(--dt-border-strong); }
+
+/* ── Decorative dot grid (hero backdrops only) ── */
+.dt-grid-paper {
+  background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--dt-ink) 9%, transparent) 1px, transparent 0);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(120% 90% at 70% 0%, black 25%, transparent 72%);
+          mask-image: radial-gradient(120% 90% at 70% 0%, black 25%, transparent 72%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}

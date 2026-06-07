@@ -1,0 +1,62 @@
+<!-- @dsCard group="Feedback" viewport="720x460" name="Drawer / Sheet" subtitle="Side sheet over a scrim — floats, but stays flat inside" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  /* a framed console behind the drawer, to show the scrim in context */
+  .frame { position: relative; width: 720px; height: 460px; overflow: hidden; background: var(--dt-surface-muted); }
+  .behind { position: absolute; inset: 0; padding: 22px; }
+  .behind h3 { margin: 0 0 4px; font-size: 17px; font-weight: 650; color: var(--dt-ink-strong); }
+  .behind p { margin: 0; font-size: 13px; color: var(--dt-muted); }
+  .ph { margin-top: 16px; display: grid; gap: 8px; }
+  .ph .bar { height: 40px; border-radius: var(--dt-radius-md); background: var(--dt-surface); border: 1px solid var(--dt-border); }
+  .scrim { position: absolute; inset: 0; background: rgba(24,22,18,0.32); }
+  .drawer { position: absolute; top: 0; right: 0; bottom: 0; width: 400px; display: flex; flex-direction: column; background: var(--dt-surface); border-left: 1px solid var(--dt-border-strong); box-shadow: var(--dt-shadow-xl); }
+  .dh { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--dt-border); }
+  .dh h4 { margin: 0; flex: 1; font-size: 16px; font-weight: 650; letter-spacing: -0.01em; color: var(--dt-ink-strong); }
+  .dh .x { width: 30px; height: 30px; display: grid; place-items: center; border: none; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-sm); color: var(--dt-muted-strong); cursor: pointer; }
+  .db { flex: 1; padding: 18px; display: grid; gap: 16px; align-content: start; }
+  .kv { border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); overflow: hidden; }
+  .kvr { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 11px 14px; border-bottom: 1px solid var(--dt-border); }
+  .kvr:last-child { border-bottom: none; }
+  .kvr dt { margin: 0; font-size: 12.5px; color: var(--dt-muted); white-space: nowrap; }
+  .kvr dd { margin: 0; font-size: 12.5px; font-weight: 600; color: var(--dt-ink-strong); font-family: var(--dt-font-mono); }
+  .kvr dd.ac { color: var(--dt-accent); }
+  .lead { font-size: 13.5px; line-height: 1.6; color: var(--dt-muted-strong); }
+  .df { display: flex; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--dt-border); }
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="behind">
+    <h3>API 카탈로그</h3>
+    <p>230개 공공데이터 API · 분야별 필터</p>
+    <div class="ph"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+  </div>
+  <div class="scrim"></div>
+  <aside class="drawer">
+    <header class="dh">
+      <h4>기상청 단기예보</h4>
+      <button class="x" aria-label="닫기">✕</button>
+    </header>
+    <div class="db">
+      <p class="lead">초단기 실황과 단기예보를 제공하는 기상청 공공 API. MCP 도구로 노출하면 AI 클라이언트에서 바로 호출됩니다.</p>
+      <dl class="kv">
+        <div class="kvr"><dt>도구 ID</dt><dd>weather_getVilageFcst</dd></div>
+        <div class="kvr"><dt>메서드</dt><dd class="ac">GET</dd></div>
+        <div class="kvr"><dt>경로</dt><dd>/v1/weather/vilage-fcst</dd></div>
+        <div class="kvr"><dt>인증</dt><dd>service_key</dd></div>
+      </dl>
+    </div>
+    <footer class="df">
+      <a class="btn-ghost" href="#">취소</a>
+      <span style="flex:1"></span>
+      <a class="btn-primary" href="#">도구로 노출</a>
+    </footer>
+  </aside>
+</div>
+</body>
+</html>

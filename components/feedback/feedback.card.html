@@ -1,0 +1,123 @@
+<!-- @dsCard group="Feedback" viewport="700x440" name="Feedback" subtitle="Alert · Toast · EmptyState · Spinner · Skeleton · Tooltip — depth from fills, not outlines" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+
+  /* One cohesive panel — the only elevated surface. No inner outlines. */
+  .panel { background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-sm); padding: 22px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 22px; align-items: start; }
+  .col { display: grid; gap: 16px; align-content: start; }
+  .cap { font-size: 11px; color: var(--dt-muted); }
+  .cap b { color: var(--dt-muted-strong); font-weight: 600; }
+
+  /* Alert — tinted fill, NO left accent bar */
+  .alert { display: flex; gap: 12px; padding: 15px 16px; border-radius: var(--dt-radius-md); background: var(--dt-tint-warning); }
+  .alert .ico { flex: 0 0 auto; margin-top: 1px; display: inline-flex; color: var(--dt-warning); }
+  .at { font-size: 14px; font-weight: 650; color: var(--dt-ink-strong); }
+  .am { margin-top: 4px; font-size: 13px; line-height: 1.55; color: var(--dt-muted-strong); }
+  .am .k { font-family: var(--dt-font-mono); color: var(--dt-ink-strong); }
+  /* text-link action — no button box */
+  .a-link { margin-top: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--dt-warning); cursor: pointer; white-space: nowrap; }
+  .a-link [data-ico] { display: inline-flex; }
+
+  /* EmptyState — sunken fill well, no outline */
+  .empty { display: grid; place-items: center; gap: 9px; text-align: center; padding: 26px 20px; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-lg); }
+  .ei { width: 42px; height: 42px; display: grid; place-items: center; border-radius: var(--dt-radius-full); background: var(--dt-surface); color: var(--dt-muted); box-shadow: var(--dt-shadow-xs); }
+  .et { font-size: 15px; font-weight: 650; color: var(--dt-ink-strong); white-space: nowrap; }
+  .ed { font-size: 13px; line-height: 1.5; color: var(--dt-muted); max-width: 230px; }
+  .e-act { margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: var(--dt-radius-md); background: var(--dt-accent); color: var(--dt-accent-ink); font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: var(--dt-shadow-xs); transition: background-color var(--dt-motion-fast); }
+  .e-act:hover { background: var(--dt-accent-strong); }
+  .e-act [data-ico] { display: inline-flex; }
+
+  /* Toast — genuinely floating: depth from shadow, no border, no status dot */
+  .toast { display: flex; align-items: flex-start; gap: 11px; padding: 13px 15px; background: var(--dt-surface); border-radius: var(--dt-radius-md); box-shadow: var(--dt-shadow-lg); }
+  .toast .tico { flex: 0 0 auto; margin-top: 1px; display: inline-flex; color: var(--dt-success); }
+  .tx { margin-top: 1px; font-size: 13px; line-height: 1.5; color: var(--dt-muted-strong); }
+  .tx .k { font-family: var(--dt-font-mono); color: var(--dt-ink-strong); }
+  .tx b { display: block; font-weight: 650; color: var(--dt-ink-strong); margin-bottom: 2px; }
+  .tclose { margin-left: auto; flex: 0 0 auto; display: inline-flex; color: var(--dt-muted); cursor: pointer; }
+
+  /* Loading — inline, no box */
+  .loading { display: flex; align-items: center; gap: 13px; }
+  .spin { width: 20px; height: 20px; flex: 0 0 auto; animation: r .8s linear infinite; }
+  @keyframes r { to { transform: rotate(360deg); } }
+  .skel { flex: 1; display: grid; gap: 8px; }
+  .sk { height: 10px; border-radius: 6px; background: linear-gradient(90deg, var(--dt-surface-sunken) 0%, var(--dt-surface-muted) 50%, var(--dt-surface-sunken) 100%); background-size: 200% 100%; animation: sh 1.4s ease-in-out infinite; }
+  @keyframes sh { to { background-position: -200% 0; } }
+
+  /* Tooltip — on a trigger, no bordered mount */
+  .tip-row { display: flex; align-items: center; gap: 10px; }
+  .tip-path { flex: 1; min-width: 0; font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .icon-btn { position: relative; flex: 0 0 auto; width: 30px; height: 30px; display: inline-grid; place-items: center; border-radius: var(--dt-radius-sm); background: var(--dt-surface-sunken); color: var(--dt-muted-strong); cursor: pointer; }
+  .tipbox { position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%) translateY(-8px); white-space: nowrap; padding: 6px 9px; font-size: 12px; font-weight: 500; color: var(--dt-paper); background: var(--dt-ink-strong); border-radius: var(--dt-radius-sm); box-shadow: var(--dt-shadow-md); }
+  .tipbox::after { content: ""; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 4px solid transparent; border-top-color: var(--dt-ink-strong); }
+
+  .hr { height: 1px; background: var(--dt-divider); }
+</style>
+</head>
+<body>
+<div class="panel">
+  <div class="col">
+    <div class="cap"><b>Alert</b> · 인라인 경고</div>
+    <div class="alert">
+      <span class="ico" data-ico="key-round"></span>
+      <div style="flex:1; min-width:0">
+        <div class="at">서비스키 만료 임박</div>
+        <div class="am">기상청 <span class="k">service_key</span> 가 3일 후 만료됩니다. 갱신하면 도구 노출이 유지됩니다.</div>
+        <span class="a-link">지금 갱신<span data-ico="arrow-right"></span></span>
+      </div>
+    </div>
+
+    <div class="cap" style="margin-top:4px"><b>EmptyState</b> · 데이터 없음</div>
+    <div class="empty">
+      <span class="ei" data-ico="inbox" data-sz="20"></span>
+      <div class="et">파이프라인 작업 없음</div>
+      <div class="ed">API를 등록하면 검증 작업이 여기에 표시됩니다.</div>
+      <button class="e-act"><span data-ico="plus"></span>API 등록</button>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="cap"><b>Toast</b> · 떠 있는 알림</div>
+    <div class="toast">
+      <span class="tico" data-ico="circle-check"></span>
+      <div class="tx" style="flex:1; min-width:0"><b>도구 등록 완료</b><span class="k">weather_getVilageFcst</span> 가 MCP로 노출되었습니다.</div>
+      <span class="tclose" data-ico="x"></span>
+    </div>
+
+    <div class="cap" style="margin-top:4px"><b>Spinner · Skeleton</b> · 불러오는 중</div>
+    <div class="loading">
+      <svg class="spin" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="var(--dt-border-strong)" stroke-width="2.4" opacity=".55"/><path d="M12 3a9 9 0 0 1 9 9" stroke="var(--dt-accent)" stroke-width="2.4" stroke-linecap="round"/></svg>
+      <div class="skel"><div class="sk" style="width:80%"></div><div class="sk" style="width:54%"></div></div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="cap"><b>Tooltip</b> · 트리거에 부착</div>
+    <div class="tip-row">
+      <span class="tip-path">/v1/weather/vilage-fcst</span>
+      <span class="icon-btn">
+        <span class="tipbox">도구 경로 복사</span>
+        <span data-ico="copy"></span>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script>
+  const map = { 'key-round': 'KeyRound', 'arrow-right': 'ArrowRight', inbox: 'Inbox', plus: 'Plus', 'circle-check': 'CircleCheck', x: 'X', copy: 'Copy' };
+  document.querySelectorAll('[data-ico]').forEach((el) => {
+    const g = window.lucide[map[el.dataset.ico]];
+    if (!g) return;
+    const sz = el.dataset.sz ? +el.dataset.sz : 15;
+    const n = window.lucide.createElement(g);
+    n.setAttribute('width', sz); n.setAttribute('height', sz); n.setAttribute('stroke-width', 1.9);
+    el.appendChild(n);
+  });
+</script>
+</body>
+</html>

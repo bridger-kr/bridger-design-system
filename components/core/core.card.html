@@ -1,0 +1,99 @@
+<!-- @dsCard group="Components" viewport="700x430" name="Core primitives" subtitle="Button · Badge · StatusPill · Input · Tabs — composed in one real console panel" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 30px; font-family: var(--dt-font-sans); color: var(--dt-ink); display: grid; place-items: center; }
+
+  .panel { width: 100%; max-width: 600px; background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-ring), var(--dt-shadow-sm); overflow: hidden; }
+
+  .phead { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 22px 0; }
+  .ptitle { font-size: 17px; font-weight: 650; letter-spacing: -0.01em; color: var(--dt-ink-strong); white-space: nowrap; }
+
+  /* StatusPill — tinted fill + colored text. No ring, no dot. */
+  .pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: var(--dt-radius-full); font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .pill [data-ico] { display: inline-flex; }
+  .pill.ok { background: var(--dt-tint-success); color: var(--dt-success); }
+  .pill.warn { background: var(--dt-tint-warning); color: var(--dt-warning); }
+
+  /* Tabs */
+  .tabs { display: flex; gap: 2px; padding: 0 22px; margin-top: 16px; border-bottom: 1px solid var(--dt-divider); }
+  .tab { display: inline-flex; align-items: center; gap: 7px; padding: 11px 14px; margin-bottom: -1px; font-size: 13px; font-weight: 600; color: var(--dt-muted); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+  .tab .count { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .tab.active { color: var(--dt-ink-strong); border-bottom-color: var(--dt-accent); }
+  .tab.active .count { color: var(--dt-accent); }
+
+  .pbody { padding: 20px 22px; display: grid; gap: 18px; }
+
+  /* Input — filled field. Depth from fill; focus lifts to white + accent ring. */
+  .field { display: grid; gap: 8px; }
+  .field > span { font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); }
+  .input { display: flex; align-items: center; gap: 9px; height: 44px; border-radius: var(--dt-radius-md); background: var(--dt-surface-sunken); padding: 0 13px; transition: background-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast); }
+  .input:focus-within { background: var(--dt-surface); box-shadow: var(--dt-shadow-focus); }
+  .input input { flex: 1; border: none; outline: none; background: transparent; font-family: var(--dt-font-mono); font-size: 13px; color: var(--dt-ink-strong); }
+  .input [data-ico] { color: var(--dt-muted); display: inline-flex; }
+
+  /* Inline classification badges, in context */
+  .tagline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .tagline > em { font-style: normal; font-size: 13px; color: var(--dt-muted); margin-right: 2px; }
+  .badge [data-ico] { display: inline-flex; }
+
+  .pfoot { display: flex; align-items: center; gap: 10px; padding: 16px 22px; border-top: 1px solid var(--dt-divider); }
+  .pfoot .spacer { flex: 1; }
+  .btn-primary [data-ico], .btn-secondary [data-ico], .btn-ghost [data-ico] { display: inline-flex; }
+</style>
+</head>
+<body>
+  <div class="panel">
+    <div class="phead">
+      <div class="ptitle">공공 API 연결</div>
+      <span class="pill ok"><span data-ico="circle-check"></span>게이트웨이 실시간</span>
+    </div>
+
+    <div class="tabs">
+      <span class="tab active">연결 정보</span>
+      <span class="tab">인증</span>
+      <span class="tab">도구 <span class="count">42</span></span>
+    </div>
+
+    <div class="pbody">
+      <label class="field">
+        <span>베이스 URL</span>
+        <div class="input"><span data-ico="database"></span><input value="https://api.datari.kr" /></div>
+      </label>
+
+      <div class="tagline">
+        <em>분류</em>
+        <span class="badge badge-accent">MCP</span>
+        <span class="badge badge-info">REST</span>
+        <span class="badge">GET</span>
+        <span class="badge badge-success">정상</span>
+        <span class="pill warn" style="margin-left:auto"><span data-ico="key-round"></span>키 재연결 중</span>
+      </div>
+    </div>
+
+    <div class="pfoot">
+      <button class="btn-ghost"><span data-ico="x"></span>취소</button>
+      <span class="spacer"></span>
+      <a class="btn-secondary" href="#">로그 열기 <span data-ico="arrow-right"></span></a>
+      <a class="btn-primary" href="#"><span data-ico="plus"></span>연결 저장</a>
+    </div>
+  </div>
+
+<script>
+  const map = { database: 'Database', x: 'X', 'arrow-right': 'ArrowRight', plus: 'Plus', 'circle-check': 'CircleCheck', 'key-round': 'KeyRound' };
+  document.querySelectorAll('[data-ico]').forEach((el) => {
+    const g = window.lucide[map[el.dataset.ico]];
+    if (!g) return;
+    const inPill = !!el.closest('.pill');
+    const n = window.lucide.createElement(g);
+    const sz = inPill ? 13 : 15;
+    n.setAttribute('width', sz); n.setAttribute('height', sz); n.setAttribute('stroke-width', inPill ? 2 : 2.2);
+    el.appendChild(n);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Bridger">
+  <defs>
+    <linearGradient id="bridger-accent" x1="6" x2="26" y1="6" y2="26" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d9ff43"></stop>
+      <stop offset="1" stop-color="#ff9f32"></stop>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="#0a0b0f"></rect>
+  <g id="bridger-symbol" fill="none" stroke="url(#bridger-accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.7">
+    <path d="M6 10.5h9c4.5 0 5.3-4 9.2-4H26"></path>
+    <path d="M6 21.5h9c4.5 0 5.3 4 9.2 4H26"></path>
+  </g>
+</svg>

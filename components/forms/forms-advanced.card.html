@@ -1,0 +1,121 @@
+<!-- @dsCard group="Forms" viewport="760x540" name="Search · range · upload" subtitle="Combobox · Slider · FileUpload — shown across their states" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 26px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  .sheet { display: grid; gap: 24px; max-width: 700px; }
+  .spec { display: grid; gap: 11px; }
+  .lbl { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; }
+  .lbl::before { content: ""; width: 5px; height: 5px; background: var(--dt-accent); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+  .flbl { font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); }
+  .hint { font-size: 12px; color: var(--dt-muted); }
+
+  /* Combobox */
+  .cb { display: grid; gap: 7px; }
+  .cb-field { display: flex; align-items: center; gap: 9px; height: 44px; padding: 0 12px; background: var(--dt-surface-sunken); border: none; border-radius: var(--dt-radius-md); }
+  .cb-field input { flex: 1; border: none; outline: none; background: transparent; font-size: 14px; font-family: inherit; color: var(--dt-ink-strong); }
+  .cb-field .meta { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .ic { color: var(--dt-muted); display: inline-flex; flex: 0 0 auto; }
+  .cb-list { background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-md); padding: 4px; }
+  .opt { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--dt-radius-md); }
+  .opt.on { background: var(--dt-surface-sunken); }
+  .opt .nm { flex: 1; font-size: 13.5px; font-weight: 500; color: var(--dt-ink-strong); }
+  .opt.sel .nm { font-weight: 600; }
+  .opt .m { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .opt .chk { color: var(--dt-accent); display: inline-flex; }
+
+  /* Slider */
+  .sl { display: grid; gap: 9px; }
+  .sl-top { display: flex; align-items: baseline; justify-content: space-between; }
+  .sl-val { font-family: var(--dt-font-mono); font-size: 13px; font-weight: 600; color: var(--dt-ink-strong); font-variant-numeric: tabular-nums; }
+  .sl-val .u { color: var(--dt-muted); font-weight: 400; }
+  .track { position: relative; height: 20px; display: flex; align-items: center; }
+  .track .rail { position: absolute; left: 0; right: 0; height: 4px; border-radius: 2px; background: var(--dt-surface-sunken); box-shadow: inset 0 0 0 1px var(--dt-border-strong); }
+  .track .fill { position: absolute; left: 0; height: 4px; border-radius: 2px; background: var(--dt-accent); }
+  .track .thumb { position: absolute; transform: translateX(-50%); width: 16px; height: 16px; border-radius: var(--dt-radius-sm); background: var(--dt-surface); box-shadow: 0 0 0 1.5px var(--dt-accent); border: 3px solid var(--dt-surface); }
+
+  /* FileUpload */
+  .drop { display: grid; place-items: center; gap: 8px; padding: 26px 20px; text-align: center; border-radius: var(--dt-radius-lg); border: 1.5px dashed var(--dt-border-strong); background: var(--dt-surface-sunken); }
+  .drop .t { font-size: 13.5px; color: var(--dt-ink-strong); }
+  .drop .t b { color: var(--dt-accent); font-weight: 600; }
+  .drop .h { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .file { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); }
+  .file .ico { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--dt-radius-md); background: var(--dt-tint-accent); color: var(--dt-accent); }
+  .file .nm { font-family: var(--dt-font-mono); font-size: 13px; font-weight: 600; color: var(--dt-ink-strong); }
+  .file .sz { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); margin-top: 2px; }
+  .file .x { width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; border: none; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-sm); color: var(--dt-muted-strong); cursor: pointer; }
+</style>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+</head>
+<body>
+<div class="sheet">
+  <div class="spec">
+    <div class="lbl">Combobox · 230+ API 검색</div>
+    <div class="cb">
+      <span class="flbl">연동할 공공 API</span>
+      <div class="cb-field">
+        <span class="ic" data-ico="search"></span>
+        <input value="기상청 단기예보" readonly>
+        <span class="meta">날씨</span>
+      </div>
+      <div class="cb-list">
+        <div class="opt sel"><span class="nm">기상청 단기예보</span><span class="m">날씨</span><span class="chk" data-ico="check"></span></div>
+        <div class="opt on"><span class="nm">국토부 실거래가</span><span class="m">부동산</span></div>
+        <div class="opt"><span class="nm">한국은행 ECOS</span><span class="m">경제</span></div>
+        <div class="opt"><span class="nm">서울 실시간 도시데이터</span><span class="m">교통</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="lbl">Slider · 수치 범위</div>
+    <div class="two">
+      <div class="sl">
+        <div class="sl-top"><span class="flbl">무료 한도</span><span class="sl-val">100<span class="u">회/일</span></span></div>
+        <div class="track"><div class="rail"></div><div class="fill" style="width:20%"></div><div class="thumb" style="left:20%"></div></div>
+      </div>
+      <div class="sl">
+        <div class="sl-top"><span class="flbl">초당 요청</span><span class="sl-val">8<span class="u"> rps</span></span></div>
+        <div class="track"><div class="rail"></div><div class="fill" style="width:16%"></div><div class="thumb" style="left:16%"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="lbl">FileUpload · 비어 있음 / 채워짐</div>
+    <div class="two">
+      <div>
+        <span class="flbl" style="display:block;margin-bottom:7px">OpenAPI 스펙</span>
+        <div class="drop">
+          <span class="ic" data-ico="upload" data-sz="22"></span>
+          <span class="t"><b>파일 선택</b> 또는 끌어다 놓기</span>
+          <span class="h">OpenAPI 스펙 · JSON 또는 YAML</span>
+        </div>
+      </div>
+      <div>
+        <span class="flbl" style="display:block;margin-bottom:7px">업로드 완료</span>
+        <div class="file">
+          <span class="ico" data-ico="file" data-sz="17"></span>
+          <div style="flex:1;min-width:0"><div class="nm">weather-openapi.yaml</div><div class="sz">18 KB · 업로드 완료</div></div>
+          <button class="x" data-ico="x" data-sz="15"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const map = { search:'Search', check:'Check', upload:'Upload', file:'File', x:'X' };
+  document.querySelectorAll('[data-ico]').forEach((el) => {
+    const g = window.lucide[map[el.dataset.ico]]; if (!g) return;
+    const sz = el.dataset.sz ? +el.dataset.sz : 16;
+    const n = window.lucide.createElement(g);
+    n.setAttribute('width', sz); n.setAttribute('height', sz); n.setAttribute('stroke-width', 2);
+    el.appendChild(n);
+  });
+</script>
+</body>
+</html>

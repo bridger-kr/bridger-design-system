@@ -1,0 +1,24 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Ink & text" subtitle="Warm near-black ink on light — four emphasis levels" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-surface); padding: 24px; }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .cell b { display: block; font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0; }
+  .cell span { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .t1 { color: var(--dt-ink-strong); } .t2 { color: var(--dt-ink); }
+  .t3 { color: var(--dt-muted-strong); } .t4 { color: var(--dt-muted); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="cell"><b class="t1">강조 Aa</b><span>ink-strong · #0c0b08</span></div>
+    <div class="cell"><b class="t2">본문 Aa</b><span>ink · #1b1a16</span></div>
+    <div class="cell"><b class="t3">보조 Aa</b><span>muted-strong · #423f38</span></div>
+    <div class="cell"><b class="t4">메타 Aa</b><span>muted · #79766e</span></div>
+  </div>
+</body>
+</html>

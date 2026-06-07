@@ -1,0 +1,67 @@
+<!-- @dsCard group="Components" viewport="700x300" name="FilterChip" subtitle="Toggleable catalog filters — default / active / count / removable" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  .sheet { display: grid; gap: 22px; max-width: 640px; }
+  .spec { display: grid; gap: 12px; }
+  .lbl { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; }
+  .lbl::before { content: ""; width: 5px; height: 5px; background: var(--dt-accent); }
+  .chips { display: flex; gap: 9px; flex-wrap: wrap; align-items: center; }
+
+  .chip { display: inline-flex; align-items: center; gap: 7px; height: 30px; padding: 0 10px; border-radius: var(--dt-radius-sm); cursor: pointer; font-size: 13px; font-weight: 500; background: var(--dt-surface); color: var(--dt-muted-strong); box-shadow: inset 0 0 0 1px var(--dt-border-strong); white-space: nowrap; }
+  .chip .ic { display: inline-flex; color: var(--dt-muted); }
+  .chip .c { font-family: var(--dt-font-mono); font-size: 11px; font-weight: 600; color: var(--dt-muted); font-variant-numeric: tabular-nums; }
+  .chip .x { display: inline-flex; margin-right: -2px; color: var(--dt-muted); }
+  .chip.on { background: var(--dt-tint-accent); color: var(--dt-accent); font-weight: 650; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-accent) 40%, transparent); }
+  .chip.on .ic, .chip.on .c, .chip.on .x { color: var(--dt-accent); }
+</style>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+</head>
+<body>
+<div class="sheet">
+  <div class="spec">
+    <div class="lbl">분야 필터 · count 포함</div>
+    <div class="chips">
+      <span class="chip on">날씨<span class="c">36</span></span>
+      <span class="chip">부동산<span class="c">27</span></span>
+      <span class="chip">경제<span class="c">19</span></span>
+      <span class="chip">교통<span class="c">22</span></span>
+      <span class="chip">안전<span class="c">14</span></span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="lbl">프로토콜 · 아이콘 + 토글</div>
+    <div class="chips">
+      <span class="chip on"><span class="ic" data-ico="zap"></span>MCP</span>
+      <span class="chip"><span class="ic" data-ico="globe"></span>REST</span>
+      <span class="chip"><span class="ic" data-ico="radio"></span>SSE</span>
+    </div>
+  </div>
+
+  <div class="spec">
+    <div class="lbl">적용된 필터 · removable</div>
+    <div class="chips">
+      <span class="chip on">날씨<span class="x" data-ico="x"></span></span>
+      <span class="chip on">GET<span class="x" data-ico="x"></span></span>
+      <span class="chip on">사용 가능<span class="x" data-ico="x"></span></span>
+      <span class="chip" style="box-shadow:none;background:transparent;color:var(--dt-muted);text-decoration:underline;text-underline-offset:3px">모두 지우기</span>
+    </div>
+  </div>
+</div>
+<script>
+  const map = { zap:'Zap', globe:'Globe', radio:'Radio', x:'X' };
+  document.querySelectorAll('[data-ico]').forEach((el) => {
+    const g = window.lucide[map[el.dataset.ico]]; if (!g) return;
+    const x = el.classList.contains('x');
+    const n = window.lucide.createElement(g);
+    n.setAttribute('width', x ? 13 : 14); n.setAttribute('height', x ? 13 : 14); n.setAttribute('stroke-width', x ? 2.2 : 2);
+    el.appendChild(n);
+  });
+</script>
+</body>
+</html>

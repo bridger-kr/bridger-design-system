@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 32" role="img" aria-label="Bridger">
+  <defs>
+    <linearGradient id="bridger-logo-light-accent" x1="4" x2="40" y1="8" y2="24" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bfdc12"></stop>
+      <stop offset="1" stop-color="#f97316"></stop>
+    </linearGradient>
+  </defs>
+  <g id="bridger-symbol" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 10h14c6 0 7-4 13-4h9" stroke="#d7d8cd" stroke-width="3"></path>
+    <path d="M4 22h14c6 0 7 4 13 4h9" stroke="#d7d8cd" stroke-width="3"></path>
+    <path d="M4 10h14c6 0 7-4 13-4h9" stroke="url(#bridger-logo-light-accent)" stroke-width="3.2"></path>
+    <path d="M4 22h14c6 0 7 4 13 4h9" stroke="url(#bridger-logo-light-accent)" stroke-width="3.2"></path>
+  </g>
+  <text x="50" y="22" font-family="Pretendard Variable,Pretendard,-apple-system,BlinkMacSystemFont,sans-serif" font-size="19" font-weight="760" fill="#14130f" letter-spacing="0">Bridger</text>
+</svg>
