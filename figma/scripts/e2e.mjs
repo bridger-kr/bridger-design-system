@@ -24,6 +24,17 @@ let idSeq = 0;
 const nid = (p) => `${p}:${++idSeq}`;
 const fail = (m) => { console.error('✗ ' + m); process.exitCode = 1; };
 
+// Figma's plugin sandbox is QuickJS — it rejects some modern syntax Node accepts.
+// Object spread crashed v1.0.0 in production, so guard against that class here.
+const quickjsBanned = [
+  [/\{\s*\.\.\./, 'object spread { ...x } (QuickJS 미지원)'],
+  [/\)\s*\?\./, 'optional chaining ?. (안전하게 회피 권장)'],
+  [/\?\?/, 'nullish coalescing ?? (안전하게 회피 권장)'],
+];
+for (const [re, label] of quickjsBanned) {
+  if (re.test(codeSrc)) fail(`QuickJS 비호환 구문 발견: ${label}`);
+}
+
 // ---- node mocks -----------------------------------------------------------
 const RGB_KEYS = ['r', 'g', 'b'];
 function assertColor(c, where) {

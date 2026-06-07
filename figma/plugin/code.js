@@ -33,6 +33,9 @@ function parseColor(val) {
   }
   return { color: hexToRgb(val), opacity: 1 };
 }
+function rgba(color, alpha) {
+  return { r: color.r, g: color.g, b: color.b, a: alpha };
+}
 
 // ---- VARIABLES + STYLES ---------------------------------------------------
 // Flattened map of varPath -> Variable, so the component builder can bind.
@@ -79,10 +82,10 @@ async function buildVariables(tokens) {
   for (const path in light) {
     const v = getVar(`color/${path}`, 'COLOR');
     const l = parseColor(light[path]);
-    v.setValueForMode(lightId, l.opacity < 1 ? { ...l.color, a: l.opacity } : l.color);
+    v.setValueForMode(lightId, l.opacity < 1 ? rgba(l.color, l.opacity) : l.color);
     if (dark[path] != null) {
       const d = parseColor(dark[path]);
-      v.setValueForMode(darkId, d.opacity < 1 ? { ...d.color, a: d.opacity } : d.color);
+      v.setValueForMode(darkId, d.opacity < 1 ? rgba(d.color, d.opacity) : d.color);
     }
     varMap[`color/${path}`] = v;
   }
@@ -157,7 +160,7 @@ async function buildEffectStyles(tokens) {
     es.name = name;
     es.effects = [{
       type: 'DROP_SHADOW', visible: true,
-      color: { ...c.color, a: c.opacity },
+      color: rgba(c.color, c.opacity),
       offset: { x: parseFloat(s.x), y: parseFloat(s.y) },
       radius: parseFloat(s.blur), spread: parseFloat(s.spread),
       blendMode: 'NORMAL',
