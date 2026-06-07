@@ -1,0 +1,68 @@
+name: Figma artifacts sync
+
+# When the design system source changes, regenerate the Figma token JSON,
+# validate tokens + component spec, and auto-commit the regenerated artifact
+# back to the branch so the plugin (which fetches GitHub raw) is always current.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tokens/**'
+      - 'components/**'
+      - 'figma/components.spec.json'
+      - 'figma/scripts/**'
+  pull_request:
+    paths:
+      - 'tokens/**'
+      - 'components/**'
+      - 'figma/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Regenerate token JSON from CSS
+        working-directory: figma
+        run: npm run gen
+
+      - name: Validate tokens + component spec
+        working-directory: figma
+        run: npm run validate
+
+      - name: Detect changes to generated artifact
+        id: diff
+        run: |
+          if git diff --quiet -- figma/bridger-tokens.tokens.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # On PRs: fail if the committed artifact is stale (forces author to regen).
+      - name: Fail PR if artifact is stale
+        if: github.event_name == 'pull_request' && steps.diff.outputs.changed == 'true'
+        run: |
+          echo "::error::figma/bridger-tokens.tokens.json 이 소스와 불일치합니다. 'npm --prefix figma run gen' 후 커밋하세요."
+          git diff -- figma/bridger-tokens.tokens.json
+          exit 1
+
+      # On push to main: auto-commit the regenerated artifact.
+      - name: Auto-commit regenerated artifact
+        if: github.event_name == 'push' && steps.diff.outputs.changed == 'true'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add figma/bridger-tokens.tokens.json
+          git commit -m "chore(figma): regenerate tokens from source [skip ci]"
+          git push

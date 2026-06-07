@@ -1,0 +1,73 @@
+name: Figma plugin release
+
+# On a version tag (figma-v*), build + validate + package the plugin and
+# publish a GitHub Release with a zip of figma/dist. This automates everything
+# UP TO the Community publish — the final "Publish" click must still happen in
+# the Figma desktop app (Figma has no CI publish API).
+
+on:
+  push:
+    tags:
+      - 'figma-v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version label (e.g. 1.0.0)'
+        required: true
+        default: '1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build + validate + package
+        working-directory: figma
+        run: |
+          npm run build
+          npm run package
+
+      - name: Zip plugin dist
+        run: |
+          cd figma/dist
+          zip -r ../../bridger-figma-plugin.zip .
+          cd ../..
+          ls -la bridger-figma-plugin.zip
+
+      - name: Resolve version
+        id: ver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "v=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "v=${GITHUB_REF_NAME#figma-v}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_type == 'tag' && github.ref_name || format('figma-v{0}', steps.ver.outputs.v) }}
+          name: Bridger Figma Plugin v${{ steps.ver.outputs.v }}
+          body: |
+            Bridger Design System — Figma plugin v${{ steps.ver.outputs.v }}
+
+            **포함:** manifest.json · code.js · ui.html · 토큰/스펙 사본
+            **검증:** 토큰 + 40개 컴포넌트 스펙 통과
+
+            ### 설치 (개발 모드)
+            1. zip 다운로드 후 압축 해제
+            2. Figma 데스크톱 → Plugins → Development → Import plugin from manifest…
+            3. `manifest.json` 선택 → 실행 → "동기화 실행"
+
+            ### Community 퍼블리시
+            Figma는 CI 자동 퍼블리시 API를 제공하지 않습니다.
+            데스크톱 앱에서 플러그인 → Publish 를 사람이 직접 눌러야 합니다.
+          files: bridger-figma-plugin.zip

@@ -1,0 +1,14 @@
+{
+  "name": "Bridger Design System Sync",
+  "id": "bridger-design-system-sync",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "editorType": ["figma"],
+  "networkAccess": {
+    "allowedDomains": [
+      "https://raw.githubusercontent.com"
+    ],
+    "reasoning": "Fetches the Bridger design tokens and component spec from the public GitHub repo (bridger-kr/bridger-design-system)."
+  }
+}

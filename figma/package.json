@@ -1,0 +1,14 @@
+{
+  "name": "bridger-figma-sync",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Figma plugin + token/spec generators for the Bridger Design System.",
+  "type": "module",
+  "scripts": {
+    "gen": "node scripts/gen-tokens.mjs",
+    "validate": "node scripts/validate.mjs",
+    "build": "npm run gen && npm run validate",
+    "package": "node scripts/package-plugin.mjs"
+  },
+  "engines": { "node": ">=18" }
+}
