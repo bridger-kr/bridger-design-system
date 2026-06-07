@@ -1,0 +1,103 @@
+/* ============================================================
+   Bridger — Color tokens  (v2 · light-first)
+   Default theme is LIGHT (premium SaaS, like flex.team / channel.io / stripe).
+   Dark is a full-parity alternate via :root[data-theme='dark'] / .dark.
+   Single persimmon action color · warm-neutral surfaces · crisp ink.
+============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* ── Surfaces (warm near-white; depth comes from shadow, not color) ── */
+  --dt-paper:           #fbfaf8;   /* page */
+  --dt-surface:         #ffffff;   /* card */
+  --dt-surface-raised:  #ffffff;   /* raised (differentiated by shadow) */
+  --dt-surface-sunken:  #f4f3ef;   /* well / inset */
+  --dt-surface-muted:   #f8f7f4;   /* subtle fill */
+
+  /* ── Ink (warm near-black) ── */
+  --dt-ink:             #1b1a16;
+  --dt-ink-strong:      #0c0b08;
+  --dt-muted:           #79766e;
+  --dt-muted-strong:    #423f38;
+
+  /* ── Hairline borders ── */
+  --dt-border:          #eceae3;
+  --dt-border-strong:   #ddd9cf;
+  --dt-divider:         color-mix(in srgb, var(--dt-border) 50%, transparent);  /* near-invisible row/section rule */
+
+  /* ── Accent — persimmon (one action per screen) ── */
+  --dt-accent:          #ec5e1f;   /* solid action */
+  --dt-accent-strong:   #d24e13;   /* hover / pressed */
+  --dt-accent-bright:   #fb923c;   /* highlight / on-dark glow */
+  --dt-accent-ink:      #ffffff;   /* text on accent */
+  --dt-accent-soft:     color-mix(in srgb, var(--dt-accent) 10%, transparent);
+
+  /* ── Status-only hues (never decorative) ── */
+  --dt-cobalt:          #2f6bff;   /* link / info */
+  --dt-lime:            #c8e44a;   /* selection */
+  --dt-success:         #1f9d57;
+  --dt-warning:         #c9820f;
+  --dt-danger:          #dc3a34;
+  --dt-info:            var(--dt-cobalt);
+
+  /* ── Tints ── */
+  --dt-tint-accent:  color-mix(in srgb, var(--dt-accent)  10%, transparent);
+  --dt-tint-cobalt:  color-mix(in srgb, var(--dt-cobalt)   9%, transparent);
+  --dt-tint-success: color-mix(in srgb, var(--dt-success) 11%, transparent);
+  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 13%, transparent);
+  --dt-tint-danger:  color-mix(in srgb, var(--dt-danger)  10%, transparent);
+  --dt-tint-muted:   color-mix(in srgb, var(--dt-ink)      5%, transparent);
+
+  /* ── Code surface (kept dark on light pages, Stripe-style) ── */
+  --dt-code-bg:      #14161d;
+  --dt-code-ink:     #e8e6df;
+  --dt-code-border:  #262a35;
+
+  --dt-brand-gradient: linear-gradient(120deg, #fb923c 0%, #ec5e1f 100%); /* @kind other */
+}
+
+/* ── Dark theme — full-parity alternate (console-native) ── */
+:root[data-theme='dark'],
+.dark {
+  color-scheme: dark;
+
+  --dt-paper:           #0b0c10;
+  --dt-surface:         #14151b;
+  --dt-surface-raised:  #1b1d25;
+  --dt-surface-sunken:  #08090c;
+  --dt-surface-muted:   #16181f;
+
+  --dt-ink:             #f4f3ee;
+  --dt-ink-strong:      #ffffff;
+  --dt-muted:           #9a9ba6;
+  --dt-muted-strong:    #c4c5ce;
+
+  --dt-border:          #23252e;
+  --dt-border-strong:   #31343f;
+  --dt-divider:         color-mix(in srgb, var(--dt-border) 55%, transparent);
+
+  --dt-accent:          #fb923c;
+  --dt-accent-strong:   #fdba74;
+  --dt-accent-bright:   #fb923c;
+  --dt-accent-ink:      #1a1206;
+  --dt-accent-soft:     color-mix(in srgb, var(--dt-accent) 14%, transparent);
+
+  --dt-cobalt:          #7aa2ff;
+  --dt-lime:            #d8f24a;
+  --dt-success:         #34d399;
+  --dt-warning:         #fbbf24;
+  --dt-danger:          #f87171;
+  --dt-info:            var(--dt-cobalt);
+
+  --dt-tint-accent:  color-mix(in srgb, var(--dt-accent)  16%, transparent);
+  --dt-tint-cobalt:  color-mix(in srgb, var(--dt-cobalt)  16%, transparent);
+  --dt-tint-success: color-mix(in srgb, var(--dt-success) 18%, transparent);
+  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 18%, transparent);
+  --dt-tint-danger:  color-mix(in srgb, var(--dt-danger)  18%, transparent);
+  --dt-tint-muted:   color-mix(in srgb, var(--dt-ink)      8%, transparent);
+
+  --dt-code-bg:      #0a0b0f;
+  --dt-code-ink:     #f4f3ee;
+  --dt-code-border:  #23252e;
+}

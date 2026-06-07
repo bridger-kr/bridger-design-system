@@ -1,0 +1,28 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Persimmon primary" subtitle="The single orange action color — one main action per screen" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 22px; display: flex; gap: 16px; align-items: stretch; }
+  .big { flex: 1; border-radius: var(--dt-radius-lg); background: var(--dt-accent); color: var(--dt-accent-ink); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 6px 16px color-mix(in srgb, var(--dt-accent) 28%, transparent); }
+  .big .name { font-weight: 700; font-size: 15px; }
+  .big .hex { font-family: var(--dt-font-mono); font-size: 13px; opacity: 0.85; }
+  .side { width: 230px; display: grid; gap: 10px; }
+  .s { border-radius: var(--dt-radius-md); box-shadow: var(--dt-ring), var(--dt-shadow-xs); background: var(--dt-surface); padding: 9px 12px; display: flex; align-items: center; gap: 10px; font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .dot { width: 20px; height: 20px; border-radius: 6px; flex: 0 0 auto; }
+</style>
+</head>
+<body>
+  <div class="big">
+    <div class="name">accent · persimmon</div>
+    <div class="hex">#ec5e1f</div>
+  </div>
+  <div class="side">
+    <div class="s"><span class="dot" style="background:var(--dt-accent-strong)"></span> accent-strong · #d24e13</div>
+    <div class="s"><span class="dot" style="background:var(--dt-accent-bright)"></span> accent-bright · #fb923c</div>
+    <div class="s"><span class="dot" style="background:var(--dt-accent-soft)"></span> accent-soft · 10% tint</div>
+  </div>
+</body>
+</html>

@@ -15,6 +15,67 @@ two product surfaces.
 
 ---
 
+## Using the packages
+
+This repo is a **pnpm monorepo** that ships two publishable packages plus a
+private Figma plugin:
+
+| Package | Public? | What it is |
+| --- | --- | --- |
+| [`@bridger-ds/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
+| [`@bridger-ds/react`](packages/react) | ✅ npm | 40 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
+| [`bridger-figma-plugin`](packages/figma-plugin) | 🔒 private | Figma Community plugin that builds Variables/Styles/40 Component Sets from the tokens. Not on npm. |
+
+### Install
+
+```sh
+pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
+```
+
+### CSS setup
+
+Import the token contract once, then the React component styles:
+
+```ts
+import '@bridger-ds/tokens/css';   // --dt-* variables, fonts, base classes
+import '@bridger-ds/react/styles.css';
+```
+
+### React usage
+
+```tsx
+import { Button, Table, CommandPalette } from '@bridger-ds/react';
+```
+
+Per-component subpath imports for maximum tree-shaking:
+
+```tsx
+import { Button } from '@bridger-ds/react/components/core/Button';
+```
+
+### Tokens in TS/JS
+
+```ts
+import { colors, spacing, typography } from '@bridger-ds/tokens';
+colors.light.accent; // "#ec5e1f"
+```
+
+### Figma plugin
+
+Private — distributed via **Figma Community** (manual desktop submission, not
+npm). See [`packages/figma-plugin/store-assets/PUBLISH.md`](packages/figma-plugin/store-assets/PUBLISH.md).
+
+### Develop
+
+```sh
+pnpm install
+pnpm build        # build all packages
+pnpm typecheck
+pnpm test
+```
+
+---
+
 ## The product, in one picture
 
 Bridger should feel like a **quiet product console** for people who repeatedly
@@ -201,31 +262,30 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 
 ## Index / manifest
 
-**Root**
-- `styles.css` — global entrypoint (import this). `@import` list only.
-- `readme.md` — this guide.
-- `SKILL.md` — Agent Skill wrapper.
+**`packages/`** — the monorepo workspaces (the publishable surface):
+- **`tokens/`** (`@bridger-ds/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
+- **`react/`** (`@bridger-ds/react`) — 40 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
+- **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
-**`tokens/`** — `fonts.css`, `colors.css`, `typography.css`, `spacing.css`, `base.css`
-(element defaults + shared `.btn`/`.card`/`.badge`/`.dt-*` vocabulary).
+**Root sources** (still consumed by the Figma plugin + examples):
+- `styles.css` — global CSS entrypoint (`@import` list of the token files).
+- `tokens/*.css` — the source-of-truth token CSS. The Figma plugin's `gen-tokens.mjs` reads these.
+- `components/*.jsx` — the original component sources (the published `.tsx` live in `packages/react`).
+- `assets/` — `brand/` (logos, favicon), `agency-logos/` (KMA, MOLIT, BOK, Seoul, data.go.kr), `fonts/` (Pretendard Variable woff2).
+- `readme.md` — this guide. `SKILL.md` — Agent Skill wrapper.
 
-**`assets/`** — `brand/` (logos, favicon), `agency-logos/` (KMA, MOLIT, BOK, Seoul,
-data.go.kr), `fonts/` (Pretendard Variable woff2).
-
-**`foundations/`** — Design-System-tab specimen cards (color, type, spacing, brand).
-
-**`components/`** — 40 reusable React primitives, grouped (each folder has a `@dsCard` showcase):
-- **core/** — Button, Badge, StatusPill, Card, Input, Tabs, **FilterChip** (toggleable catalog filter).
-- **forms/** — Select, Checkbox, RadioGroup, Switch, Textarea, SegmentedControl, **Combobox** (searchable select), **Slider** (numeric range), **FileUpload** (OpenAPI-spec dropzone).
-- **feedback/** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, **Drawer** (side sheet).
-- **data/** — Table, StatTile, Avatar, Pagination, **CodeBlock** (dark code surface), **KeyValue** (spec metadata list), **LogRow** (execution-log stream), **UsageMeter** (quota bar).
-- **navigation/** — Breadcrumb, Menu, **Sidebar** (console nav rail), **CommandPalette** (⌘K), **Stepper** (onboarding progress).
-- **product/** — BrandLogo (wordmark), SectionCard, ToolCard.
+**The 40 components**, grouped:
+- **core** — Button, Badge, StatusPill, Card, Input, Tabs, **FilterChip** (toggleable catalog filter).
+- **forms** — Select, Checkbox, RadioGroup, Switch, Textarea, SegmentedControl, **Combobox** (searchable select), **Slider** (numeric range), **FileUpload** (OpenAPI-spec dropzone).
+- **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, **Drawer** (side sheet).
+- **data** — Table, StatTile, Avatar, Pagination, **CodeBlock** (dark code surface), **KeyValue** (spec metadata list), **LogRow** (execution-log stream), **UsageMeter** (quota bar).
+- **navigation** — Breadcrumb, Menu, **Sidebar** (console nav rail), **CommandPalette** (⌘K), **Stepper** (onboarding progress).
+- **product** — BrandLogo (wordmark), SectionCard, ToolCard.
 
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (3–6px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 
-**`ui_kits/`**
-- `console/` — the Bridger portal console (dashboard, catalog, logs).
-- `landing/` — the marketing site recreation.
-
-See each `ui_kit`'s `README.md` for screen breakdowns.
+**`examples/`** — standalone demos (not part of the published library; see [`examples/README.md`](examples/README.md)):
+- `ui_kits/console/` — the Bridger portal console (dashboard, catalog, logs).
+- `ui_kits/landing/` — the marketing site recreation.
+- `foundations/` — 13 specimen cards (color, type, spacing, brand).
+- `design-canvas.jsx` — Figma-like composition canvas.

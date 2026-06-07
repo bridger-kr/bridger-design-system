@@ -1,0 +1,25 @@
+<!-- @dsCard group="Colors" viewport="700x160" name="Status hues" subtitle="Semantic only — success / warning / danger / info (cobalt)" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-surface); padding: 24px; }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .cell { display: grid; gap: 8px; }
+  .chip { height: 44px; border-radius: var(--dt-radius-md); box-shadow: var(--dt-ring); }
+  .lab { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .lab b { display: block; color: var(--dt-ink-strong); font-weight: 600; font-size: 12px; letter-spacing: 0; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="cell"><div class="chip" style="background:var(--dt-success)"></div><div class="lab"><b>success</b>#1f9d57</div></div>
+    <div class="cell"><div class="chip" style="background:var(--dt-warning)"></div><div class="lab"><b>warning</b>#c9820f</div></div>
+    <div class="cell"><div class="chip" style="background:var(--dt-danger)"></div><div class="lab"><b>danger</b>#dc3a34</div></div>
+    <div class="cell"><div class="chip" style="background:var(--dt-cobalt)"></div><div class="lab"><b>info · cobalt</b>#2f6bff</div></div>
+    <div class="cell"><div class="chip" style="background:var(--dt-lime)"></div><div class="lab"><b>selection</b>#c8e44a</div></div>
+  </div>
+</body>
+</html>

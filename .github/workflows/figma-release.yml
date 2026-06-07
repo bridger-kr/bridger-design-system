@@ -1,7 +1,7 @@
 name: Figma plugin release
 
 # On a version tag (figma-v*), build + validate + package the plugin and
-# publish a GitHub Release with a zip of figma/dist. This automates everything
+# publish a GitHub Release with a zip of packages/figma-plugin/dist. This automates everything
 # UP TO the Community publish — the final "Publish" click must still happen in
 # the Figma desktop app (Figma has no CI publish API).
 
@@ -30,16 +30,16 @@ jobs:
           node-version: '20'
 
       - name: Build + validate + package
-        working-directory: figma
+        working-directory: packages/figma-plugin
         run: |
           npm run build
           npm run package
 
       - name: Zip plugin dist
         run: |
-          cd figma/dist
-          zip -r ../../bridger-figma-plugin.zip .
-          cd ../..
+          cd packages/figma-plugin/dist
+          zip -r ../../../bridger-figma-plugin.zip .
+          cd ../../..
           ls -la bridger-figma-plugin.zip
 
       - name: Resolve version

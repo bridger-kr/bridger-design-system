@@ -1,0 +1,41 @@
+/* ============================================================
+   Bridger — Typography tokens
+   Pretendard for all Korean + product UI. Mono for code-like values.
+   Letter spacing stays at 0em — no negative tracking.
+============================================================ */
+
+:root {
+  /* ── Families ── */
+  --dt-font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --dt-font-mono: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace;
+
+  /* ── H1 / H2 — real page-level headings only ── */
+  --dt-h1-size: clamp(40px, 6vw, 72px);
+  --dt-h1-leading: 1.08;
+  --dt-h1-tracking: -0.04em;
+  --dt-h1-weight: 700;
+
+  --dt-h2-size: clamp(28px, 3.5vw, 40px);
+  --dt-h2-leading: 1.15;
+  --dt-h2-tracking: -0.035em;
+  --dt-h2-weight: 700;
+
+  /* ── H3 — compact section & panel titles ── */
+  --dt-h3-size: 18px;
+  --dt-h3-leading: 1.3;
+  --dt-h3-tracking: -0.02em;
+  --dt-h3-weight: 600;
+
+  /* ── Body — default content ── */
+  --dt-body-size: 16px;
+  --dt-body-leading: 1.6;
+  --dt-body-weight: 400;
+
+  /* ── Small — dense metadata / helper ── */
+  --dt-small-size: 13px;
+  --dt-small-leading: 1.55;
+
+  /* ── Mono — code / API values only ── */
+  --dt-mono-size: 13px;
+  --dt-mono-leading: 1.55;
+}

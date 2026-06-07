@@ -1,0 +1,27 @@
+<!-- @dsCard group="Colors" viewport="700x190" name="Surfaces" subtitle="Warm near-white planes — structure reads from hairlines, not float" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 24px; font-family: var(--dt-font-sans); }
+  .sheet { border: 1px solid var(--dt-border-strong); display: grid; grid-template-columns: repeat(4, 1fr); }
+  .cell { border-right: 1px solid var(--dt-border); }
+  .cell:last-child { border-right: 0; }
+  .chip { height: 56px; border-bottom: 1px solid var(--dt-border); }
+  .meta { padding: 10px 12px; }
+  .meta .role { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--dt-muted); }
+  .meta .name { font-size: 13px; font-weight: 650; color: var(--dt-ink-strong); margin-top: 3px; }
+  .meta .hex { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted-strong); margin-top: 2px; }
+</style>
+</head>
+<body>
+  <div class="sheet">
+    <div class="cell"><div class="chip" style="background:var(--dt-paper)"></div><div class="meta"><div class="role">page</div><div class="name">paper</div><div class="hex">#fbfaf8</div></div></div>
+    <div class="cell"><div class="chip" style="background:var(--dt-surface)"></div><div class="meta"><div class="role">card</div><div class="name">surface</div><div class="hex">#ffffff</div></div></div>
+    <div class="cell"><div class="chip" style="background:var(--dt-surface-muted)"></div><div class="meta"><div class="role">subtle fill</div><div class="name">muted</div><div class="hex">#f8f7f4</div></div></div>
+    <div class="cell"><div class="chip" style="background:var(--dt-surface-sunken)"></div><div class="meta"><div class="role">well / inset</div><div class="name">sunken</div><div class="hex">#f4f3ef</div></div></div>
+  </div>
+</body>
+</html>

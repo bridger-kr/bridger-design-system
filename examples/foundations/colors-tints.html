@@ -1,0 +1,35 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Tints & borders" subtitle="Translucent fills for chips & badges; the two hairline border tokens" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 24px; display: grid; gap: 18px; font-family: var(--dt-font-sans); }
+  .row { display: grid; grid-template-columns: repeat(6, 1fr); border: 1px solid var(--dt-border-strong); }
+  .chip { height: 46px; display: flex; align-items: flex-end; padding: 5px 8px; font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .04em; color: var(--dt-muted-strong); border-right: 1px solid var(--dt-border); }
+  .chip:last-child { border-right: 0; }
+  .borders { display: flex; gap: 40px; }
+  .b { display: grid; gap: 7px; }
+  .b .ln { width: 110px; height: 0; }
+  .b .bl { border-top: 1px solid var(--dt-border); }
+  .b .bls { border-top: 1px solid var(--dt-border-strong); }
+  .b .cap { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .b .cap b { color: var(--dt-ink-strong); font-weight: 600; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="chip" style="background:var(--dt-tint-accent)">accent</div>
+    <div class="chip" style="background:var(--dt-tint-cobalt)">cobalt</div>
+    <div class="chip" style="background:var(--dt-tint-success)">success</div>
+    <div class="chip" style="background:var(--dt-tint-warning)">warning</div>
+    <div class="chip" style="background:var(--dt-tint-danger)">danger</div>
+    <div class="chip" style="background:var(--dt-tint-muted)">muted</div>
+  </div>
+  <div class="borders">
+    <div class="b"><span class="ln bl"></span><span class="cap"><b>border</b> · #eceae3 · planes & dividers</span></div>
+    <div class="b"><span class="ln bls"></span><span class="cap"><b>border-strong</b> · #ddd9cf · framing</span></div>
+  </div>
+</body>
+</html>

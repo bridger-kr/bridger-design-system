@@ -1,0 +1,83 @@
+/* ============================================================
+   Bridger — Spacing, radius, elevation, motion  (v2)
+   Spacing scale: 4 / 8 / 16 / 24 / 40 / 64 / 96 / 128.
+   Elevation is a LAYERED soft-shadow system (channel.io / Stripe depth),
+   not a single flat box-shadow. Cards float on warm light.
+============================================================ */
+
+:root {
+  /* ── Spacing scale ── */
+  --dt-space-1: 4px;
+  --dt-space-2: 8px;
+  --dt-space-3: 16px;
+  --dt-space-4: 24px;
+  --dt-space-5: 40px;
+  --dt-space-6: 64px;
+  --dt-space-7: 96px;
+  --dt-space-8: 128px;
+
+  /* ── Radius ── crisp; barely-there softening. Structure reads from
+     hairlines, not from rounded shells. ── */
+  --dt-radius-sm:   3px;
+  --dt-radius-md:   4px;
+  --dt-radius-lg:   6px;
+  --dt-radius-xl:   8px;
+  --dt-radius-2xl:  10px;
+  --dt-radius-full: 9999px;  /* dots, avatars, true pills only */
+
+  /* ── Elevation (light) — STRUCTURE FROM HAIRLINES, not float.
+     The ring is a real, visible 1px border. Shadows are reserved
+     for things that genuinely float (toast, menu, modal) and stay tight. ── */
+  --dt-ring:          0 0 0 1px var(--dt-border);
+  --dt-ring-strong:   0 0 0 1px var(--dt-border-strong);
+  --dt-shadow-xs:     none;
+  --dt-shadow-sm:     0 1px 2px rgba(24, 22, 18, 0.05);
+  --dt-shadow-md:     0 2px 6px rgba(24, 22, 18, 0.07);
+  --dt-shadow-lg:     0 6px 16px rgba(24, 22, 18, 0.10);
+  --dt-shadow-xl:     0 12px 30px rgba(24, 22, 18, 0.14);
+  --dt-shadow-focus:  0 0 0 3px color-mix(in srgb, var(--dt-accent) 22%, transparent);
+
+  /* Card recipes: at rest a card is a bordered plane — no lift.
+     Elevation is earned only on hover / for truly floating layers. */
+  --dt-card-rest:  var(--dt-ring);
+  --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
+  --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
+
+  /* Legacy aliases (kept so older surfaces keep rendering) */
+  --dt-shadow-subtle:   var(--dt-shadow-sm);
+  --dt-shadow-elevated: var(--dt-shadow-lg);
+
+  /* ── Motion ── */
+  --dt-ease:        cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --dt-ease-in:     cubic-bezier(0.55, 0.05, 0.55, 0.2); /* @kind other */
+  --dt-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* @kind other */
+  --dt-motion-fast: 130ms var(--dt-ease); /* @kind other */
+  --dt-motion-base: 200ms var(--dt-ease); /* @kind other */
+  --dt-motion:      260ms var(--dt-ease); /* @kind other */
+  --dt-motion-slow: 420ms var(--dt-ease); /* @kind other */
+  --dt-press-scale: 0.97; /* @kind other */
+
+  /* ── Glass (sticky chrome) ── */
+  --dt-glass-bg:   color-mix(in srgb, var(--dt-paper) 72%, transparent);
+  --dt-glass-blur: saturate(180%) blur(20px); /* @kind other */
+}
+
+/* ── Dark elevation — deeper, cooler shadows ── */
+:root[data-theme='dark'],
+.dark {
+  --dt-ring:        0 0 0 1px rgba(255, 255, 255, 0.04);
+  --dt-shadow-xs:   0 1px 2px rgba(0, 0, 0, 0.4);
+  --dt-shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.5),
+                    0 2px 6px rgba(0, 0, 0, 0.4);
+  --dt-shadow-md:   0 4px 10px rgba(0, 0, 0, 0.5),
+                    0 12px 24px rgba(0, 0, 0, 0.45);
+  --dt-shadow-lg:   0 8px 20px rgba(0, 0, 0, 0.55),
+                    0 24px 48px rgba(0, 0, 0, 0.5);
+  --dt-shadow-xl:   0 16px 32px rgba(0, 0, 0, 0.6),
+                    0 40px 72px rgba(0, 0, 0, 0.55);
+  --dt-glass-bg:    color-mix(in srgb, var(--dt-paper) 70%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dt-motion-fast: 1ms linear /* @kind other */; --dt-motion: 1ms linear /* @kind other */; --dt-motion-slow: 1ms linear /* @kind other */; }
+}

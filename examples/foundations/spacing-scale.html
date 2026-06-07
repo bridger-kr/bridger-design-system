@@ -1,0 +1,27 @@
+<!-- @dsCard group="Spacing" viewport="700x190" name="Spacing scale" subtitle="4 / 8 / 16 / 24 / 40 / 64 / 96 / 128 px — a strict ×2-ish step" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-surface); padding: 26px; font-family: var(--dt-font-sans); }
+  .row { display: flex; align-items: flex-end; gap: 16px; border-bottom: 1px solid var(--dt-border-strong); padding-bottom: 0; }
+  .item { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .bar { width: 100%; background: var(--dt-accent); }
+  .lab { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted-strong); padding-bottom: 6px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="item" style="width:4px"><div class="bar" style="height:var(--dt-space-1)"></div><div class="lab">4</div></div>
+    <div class="item" style="width:8px"><div class="bar" style="height:var(--dt-space-2)"></div><div class="lab">8</div></div>
+    <div class="item" style="width:16px"><div class="bar" style="height:var(--dt-space-3)"></div><div class="lab">16</div></div>
+    <div class="item" style="width:24px"><div class="bar" style="height:var(--dt-space-4)"></div><div class="lab">24</div></div>
+    <div class="item" style="width:40px"><div class="bar" style="height:var(--dt-space-5)"></div><div class="lab">40</div></div>
+    <div class="item" style="width:64px"><div class="bar" style="height:var(--dt-space-6)"></div><div class="lab">64</div></div>
+    <div class="item" style="width:96px"><div class="bar" style="height:var(--dt-space-7)"></div><div class="lab">96</div></div>
+    <div class="item" style="width:128px"><div class="bar" style="height:var(--dt-space-8)"></div><div class="lab">128</div></div>
+  </div>
+</body>
+</html>
