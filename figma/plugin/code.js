@@ -250,18 +250,32 @@ async function probeFonts() {
   }
 }
 
-// Recursive node builder from spec.
+// Apply a child's fill/sizing behaviour. MUST run AFTER the child is appended
+// to its auto-layout parent — Figma silently ignores layoutSizing* otherwise.
+function applyChildSizing(node, def) {
+  if (!def.grow) return;
+  try {
+    node.layoutSizingHorizontal = 'FILL';
+  } catch (e) {
+    node.layoutGrow = 1;
+    node.layoutAlign = 'STRETCH';
+  }
+}
+
+// Recursive node builder. Returns a node with auto-layout fully configured
+// BEFORE children are appended; child sizing is applied AFTER appendChild.
 function buildNode(def) {
   let node;
   if (def.type === 'text') {
     node = figma.createText();
     const f = pickFont(def.font || 'sans', def.weight || 400);
-    node.fontName = f;
     node.characters = def.text != null ? String(def.text) : '';
     if (def.size) node.fontSize = def.size;
+    node.fontName = f;
     if (def.color) bindFill(node, def.color);
     if (def.letterSpacing != null) node.letterSpacing = { unit: 'PERCENT', value: def.letterSpacing };
     if (def.align) node.textAlignHorizontal = def.align.toUpperCase();
+    node.textAutoResize = 'WIDTH_AND_HEIGHT';
   } else if (def.type === 'ellipse') {
     node = figma.createEllipse();
     if (def.w) node.resize(def.w, def.h || def.w);
@@ -272,20 +286,20 @@ function buildNode(def) {
     node.resize(def.w || 1, def.h || 1);
     if (def.fill) bindFill(node, def.fill);
   } else {
-    // frame (default)
     node = figma.createFrame();
-    node.layoutMode = def.dir === 'vertical' ? 'VERTICAL' : (def.dir === 'none' ? 'NONE' : 'HORIZONTAL');
-    if (node.layoutMode !== 'NONE') {
-      node.primaryAxisSizingMode = def.grow ? 'FIXED' : 'AUTO';
-      node.counterAxisSizingMode = 'AUTO';
+    const dir = def.dir === 'vertical' ? 'VERTICAL' : (def.dir === 'none' ? 'NONE' : 'HORIZONTAL');
+    node.layoutMode = dir;
+    node.fills = [];
+    if (dir !== 'NONE') {
       node.itemSpacing = def.gap != null ? def.gap : 0;
       node.primaryAxisAlignItems = def.justify || 'MIN';
       node.counterAxisAlignItems = def.align || 'CENTER';
       const p = def.padding || {};
       node.paddingTop = p.t || 0; node.paddingBottom = p.b || 0;
       node.paddingLeft = p.l || 0; node.paddingRight = p.r || 0;
+      node.primaryAxisSizingMode = 'AUTO';
+      node.counterAxisSizingMode = 'AUTO';
     }
-    node.fills = [];
     if (def.fill) bindFill(node, def.fill);
     if (def.stroke) bindStroke(node, def.stroke, def.strokeWeight);
     if (def.radius != null) node.cornerRadius = def.radius;
@@ -293,12 +307,22 @@ function buildNode(def) {
       const es = figma.getLocalEffectStyles().find((s) => s.name === `Bridger/shadow-${def.effect.shadow}`);
       if (es) node.effectStyleId = es.id;
     }
-    if (def.w) { node.resize(def.w, node.height); node.primaryAxisSizingMode = 'FIXED'; }
-    if (def.h) { node.resize(node.width, def.h); node.counterAxisSizingMode = 'FIXED'; }
-    (def.children || []).forEach((c) => node.appendChild(buildNode(c)));
+
+    (def.children || []).forEach((c) => {
+      const child = buildNode(c);
+      node.appendChild(child);
+      applyChildSizing(child, c);
+    });
+
+    if (def.w) {
+      if (dir !== 'NONE') node.primaryAxisSizingMode = dir === 'HORIZONTAL' ? 'FIXED' : node.primaryAxisSizingMode;
+      node.resize(def.w, node.height);
+    }
+    if (def.h) {
+      node.resize(node.width, def.h);
+    }
   }
   if (def.name) node.name = def.name;
-  if (def.grow) node.layoutGrow = 1;
   return node;
 }
 

@@ -79,6 +79,14 @@ class BaseNode {
     if (typeof w !== 'number' || typeof h !== 'number') fail(`${this.type}.resize: 숫자 아님 (${w},${h})`);
     this.width = w; this.height = h;
   }
+  set layoutSizingHorizontal(v) {
+    if (!this.parent) fail(`${this.type}.layoutSizingHorizontal: appendChild 전 설정 (Figma 무시됨)`);
+    else if (this.parent.layoutMode === 'NONE' || this.parent.type === 'PAGE') {
+      throw new Error('layoutSizing requires auto-layout parent');
+    }
+    this._lsh = v;
+  }
+  get layoutSizingHorizontal() { return this._lsh; }
 }
 
 class FrameNode extends BaseNode {
@@ -101,6 +109,11 @@ class TextNode extends BaseNode {
     this._characters = v;
   }
   get characters() { return this._characters; }
+  set textAutoResize(v) {
+    if (!['WIDTH_AND_HEIGHT', 'HEIGHT', 'NONE', 'TRUNCATE'].includes(v)) fail(`TEXT.textAutoResize: 잘못된 값 ${v}`);
+    this._tar = v;
+  }
+  get textAutoResize() { return this._tar; }
 }
 class EllipseNode extends BaseNode { constructor() { super('ELLIPSE'); this.width = 10; this.height = 10; } }
 class RectangleNode extends BaseNode { constructor() { super('RECTANGLE'); this.width = 10; this.height = 10; } }
@@ -245,13 +258,26 @@ run().then(() => {
     if (v._values[m2] === undefined) fail(`${v.name}: Dark 값 없음`);
   }
 
+  // every TEXT node must have textAutoResize (else glyphs overlap in real Figma)
+  let textCount = 0;
+  const walk = (n) => {
+    if (n.type === 'TEXT') {
+      textCount += 1;
+      if (n.textAutoResize === undefined) fail(`TEXT "${n.characters}" textAutoResize 미설정 → 실제 Figma에서 글자 오버랩`);
+    }
+    (n.children || []).forEach(walk);
+  };
+  state.pages.flatMap((p) => p.children).forEach(walk);
+  if (textCount < 100) fail(`텍스트 노드 수 비정상 (${textCount})`);
+
   if (process.exitCode) {
     console.error('\n✗ E2E 실패');
   } else {
     console.log('✓ E2E 통과');
     console.log(`  컬렉션 1 · 모드 2 · 색상변수 ${colorVars} · 숫자변수 ${floatVars}`);
-    console.log(`  TextStyle ${state.textStyles.length} · EffectStyle ${state.effectStyles.length} · 컴포넌트 ${sets.length}`);
+    console.log(`  TextStyle ${state.textStyles.length} · EffectStyle ${state.effectStyles.length} · 컴포넌트 ${sets.length} · 텍스트노드 ${textCount}`);
     console.log(`  폰트 폴백: Pretendard/JetBrains 부재 → Inter 로 정상 폴백 (에러 0)`);
+    console.log(`  오토레이아웃: layoutSizing은 appendChild 후 적용 · 모든 텍스트 textAutoResize 설정됨`);
   }
 }).catch((e) => {
   fail('sync 실행 중 예외: ' + e.stack);
