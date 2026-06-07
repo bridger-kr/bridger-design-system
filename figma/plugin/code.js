@@ -56,7 +56,7 @@ function flattenColors(group, prefix, out) {
 async function buildVariables(tokens) {
   ui('Variables 생성 중…', 'dim');
   // single collection, two modes
-  let col = figma.variables.getLocalVariableCollections().find((c) => c.name === 'Bridger');
+  let col = (await figma.variables.getLocalVariableCollectionsAsync()).find((c) => c.name === 'Bridger');
   if (!col) col = figma.variables.createVariableCollection('Bridger');
   // ensure modes
   let lightId = col.modes[0].modeId;
@@ -65,7 +65,7 @@ async function buildVariables(tokens) {
   let darkId = darkMode ? darkMode.modeId : col.addMode('Dark');
 
   const existing = {};
-  for (const v of figma.variables.getLocalVariables()) {
+  for (const v of await figma.variables.getLocalVariablesAsync()) {
     if (v.variableCollectionId === col.id) existing[v.name] = v;
   }
   const getVar = (name, type) => {
@@ -116,7 +116,7 @@ async function buildTextStyles(tokens) {
   const weightStyle = { '400': 'Regular', '600': 'SemiBold', '700': 'Bold' };
   const px = (s) => parseFloat(String(s));
   const existing = {};
-  for (const s of figma.getLocalTextStyles()) existing[s.name] = s;
+  for (const s of await figma.getLocalTextStylesAsync()) existing[s.name] = s;
 
   for (const key in tokens.typography) {
     if (key.startsWith('$')) continue;
@@ -147,10 +147,12 @@ async function buildTextStyles(tokens) {
   ui('✓ Text Styles', 'ok');
 }
 
+const effectStyleMap = {};
+
 async function buildEffectStyles(tokens) {
   ui('Effect Styles 생성 중…', 'dim');
   const existing = {};
-  for (const s of figma.getLocalEffectStyles()) existing[s.name] = s;
+  for (const s of await figma.getLocalEffectStylesAsync()) existing[s.name] = s;
   for (const key in tokens.boxShadow) {
     if (key.startsWith('$')) continue;
     const s = tokens.boxShadow[key].$value;
@@ -165,6 +167,7 @@ async function buildEffectStyles(tokens) {
       radius: parseFloat(s.blur), spread: parseFloat(s.spread),
       blendMode: 'NORMAL',
     }];
+    effectStyleMap[name] = es.id;
   }
   ui('✓ Effect Styles', 'ok');
 }
@@ -304,8 +307,8 @@ function buildNode(def) {
     if (def.stroke) bindStroke(node, def.stroke, def.strokeWeight);
     if (def.radius != null) node.cornerRadius = def.radius;
     if (def.effect && def.effect.shadow) {
-      const es = figma.getLocalEffectStyles().find((s) => s.name === `Bridger/shadow-${def.effect.shadow}`);
-      if (es) node.effectStyleId = es.id;
+      const esId = effectStyleMap[`Bridger/shadow-${def.effect.shadow}`];
+      if (esId) node.effectStyleId = esId;
     }
 
     (def.children || []).forEach((c) => {
@@ -328,10 +331,11 @@ function buildNode(def) {
 
 async function buildComponents(spec) {
   ui(`컴포넌트 ${spec.components.length}종 생성 중…`, 'dim');
-  // page
+  // dynamic-page: must load all pages before reading figma.root.children
+  await figma.loadAllPagesAsync();
   let page = figma.root.children.find((p) => p.name === 'Bridger / Components');
   if (!page) { page = figma.createPage(); page.name = 'Bridger / Components'; }
-  figma.currentPage = page;
+  await figma.setCurrentPageAsync(page);
 
   let x = 0, y = 0, rowH = 0, count = 0;
   const GAP = 80, MAXW = 1600;

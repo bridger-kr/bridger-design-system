@@ -191,8 +191,8 @@ const figma = {
     return Promise.reject(new Error(`Cannot load font ${f.family} ${f.style}`));
   },
   variables: {
-    getLocalVariableCollections: () => state.collections,
-    getLocalVariables: () => state.variables,
+    getLocalVariableCollectionsAsync: () => Promise.resolve(state.collections),
+    getLocalVariablesAsync: () => Promise.resolve(state.variables),
     createVariableCollection(name) { const c = new VariableCollection(name); state.collections.push(c); return c; },
     createVariable(name, col, type) { const v = new Variable(name, col, type); state.variables.push(v); return v; },
     setBoundVariableForPaint(paint, field, variable) {
@@ -202,8 +202,10 @@ const figma = {
       return { ...paint, boundVariables: { color: { type: 'VARIABLE_ALIAS', id: variable.id } } };
     },
   },
-  getLocalTextStyles: () => state.textStyles,
-  getLocalEffectStyles: () => state.effectStyles,
+  getLocalTextStylesAsync: () => Promise.resolve(state.textStyles),
+  getLocalEffectStylesAsync: () => Promise.resolve(state.effectStyles),
+  loadAllPagesAsync: () => Promise.resolve(),
+  setCurrentPageAsync(p) { this._cp = p; return Promise.resolve(); },
   createTextStyle() { const s = { id: nid('TS'), name: '', _fontName: null }; Object.defineProperty(s, 'fontName', { set(f) { if (!LOADED_FONTS.has(`${f.family}__${f.style}`)) fail(`TextStyle.fontName 미로딩: ${f.family} ${f.style}`); this._fontName = f; }, get() { return this._fontName; } }); state.textStyles.push(s); return s; },
   createEffectStyle() { const s = { id: nid('ES'), name: '', effects: [] }; state.effectStyles.push(s); return s; },
   viewport: { scrollAndZoomIntoView() {} },
