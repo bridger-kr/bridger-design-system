@@ -1,14 +1,22 @@
 import * as React from 'react';
 
+export const CardTone: {
+  readonly Default: 'default';
+  readonly Muted: 'muted';
+  readonly Raised: 'raised';
+  readonly Panel: 'panel';
+};
+
+export type CardTone = (typeof CardTone)[keyof typeof CardTone];
+
 export interface CardProps {
   children?: React.ReactNode;
-  /** default = surface + subtle shadow; muted = sunken well; raised = elevated; panel = flat console panel. */
-  variant?: 'default' | 'muted' | 'raised' | 'panel';
-  /** Strengthen border + lift surface on hover (for clickable rows/cards). */
+  variant?: CardTone;
+  tone?: CardTone;
   interactive?: boolean;
+  className?: string;
   padding?: number;
   style?: React.CSSProperties;
 }
 
-/** Framed surface for repeated items, modals, and tools. */
 export function Card(props: CardProps): React.JSX.Element;

@@ -122,13 +122,14 @@ encoded throughout this system.
 
 ---
 
-## Brand mark (v2)
+## Brand mark (v3)
 
-The logo is the **Bridger wordmark, mark-only** — set in Pretendard heavy (780)
-with tight tracking and a single **persimmon period**: `Bridger.` The period is
-the one place the brand color touches the logotype (flex.team-style restraint).
-The earlier literal bridge symbol was retired — it read as illustration rather
-than product. Render it with the `BrandLogo` component or as plain styled text.
+The logo is the **bridge-line symbol plus the Bridger wordmark**. The symbol is a
+compact two-line route mark in persimmon over a muted track; the visible wordmark
+is always `Bridger` across locales. Korean/English only change the accessible
+label (`브릿저` / `Bridger`) and surrounding product copy. Render it with the
+`BrandLogo` component from `@bridger-ds/react`; do not recreate a plain
+`Bridger.` text mark in product surfaces.
 
 ---
 
@@ -280,7 +281,7 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, **Drawer** (side sheet).
 - **data** — Table, StatTile, Avatar, Pagination, **CodeBlock** (dark code surface), **KeyValue** (spec metadata list), **LogRow** (execution-log stream), **UsageMeter** (quota bar).
 - **navigation** — Breadcrumb, Menu, **Sidebar** (console nav rail), **CommandPalette** (⌘K), **Stepper** (onboarding progress).
-- **product** — BrandLogo (wordmark), SectionCard, ToolCard.
+- **product** — BrandLogo (bridge-line mark + wordmark), SectionCard, ToolCard.
 
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (3–6px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 

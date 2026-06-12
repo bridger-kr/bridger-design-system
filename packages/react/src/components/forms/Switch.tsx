@@ -74,3 +74,40 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
     </label>
   );
 }
+
+export interface ToggleSwitchProps {
+  readonly checked: boolean;
+  readonly label: string;
+  readonly onChange: (next: boolean) => void;
+  readonly disabled?: boolean;
+  readonly className?: string;
+}
+
+export function ToggleSwitch({
+  checked,
+  label,
+  onChange,
+  disabled = false,
+  className = '',
+}: ToggleSwitchProps) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      disabled={disabled}
+      onClick={() => onChange(!checked)}
+      className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
+        checked ? 'border-success/40 bg-success/80' : 'border-line-strong bg-raised'
+      } ${className}`}
+    >
+      <span
+        aria-hidden
+        className={`inline-block h-4 w-4 transform rounded-full bg-surface shadow-dtSubtle transition-transform ${
+          checked ? 'translate-x-6' : 'translate-x-1'
+        }`}
+      />
+    </button>
+  );
+}

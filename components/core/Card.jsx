@@ -1,5 +1,12 @@
 import React from 'react';
 
+export const CardTone = {
+  Default: 'default',
+  Muted: 'muted',
+  Raised: 'raised',
+  Panel: 'panel',
+};
+
 const VARIANT_STYLE = {
   default: { background: 'var(--dt-surface)', boxShadow: 'var(--dt-card-rest)' },
   muted:   { background: 'var(--dt-surface-sunken)' },
@@ -7,15 +14,16 @@ const VARIANT_STYLE = {
   panel:   { background: 'var(--dt-surface)', boxShadow: 'var(--dt-shadow-xs)' },
 };
 
-/**
- * Surface container. Use for repeated items, modals, and genuinely framed
- * tools — not as a decorative wrapper. `panel` is the flatter console variant.
- */
-export function Card({ children, variant = 'default', interactive = false, padding = 20, style, ...rest }) {
-  const v = VARIANT_STYLE[variant] ?? VARIANT_STYLE.default;
+function cx(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+
+export function Card({ children, variant, tone, interactive = false, padding = 20, className, style, ...rest }) {
+  const selectedTone = tone ?? variant ?? CardTone.Default;
+  const v = VARIANT_STYLE[selectedTone] ?? VARIANT_STYLE.default;
   return (
     <div
-      className={interactive ? 'dt-card-interactive' : undefined}
+      className={cx(interactive && 'dt-card-interactive', className)}
       style={{
         borderRadius: 'var(--dt-radius-lg)',
         color: 'var(--dt-ink)',

@@ -255,8 +255,8 @@
     {
       "name": "BrandLogo",
       "variants": [
-        { "props": { "Size": "lg" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "gap": 0, "align": "MIN", "children": [ { "type": "text", "text": "Bridger", "size": 40, "weight": 780, "letterSpacing": -2.5, "color": "{color/ink/ink-strong}" }, { "type": "text", "text": ".", "size": 40, "weight": 780, "letterSpacing": -2.5, "color": "{color/accent/accent}" } ] } },
-        { "props": { "Size": "md" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "gap": 0, "align": "MIN", "children": [ { "type": "text", "text": "Bridger", "size": 22, "weight": 780, "letterSpacing": -2.5, "color": "{color/ink/ink-strong}" }, { "type": "text", "text": ".", "size": 22, "weight": 780, "letterSpacing": -2.5, "color": "{color/accent/accent}" } ] } }
+        { "props": { "Size": "lg" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "gap": 16, "align": "CENTER", "children": [ { "type": "frame", "name": "bridge-line-symbol", "dir": "vertical", "gap": 10, "align": "MIN", "w": 92, "children": [ { "type": "line", "name": "bridge-line-top", "w": 92, "h": 5, "fill": "{color/accent/accent}" }, { "type": "line", "name": "bridge-line-bottom", "w": 92, "h": 5, "fill": "{color/accent/accent}" } ] }, { "type": "text", "text": "Bridger", "size": 40, "weight": 780, "letterSpacing": 0, "color": "{color/ink/ink-strong}" } ] } },
+        { "props": { "Size": "md" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "gap": 10, "align": "CENTER", "children": [ { "type": "frame", "name": "bridge-line-symbol", "dir": "vertical", "gap": 6, "align": "MIN", "w": 52, "children": [ { "type": "line", "name": "bridge-line-top", "w": 52, "h": 3, "fill": "{color/accent/accent}" }, { "type": "line", "name": "bridge-line-bottom", "w": 52, "h": 3, "fill": "{color/accent/accent}" } ] }, { "type": "text", "text": "Bridger", "size": 22, "weight": 780, "letterSpacing": 0, "color": "{color/ink/ink-strong}" } ] } }
       ]
     },
     {
