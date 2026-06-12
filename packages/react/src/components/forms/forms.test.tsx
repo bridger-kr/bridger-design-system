@@ -9,6 +9,7 @@ import {
   Select,
   Slider,
   Switch,
+  ToggleSwitch,
   Textarea,
 } from './index';
 
@@ -22,6 +23,7 @@ describe('forms exports', () => {
     expect(Select).toBeTypeOf('function');
     expect(Slider).toBeTypeOf('function');
     expect(Switch).toBeTypeOf('function');
+    expect(ToggleSwitch).toBeTypeOf('function');
     expect(Textarea).toBeTypeOf('function');
   });
 });

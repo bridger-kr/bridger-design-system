@@ -2,7 +2,7 @@
 import { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
-import { BrandLogo, SectionCard, ToolCard } from './index';
+import { BRAND_LOGO_LANGUAGE, BrandLogo, SectionCard, ToolCard } from './index';
 import type { BrandLogoHandle } from './index';
 
 describe('Product components', () => {
@@ -14,6 +14,7 @@ describe('Product components', () => {
       expect(screen.getByText('Bridger')).toBeTruthy();
       expect(container.querySelector('svg[viewBox="0 0 44 24"]')).toBeTruthy();
       expect(container.textContent).not.toContain('Bridger.');
+      expect(BRAND_LOGO_LANGUAGE.Korean).toBe('ko');
     });
 
     it('exposes an imperative play handle for brand interactions', () => {

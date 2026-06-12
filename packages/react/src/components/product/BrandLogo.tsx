@@ -8,7 +8,7 @@ import {
   type SetStateAction,
 } from 'react';
 
-const BRAND_LOGO_LANGUAGE = {
+export const BRAND_LOGO_LANGUAGE = {
   Korean: 'ko',
   English: 'en',
 } as const;
