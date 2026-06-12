@@ -12,7 +12,7 @@ pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
 
 ## Peer Dependencies
 
-`@bridger-ds/react` expects React and React DOM 18 or newer:
+`@bridger-ds/react` expects React, React DOM 18 or newer, and `@bridger-ds/tokens`:
 
 ```json
 {
