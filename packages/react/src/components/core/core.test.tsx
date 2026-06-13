@@ -41,4 +41,35 @@ describe('core exports', () => {
     expect(metricAccentColor(MetricAccent.Success)).toBe('text-[var(--dt-success)]');
     expect(cx('a', false, 'b')).toBe('a b');
   });
+
+  it('maps every Card tone to its surface token (contract apps depend on)', () => {
+    expect(Card({ tone: CardTone.Default, children: 'x' }).props.style.background).toBe('var(--dt-surface)');
+    expect(Card({ tone: CardTone.Muted, children: 'x' }).props.style.background).toBe('var(--dt-surface-sunken)');
+    expect(Card({ tone: CardTone.Raised, children: 'x' }).props.style.background).toBe('var(--dt-surface-raised)');
+    expect(Card({ tone: CardTone.Panel, children: 'x' }).props.style.background).toBe('var(--dt-surface)');
+    expect(Card({ variant: CardTone.Muted, children: 'x' }).props.style.background).toBe('var(--dt-surface-sunken)');
+    expect(Card({ children: 'x' }).props.style.background).toBe('var(--dt-surface)');
+  });
+
+  it('honors Card padding default and interactive flag', () => {
+    expect(Card({ children: 'x' }).props.style.padding).toBe(20);
+    expect(Card({ padding: 8, children: 'x' }).props.style.padding).toBe(8);
+    expect(Card({ interactive: true, children: 'x' }).props.className).toContain('dt-card-interactive');
+    expect(Card({ children: 'x' }).props.className ?? '').not.toContain('dt-card-interactive');
+  });
+
+  it('maps every Badge tone to its status class (status-only, never decorative)', () => {
+    expect(Badge({ children: 'x' }).props.className).toBe('badge');
+    expect(Badge({ tone: 'accent', children: 'x' }).props.className).toBe('badge badge-accent');
+    expect(Badge({ tone: 'info', children: 'x' }).props.className).toBe('badge badge-info');
+    expect(Badge({ tone: 'success', children: 'x' }).props.className).toBe('badge badge-success');
+    expect(Badge({ tone: 'warning', children: 'x' }).props.className).toBe('badge badge-warning');
+    expect(Badge({ tone: 'danger', children: 'x' }).props.className).toBe('badge badge-danger');
+  });
+
+  it('Button forwards variant/size without dropping the native button type', () => {
+    const el = Button({ variant: 'secondary', size: 'lg', children: '연결' });
+    expect(el.type).toBe('button');
+    expect(el.props.type).toBe('button');
+  });
 });

@@ -2,7 +2,7 @@
 
 React component library for the Bridger Design System.
 
-This package is scaffolded for Wave 4 component migration. No concrete components are exported yet.
+Exports 40 components across six categories (core, forms, feedback, data, navigation, product) plus the `cx` class-name helper, all consumable from the package root.
 
 ## Install
 
@@ -23,10 +23,10 @@ pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
 
 ## Usage
 
-Components will be exported from the package root by category once Wave 4 migrates them:
+Components are exported from the package root by category:
 
 ```tsx
-import { Button } from '@bridger-ds/react';
+import { Button, Card, CardTone, Badge, Input } from '@bridger-ds/react';
 ```
 
 Per-component subpath imports are reserved for tree-shaking-friendly usage:
@@ -54,11 +54,9 @@ If your bundler does not resolve package `@import` statements in CSS, import bot
 
 ## Component Categories
 
-Wave 4 will populate these source categories:
-
-- `core`
-- `forms`
-- `feedback`
-- `data`
-- `navigation`
-- `product`
+- `core` — Badge, Button, Card, FilterChip, Input, Panel/Surface, StatusPill, Tabs
+- `forms` — Checkbox, Combobox, FileUpload, RadioGroup, SegmentedControl, Select, Slider, Switch/ToggleSwitch, Textarea
+- `feedback` — Alert, Dialog, Drawer, EmptyState, Skeleton, Spinner, Toast, Tooltip
+- `data` — Avatar, CodeBlock, KeyValue, LogRow, Pagination, StatTile, Table, UsageMeter
+- `navigation` — Breadcrumb, CommandPalette, Menu, Sidebar, Stepper
+- `product` — BrandLogo, SectionCard, ToolCard

@@ -21,9 +21,9 @@ If the user invokes this skill without any other guidance, ask them what they wa
 - **`assets/`** — brand logos + favicon, Korean agency logos (KMA, MOLIT, BOK, Seoul, data.go.kr), Pretendard webfont.
 
 ## Non-negotiables (see readme for the full set)
-- **Dark is the default.** Light is parity only.
-- **One persimmon `#fb923c` action per screen.** Cobalt/lime/status hues are semantic only — never decoration.
+- **Light is the default** and the design lead; **dark is a full-parity alternate** (`:root[data-theme='dark']` / `.dark`), the console-native mode. Both are designed deliberately.
+- **One persimmon action per screen** (`#ec5e1f` light / hover `#d24e13` / highlight `#fb923c`). Cobalt/lime/status hues are semantic only — never decoration.
 - **Pretendard** for Korean + UI; **JetBrains Mono** for code/API/paths/IDs/timestamps. Tracking 0em (negative only on large display headings).
 - **Korean-first, terse, operational copy.** No emoji. Lucide line icons only.
-- **Quiet depth:** tonal surfaces + 1px borders, subtle shadows, restrained radii (6/12/16/full). No gradient blobs, no glow, no card-in-card.
+- **Quiet depth:** tonal surfaces + hairline 1px borders, no resting shadow (shadows only for genuinely floating layers), crisp restrained radii (3–4px controls/tags · 6px panels · 8–10px large surfaces · full pills). No gradient blobs, no glow, no card-in-card.
 - Build cinematic, detailed surfaces (Stripe / channel.io level of craft) — never generic AI-slop Tailwind.
