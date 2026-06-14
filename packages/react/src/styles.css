@@ -1,3 +1,371 @@
-@import '@bridger-ds/tokens/css';
+.dt-alert:hover {
+  filter: brightness(1.03);
+}
 
-/* Component CSS classes live in @bridger-ds/tokens base.css until Wave 4 adds component-specific styles. */
+.dt-alert:active {
+  transform: scale(var(--dt-press-scale));
+}
+
+.dt-alert-motion-subtle {
+  animation: dt-alert-enter var(--dt-motion-slow) both;
+}
+
+.dt-alert-motion-pulse {
+  animation: dt-alert-pulse 1.8s var(--dt-ease) infinite;
+}
+
+.dt-toast {
+  animation: dt-toast-enter 240ms var(--dt-ease) both;
+}
+
+.dt-spinner-svg {
+  animation: dt-spin 0.7s linear infinite;
+}
+
+.dt-skeleton {
+  animation: dt-skel 1.4s var(--dt-ease) infinite;
+}
+
+@keyframes dt-alert-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes dt-alert-pulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.08);
+  }
+}
+
+@keyframes dt-toast-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes dt-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dt-skel {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dt-alert-motion-subtle,
+  .dt-alert-motion-pulse,
+  .dt-toast,
+  .dt-spinner-svg,
+  .dt-skeleton {
+    animation: none;
+  }
+}
+
+.dt-product-shell {
+  --dt-product-paper: #cfecd8;
+  --dt-product-card: #edfff3;
+  --dt-product-card-strong: #f6fff9;
+  --dt-product-accent: #ec5e1f;
+  --dt-product-accent-strong: #d94f18;
+  --dt-product-ink: #15110c;
+  --dt-product-muted: #786f63;
+  --dt-product-line: #efcdbf;
+  min-height: 100vh;
+  color: var(--dt-product-accent);
+  font-family: var(--dt-font-sans);
+}
+
+.dt-product-shell-cinematic {
+  background: var(--dt-product-paper);
+}
+
+.dt-product-shell-console {
+  background: var(--dt-paper);
+  color: var(--dt-ink);
+}
+
+.dt-product-cinematic-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.dt-product-cinematic-wash {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 52%, color-mix(in srgb, var(--dt-product-accent) 16%, transparent), transparent 34%),
+    radial-gradient(circle at 74% 28%, color-mix(in srgb, var(--dt-product-card-strong) 68%, transparent), transparent 38%);
+}
+
+.dt-product-cinematic-dots {
+  position: absolute;
+  inset: 0;
+  opacity: 0.36;
+  background-image: radial-gradient(color-mix(in srgb, var(--dt-product-accent) 38%, transparent) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(circle at 50% 44%, #000 0 42%, transparent 74%);
+}
+
+.dt-product-cinematic-lines {
+  position: absolute;
+  inset: auto 0 16px;
+  width: 100%;
+  height: min(62vw, 620px);
+  opacity: 0.74;
+}
+
+.dt-product-cinematic-track,
+.dt-product-cinematic-flow {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.dt-product-cinematic-track {
+  stroke: color-mix(in srgb, var(--dt-product-accent) 18%, transparent);
+  stroke-width: 1;
+}
+
+.dt-product-cinematic-flow {
+  stroke: var(--dt-product-accent);
+  stroke-width: 1.8;
+  stroke-dasharray: 46 360;
+}
+
+.dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
+  animation: dt-product-cinematic-flow 7s linear infinite;
+}
+
+.dt-product-cinematic-flow-b {
+  animation-delay: -2.1s;
+}
+
+.dt-product-cinematic-flow-c {
+  animation-delay: -4.2s;
+}
+
+.dt-product-action-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--dt-product-line);
+  border-radius: var(--dt-radius-full);
+  color: var(--dt-product-accent);
+  font-weight: 850;
+  text-decoration: none;
+  transition:
+    transform var(--dt-motion),
+    border-color var(--dt-motion),
+    background-color var(--dt-motion),
+    color var(--dt-motion);
+}
+
+.dt-product-action-pill:hover {
+  transform: translateY(-1px);
+}
+
+.dt-product-action-pill:active {
+  transform: scale(var(--dt-press-scale));
+}
+
+.dt-product-action-pill-compact {
+  min-height: 36px;
+  padding-inline: 18px;
+  font-size: 12px;
+}
+
+.dt-product-action-pill-figma {
+  min-height: 65px;
+  padding-inline: 30px;
+  font-size: 15px;
+}
+
+.dt-product-action-pill-default {
+  background: color-mix(in srgb, #ffffff 54%, transparent);
+}
+
+.dt-product-action-pill-outline {
+  background: var(--dt-product-paper);
+  border-color: var(--dt-product-accent);
+}
+
+.dt-product-action-pill-accent {
+  background: var(--dt-product-accent);
+  border-color: var(--dt-product-accent);
+  color: #ffffff;
+}
+
+.dt-product-action-pill-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.dt-product-action-pill-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.dt-product-side-rail {
+  position: absolute;
+  left: clamp(18px, 4vw, 72px);
+  top: 245px;
+  z-index: 1;
+  display: grid;
+  gap: 8px;
+  width: 116px;
+}
+
+.dt-product-side-rail a {
+  color: var(--dt-product-accent);
+  font-size: 10px;
+  font-weight: 780;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.dt-product-page-header {
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-lg);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--dt-accent) 8%, transparent), transparent 48%),
+    var(--dt-surface);
+  box-shadow: var(--dt-ring), var(--dt-shadow-xs);
+  padding: 20px;
+}
+
+.dt-product-page-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.dt-product-page-header-copy {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+
+.dt-product-page-header-eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  border-radius: var(--dt-radius-full);
+  background: var(--dt-tint-accent);
+  padding: 4px 10px;
+  color: var(--dt-accent);
+  font-size: 11px;
+  font-weight: 750;
+}
+
+.dt-product-page-header-text {
+  display: grid;
+  gap: 8px;
+}
+
+.dt-product-page-header h1,
+.dt-product-page-header p {
+  margin: 0;
+}
+
+.dt-product-page-header h1 {
+  max-width: 64rem;
+  color: var(--dt-ink-strong);
+  font-size: 24px;
+  font-weight: 760;
+  line-height: 1.18;
+}
+
+.dt-product-page-header p {
+  max-width: 48rem;
+  color: var(--dt-muted-strong);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.dt-product-page-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.dt-product-page-header-content {
+  margin-top: 20px;
+}
+
+@keyframes dt-product-cinematic-flow {
+  to {
+    stroke-dashoffset: -406;
+  }
+}
+
+@media (min-width: 768px) {
+  .dt-product-page-header {
+    padding: 24px;
+  }
+
+  .dt-product-page-header-row {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 900px) {
+  .dt-product-cinematic-lines {
+    height: 680px;
+    opacity: 0.5;
+  }
+
+  .dt-product-side-rail {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .dt-product-action-pill-compact {
+    min-height: 34px;
+    padding-inline: 13px;
+    font-size: 11px;
+  }
+
+  .dt-product-action-pill-figma {
+    min-height: 56px;
+    padding-inline: 20px;
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
+    animation: none;
+  }
+
+  .dt-product-action-pill {
+    transition: none;
+  }
+}

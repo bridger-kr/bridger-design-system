@@ -2,7 +2,7 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render } from '@testing-library/react';
 
-import { Alert, Dialog, Drawer, Toast, Tooltip } from './index';
+import { Alert, Dialog, Drawer, Skeleton, Spinner, Toast, Tooltip } from './index';
 
 describe('feedback a11y', () => {
   it('Dialog links its title via aria-labelledby', () => {
@@ -56,12 +56,30 @@ describe('feedback a11y', () => {
     );
     const tip = container.querySelector('[role="tooltip"]');
     expect(tip).not.toBeNull();
+    expect((tip as HTMLElement | null)?.style.opacity).toBe('0');
+    expect((tip as HTMLElement | null)?.style.visibility).toBe('hidden');
     const tipId = tip?.getAttribute('id');
     expect(tipId).toBeTruthy();
     const trigger = container.querySelector('span') as HTMLElement;
     fireEvent.focus(trigger);
+    expect((tip as HTMLElement | null)?.style.opacity).toBe('1');
+    expect((tip as HTMLElement | null)?.style.visibility).toBe('visible');
     const described = container.querySelector(`[aria-describedby="${tipId}"]`);
     expect(described).not.toBeNull();
+  });
+
+  it('feedback motion classes render through package stylesheet hooks', () => {
+    const { container } = render(
+      <>
+        <Toast message="저장됨" />
+        <Spinner />
+        <Skeleton />
+      </>,
+    );
+
+    expect(container.querySelector('.dt-toast')).not.toBeNull();
+    expect(container.querySelector('.dt-spinner-svg')).not.toBeNull();
+    expect(container.querySelector('.dt-skeleton')).not.toBeNull();
   });
 
   it('Alert dismiss button has an accessible label and hidden icon', () => {

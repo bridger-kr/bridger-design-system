@@ -13,7 +13,7 @@ If the user invokes this skill without any other guidance, ask them what they wa
 ## Fast orientation
 - **`readme.md`** — the full design guide: product context, CONTENT FUNDAMENTALS, VISUAL FOUNDATIONS, ICONOGRAPHY, and the file index. Read this first.
 - **`styles.css`** — the single global CSS entrypoint. Link it and you get every token + the Pretendard webfont + the shared `.btn-*`/`.card`/`.badge`/`.dt-*` vocabulary.
-- **`tokens/`** — `colors.css`, `typography.css`, `spacing.css`, `fonts.css`, `base.css`. Canonical `--dt-*` tokens, ported from `bridger-web/packages/design-system/contract.css`.
+- **`tokens/`** — `colors.css`, `typography.css`, `spacing.css`, `fonts.css`, `base.css`. Canonical `--dt-*` tokens; package source lives in `packages/tokens/css/contract.css`.
 - **`components/`** — React primitives (Button, Badge, StatusPill, Card, Input, Tabs, BrandLogo, SectionCard, ToolCard) with `.d.ts` + `.prompt.md`.
 - **`ui_kits/console/`** — the Bridger portal console (dashboard, government-API catalog, execution logs). The core product surface.
 - **`ui_kits/landing/`** — the cinematic marketing site (hero, convergence, MCP/REST code block, catalog, examples).
@@ -21,7 +21,7 @@ If the user invokes this skill without any other guidance, ask them what they wa
 - **`assets/`** — brand logos + favicon, Korean agency logos (KMA, MOLIT, BOK, Seoul, data.go.kr), Pretendard webfont.
 
 ## Non-negotiables (see readme for the full set)
-- **Light is the default** and the design lead; **dark is a full-parity alternate** (`:root[data-theme='dark']` / `.dark`), the console-native mode. Both are designed deliberately.
+- **Dark is the default web runtime** and light is a full-parity alternate (`:root[data-theme='light']` / `.light`). Both are designed deliberately.
 - **One persimmon action per screen** (`#ec5e1f` light / hover `#d24e13` / highlight `#fb923c`). Cobalt/lime/status hues are semantic only — never decoration.
 - **Pretendard** for Korean + UI; **JetBrains Mono** for code/API/paths/IDs/timestamps. Tracking 0em (negative only on large display headings).
 - **Korean-first, terse, operational copy.** No emoji. Lucide line icons only.

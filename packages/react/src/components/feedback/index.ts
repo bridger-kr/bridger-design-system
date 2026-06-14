@@ -1,5 +1,6 @@
 export { Alert } from './Alert';
-export type { AlertProps } from './Alert';
+export { AlertMotion, AlertTone } from './Alert';
+export type { AlertMotion as AlertMotionValue, AlertProps, AlertTone as AlertToneValue } from './Alert';
 export { Dialog } from './Dialog';
 export type { DialogProps } from './Dialog';
 export { Drawer } from './Drawer';

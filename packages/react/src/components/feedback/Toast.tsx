@@ -11,14 +11,13 @@ export interface ToastProps {
   style?: CSSProperties;
 }
 
-/** Floating toast card with a status dot. Place in a fixed corner stack. */
 export function Toast({ tone = 'success', title, message, action, onDismiss, style }: ToastProps) {
   return (
-    <div role="status" style={{
+    <div role="status" className="dt-toast" style={{
       display: 'flex', alignItems: 'flex-start', gap: 11, width: 340, maxWidth: '90vw',
       padding: '13px 15px', background: 'var(--dt-surface)',
       borderRadius: 'var(--dt-radius-md)', boxShadow: 'var(--dt-shadow-lg)',
-      animation: 'dt-toast 240ms var(--dt-ease)', ...style,
+      ...style,
     }}>
       <span style={{ width: 8, height: 8, borderRadius: 9999, marginTop: 5, flex: '0 0 auto', background: DOT[tone] ?? DOT.success }} />
       <div style={{ flex: 1, minWidth: 0 }}>
@@ -31,7 +30,6 @@ export function Toast({ tone = 'success', title, message, action, onDismiss, sty
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
         </button>
       ) : null}
-      <style>{`@keyframes dt-toast{from{opacity:0;transform:translateY(10px)}}`}</style>
     </div>
   );
 }

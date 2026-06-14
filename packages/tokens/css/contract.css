@@ -1,0 +1,197 @@
+/* ============================================================
+   Bridger shared design contract (canonical token source)
+
+   Canonical source for shared --dt-* token definitions.
+   `npm run check:tokens` verifies app mirrors against this file.
+   The live landing and dashboard apps intentionally keep local
+   runtime mirrors at:
+
+     - landing/src/styles/tokens.css
+     - dashboard/src/styles/tokens.css
+
+   Do not import this file into those apps in the design-foundation
+   lane. Update the app-local mirrors when changing this contract.
+
+   Theme contract: dark is the default token set; light activates with
+   :root[data-theme='light']. Runtime theme state is stored in the
+   `datari-theme` localStorage key only after an explicit user choice.
+============================================================ */
+
+/*
+  Font delivery remains app-local in this lane.
+  Runtime mirrors in landing/dashboard own their @font-face src paths.
+*/
+
+:root {
+  color-scheme: dark;
+
+  --dt-paper: #0a0b0f;
+  --dt-surface: #111218;
+  --dt-surface-raised: #181a22;
+  --dt-surface-sunken: #07080b;
+
+  --dt-ink: #f5f4ee;
+  --dt-ink-strong: #ffffff;
+  --dt-muted: #9a9ba6;
+  --dt-muted-strong: #c3c4cd;
+
+  --dt-border: #23252e;
+  --dt-border-strong: #2f323d;
+
+  --dt-accent: #fb923c;
+  --dt-accent-strong: #fdba74;
+  --dt-accent-ink: #1a1206;
+
+  --dt-cobalt: #7aa2ff;
+  --dt-lime: #d8f24a;
+  --dt-accent-soft: color-mix(in srgb, var(--dt-accent) 14%, transparent);
+
+  --dt-success: #34d399;
+  --dt-warning: #fbbf24;
+  --dt-danger: #f87171;
+  --dt-info: var(--dt-cobalt);
+  --dt-status-cobalt: #2f6bff;
+  --dt-status-success: #00b04e;
+  --dt-status-warning: #ffa71a;
+  --dt-status-danger: #dc3a34;
+  --dt-alert-ink: #ecfff2;
+
+  --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 14%, transparent);
+  --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 14%, transparent);
+  --dt-tint-success: color-mix(in srgb, var(--dt-success) 16%, transparent);
+  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 16%, transparent);
+  --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 16%, transparent);
+  --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 6%, transparent);
+
+  --dt-space-1: 4px;
+  --dt-space-2: 8px;
+  --dt-space-3: 16px;
+  --dt-space-4: 24px;
+  --dt-space-5: 40px;
+  --dt-space-6: 64px;
+  --dt-space-7: 96px;
+  --dt-space-8: 128px;
+
+  --dt-radius-sm: 6px;
+  --dt-radius-md: 12px;
+  --dt-radius-lg: 16px;
+  --dt-radius-button: 18px;
+  --dt-radius-xl: 24px;
+  --dt-radius-full: 9999px;
+
+  --dt-shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.5),
+                      0 0 0 1px rgba(255, 255, 255, 0.02);
+  --dt-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.55),
+                        0 0 0 1px rgba(255, 255, 255, 0.03);
+  --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-shadow-glow: 0 0 0 1px color-mix(in srgb, var(--dt-accent) 30%, transparent),
+                    0 8px 24px color-mix(in srgb, var(--dt-accent) 14%, transparent);
+
+  --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
+  --dt-motion-fast: 120ms var(--dt-ease);
+  --dt-motion-base: 160ms var(--dt-ease);
+  --dt-motion: 200ms var(--dt-ease);
+  --dt-motion-slow: 280ms var(--dt-ease);
+  --dt-press-scale: 0.97;
+
+  --dt-glass-bg: color-mix(in srgb, var(--dt-paper) 72%, transparent);
+  --dt-glass-blur: saturate(180%) blur(16px);
+
+  --dt-font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --dt-font-mono: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace;
+
+  --dt-h1-size: clamp(40px, 6vw, 72px);
+  --dt-h1-leading: 1.08;
+  --dt-h1-tracking: 0;
+  --dt-h1-weight: 700;
+
+  --dt-h2-size: clamp(28px, 3.5vw, 40px);
+  --dt-h2-leading: 1.15;
+  --dt-h2-tracking: 0;
+  --dt-h2-weight: 700;
+
+  --dt-h3-size: 18px;
+  --dt-h3-leading: 1.3;
+  --dt-h3-tracking: 0;
+  --dt-h3-weight: 600;
+
+  --dt-body-size: 16px;
+  --dt-body-leading: 1.6;
+  --dt-body-weight: 400;
+
+  --dt-small-size: 13px;
+  --dt-small-leading: 1.55;
+
+  --dt-eyebrow-size: 11px;
+  --dt-eyebrow-tracking: 0.18em;
+  --dt-eyebrow-weight: 700;
+
+  --dt-mono-size: 13px;
+  --dt-mono-leading: 1.55;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --dt-paper: #cfecd8;
+  --dt-surface: #ecfff2;
+  --dt-surface-raised: #ffffff;
+  --dt-surface-sunken: #f4f3ef;
+
+  --dt-ink: #0c0b08;
+  --dt-ink-strong: #0c0b08;
+  --dt-muted: #79766e;
+  --dt-muted-strong: #423f38;
+
+  --dt-border: #eed5cb;
+  --dt-border-strong: #ddd9cf;
+
+  --dt-accent: #ec5e1f;
+  --dt-accent-strong: #d94f18;
+  --dt-accent-ink: #ffffff;
+
+  --dt-cobalt: #256b5a;
+  --dt-lime: #dce95b;
+  --dt-accent-soft: color-mix(in srgb, var(--dt-accent) 14%, transparent);
+
+  --dt-success: #16a34a;
+  --dt-warning: #d97706;
+  --dt-danger: #dc2626;
+  --dt-info: var(--dt-cobalt);
+  --dt-status-cobalt: #2f6bff;
+  --dt-status-success: #00b04e;
+  --dt-status-warning: #ffa71a;
+  --dt-status-danger: #dc3a34;
+  --dt-alert-ink: #ecfff2;
+
+  --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 12%, transparent);
+  --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 10%, transparent);
+  --dt-tint-success: color-mix(in srgb, var(--dt-success) 12%, transparent);
+  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 14%, transparent);
+  --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 12%, transparent);
+  --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 5%, transparent);
+
+  --dt-shadow-subtle: 0 1px 2px rgba(24, 22, 18, 0.07),
+                      0 0 0 1px rgba(24, 22, 18, 0.03);
+  --dt-shadow-elevated: 0 8px 24px rgba(24, 22, 18, 0.10),
+                        0 0 0 1px rgba(24, 22, 18, 0.04);
+  --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-shadow-glow: 0 0 0 1px color-mix(in srgb, var(--dt-accent) 28%, transparent),
+                    0 8px 24px color-mix(in srgb, var(--dt-accent) 12%, transparent);
+
+  --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
+  --dt-motion-base: 160ms var(--dt-ease);
+  --dt-press-scale: 0.97;
+
+  --dt-glass-bg: color-mix(in srgb, var(--dt-paper) 78%, transparent);
+}
+
+/*
+  Primitive class-name contract downstream surfaces can mirror locally:
+  .dt-shell, .dt-section, .dt-eyebrow,
+  .badge, .badge-accent, .badge-info, .badge-success, .badge-warning,
+  .card, .card-muted, .card-raised, .glass-card,
+  .btn-primary, .btn-secondary, .btn-ghost.
+*/

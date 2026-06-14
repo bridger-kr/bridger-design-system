@@ -40,6 +40,11 @@
   --dt-warning:         #c9820f;
   --dt-danger:          #dc3a34;
   --dt-info:            var(--dt-cobalt);
+  --dt-status-cobalt:   #2f6bff;
+  --dt-status-success:  #00b04e;
+  --dt-status-warning:  #ffa71a;
+  --dt-status-danger:   #dc3a34;
+  --dt-alert-ink:       #ecfff2;
 
   /* ── Tints ── */
   --dt-tint-accent:  color-mix(in srgb, var(--dt-accent)  10%, transparent);
@@ -89,6 +94,11 @@
   --dt-warning:         #fbbf24;
   --dt-danger:          #f87171;
   --dt-info:            var(--dt-cobalt);
+  --dt-status-cobalt:   #2f6bff;
+  --dt-status-success:  #00b04e;
+  --dt-status-warning:  #ffa71a;
+  --dt-status-danger:   #dc3a34;
+  --dt-alert-ink:       #ecfff2;
 
   --dt-tint-accent:  color-mix(in srgb, var(--dt-accent)  16%, transparent);
   --dt-tint-cobalt:  color-mix(in srgb, var(--dt-cobalt)  16%, transparent);

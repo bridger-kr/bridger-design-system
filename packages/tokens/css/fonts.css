@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 /* ============================================================
    Bridger — Fonts
    Pretendard Variable is shipped locally (Korean + product UI).
@@ -11,6 +13,3 @@
   font-display: swap;
   src: url('../assets/fonts/PretendardVariable.woff2') format('woff2-variations');
 }
-
-/* Monospace: JetBrains Mono (code, API paths, request IDs, timestamps). */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
