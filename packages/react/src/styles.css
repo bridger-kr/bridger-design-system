@@ -138,7 +138,7 @@
   --dt-product-accent-strong: #ec5e1f;
   --dt-product-ink: #15110c;
   --dt-product-muted: #786f63;
-  --dt-product-line: color-mix(in srgb, var(--dt-product-ink) 12%, var(--dt-product-paper));
+  --dt-product-line: transparent;
   min-height: 100vh;
   color: var(--dt-product-accent);
   font-family: var(--dt-font-sans);
@@ -164,17 +164,16 @@
 .dt-product-cinematic-wash {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 74% 28%, color-mix(in srgb, var(--dt-product-card-strong) 56%, transparent), transparent 38%),
-    linear-gradient(180deg, color-mix(in srgb, #ffffff 16%, transparent), transparent 58%);
+  background: linear-gradient(180deg, color-mix(in srgb, #ffffff 10%, transparent), transparent 58%);
 }
 
 .dt-product-cinematic-lines {
   position: absolute;
   inset: auto 0 16px;
+  display: none;
   width: 100%;
   height: min(62vw, 620px);
-  opacity: 0.74;
+  opacity: 0;
 }
 
 .dt-product-cinematic-track,
@@ -184,8 +183,8 @@
 }
 
 .dt-product-cinematic-track {
-  stroke: color-mix(in srgb, var(--dt-product-accent) 18%, transparent);
-  stroke-width: 1;
+  stroke: transparent;
+  stroke-width: 0;
 }
 
 .dt-product-cinematic-flow {
@@ -214,7 +213,7 @@
   border: none;
   border-radius: 18px;
   color: var(--dt-product-accent);
-  font-weight: 560;
+  font-weight: 500;
   text-decoration: none;
   transition:
     transform var(--dt-motion),
@@ -232,8 +231,8 @@
 }
 
 .dt-product-action-pill-compact {
-  min-height: 36px;
-  padding-inline: 18px;
+  min-height: 40px;
+  padding-inline: 20px;
   border-radius: 18px;
   font-size: 12px;
 }
@@ -283,7 +282,7 @@
 .dt-product-side-rail a {
   color: var(--dt-product-accent);
   font-size: 10px;
-  font-weight: 560;
+  font-weight: 500;
   line-height: 1.2;
   text-decoration: none;
 }
@@ -342,7 +341,8 @@
   position: absolute;
   width: 68%;
   height: 1px;
-  background: color-mix(in srgb, var(--dt-product-accent) 46%, transparent);
+  background: var(--dt-product-accent);
+  opacity: 0.46;
 }
 
 .dt-product-motion-copy {
@@ -355,7 +355,7 @@
   background: var(--dt-product-accent);
   color: #ffffff;
   font-size: 13px;
-  font-weight: 560;
+  font-weight: 500;
   letter-spacing: 0;
 }
 
