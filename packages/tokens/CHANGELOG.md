@@ -1,5 +1,11 @@
 # @bridger-kr/tokens
 
+## 0.1.2
+
+### Patch Changes
+
+- [#19](https://github.com/bridger-kr/bridger-design-system/pull/19) [`86f7d42`](https://github.com/bridger-kr/bridger-design-system/commit/86f7d42eddf083d1f5b39f98ea270d35eeaa6509) Thanks [@happycastle114](https://github.com/happycastle114)! - Remove the external Google Fonts import from the token font stylesheet so apps can keep CSP font and style policies self-hosted.
+
 ## 0.1.1
 
 ### Patch Changes
