@@ -41,9 +41,18 @@ jobs:
             echo "::error::NPM_TOKEN is not configured for this repository. Add the repository secret or make the Bridger organization secret available before running the release workflow."
             exit 1
           fi
-          printf "//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n" > ~/.npmrc
+          npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
+          mkdir -p "$(dirname "$npmrc")"
+          printf "//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n" > "$npmrc"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Verify npm authentication
+        run: npm whoami
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create version PR or publish packages
         uses: changesets/action@v1
@@ -54,3 +63,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
