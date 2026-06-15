@@ -38,7 +38,7 @@ importers:
   packages/react:
     dependencies:
       '@bridger-ds/tokens':
-        specifier: workspace:*
+        specifier: file:../tokens
         version: link:../tokens
     devDependencies:
       '@testing-library/react':

@@ -35,7 +35,7 @@
     "react-dom": ">=18"
   },
   "dependencies": {
-    "@bridger-ds/tokens": "workspace:*"
+    "@bridger-ds/tokens": "file:../tokens"
   },
   "devDependencies": {
     "react": "^19.2.7",
