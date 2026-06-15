@@ -3,6 +3,8 @@ import { createRef } from 'react';
 import { render, screen, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import {
+  ActionList,
+  ActionListIndex,
   BRAND_LOGO_LANGUAGE,
   PRODUCT_ACTION_PILL_VARIANT,
   PRODUCT_SHELL_TONE,
@@ -15,6 +17,8 @@ import {
   ProductSideRail,
   SectionCard,
   ToolCard,
+  actionListClassName,
+  actionListItemClassName,
   productActionPillClassName,
 } from './index';
 import type { BrandLogoHandle } from './index';
@@ -62,6 +66,21 @@ describe('Product components', () => {
   });
 
   describe('Product composition primitives', () => {
+    it('exports the console action-list contract for guide-first flows', () => {
+      render(
+        <ActionList aria-label="시작 경로">
+          <a href="/register" className={actionListItemClassName({ interactive: true })}>
+            <ActionListIndex>1</ActionListIndex>
+            API 등록
+          </a>
+        </ActionList>,
+      );
+
+      expect(screen.getByLabelText('시작 경로').className).toBe(actionListClassName());
+      expect(screen.getByRole('link', { name: /API 등록/ }).className).toContain('dt-action-list-item-interactive');
+      expect(screen.getByText('1').className).toBe('dt-action-list-index');
+    });
+
     it('renders Figma navigation item variants through the action pill contract', () => {
       render(
         <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent}>
