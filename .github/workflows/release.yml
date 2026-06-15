@@ -73,7 +73,7 @@ jobs:
           )
 
           for package_name in "${packages[@]}"; do
-            npm access public "$package_name"
+            npm access set status=public "$package_name"
             npm view "$package_name" version --registry=https://registry.npmjs.org/
           done
         env:
