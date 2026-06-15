@@ -1,4 +1,4 @@
-# @bridger-ds/tokens
+# @bridger-kr/tokens
 
 ## 0.1.0
 

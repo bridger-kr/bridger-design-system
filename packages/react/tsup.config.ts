@@ -5,7 +5,7 @@ import { libConfig } from '../../tsup.base';
  * Entry points:
  *  - src/index.ts: the package barrel (re-exports every category).
  *  - src/components/<category>/<Name>.tsx: one entry per component so consumers
- *    can deep-import `@bridger-ds/react/components/<category>/<Name>` and bundlers
+ *    can deep-import `@bridger-kr/react/components/<category>/<Name>` and bundlers
  *    can tree-shake at the file level.
  *
  * Wave-4 migrations only drop .tsx files into the category folders; this glob

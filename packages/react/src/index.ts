@@ -1,5 +1,5 @@
 /**
- * @bridger-ds/react — public barrel.
+ * @bridger-kr/react — public barrel.
  *
  * Components are re-exported here per category. Each category barrel lives at
  * `src/components/<category>/index.ts` and re-exports its own components, so

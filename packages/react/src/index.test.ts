@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import * as api from './index';
 
-describe('@bridger-ds/react package barrel', () => {
+describe('@bridger-kr/react package barrel', () => {
   it('loads without side-effect errors', () => {
     expect(api).toBeTypeOf('object');
   });

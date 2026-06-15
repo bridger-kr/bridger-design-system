@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { createRef } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import {
   BRAND_LOGO_LANGUAGE,
@@ -106,8 +106,9 @@ describe('Product components', () => {
         />,
       );
 
-      expect(screen.getByRole('heading', { name: '연결 설정' })).toBeTruthy();
-      expect(screen.getByText('API')).toBeTruthy();
+      const header = screen.getByRole('banner');
+      expect(within(header).getByRole('heading', { name: '연결 설정' })).toBeTruthy();
+      expect(within(header).getByText('API')).toBeTruthy();
       expect(screen.getByRole('button', { name: '저장' })).toBeTruthy();
     });
   });

@@ -1,4 +1,4 @@
-# @bridger-ds/react
+# @bridger-kr/react
 
 ## 0.1.0
 
@@ -13,4 +13,4 @@
 - Move the Bridger web Figma token contract into the published token package and align React feedback components with the Figma Alert contract.
 
 - Updated dependencies [[`f2d58a0`](https://github.com/bridger-kr/bridger-design-system/commit/f2d58a001cb0352008ed4d214a93c787dae602d8)]:
-  - @bridger-ds/tokens@0.1.0
+  - @bridger-kr/tokens@0.1.0

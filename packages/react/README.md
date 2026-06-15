@@ -1,4 +1,4 @@
-# @bridger-ds/react
+# @bridger-kr/react
 
 React component library for the Bridger Design System.
 
@@ -7,12 +7,12 @@ Exports 40 components across six categories (core, forms, feedback, data, naviga
 ## Install
 
 ```sh
-pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
+pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 ```
 
 ## Peer Dependencies
 
-`@bridger-ds/react` expects React, React DOM 18 or newer, and `@bridger-ds/tokens`:
+`@bridger-kr/react` expects React, React DOM 18 or newer, and `@bridger-kr/tokens`:
 
 ```json
 {
@@ -26,13 +26,13 @@ pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
 Components are exported from the package root by category:
 
 ```tsx
-import { Button, Card, CardTone, Badge, Input } from '@bridger-ds/react';
+import { Button, Card, CardTone, Badge, Input } from '@bridger-kr/react';
 ```
 
 Per-component subpath imports are reserved for tree-shaking-friendly usage:
 
 ```tsx
-import { Button } from '@bridger-ds/react/components/core/Button';
+import { Button } from '@bridger-kr/react/components/core/Button';
 ```
 
 ## CSS Setup
@@ -40,17 +40,17 @@ import { Button } from '@bridger-ds/react/components/core/Button';
 Import the token contract once before React component styles:
 
 ```ts
-import '@bridger-ds/tokens/css';
-import '@bridger-ds/react/styles.css';
+import '@bridger-kr/tokens/css';
+import '@bridger-kr/react/styles.css';
 ```
 
-The React stylesheet currently imports `@bridger-ds/tokens/css` too, so bundlers that preserve package CSS imports can load a single stylesheet:
+The React stylesheet currently imports `@bridger-kr/tokens/css` too, so bundlers that preserve package CSS imports can load a single stylesheet:
 
 ```ts
-import '@bridger-ds/react/styles.css';
+import '@bridger-kr/react/styles.css';
 ```
 
-If your bundler does not resolve package `@import` statements in CSS, import both `@bridger-ds/tokens/css` and `@bridger-ds/react/styles.css` in that order.
+If your bundler does not resolve package `@import` statements in CSS, import both `@bridger-kr/tokens/css` and `@bridger-kr/react/styles.css` in that order.
 
 ## Component Categories
 
