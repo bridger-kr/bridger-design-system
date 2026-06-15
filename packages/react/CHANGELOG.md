@@ -1,5 +1,12 @@
 # @bridger-kr/react
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [[`0e19cb4`](https://github.com/bridger-kr/bridger-design-system/commit/0e19cb480a379a3ff79bd5fcb842041518cc9b2f)]:
+  - @bridger-kr/tokens@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
