@@ -1,7 +1,7 @@
 /* ============================================================
    Bridger — Fonts
    Pretendard Variable is shipped locally (Korean + product UI).
-   JetBrains Mono is loaded from CDN for code / API values.
+   Mono UI falls back to the platform monospace stack.
 ============================================================ */
 
 @font-face {
@@ -11,6 +11,3 @@
   font-display: swap;
   src: url('../assets/fonts/PretendardVariable.woff2') format('woff2-variations');
 }
-
-/* Monospace: JetBrains Mono (code, API paths, request IDs, timestamps). */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
