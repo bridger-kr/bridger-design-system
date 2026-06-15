@@ -1,5 +1,11 @@
 # @bridger-kr/react
 
+## 0.1.2
+
+### Patch Changes
+
+- [#13](https://github.com/bridger-kr/bridger-design-system/pull/13) [`9ae6aa5`](https://github.com/bridger-kr/bridger-design-system/commit/9ae6aa5ea29153b148dae99f549f901099e4745d) Thanks [@happycastle114](https://github.com/happycastle114)! - Reduce the cinematic product backdrop wash so landing pages no longer render an orange glow behind the fixed question dock and motion field.
+
 ## 0.1.1
 
 ### Patch Changes
