@@ -1,5 +1,11 @@
 # @bridger-kr/react
 
+## 0.1.4
+
+### Patch Changes
+
+- [#17](https://github.com/bridger-kr/bridger-design-system/pull/17) [`e6f121b`](https://github.com/bridger-kr/bridger-design-system/commit/e6f121b8fc06a21455401dfe0f89fe0c752398bd) Thanks [@happycastle114](https://github.com/happycastle114)! - Add the ActionList product primitive for guide-first console workflows.
+
 ## 0.1.3
 
 ### Patch Changes
