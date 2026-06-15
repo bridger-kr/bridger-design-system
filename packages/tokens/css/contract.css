@@ -52,7 +52,7 @@
   --dt-info: var(--dt-cobalt);
   --dt-status-cobalt: #2f6bff;
   --dt-status-success: #00b04e;
-  --dt-status-warning: #ffa71a;
+  --dt-status-warning: #ec5e1f;
   --dt-status-danger: #dc3a34;
   --dt-alert-ink: #ecfff2;
 
@@ -158,7 +158,7 @@
   --dt-info: var(--dt-cobalt);
   --dt-status-cobalt: #2f6bff;
   --dt-status-success: #00b04e;
-  --dt-status-warning: #ffa71a;
+  --dt-status-warning: #ec5e1f;
   --dt-status-danger: #dc3a34;
   --dt-alert-ink: #ecfff2;
 

@@ -9,9 +9,11 @@ describe('@bridger-kr/tokens', () => {
     expect(colors.light.accent).toBe('#ec5e1f');
     expect(colors.light.accentStrong).toBe('#ec5e1f');
     expect(colors.light.statusCobalt).toBe('#2f6bff');
+    expect(colors.light.statusWarning).toBe('#ec5e1f');
     expect(colors.light.alertInk).toBe('#ecfff2');
     expect(colors.dark.accent).toBe('#ec5e1f');
     expect(colors.dark.accentStrong).toBe('#ec5e1f');
+    expect(colors.dark.statusWarning).toBe('#ec5e1f');
   });
 
   it('preserves literal token types', () => {
@@ -19,8 +21,10 @@ describe('@bridger-kr/tokens', () => {
     expectTypeOf(colors.light.surface).toEqualTypeOf<'#ecfff2'>();
     expectTypeOf(colors.light.accent).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(colors.light.accentStrong).toEqualTypeOf<'#ec5e1f'>();
+    expectTypeOf(colors.light.statusWarning).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(colors.light.statusDanger).toEqualTypeOf<'#dc3a34'>();
     expectTypeOf(colors.dark.accent).toEqualTypeOf<'#ec5e1f'>();
+    expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(radius.lg).toEqualTypeOf<'40px'>();
     expectTypeOf(radius.xl).toEqualTypeOf<'40px'>();
     expectTypeOf(typography.fontFamilies.sans).toEqualTypeOf<
