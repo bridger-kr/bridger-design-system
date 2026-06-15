@@ -18,9 +18,11 @@ export {
 export {
   PRODUCT_SHELL_TONE,
   ProductCinematicBackdrop,
+  ProductMotionField,
   ProductShell,
   ProductSideRail,
   type ProductCinematicBackdropProps,
+  type ProductMotionFieldProps,
   type ProductShellProps,
   type ProductShellTone,
   type ProductSideRailItem,

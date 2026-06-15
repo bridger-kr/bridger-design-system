@@ -38,8 +38,8 @@
   --dt-border: #23252e;
   --dt-border-strong: #2f323d;
 
-  --dt-accent: #fb923c;
-  --dt-accent-strong: #fdba74;
+  --dt-accent: #ec5e1f;
+  --dt-accent-strong: #ec5e1f;
   --dt-accent-ink: #1a1206;
 
   --dt-cobalt: #7aa2ff;
@@ -74,9 +74,9 @@
 
   --dt-radius-sm: 6px;
   --dt-radius-md: 12px;
-  --dt-radius-lg: 16px;
+  --dt-radius-lg: 40px;
   --dt-radius-button: 18px;
-  --dt-radius-xl: 24px;
+  --dt-radius-xl: 40px;
   --dt-radius-full: 9999px;
 
   --dt-shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.5),
@@ -84,10 +84,7 @@
   --dt-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.55),
                         0 0 0 1px rgba(255, 255, 255, 0.03);
   --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
-  --dt-shadow-glow: 0 0 0 1px color-mix(in srgb, var(--dt-accent) 30%, transparent),
-                    0 8px 24px color-mix(in srgb, var(--dt-accent) 14%, transparent);
-
-  --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
   --dt-motion-fast: 120ms var(--dt-ease);
   --dt-motion-base: 160ms var(--dt-ease);
@@ -104,12 +101,12 @@
   --dt-h1-size: clamp(40px, 6vw, 72px);
   --dt-h1-leading: 1.08;
   --dt-h1-tracking: 0;
-  --dt-h1-weight: 700;
+  --dt-h1-weight: 560;
 
   --dt-h2-size: clamp(28px, 3.5vw, 40px);
   --dt-h2-leading: 1.15;
   --dt-h2-tracking: 0;
-  --dt-h2-weight: 700;
+  --dt-h2-weight: 540;
 
   --dt-h3-size: 18px;
   --dt-h3-leading: 1.3;
@@ -144,11 +141,11 @@
   --dt-muted: #79766e;
   --dt-muted-strong: #423f38;
 
-  --dt-border: #eed5cb;
+  --dt-border: #d8d5ca;
   --dt-border-strong: #ddd9cf;
 
   --dt-accent: #ec5e1f;
-  --dt-accent-strong: #d94f18;
+  --dt-accent-strong: #ec5e1f;
   --dt-accent-ink: #ffffff;
 
   --dt-cobalt: #256b5a;
@@ -177,10 +174,7 @@
   --dt-shadow-elevated: 0 8px 24px rgba(24, 22, 18, 0.10),
                         0 0 0 1px rgba(24, 22, 18, 0.04);
   --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
-  --dt-shadow-glow: 0 0 0 1px color-mix(in srgb, var(--dt-accent) 28%, transparent),
-                    0 8px 24px color-mix(in srgb, var(--dt-accent) 12%, transparent);
-
-  --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
   --dt-motion-base: 160ms var(--dt-ease);
   --dt-press-scale: 0.97;

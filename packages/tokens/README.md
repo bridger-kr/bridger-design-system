@@ -36,7 +36,7 @@ import '@bridger-ds/tokens/css/base';
 import { colors, spacing, radius, shadows, typography, cssVarName } from '@bridger-ds/tokens';
 
 colors.light.accent; // '#ec5e1f'
-colors.dark.accent; // '#fb923c'
+colors.dark.accent; // '#ec5e1f'
 spacing[4]; // '24px'
 cssVarName.colors.accent; // '--dt-accent'
 ```

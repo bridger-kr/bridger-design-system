@@ -9,6 +9,7 @@ import {
   BrandLogo,
   ProductActionPill,
   ProductCinematicBackdrop,
+  ProductMotionField,
   ProductPageHeader,
   ProductShell,
   ProductSideRail,
@@ -80,12 +81,17 @@ describe('Product components', () => {
       const { container } = render(
         <ProductShell tone={PRODUCT_SHELL_TONE.Cinematic}>
           <ProductCinematicBackdrop />
+          <ProductMotionField gridSrc="/grid.svg" />
           <ProductSideRail label="Sections" items={[{ key: 'features', href: '#features', label: 'Features' }]} />
         </ProductShell>,
       );
 
       expect(container.querySelector('.dt-product-shell-cinematic')).toBeTruthy();
       expect(container.querySelector('.dt-product-cinematic-lines')).toBeTruthy();
+      expect(container.querySelector('.dt-product-motion-field')).toBeTruthy();
+      expect(container.querySelector('.dt-product-motion-grid')?.getAttribute('src')).toBe('/grid.svg');
+      expect(container.querySelector('.dt-product-motion-orbit')).toBeTruthy();
+      expect(container.querySelector('.dt-product-motion-node')).toBeTruthy();
       expect(screen.getByRole('complementary', { name: 'Sections' })).toBeTruthy();
       expect(screen.getByRole('link', { name: 'Features' }).getAttribute('href')).toBe('#features');
     });

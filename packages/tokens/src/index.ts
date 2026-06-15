@@ -11,12 +11,12 @@ const lightColors = freeze({
   inkStrong: '#0c0b08',
   muted: '#79766e',
   mutedStrong: '#423f38',
-  border: '#eed5cb',
+  border: '#d8d5ca',
   borderStrong: '#ddd9cf',
   divider: 'color-mix(in srgb, var(--dt-border) 50%, transparent)',
   accent: '#ec5e1f',
-  accentStrong: '#d94f18',
-  accentBright: '#fb923c',
+  accentStrong: '#ec5e1f',
+  accentBright: '#ec5e1f',
   accentInk: '#ffffff',
   accentSoft: 'color-mix(in srgb, var(--dt-accent) 10%, transparent)',
   cobalt: '#256b5a',
@@ -39,7 +39,7 @@ const lightColors = freeze({
   codeBg: '#14161d',
   codeInk: '#e8e6df',
   codeBorder: '#262a35',
-  brandGradient: 'linear-gradient(120deg, #fb923c 0%, #ec5e1f 100%)',
+  brandGradient: 'linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%)',
 } as const);
 
 const darkColors = freeze({
@@ -55,9 +55,9 @@ const darkColors = freeze({
   border: '#23252e',
   borderStrong: '#31343f',
   divider: 'color-mix(in srgb, var(--dt-border) 55%, transparent)',
-  accent: '#fb923c',
-  accentStrong: '#fdba74',
-  accentBright: '#fb923c',
+  accent: '#ec5e1f',
+  accentStrong: '#ec5e1f',
+  accentBright: '#ec5e1f',
   accentInk: '#1a1206',
   accentSoft: 'color-mix(in srgb, var(--dt-accent) 14%, transparent)',
   cobalt: '#7aa2ff',
@@ -101,8 +101,8 @@ export const spacing = freeze({
 export const radius = freeze({
   sm: '6px',
   md: '12px',
-  lg: '16px',
-  xl: '24px',
+  lg: '40px',
+  xl: '40px',
   'button': '18px',
   full: '9999px',
 } as const);
@@ -152,8 +152,8 @@ const fontSizes = freeze({
 } as const);
 
 const fontWeights = freeze({
-  h1: 700,
-  h2: 700,
+  h1: 560,
+  h2: 540,
   h3: 600,
   body: 400,
 } as const);

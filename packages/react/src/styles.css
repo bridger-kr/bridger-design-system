@@ -85,10 +85,10 @@
   --dt-product-card: #edfff3;
   --dt-product-card-strong: #f6fff9;
   --dt-product-accent: #ec5e1f;
-  --dt-product-accent-strong: #d94f18;
+  --dt-product-accent-strong: #ec5e1f;
   --dt-product-ink: #15110c;
   --dt-product-muted: #786f63;
-  --dt-product-line: #efcdbf;
+  --dt-product-line: color-mix(in srgb, var(--dt-product-ink) 12%, var(--dt-product-paper));
   min-height: 100vh;
   color: var(--dt-product-accent);
   font-family: var(--dt-font-sans);
@@ -117,15 +117,6 @@
   background:
     radial-gradient(circle at 50% 52%, color-mix(in srgb, var(--dt-product-accent) 16%, transparent), transparent 34%),
     radial-gradient(circle at 74% 28%, color-mix(in srgb, var(--dt-product-card-strong) 68%, transparent), transparent 38%);
-}
-
-.dt-product-cinematic-dots {
-  position: absolute;
-  inset: 0;
-  opacity: 0.36;
-  background-image: radial-gradient(color-mix(in srgb, var(--dt-product-accent) 38%, transparent) 1px, transparent 1px);
-  background-size: 22px 22px;
-  mask-image: radial-gradient(circle at 50% 44%, #000 0 42%, transparent 74%);
 }
 
 .dt-product-cinematic-lines {
@@ -170,10 +161,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid var(--dt-product-line);
-  border-radius: var(--dt-radius-full);
+  border: none;
+  border-radius: 18px;
   color: var(--dt-product-accent);
-  font-weight: 850;
+  font-weight: 560;
   text-decoration: none;
   transition:
     transform var(--dt-motion),
@@ -193,27 +184,27 @@
 .dt-product-action-pill-compact {
   min-height: 36px;
   padding-inline: 18px;
+  border-radius: 18px;
   font-size: 12px;
 }
 
 .dt-product-action-pill-figma {
-  min-height: 65px;
-  padding-inline: 30px;
+  min-height: 72px;
+  padding-inline: 34px;
+  border-radius: 18px;
   font-size: 15px;
 }
 
 .dt-product-action-pill-default {
-  background: color-mix(in srgb, #ffffff 54%, transparent);
+  background: color-mix(in srgb, #ffffff 54%, var(--dt-product-paper));
 }
 
 .dt-product-action-pill-outline {
-  background: var(--dt-product-paper);
-  border-color: var(--dt-product-accent);
+  background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
 }
 
 .dt-product-action-pill-accent {
   background: var(--dt-product-accent);
-  border-color: var(--dt-product-accent);
   color: #ffffff;
 }
 
@@ -230,9 +221,9 @@
 }
 
 .dt-product-side-rail {
-  position: absolute;
+  position: fixed;
   left: clamp(18px, 4vw, 72px);
-  top: 245px;
+  top: 120px;
   z-index: 1;
   display: grid;
   gap: 8px;
@@ -242,9 +233,88 @@
 .dt-product-side-rail a {
   color: var(--dt-product-accent);
   font-size: 10px;
-  font-weight: 780;
+  font-weight: 560;
   line-height: 1.2;
   text-decoration: none;
+}
+
+.dt-product-motion-field {
+  position: absolute;
+  right: clamp(64px, 16vw, 260px);
+  top: clamp(310px, 39vw, 470px);
+  z-index: 1;
+  display: grid;
+  width: clamp(180px, 19vw, 280px);
+  aspect-ratio: 1;
+  place-items: center;
+  color: var(--dt-product-accent);
+  isolation: isolate;
+  pointer-events: none;
+}
+
+.dt-product-motion-grid {
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  width: 136%;
+  height: 136%;
+  object-fit: contain;
+  opacity: 0.32;
+  mix-blend-mode: multiply;
+  animation: dt-product-motion-grid 11s ease-in-out infinite alternate;
+}
+
+.dt-product-motion-orbit {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid color-mix(in srgb, var(--dt-product-ink) 18%, transparent);
+  border-radius: 40px;
+  transform: rotate(18deg);
+}
+
+.dt-product-motion-orbit-b {
+  inset: 25%;
+  transform: rotate(-24deg);
+}
+
+.dt-product-motion-node {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 18px;
+  background: var(--dt-product-accent);
+  transform: translateX(-50%);
+}
+
+.dt-product-motion-axis {
+  position: absolute;
+  width: 68%;
+  height: 1px;
+  background: color-mix(in srgb, var(--dt-product-accent) 46%, transparent);
+}
+
+.dt-product-motion-copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 66px;
+  height: 46px;
+  border-radius: 18px;
+  background: var(--dt-product-accent);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 560;
+  letter-spacing: 0;
+}
+
+.dt-product-motion-field .dt-product-motion-orbit-a {
+  animation: dt-product-motion-orbit 9s linear infinite;
+}
+
+.dt-product-motion-field .dt-product-motion-orbit-b {
+  animation: dt-product-motion-orbit 12s linear infinite reverse;
 }
 
 .dt-product-page-header {
@@ -323,6 +393,18 @@
   }
 }
 
+@keyframes dt-product-motion-orbit {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes dt-product-motion-grid {
+  to {
+    transform: translate3d(2%, -2%, 0) scale(1.04);
+  }
+}
+
 @media (min-width: 768px) {
   .dt-product-page-header {
     padding: 24px;
@@ -344,6 +426,10 @@
   .dt-product-side-rail {
     display: none;
   }
+
+  .dt-product-motion-field {
+    display: none;
+  }
 }
 
 @media (max-width: 520px) {
@@ -362,6 +448,12 @@
 
 @media (prefers-reduced-motion: reduce) {
   .dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
+    animation: none;
+  }
+
+  .dt-product-motion-grid,
+  .dt-product-motion-field .dt-product-motion-orbit-a,
+  .dt-product-motion-field .dt-product-motion-orbit-b {
     animation: none;
   }
 

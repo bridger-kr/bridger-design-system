@@ -113,7 +113,7 @@ Key files lifted into this system: the original Bridger web token contract,
 that predates the production token contract: it uses Figtree / Funnel Display /
 Bitcount Single type and a hotter orange (`#fd4900`) + cobalt (`#1158fe`). The
 production system has since standardized on **Pretendard + JetBrains Mono** and
-persimmon `#fb923c` per `packages/tokens/css/contract.css` and `DESIGN.md`. We build on the
+persimmon `#ec5e1f` per `packages/tokens/css/contract.css` and `DESIGN.md`. We build on the
 **codebase contract**, not the Figma exploration — but the Figma's bridging-line
 brand mark concept carries through to the live logo.
 
@@ -178,7 +178,7 @@ are designed deliberately.
 
 **Color (v2).** Warm near-white surfaces (`#fbfaf8` paper → `#ffffff` card →
 `#f4f3ef` sunken), warm near-black ink (`#1b1a16`, strong `#0c0b08`), and a single
-**persimmon** action color (`#ec5e1f`, hover `#d24e13`, highlight `#fb923c`) used
+**persimmon** action color (`#ec5e1f`, hover `#ec5e1f`, highlight `#ec5e1f`) used
 for *one* main action per screen plus active/focus. Cobalt, lime, success,
 warning, danger are **status-semantic only** — never decoration. No second
 decorative accent, no purple/indigo gradients, no glow.
