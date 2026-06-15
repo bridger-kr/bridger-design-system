@@ -1,5 +1,11 @@
 # @bridger-kr/react
 
+## 0.1.3
+
+### Patch Changes
+
+- [#15](https://github.com/bridger-kr/bridger-design-system/pull/15) [`76e6bfb`](https://github.com/bridger-kr/bridger-design-system/commit/76e6bfb13c770f9311820964ecf2b5d68522a198) Thanks [@happycastle114](https://github.com/happycastle114)! - Build React components against the React 18 JSX runtime so consumers on React 18 receive `react.element` output from core primitives.
+
 ## 0.1.2
 
 ### Patch Changes
