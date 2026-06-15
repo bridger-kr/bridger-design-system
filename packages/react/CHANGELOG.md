@@ -1,5 +1,14 @@
 # @bridger-kr/react
 
+## 0.1.5
+
+### Patch Changes
+
+- [#20](https://github.com/bridger-kr/bridger-design-system/pull/20) [`1101760`](https://github.com/bridger-kr/bridger-design-system/commit/1101760c04e4dbe4b36748b02501ba20d8b8710c) Thanks [@happycastle114](https://github.com/happycastle114)! - Refine cinematic product primitives to match the latest Bridger landing direction: fixed side rail, larger action pills, no pale orange outline layer, and motion carried by the product motion field.
+
+- Updated dependencies [[`86f7d42`](https://github.com/bridger-kr/bridger-design-system/commit/86f7d42eddf083d1f5b39f98ea270d35eeaa6509)]:
+  - @bridger-kr/tokens@0.1.2
+
 ## 0.1.4
 
 ### Patch Changes
