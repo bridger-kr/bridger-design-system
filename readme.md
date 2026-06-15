@@ -22,14 +22,14 @@ private Figma plugin:
 
 | Package | Public? | What it is |
 | --- | --- | --- |
-| [`@bridger-ds/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
-| [`@bridger-ds/react`](packages/react) | ✅ npm | 40 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
+| [`@bridger-kr/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
+| [`@bridger-kr/react`](packages/react) | ✅ npm | 40 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
 | [`bridger-figma-plugin`](packages/figma-plugin) | 🔒 private | Figma Community plugin that builds Variables/Styles/40 Component Sets from the tokens. Not on npm. |
 
 ### Install
 
 ```sh
-pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
+pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 ```
 
 ### CSS setup
@@ -37,26 +37,26 @@ pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
 Import the token contract once, then the React component styles:
 
 ```ts
-import '@bridger-ds/tokens/css';   // --dt-* variables, fonts, base classes
-import '@bridger-ds/react/styles.css';
+import '@bridger-kr/tokens/css';   // --dt-* variables, fonts, base classes
+import '@bridger-kr/react/styles.css';
 ```
 
 ### React usage
 
 ```tsx
-import { Button, Table, CommandPalette } from '@bridger-ds/react';
+import { Button, Table, CommandPalette } from '@bridger-kr/react';
 ```
 
 Per-component subpath imports for maximum tree-shaking:
 
 ```tsx
-import { Button } from '@bridger-ds/react/components/core/Button';
+import { Button } from '@bridger-kr/react/components/core/Button';
 ```
 
 ### Tokens in TS/JS
 
 ```ts
-import { colors, spacing, typography } from '@bridger-ds/tokens';
+import { colors, spacing, typography } from '@bridger-kr/tokens';
 colors.light.accent; // "#ec5e1f"
 ```
 
@@ -101,7 +101,7 @@ or **브릿저**.
 Store these even though the reader may not have access — they are the source of truth.
 
 **GitHub (org `bridger-kr`)** — explore these to build better Bridger designs:
-- [`bridger-kr/bridger-web`](https://github.com/bridger-kr/bridger-web) — frontend monorepo: `landing/` (Vite marketing app) and `dashboard/` (Vite console app). It consumes this repo through `@bridger-ds/react` and `@bridger-ds/tokens`.
+- [`bridger-kr/bridger-web`](https://github.com/bridger-kr/bridger-web) — frontend monorepo: `landing/` (Vite marketing app) and `dashboard/` (Vite console app). It consumes this repo through `@bridger-kr/react` and `@bridger-kr/tokens`.
 - [`bridger-kr/bridger-ops-bot`](https://github.com/bridger-kr/bridger-ops-bot) — ops automation bot.
 - [`bridger-kr/bridger-spec`](https://github.com/bridger-kr/bridger-spec) — OpenAPI presets + codegen (mcp-gen, openapi-gen).
 
@@ -128,7 +128,7 @@ The logo is the **bridge-line symbol plus the Bridger wordmark**. The symbol is 
 compact two-line route mark in persimmon over a muted track; the visible wordmark
 is always `Bridger` across locales. Korean/English only change the accessible
 label (`브릿저` / `Bridger`) and surrounding product copy. Render it with the
-`BrandLogo` component from `@bridger-ds/react`; do not recreate a plain
+`BrandLogo` component from `@bridger-kr/react`; do not recreate a plain
 `Bridger.` text mark in product surfaces.
 
 ---
@@ -264,8 +264,8 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 ## Index / manifest
 
 **`packages/`** — the monorepo workspaces (the publishable surface):
-- **`tokens/`** (`@bridger-ds/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
-- **`react/`** (`@bridger-ds/react`) — 40 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
+- **`tokens/`** (`@bridger-kr/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
+- **`react/`** (`@bridger-kr/react`) — 40 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
 - **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
 **Root sources** (still consumed by the Figma plugin + examples):

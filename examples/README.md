@@ -26,9 +26,9 @@ The demos link the **source** token CSS at the repo root (`styles.css` →
 `tokens/*.css`). For production consumption, use the published packages instead:
 
 ```ts
-import '@bridger-ds/tokens/css';
-import '@bridger-ds/react/styles.css';
-import { Button } from '@bridger-ds/react';
+import '@bridger-kr/tokens/css';
+import '@bridger-kr/react/styles.css';
+import { Button } from '@bridger-kr/react';
 ```
 
 See the root `readme.md` and each package's `README.md` for library usage.

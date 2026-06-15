@@ -2,7 +2,7 @@ import { describe, expect, expectTypeOf, it } from 'vitest';
 
 import { colors, radius, typography } from './index';
 
-describe('@bridger-ds/tokens', () => {
+describe('@bridger-kr/tokens', () => {
   it('exports faithful light and dark accent values from the CSS contract', () => {
     expect(colors.light.paper).toBe('#cfecd8');
     expect(colors.light.surface).toBe('#ecfff2');
