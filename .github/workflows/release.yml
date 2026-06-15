@@ -21,8 +21,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 11
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -40,10 +38,10 @@ jobs:
       - name: Configure npm authentication
         run: |
           if [ -z "${NPM_TOKEN}" ]; then
-            echo "NPM_TOKEN is not configured; publishing requires the repository secret."
-            exit 0
+            echo "::error::NPM_TOKEN is not configured for this repository. Add the repository secret or make the Bridger organization secret available before running the release workflow."
+            exit 1
           fi
-          printf '//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n' > ~/.npmrc
+          printf "//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n" > ~/.npmrc
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 

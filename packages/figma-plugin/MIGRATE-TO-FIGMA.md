@@ -49,7 +49,7 @@ Tokens Studio 하단 **Export** → **Export to Figma (Variables)**.
 - `boxShadow` → **Figma Effect Styles**로 생성됨
 
 ### 1-4. 검증
-- Variables 패널(우측 사이드바)에서 `accent/accent = #ec5e1f` (Light) / `#fb923c` (Dark) 확인
+- Variables 패널(우측 사이드바)에서 `accent/accent = #ec5e1f` (Light) / `#ec5e1f` (Dark) 확인
 - 사각형 하나 그려서 fill을 `surface/surface`로 잡고 Mode를 Dark로 토글 → `#14151b`로 바뀌면 성공
 
 > ⚠️ **변환 시 손실된 것 (CSS → Figma 한계):**
@@ -159,7 +159,7 @@ Figma Variables가 못 담는 것들. 프로토타입/Effect로 처리:
 
 소스가 충돌한다:
 - `readme.md` / `tokens/colors.css` → **Light가 기본** (`#ec5e1f`), Dark는 parity
-- `SKILL.md` → "Dark가 기본" (`#fb923c`)
+- `SKILL.md` → "Dark가 기본" (`#ec5e1f`)
 
 readme가 명시적으로 *"We build on the **codebase contract**, not the Figma exploration"*
 라고 못박았고, `colors.css`의 `:root`가 light다. 따라서 이 JSON은 **Light를 기본(Mode 1)**,

@@ -1,4 +1,4 @@
-<!-- @dsCard group="Feedback" viewport="700x440" name="Feedback" subtitle="Alert · Toast · EmptyState · Spinner · Skeleton · Tooltip — depth from fills, not outlines" -->
+<!-- @dsCard group="Feedback" viewport="860x560" name="Feedback" subtitle="Alert · Toast · EmptyState · Spinner · Skeleton · Tooltip — depth from fills, not outlines" -->
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,17 +9,24 @@
   body { margin: 0; background: var(--dt-paper); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
 
   /* One cohesive panel — the only elevated surface. No inner outlines. */
-  .panel { background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-sm); padding: 22px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 22px; align-items: start; }
+  .panel { background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-sm); padding: 22px; display: grid; gap: 20px; align-items: start; }
+  .grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 22px; align-items: start; }
   .col { display: grid; gap: 16px; align-content: start; }
   .cap { font-size: 11px; color: var(--dt-muted); }
   .cap b { color: var(--dt-muted-strong); font-weight: 600; }
 
-  /* Alert — tinted fill, NO left accent bar */
-  .alert { display: flex; gap: 12px; padding: 15px 16px; border-radius: var(--dt-radius-md); background: var(--dt-tint-warning); }
-  .alert .ico { flex: 0 0 auto; margin-top: 1px; display: inline-flex; color: var(--dt-warning); }
-  .at { font-size: 14px; font-weight: 650; color: var(--dt-ink-strong); }
-  .am { margin-top: 4px; font-size: 13px; line-height: 1.55; color: var(--dt-muted-strong); }
-  .am .k { font-family: var(--dt-font-mono); color: var(--dt-ink-strong); }
+  .alerts { display: grid; grid-template-columns: repeat(2, minmax(0, 380px)); gap: 10px; }
+  .alert { display: flex; align-items: flex-start; gap: 12px; min-height: 62px; width: min(100%, 380px); overflow: clip; padding: 13px 15px; border-radius: 20px; background: var(--dt-status-warning); color: var(--dt-alert-ink); transition: filter var(--dt-motion-fast), transform var(--dt-motion-fast); }
+  .alert.info { background: var(--dt-status-cobalt); }
+  .alert.success { background: var(--dt-status-success); }
+  .alert.warning { background: var(--dt-status-warning); }
+  .alert.danger { background: var(--dt-status-danger); }
+  .alert:hover { filter: brightness(1.03); }
+  .alert:active { transform: scale(var(--dt-press-scale)); }
+  .alert .ico { flex: 0 0 auto; margin-top: 1px; display: inline-flex; color: currentColor; }
+  .at { font-size: 14px; font-weight: 600; line-height: normal; }
+  .am { margin-top: 3px; font-size: 13px; line-height: normal; }
+  .am .k { font-family: var(--dt-font-mono); color: currentColor; }
   /* text-link action — no button box */
   .a-link { margin-top: 10px; display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--dt-warning); cursor: pointer; white-space: nowrap; }
   .a-link [data-ico] { display: inline-flex; }
@@ -61,17 +68,40 @@
 </head>
 <body>
 <div class="panel">
-  <div class="col">
-    <div class="cap"><b>Alert</b> · 인라인 경고</div>
-    <div class="alert">
-      <span class="ico" data-ico="key-round"></span>
+  <div class="cap"><b>Alert</b> · Figma 81:639 solid status pills</div>
+  <div class="alerts">
+    <div class="alert info">
+      <span class="ico" data-ico="info"></span>
       <div style="flex:1; min-width:0">
-        <div class="at">서비스키 만료 임박</div>
-        <div class="am">기상청 <span class="k">service_key</span> 가 3일 후 만료됩니다. 갱신하면 도구 노출이 유지됩니다.</div>
-        <span class="a-link">지금 갱신<span data-ico="arrow-right"></span></span>
+        <div class="at">안내</div>
+        <div class="am">게이트웨이 응답 정상.</div>
       </div>
     </div>
+    <div class="alert success">
+      <span class="ico" data-ico="circle-check"></span>
+      <div style="flex:1; min-width:0">
+        <div class="at">완료</div>
+        <div class="am">도구 노출이 적용되었습니다.</div>
+      </div>
+    </div>
+    <div class="alert warning">
+      <span class="ico" data-ico="triangle-alert"></span>
+      <div style="flex:1; min-width:0">
+        <div class="at">주의</div>
+        <div class="am">게이트웨이 응답 지연. 네트워크 확인 필요.</div>
+      </div>
+    </div>
+    <div class="alert danger">
+      <span class="ico" data-ico="octagon-alert"></span>
+      <div style="flex:1; min-width:0">
+        <div class="at">오류</div>
+        <div class="am">서비스키 검증 실패. 지금 재시도.</div>
+      </div>
+    </div>
+  </div>
 
+  <div class="grid">
+  <div class="col">
     <div class="cap" style="margin-top:4px"><b>EmptyState</b> · 데이터 없음</div>
     <div class="empty">
       <span class="ei" data-ico="inbox" data-sz="20"></span>
@@ -106,10 +136,11 @@
       </span>
     </div>
   </div>
+  </div>
 </div>
 
 <script>
-  const map = { 'key-round': 'KeyRound', 'arrow-right': 'ArrowRight', inbox: 'Inbox', plus: 'Plus', 'circle-check': 'CircleCheck', x: 'X', copy: 'Copy' };
+  const map = { info: 'Info', 'circle-check': 'CircleCheck', 'triangle-alert': 'TriangleAlert', 'octagon-alert': 'OctagonAlert', inbox: 'Inbox', plus: 'Plus', x: 'X', copy: 'Copy' };
   document.querySelectorAll('[data-ico]').forEach((el) => {
     const g = window.lucide[map[el.dataset.ico]];
     if (!g) return;

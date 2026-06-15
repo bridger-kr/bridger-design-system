@@ -81,7 +81,7 @@
 .terminal pre { margin: 0; padding: 14px; font-family: var(--dt-font-mono); font-size: 12px; line-height: 1.75; color: var(--dt-code-ink); overflow-x: auto; }
 .term-mut { color: #8a93a3; }
 .term-ok { color: #7ee0a3; }
-.term-acc { color: #fb923c; }
+.term-acc { color: #ec5e1f; }
 
 /* ── Stat row ── */
 .stat-row { display: grid; overflow: hidden; border-radius: var(--dt-radius-lg); background: var(--dt-surface); box-shadow: var(--dt-ring), var(--dt-shadow-xs); }

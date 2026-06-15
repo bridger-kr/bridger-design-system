@@ -23,12 +23,12 @@ export function Tooltip({ label, position = 'top', children }: TooltipProps) {
       <span aria-describedby={show ? tooltipId : undefined}>{children}</span>
       <span id={tooltipId} role="tooltip" style={{
         position: 'absolute', zIndex: 60, whiteSpace: 'nowrap', pointerEvents: 'none',
+        opacity: show ? 1 : 0, visibility: show ? 'visible' : 'hidden',
         padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
         color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)',
         borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-md)',
-        animation: 'dt-tip 120ms var(--dt-ease)', ...pos,
+        transition: 'opacity var(--dt-motion-fast), visibility var(--dt-motion-fast)', ...pos,
       }}>{label}</span>
-      <style>{`@keyframes dt-tip{from{opacity:0}}`}</style>
     </span>
   );
 }

@@ -101,11 +101,11 @@ or **브릿저**.
 Store these even though the reader may not have access — they are the source of truth.
 
 **GitHub (org `bridger-kr`)** — explore these to build better Bridger designs:
-- [`bridger-kr/bridger-web`](https://github.com/bridger-kr/bridger-web) — frontend monorepo: `landing/` (Vite marketing app), `dashboard/` (Vite console app), and `packages/design-system/` (the canonical token + primitive canon). **`packages/design-system/contract.css` is the canonical `--dt-*` token source.**
+- [`bridger-kr/bridger-web`](https://github.com/bridger-kr/bridger-web) — frontend monorepo: `landing/` (Vite marketing app) and `dashboard/` (Vite console app). It consumes this repo through `@bridger-ds/react` and `@bridger-ds/tokens`.
 - [`bridger-kr/bridger-ops-bot`](https://github.com/bridger-kr/bridger-ops-bot) — ops automation bot.
 - [`bridger-kr/bridger-spec`](https://github.com/bridger-kr/bridger-spec) — OpenAPI presets + codegen (mcp-gen, openapi-gen).
 
-Key files lifted into this system: `packages/design-system/contract.css`,
+Key files lifted into this system: the original Bridger web token contract,
 `colors_and_type.css`, `dashboard/src/styles.css`, `dashboard/tailwind.config.ts`,
 `landing/src/components/BrandLogo.jsx`, plus agency logos and the Pretendard webfont.
 
@@ -113,7 +113,7 @@ Key files lifted into this system: `packages/design-system/contract.css`,
 that predates the production token contract: it uses Figtree / Funnel Display /
 Bitcount Single type and a hotter orange (`#fd4900`) + cobalt (`#1158fe`). The
 production system has since standardized on **Pretendard + JetBrains Mono** and
-persimmon `#fb923c` per `contract.css` and `DESIGN.md`. We build on the
+persimmon `#ec5e1f` per `packages/tokens/css/contract.css` and `DESIGN.md`. We build on the
 **codebase contract**, not the Figma exploration — but the Figma's bridging-line
 brand mark concept carries through to the live logo.
 
@@ -178,7 +178,7 @@ are designed deliberately.
 
 **Color (v2).** Warm near-white surfaces (`#fbfaf8` paper → `#ffffff` card →
 `#f4f3ef` sunken), warm near-black ink (`#1b1a16`, strong `#0c0b08`), and a single
-**persimmon** action color (`#ec5e1f`, hover `#d24e13`, highlight `#fb923c`) used
+**persimmon** action color (`#ec5e1f`, hover `#ec5e1f`, highlight `#ec5e1f`) used
 for *one* main action per screen plus active/focus. Cobalt, lime, success,
 warning, danger are **status-semantic only** — never decoration. No second
 decorative accent, no purple/indigo gradients, no glow.

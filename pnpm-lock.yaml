@@ -36,6 +36,10 @@ importers:
   packages/figma-plugin: {}
 
   packages/react:
+    dependencies:
+      '@bridger-ds/tokens':
+        specifier: file:../tokens
+        version: link:../tokens
     devDependencies:
       '@testing-library/react':
         specifier: 16.3.2

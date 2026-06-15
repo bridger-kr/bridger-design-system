@@ -1,6 +1,6 @@
 {
   "name": "@bridger-ds/tokens",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": false,
   "type": "module",
   "sideEffects": [
@@ -16,6 +16,7 @@
       "require": "./dist/index.cjs"
     },
     "./css": "./css/index.css",
+    "./css/contract": "./css/contract.css",
     "./css/colors": "./css/colors.css",
     "./css/typography": "./css/typography.css",
     "./css/spacing": "./css/spacing.css",

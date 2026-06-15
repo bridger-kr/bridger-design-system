@@ -28,8 +28,8 @@
 
   /* ── Accent — persimmon (one action per screen) ── */
   --dt-accent:          #ec5e1f;   /* solid action */
-  --dt-accent-strong:   #d24e13;   /* hover / pressed */
-  --dt-accent-bright:   #fb923c;   /* highlight / on-dark glow */
+  --dt-accent-strong:   #ec5e1f;   /* hover / pressed */
+  --dt-accent-bright:   #ec5e1f;   /* highlight / on-dark glow */
   --dt-accent-ink:      #ffffff;   /* text on accent */
   --dt-accent-soft:     color-mix(in srgb, var(--dt-accent) 10%, transparent);
 
@@ -40,6 +40,11 @@
   --dt-warning:         #c9820f;
   --dt-danger:          #dc3a34;
   --dt-info:            var(--dt-cobalt);
+  --dt-status-cobalt:   #2f6bff;
+  --dt-status-success:  #00b04e;
+  --dt-status-warning:  #ffa71a;
+  --dt-status-danger:   #dc3a34;
+  --dt-alert-ink:       #ecfff2;
 
   /* ── Tints ── */
   --dt-tint-accent:  color-mix(in srgb, var(--dt-accent)  10%, transparent);
@@ -54,7 +59,7 @@
   --dt-code-ink:     #e8e6df;
   --dt-code-border:  #262a35;
 
-  --dt-brand-gradient: linear-gradient(120deg, #fb923c 0%, #ec5e1f 100%); /* @kind other */
+  --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%); /* @kind other */
 }
 
 /* ── Dark theme — full-parity alternate (console-native) ── */
@@ -77,9 +82,9 @@
   --dt-border-strong:   #31343f;
   --dt-divider:         color-mix(in srgb, var(--dt-border) 55%, transparent);
 
-  --dt-accent:          #fb923c;
-  --dt-accent-strong:   #fdba74;
-  --dt-accent-bright:   #fb923c;
+  --dt-accent:          #ec5e1f;
+  --dt-accent-strong:   #ec5e1f;
+  --dt-accent-bright:   #ec5e1f;
   --dt-accent-ink:      #1a1206;
   --dt-accent-soft:     color-mix(in srgb, var(--dt-accent) 14%, transparent);
 
@@ -89,6 +94,11 @@
   --dt-warning:         #fbbf24;
   --dt-danger:          #f87171;
   --dt-info:            var(--dt-cobalt);
+  --dt-status-cobalt:   #2f6bff;
+  --dt-status-success:  #00b04e;
+  --dt-status-warning:  #ffa71a;
+  --dt-status-danger:   #dc3a34;
+  --dt-alert-ink:       #ecfff2;
 
   --dt-tint-accent:  color-mix(in srgb, var(--dt-accent)  16%, transparent);
   --dt-tint-cobalt:  color-mix(in srgb, var(--dt-cobalt)  16%, transparent);

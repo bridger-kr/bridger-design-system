@@ -2,8 +2,8 @@ const freeze = <const TokenGroup extends Record<string, unknown>>(tokenGroup: To
   Object.freeze(tokenGroup);
 
 const lightColors = freeze({
-  paper: '#fbfaf8',
-  surface: '#ffffff',
+  paper: '#cfecd8',
+  surface: '#ecfff2',
   surfaceRaised: '#ffffff',
   surfaceSunken: '#f4f3ef',
   surfaceMuted: '#f8f7f4',
@@ -11,30 +11,35 @@ const lightColors = freeze({
   inkStrong: '#0c0b08',
   muted: '#79766e',
   mutedStrong: '#423f38',
-  border: '#eceae3',
+  border: '#d8d5ca',
   borderStrong: '#ddd9cf',
   divider: 'color-mix(in srgb, var(--dt-border) 50%, transparent)',
   accent: '#ec5e1f',
-  accentStrong: '#d24e13',
-  accentBright: '#fb923c',
+  accentStrong: '#ec5e1f',
+  accentBright: '#ec5e1f',
   accentInk: '#ffffff',
   accentSoft: 'color-mix(in srgb, var(--dt-accent) 10%, transparent)',
-  cobalt: '#2f6bff',
-  lime: '#c8e44a',
-  success: '#1f9d57',
-  warning: '#c9820f',
-  danger: '#dc3a34',
+  cobalt: '#256b5a',
+  lime: '#dce95b',
+  success: '#16a34a',
+  warning: '#d97706',
+  danger: '#dc2626',
   info: 'var(--dt-cobalt)',
-  tintAccent: 'color-mix(in srgb, var(--dt-accent) 10%, transparent)',
-  tintCobalt: 'color-mix(in srgb, var(--dt-cobalt) 9%, transparent)',
-  tintSuccess: 'color-mix(in srgb, var(--dt-success) 11%, transparent)',
-  tintWarning: 'color-mix(in srgb, var(--dt-warning) 13%, transparent)',
-  tintDanger: 'color-mix(in srgb, var(--dt-danger) 10%, transparent)',
+  statusCobalt: '#2f6bff',
+  statusSuccess: '#00b04e',
+  statusWarning: '#ffa71a',
+  statusDanger: '#dc3a34',
+  alertInk: '#ecfff2',
+  tintAccent: 'color-mix(in srgb, var(--dt-accent) 12%, transparent)',
+  tintCobalt: 'color-mix(in srgb, var(--dt-cobalt) 10%, transparent)',
+  tintSuccess: 'color-mix(in srgb, var(--dt-success) 12%, transparent)',
+  tintWarning: 'color-mix(in srgb, var(--dt-warning) 14%, transparent)',
+  tintDanger: 'color-mix(in srgb, var(--dt-danger) 12%, transparent)',
   tintMuted: 'color-mix(in srgb, var(--dt-ink) 5%, transparent)',
   codeBg: '#14161d',
   codeInk: '#e8e6df',
   codeBorder: '#262a35',
-  brandGradient: 'linear-gradient(120deg, #fb923c 0%, #ec5e1f 100%)',
+  brandGradient: 'linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%)',
 } as const);
 
 const darkColors = freeze({
@@ -50,9 +55,9 @@ const darkColors = freeze({
   border: '#23252e',
   borderStrong: '#31343f',
   divider: 'color-mix(in srgb, var(--dt-border) 55%, transparent)',
-  accent: '#fb923c',
-  accentStrong: '#fdba74',
-  accentBright: '#fb923c',
+  accent: '#ec5e1f',
+  accentStrong: '#ec5e1f',
+  accentBright: '#ec5e1f',
   accentInk: '#1a1206',
   accentSoft: 'color-mix(in srgb, var(--dt-accent) 14%, transparent)',
   cobalt: '#7aa2ff',
@@ -61,6 +66,11 @@ const darkColors = freeze({
   warning: '#fbbf24',
   danger: '#f87171',
   info: 'var(--dt-cobalt)',
+  statusCobalt: '#2f6bff',
+  statusSuccess: '#00b04e',
+  statusWarning: '#ffa71a',
+  statusDanger: '#dc3a34',
+  alertInk: '#ecfff2',
   tintAccent: 'color-mix(in srgb, var(--dt-accent) 16%, transparent)',
   tintCobalt: 'color-mix(in srgb, var(--dt-cobalt) 16%, transparent)',
   tintSuccess: 'color-mix(in srgb, var(--dt-success) 18%, transparent)',
@@ -89,11 +99,11 @@ export const spacing = freeze({
 } as const);
 
 export const radius = freeze({
-  sm: '3px',
-  md: '4px',
-  lg: '6px',
-  xl: '8px',
-  '2xl': '10px',
+  sm: '6px',
+  md: '12px',
+  lg: '40px',
+  xl: '40px',
+  'button': '18px',
   full: '9999px',
 } as const);
 
@@ -142,8 +152,8 @@ const fontSizes = freeze({
 } as const);
 
 const fontWeights = freeze({
-  h1: 700,
-  h2: 700,
+  h1: 560,
+  h2: 540,
   h3: 600,
   body: 400,
 } as const);
@@ -158,9 +168,9 @@ const lineHeights = freeze({
 } as const);
 
 const letterSpacing = freeze({
-  h1: '-0.04em',
-  h2: '-0.035em',
-  h3: '-0.02em',
+  h1: '0',
+  h2: '0',
+  h3: '0',
 } as const);
 
 export const typography = freeze({
@@ -196,6 +206,11 @@ export const cssVarName = freeze({
     warning: '--dt-warning',
     danger: '--dt-danger',
     info: '--dt-info',
+    statusCobalt: '--dt-status-cobalt',
+    statusSuccess: '--dt-status-success',
+    statusWarning: '--dt-status-warning',
+    statusDanger: '--dt-status-danger',
+    alertInk: '--dt-alert-ink',
     codeBg: '--dt-code-bg',
     codeInk: '--dt-code-ink',
     codeBorder: '--dt-code-border',
@@ -216,7 +231,7 @@ export const cssVarName = freeze({
     md: '--dt-radius-md',
     lg: '--dt-radius-lg',
     xl: '--dt-radius-xl',
-    '2xl': '--dt-radius-2xl',
+    button: '--dt-radius-button',
     full: '--dt-radius-full',
   } as const),
   shadows: freeze({

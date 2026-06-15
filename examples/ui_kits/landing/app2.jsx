@@ -109,7 +109,7 @@ const CODE = {
 const TOK_COLOR = {
   ink: '#e8e6df', com: '#7c8699', str: '#7ee0a3',
   num: '#8ab4ff', key: '#fbbf6b', punc: '#9aa3b2',
-  meth: '#fb923c',
+  meth: '#ec5e1f',
 };
 
 function IntegrationSection({ locale }) {
