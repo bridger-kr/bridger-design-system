@@ -455,6 +455,24 @@
   }
 }
 
+.dt-brand-logo-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.dt-brand-logo-dot {
+  display: inline-block;
+  color: var(--dt-accent);
+  transform-origin: center;
+  transition:
+    transform 180ms var(--dt-ease, ease),
+    opacity 180ms var(--dt-ease, ease);
+}
+
+.dt-brand-logo[data-armed='true'] .dt-brand-logo-dot {
+  transform: translateY(-0.05em) scale(1.08);
+}
+
 @media (min-width: 768px) {
   .dt-product-page-header {
     padding: 24px;
@@ -509,5 +527,10 @@
 
   .dt-product-action-pill {
     transition: none;
+  }
+
+  .dt-brand-logo-dot {
+    transform: none !important;
+    transition: none !important;
   }
 }

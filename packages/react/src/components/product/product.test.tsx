@@ -25,13 +25,14 @@ import type { BrandLogoHandle } from './index';
 
 describe('Product components', () => {
   describe('BrandLogo', () => {
-    it('renders the bridge-line symbol and stable Bridger wordmark', () => {
+    it('renders the Figma wordmark with a persimmon period', () => {
       const { container } = render(<BrandLogo lang="ko" />);
 
       expect(screen.getByLabelText('브릿저')).toBeTruthy();
-      expect(screen.getByText('Bridger')).toBeTruthy();
-      expect(container.querySelector('svg[viewBox="0 0 44 24"]')).toBeTruthy();
-      expect(container.textContent).not.toContain('Bridger.');
+      expect(container.querySelector('.dt-brand-logo-dot')?.textContent).toBe('.');
+      expect(container.textContent).toContain('Bridger.');
+      expect(container.querySelector('svg[viewBox="0 0 44 24"]')).toBeFalsy();
+      expect(container.querySelector('.dt-brand-logo-line')).toBeFalsy();
       expect(BRAND_LOGO_LANGUAGE.Korean).toBe('ko');
     });
 

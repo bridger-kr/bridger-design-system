@@ -109,13 +109,11 @@ Key files lifted into this system: the original Bridger web token contract,
 `colors_and_type.css`, `dashboard/src/styles.css`, `dashboard/tailwind.config.ts`,
 `landing/src/components/BrandLogo.jsx`, plus agency logos and the Pretendard webfont.
 
-**Figma** — `제목 없음.fig` (mounted). An **early brand exploration** (Page-1, Page-2)
-that predates the production token contract: it uses Figtree / Funnel Display /
-Bitcount Single type and a hotter orange (`#fd4900`) + cobalt (`#1158fe`). The
-production system has since standardized on **Pretendard + JetBrains Mono** and
-persimmon `#ec5e1f` per `packages/tokens/css/contract.css` and `DESIGN.md`. We build on the
-**codebase contract**, not the Figma exploration — but the Figma's bridging-line
-brand mark concept carries through to the live logo.
+**Figma** — `DXAVhKo8uCGJ4HSQYAq9dY` (mounted). The production component
+library uses **Pretendard + JetBrains Mono** and persimmon `#ec5e1f` per
+`packages/tokens/css/contract.css` and `DESIGN.md`. The current BrandLogo source
+is the Figma component page: `BrandLogo` exposes wordmark `lg` / `md`, plus
+`Symbol` and `Favicon` variants for constrained icon surfaces.
 
 **`DESIGN.md`** (provided) — the brand's written design canon. Its rules are
 encoded throughout this system.
@@ -124,12 +122,12 @@ encoded throughout this system.
 
 ## Brand mark (v3)
 
-The logo is the **bridge-line symbol plus the Bridger wordmark**. The symbol is a
-compact two-line route mark in persimmon over a muted track; the visible wordmark
-is always `Bridger` across locales. Korean/English only change the accessible
-label (`브릿저` / `Bridger`) and surrounding product copy. Render it with the
-`BrandLogo` component from `@bridger-kr/react`; do not recreate a plain
-`Bridger.` text mark in product surfaces.
+The logo is the **Bridger. wordmark plus a single persimmon period**. The wordmark
+renders in persimmon across product and marketing surfaces; `symbol` and
+`favicon` variants are reserved for tight icon slots. Korean/English only change
+the accessible label (`브릿저` / `Bridger.`) and surrounding product copy. Render
+it with the `BrandLogo` component from `@bridger-kr/react`; do not recreate a
+page-local logo.
 
 ---
 
@@ -281,7 +279,7 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, **Drawer** (side sheet).
 - **data** — Table, StatTile, Avatar, Pagination, **CodeBlock** (dark code surface), **KeyValue** (spec metadata list), **LogRow** (execution-log stream), **UsageMeter** (quota bar).
 - **navigation** — Breadcrumb, Menu, **Sidebar** (console nav rail), **CommandPalette** (⌘K), **Stepper** (onboarding progress).
-- **product** — BrandLogo (bridge-line mark + wordmark), SectionCard, ToolCard.
+- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard.
 
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (3–6px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 

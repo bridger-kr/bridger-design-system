@@ -1,8 +1,8 @@
-The Bridger logo — a compact two-line bridge symbol plus the stable `Bridger` wordmark. The symbol uses persimmon over a muted track. The visible wordmark never localizes; Korean/English only change the accessible label.
+The Bridger logo — the stable `Bridger.` wordmark with a single persimmon period. Use `symbol` only for constrained icon slots and `favicon` for browser/app icons. The visible wordmark never localizes; Korean/English only change the accessible label.
 
 ```jsx
 <BrandLogo size="md" />
-<BrandLogo size="lg" autoplay />
+<BrandLogo size="symbol" />
 ```
 
-Sizes `sm` / `md` / `lg` / `xl` or an explicit px number. Use `autoplay`, `loop`, or the imperative `play()` handle to replay the bridge-line draw.
+Sizes `sm` / `md` / `lg` / `xl` / `symbol` / `favicon` or an explicit px number. `autoplay`, `loop`, and the imperative `play()` handle only give the period a restrained pulse for compatibility.
