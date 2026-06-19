@@ -29,6 +29,7 @@
   --dt-surface: #111218;
   --dt-surface-raised: #181a22;
   --dt-surface-sunken: #07080b;
+  --dt-surface-muted: #16181f;
 
   --dt-ink: #f5f4ee;
   --dt-ink-strong: #ffffff;
@@ -37,9 +38,11 @@
 
   --dt-border: #23252e;
   --dt-border-strong: #2f323d;
+  --dt-divider: color-mix(in srgb, var(--dt-border) 55%, transparent);
 
   --dt-accent: #ec5e1f;
   --dt-accent-strong: #ec5e1f;
+  --dt-accent-bright: #ec5e1f;
   --dt-accent-ink: #1a1206;
 
   --dt-cobalt: #7aa2ff;
@@ -55,6 +58,10 @@
   --dt-status-warning: #ec5e1f;
   --dt-status-danger: #dc3a34;
   --dt-alert-ink: #ecfff2;
+  --dt-code-bg: #0a0b0f;
+  --dt-code-ink: #f4f3ee;
+  --dt-code-border: #23252e;
+  --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
 
   --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 14%, transparent);
   --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 14%, transparent);
@@ -79,11 +86,25 @@
   --dt-radius-xl: 40px;
   --dt-radius-full: 9999px;
 
+  --dt-ring: 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --dt-ring-strong: 0 0 0 1px var(--dt-border-strong);
+  --dt-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --dt-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5),
+                  0 2px 6px rgba(0, 0, 0, 0.4);
+  --dt-shadow-md: 0 4px 10px rgba(0, 0, 0, 0.5),
+                  0 12px 24px rgba(0, 0, 0, 0.45);
+  --dt-shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.55),
+                  0 24px 48px rgba(0, 0, 0, 0.5);
+  --dt-shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.6),
+                  0 40px 72px rgba(0, 0, 0, 0.55);
   --dt-shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.5),
                       0 0 0 1px rgba(255, 255, 255, 0.02);
   --dt-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.55),
                         0 0 0 1px rgba(255, 255, 255, 0.03);
   --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-card-rest: var(--dt-ring);
+  --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
+  --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
   --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
   --dt-motion-fast: 120ms var(--dt-ease);
@@ -135,6 +156,7 @@
   --dt-surface: #ecfff2;
   --dt-surface-raised: #ffffff;
   --dt-surface-sunken: #f4f3ef;
+  --dt-surface-muted: #f8f7f4;
 
   --dt-ink: #0c0b08;
   --dt-ink-strong: #0c0b08;
@@ -142,10 +164,12 @@
   --dt-muted-strong: #423f38;
 
   --dt-border: #d8d5ca;
-  --dt-border-strong: #ddd9cf;
+  --dt-border-strong: #b6cbbd;
+  --dt-divider: color-mix(in srgb, var(--dt-border) 50%, transparent);
 
   --dt-accent: #ec5e1f;
   --dt-accent-strong: #ec5e1f;
+  --dt-accent-bright: #ec5e1f;
   --dt-accent-ink: #ffffff;
 
   --dt-cobalt: #256b5a;
@@ -158,9 +182,14 @@
   --dt-info: var(--dt-cobalt);
   --dt-status-cobalt: #2f6bff;
   --dt-status-success: #00b04e;
-  --dt-status-warning: #ec5e1f;
+  --dt-status-warning: #ffa71a;
   --dt-status-danger: #dc3a34;
   --dt-alert-ink: #ecfff2;
+
+  --dt-code-bg: #14161d;
+  --dt-code-ink: #e8e6df;
+  --dt-code-border: #262a35;
+  --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
 
   --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 12%, transparent);
   --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 10%, transparent);
@@ -169,11 +198,21 @@
   --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 12%, transparent);
   --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 5%, transparent);
 
+  --dt-ring: 0 0 0 1px var(--dt-border);
+  --dt-ring-strong: 0 0 0 1px var(--dt-border-strong);
+  --dt-shadow-xs: none;
+  --dt-shadow-sm: 0 1px 2px rgba(24, 22, 18, 0.05);
+  --dt-shadow-md: 0 2px 6px rgba(24, 22, 18, 0.07);
+  --dt-shadow-lg: 0 6px 16px rgba(24, 22, 18, 0.10);
+  --dt-shadow-xl: 0 12px 30px rgba(24, 22, 18, 0.14);
   --dt-shadow-subtle: 0 1px 2px rgba(24, 22, 18, 0.07),
                       0 0 0 1px rgba(24, 22, 18, 0.03);
   --dt-shadow-elevated: 0 8px 24px rgba(24, 22, 18, 0.10),
                         0 0 0 1px rgba(24, 22, 18, 0.04);
   --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-card-rest: var(--dt-ring);
+  --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
+  --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
   --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
   --dt-motion-base: 160ms var(--dt-ease);
