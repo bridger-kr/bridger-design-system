@@ -1,30 +1,30 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
+export interface BrandLogoFrameSize {
+  readonly width: number;
+  readonly height: number;
+}
 
-export const BRAND_LOGO_SIZE_NAME = {
-  Small: 'sm',
-  Medium: 'md',
-  Large: 'lg',
-  ExtraLarge: 'xl',
-  Symbol: 'symbol',
-  Favicon: 'favicon',
-};
+export const BRAND_WORDMARK_VIEW_BOX = '0 0 148.484 43';
 
-const WORDMARK_VIEW_BOX = '0 0 148.484 43';
-const WORDMARK_SIZE = {
+export const BRAND_WORDMARK_SIZE = {
   sm: { width: 69.062, height: 20 },
   md: { width: 69.062, height: 20 },
   lg: { width: 148.484, height: 43 },
   xl: { width: 262.529, height: 76 },
-};
-const SYMBOL_SIZE = {
+} as const;
+
+export const BRAND_SYMBOL_SIZE = {
   symbol: { width: 15, height: 14 },
   favicon: { width: 45, height: 45 },
-};
-const WORDMARK = 'Bridger';
-const PERIOD = '.';
-const LABEL = { ko: '브릿저', en: `${WORDMARK}${PERIOD}` };
-const WORDMARK_ASPECT_RATIO = WORDMARK_SIZE.lg.width / WORDMARK_SIZE.lg.height;
-const WORDMARK_PATHS = [
+} as const;
+
+export const BRAND_SYMBOL_VIEW_BOX = {
+  symbol: '0 0 15 14',
+  favicon: '0 0 45 45',
+} as const;
+
+export const BRAND_WORDMARK_ASPECT_RATIO = BRAND_WORDMARK_SIZE.lg.width / BRAND_WORDMARK_SIZE.lg.height;
+
+export const BRAND_WORDMARK_PATHS = [
   'M20.6094 17.9902C19.5442 17.3602 18.4391 17.0185 17.2869 16.9579V16.6376C18.3485 16.3955 19.3087 15.9862 20.1602 15.4131C21.0116 14.84 21.6928 14.0925 22.2037 13.1705C22.7146 12.2486 22.9682 11.1344 22.9682 9.83162C22.9682 8.24404 22.5805 6.82732 21.8088 5.58146C21.037 4.3356 19.8703 3.34959 18.3123 2.61987C16.7542 1.89015 14.8013 1.52351 12.457 1.52351H1.24485e-06V33.5101H13.1345C15.6274 33.5101 17.6891 33.1328 19.3304 32.371C20.9682 31.6128 22.1965 30.5734 23.0117 29.2564C23.827 27.9393 24.2364 26.4514 24.2364 24.7926C24.2364 23.1339 23.8958 21.7954 23.2182 20.6493C22.5407 19.5031 21.6711 18.6167 20.6058 17.9867L20.6094 17.9902ZM5.83717 6.28982H11.8483C13.5947 6.28982 14.9136 6.69205 15.8049 7.49296C16.6926 8.29387 17.1383 9.31904 17.1383 10.5613C17.1383 11.5046 16.9028 12.3233 16.4281 13.0103C15.9535 13.6974 15.3085 14.2277 14.4933 14.5979C13.678 14.9717 12.7505 15.1568 11.7178 15.1568H5.84079V6.28982H5.83717ZM16.8847 27.5015C15.9317 28.3166 14.3737 28.726 12.2178 28.726H5.83717V19.3002H12.4135C13.6237 19.3002 14.6672 19.5209 15.5477 19.9658C16.4281 20.4108 17.1093 21.0159 17.5912 21.7812C18.0731 22.5465 18.3123 23.4079 18.3123 24.369C18.3123 25.6434 17.834 26.6863 16.881 27.5015H16.8847Z',
   'M38.7297 9.18733C37.3311 9.18733 36.0847 9.56465 34.994 10.3157C33.8998 11.0668 33.1353 12.1382 32.7005 13.5265H32.4396V9.51126H26.9321V33.5137H32.6135V19.3892C32.6135 18.3747 32.849 17.4741 33.3237 16.6945C33.7983 15.915 34.4542 15.3027 35.2911 14.8578C36.1281 14.4128 37.0738 14.1921 38.121 14.1921C38.6318 14.1921 39.1464 14.2206 39.6717 14.2776C40.1971 14.3345 40.5739 14.3986 40.8095 14.4698V9.3404C40.5341 9.29768 40.1971 9.26209 39.8022 9.23361C39.4109 9.20513 39.0521 9.19089 38.7333 9.19089L38.7297 9.18733Z',
   'M46.8242 0C45.922 0 45.1466 0.299007 44.498 0.889901C43.8494 1.48435 43.5233 2.21051 43.5233 3.06838C43.5233 3.92624 43.8494 4.61324 44.498 5.21482C45.1466 5.81639 45.922 6.1154 46.8242 6.1154C47.7264 6.1154 48.5235 5.81639 49.1721 5.21482C49.8207 4.61324 50.1431 3.89065 50.1431 3.04702C50.1431 2.20339 49.817 1.48435 49.1721 0.889901C48.5235 0.295447 47.7409 0 46.8242 0Z',
@@ -34,142 +34,4 @@ const WORDMARK_PATHS = [
   'M123.494 12.1098C122.45 11.1238 121.258 10.394 119.91 9.92061C118.562 9.44719 117.146 9.21225 115.66 9.21225C113.33 9.21225 111.301 9.73907 109.573 10.7892C107.845 11.8428 106.515 13.2987 105.573 15.1568C104.634 17.0185 104.163 19.1863 104.163 21.6602C104.163 24.1341 104.641 26.3411 105.594 28.1849C106.547 30.0324 107.91 31.4633 109.682 32.4778C111.45 33.4923 113.566 34.0013 116.03 34.0013C117.849 34.0013 119.472 33.7344 120.892 33.1969C122.312 32.6594 123.497 31.9083 124.443 30.9436C125.389 29.979 126.059 28.8506 126.454 27.562L121.233 26.5084C120.986 27.1811 120.613 27.7507 120.117 28.2134C119.62 28.6797 119.033 29.0286 118.356 29.2671C117.678 29.5055 116.925 29.623 116.095 29.623C114.841 29.623 113.743 29.3596 112.794 28.8292C111.848 28.2988 111.113 27.5122 110.587 26.4692C110.116 25.5295 109.859 24.3975 109.812 23.0769H126.823V21.3185C126.823 19.2147 126.53 17.3993 125.939 15.8758C125.349 14.3523 124.534 13.0958 123.494 12.1098ZM112.49 14.4591C113.363 13.8789 114.428 13.5906 115.682 13.5906C116.935 13.5906 117.979 13.8753 118.816 14.4484C119.653 15.0215 120.283 15.8189 120.707 16.8405C121.008 17.5702 121.2 18.3853 121.287 19.2788H109.837C109.913 18.3747 110.131 17.5417 110.493 16.7764C110.953 15.8118 111.62 15.0393 112.493 14.4591H112.49Z',
   'M141.886 9.18733C140.487 9.18733 139.241 9.56465 138.15 10.3157C137.056 11.0668 136.291 12.1382 135.856 13.5265H135.596V9.51126H130.088V33.5137H135.769V19.3892C135.769 18.3747 136.005 17.4741 136.48 16.6945C136.954 15.915 137.61 15.3027 138.447 14.8578C139.284 14.4128 140.23 14.1921 141.277 14.1921C141.788 14.1921 142.302 14.2206 142.828 14.2776C143.353 14.3345 143.73 14.3986 143.965 14.4698V9.3404C143.69 9.29768 143.353 9.26209 142.962 9.23361C142.567 9.20513 142.212 9.19089 141.889 9.19089L141.886 9.18733Z',
   'M144.136 24.6324C141.734 24.6324 139.788 26.544 139.788 28.904C139.788 31.264 141.734 33.1755 144.136 33.1755C146.538 33.1755 148.484 31.264 148.484 28.904C148.484 26.544 146.538 24.6324 144.136 24.6324Z',
-];
-
-function playMark(setArmed) {
-  const scheduleFrame = typeof requestAnimationFrame === 'function'
-    ? requestAnimationFrame
-    : (callback) => setTimeout(callback, 0);
-  setArmed(false);
-  scheduleFrame(() => scheduleFrame(() => setArmed(true)));
-}
-
-function resolveWordmarkSize(size) {
-  if (typeof size === 'number') {
-    return { width: Number((size * WORDMARK_ASPECT_RATIO).toFixed(3)), height: size };
-  }
-
-  return WORDMARK_SIZE[size] ?? WORDMARK_SIZE.md;
-}
-
-function renderBrandSymbol({ isFavicon }) {
-  if (isFavicon) {
-    return (
-      <>
-        <rect width="45" height="45" fill="var(--dt-accent)" />
-        <path
-          d="M35 18.31V11C29.5756 11 24.8659 12.6995 22.5 15.1925C20.1341 12.6995 15.4244 11 10 11V18.31C15.4244 18.31 20.1341 20.007 22.5 22.5C20.1341 24.993 15.4244 26.69 10 26.69V34C15.4244 34 20.1341 32.3005 22.5 29.8075C24.8659 32.3005 29.5756 34 35 34V26.69C29.5756 26.69 24.8659 24.993 22.5 22.5C24.8659 20.007 29.5756 18.31 35 18.31Z"
-          fill="var(--dt-paper)"
-        />
-      </>
-    );
-  }
-
-  return (
-    <path
-      d="M15 4.44959V0C11.7454 0 8.91951 1.0345 7.5 2.55197C6.08049 1.0345 3.25463 0 0 0V4.44959C3.25463 4.44959 6.08049 5.48253 7.5 7C6.08049 8.51747 3.25463 9.55041 0 9.55041V14C3.25463 14 6.08049 12.9655 7.5 11.448C8.91951 12.9655 11.7454 14 15 14V9.55041C11.7454 9.55041 8.91951 8.51747 7.5 7C8.91951 5.48253 11.7454 4.44959 15 4.44959Z"
-      fill="currentColor"
-    />
-  );
-}
-
-function renderWordmark() {
-  const dotIndex = WORDMARK_PATHS.length - 1;
-
-  return (
-    <svg width="100%" height="100%" viewBox={WORDMARK_VIEW_BOX} aria-hidden="true" focusable="false" style={{ display: 'block' }}>
-      {WORDMARK_PATHS.map((path, index) => (
-        <path key={path} className={index === dotIndex ? 'dt-brand-logo-dot' : undefined} d={path} fill="currentColor" />
-      ))}
-    </svg>
-  );
-}
-
-export const BrandLogo = forwardRef(function BrandLogo({ size = 'md', autoplay = false, loop = false, lang = 'ko', style }, ref) {
-  const isSymbol = size === BRAND_LOGO_SIZE_NAME.Symbol;
-  const isFavicon = size === BRAND_LOGO_SIZE_NAME.Favicon;
-  const [armed, setArmed] = useState(false);
-
-  useImperativeHandle(ref, () => ({
-    play() {
-      playMark(setArmed);
-    },
-  }), []);
-
-  useEffect(() => {
-    if (!autoplay) return;
-    const timeout = setTimeout(() => playMark(setArmed), 200);
-    return () => clearTimeout(timeout);
-  }, [autoplay]);
-
-  useEffect(() => {
-    if (!loop) return;
-    let alive = true;
-    const interval = setInterval(() => {
-      if (!alive) return;
-      playMark((value) => {
-        if (alive) setArmed(value);
-      });
-    }, 7000);
-    return () => {
-      alive = false;
-      clearInterval(interval);
-    };
-  }, [loop]);
-
-  if (isSymbol || isFavicon) {
-    const symbolSize = isFavicon ? SYMBOL_SIZE.favicon : SYMBOL_SIZE.symbol;
-
-    return (
-      <span
-        aria-label={LABEL[lang] ?? LABEL.ko}
-        style={{
-          display: 'inline-flex',
-          width: symbolSize.width,
-          height: symbolSize.height,
-          color: 'var(--dt-accent)',
-          userSelect: 'none',
-          ...style,
-        }}
-      >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox={isFavicon ? '0 0 45 45' : '0 0 15 14'}
-          aria-hidden="true"
-          focusable="false"
-          style={{ display: 'block' }}
-        >
-          {renderBrandSymbol({ isFavicon })}
-        </svg>
-      </span>
-    );
-  }
-
-  const wordmarkSize = resolveWordmarkSize(size);
-
-  return (
-    <span
-      aria-label={LABEL[lang] ?? LABEL.ko}
-      className="dt-brand-logo"
-      data-armed={armed ? 'true' : 'false'}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        width: wordmarkSize.width,
-        height: wordmarkSize.height,
-        fontFamily: 'var(--dt-font-sans)',
-        fontWeight: 780,
-        letterSpacing: 0,
-        lineHeight: 1,
-        color: 'var(--dt-accent)',
-        userSelect: 'none',
-        ...style,
-      }}
-    >
-      <span className="dt-brand-logo-wordmark" aria-hidden="true">
-        {renderWordmark()}
-      </span>
-    </span>
-  );
-});
+] as const;

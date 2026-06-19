@@ -122,12 +122,13 @@ encoded throughout this system.
 
 ## Brand mark (v3)
 
-The logo is the **Bridger. wordmark plus a single persimmon period**. The wordmark
-renders in persimmon across product and marketing surfaces; `symbol` and
-`favicon` variants are reserved for tight icon slots. Korean/English only change
-the accessible label (`브릿저` / `Bridger.`) and surrounding product copy. Render
-it with the `BrandLogo` component from `@bridger-kr/react`; do not recreate a
-page-local logo.
+The logo is the **Bridger. Figma vector wordmark plus a single persimmon period**.
+The wordmark renders in persimmon across product and marketing surfaces; `lg`
+matches the 148.484x43 Figma frame, `md` matches the 69.062x20 Figma frame, and
+`symbol` / `favicon` variants are reserved for tight icon slots. Korean/English
+only change the accessible label (`브릿저` / `Bridger.`) and surrounding product
+copy. Render it with the `BrandLogo` component from `@bridger-kr/react`; do not
+recreate a page-local logo.
 
 ---
 

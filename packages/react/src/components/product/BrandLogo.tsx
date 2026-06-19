@@ -7,6 +7,15 @@ import {
   type Dispatch,
   type SetStateAction,
 } from 'react';
+import {
+  BRAND_SYMBOL_SIZE,
+  BRAND_SYMBOL_VIEW_BOX,
+  BRAND_WORDMARK_ASPECT_RATIO,
+  BRAND_WORDMARK_PATHS,
+  BRAND_WORDMARK_SIZE,
+  BRAND_WORDMARK_VIEW_BOX,
+  type BrandLogoFrameSize,
+} from './brandLogoGeometry';
 
 export const BRAND_LOGO_LANGUAGE = {
   Korean: 'ko',
@@ -22,15 +31,6 @@ export const BRAND_LOGO_SIZE_NAME = {
   Favicon: 'favicon',
 } as const;
 
-const BRAND_LOGO_SIZE = {
-  [BRAND_LOGO_SIZE_NAME.Small]: 20,
-  [BRAND_LOGO_SIZE_NAME.Medium]: 28,
-  [BRAND_LOGO_SIZE_NAME.Large]: 56,
-  [BRAND_LOGO_SIZE_NAME.ExtraLarge]: 76,
-  [BRAND_LOGO_SIZE_NAME.Symbol]: 20,
-  [BRAND_LOGO_SIZE_NAME.Favicon]: 45,
-} as const;
-
 const BRAND_WORDMARK = 'Bridger';
 const BRAND_WORDMARK_PERIOD = '.';
 
@@ -40,7 +40,7 @@ const BRAND_LOGO_LABEL: Record<BrandLogoLanguage, string> = {
 };
 
 export type BrandLogoLanguage = (typeof BRAND_LOGO_LANGUAGE)[keyof typeof BRAND_LOGO_LANGUAGE];
-export type BrandLogoSize = keyof typeof BRAND_LOGO_SIZE;
+export type BrandLogoSize = keyof typeof BRAND_WORDMARK_SIZE | keyof typeof BRAND_SYMBOL_SIZE;
 
 export interface BrandLogoHandle {
   readonly play: () => void;
@@ -85,6 +85,51 @@ function renderBrandSymbol({ isFavicon }: { readonly isFavicon: boolean }) {
   );
 }
 
+function renderBrandWordmark() {
+  const dotIndex = BRAND_WORDMARK_PATHS.length - 1;
+
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      viewBox={BRAND_WORDMARK_VIEW_BOX}
+      aria-hidden="true"
+      focusable="false"
+      style={{ display: 'block' }}
+    >
+      {BRAND_WORDMARK_PATHS.map((path, index) => (
+        <path
+          key={path}
+          className={index === dotIndex ? 'dt-brand-logo-dot' : undefined}
+          d={path}
+          fill="currentColor"
+        />
+      ))}
+    </svg>
+  );
+}
+
+function resolveWordmarkSize(size: BrandLogoSize | number): BrandLogoFrameSize {
+  if (typeof size === 'number') {
+    return {
+      width: Number((size * BRAND_WORDMARK_ASPECT_RATIO).toFixed(3)),
+      height: size,
+    };
+  }
+
+  if (size in BRAND_WORDMARK_SIZE) {
+    return BRAND_WORDMARK_SIZE[size as keyof typeof BRAND_WORDMARK_SIZE];
+  }
+
+  return BRAND_WORDMARK_SIZE[BRAND_LOGO_SIZE_NAME.Medium];
+}
+
+function resolveSymbolSize({ isFavicon }: { readonly isFavicon: boolean }): BrandLogoFrameSize {
+  return isFavicon
+    ? BRAND_SYMBOL_SIZE[BRAND_LOGO_SIZE_NAME.Favicon]
+    : BRAND_SYMBOL_SIZE[BRAND_LOGO_SIZE_NAME.Symbol];
+}
+
 export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function BrandLogo(
   {
     size = BRAND_LOGO_SIZE_NAME.Medium,
@@ -95,7 +140,6 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
   },
   ref,
 ) {
-  const fontSize = typeof size === 'number' ? size : (BRAND_LOGO_SIZE[size] ?? BRAND_LOGO_SIZE.md);
   const isSymbol = size === BRAND_LOGO_SIZE_NAME.Symbol;
   const isFavicon = size === BRAND_LOGO_SIZE_NAME.Favicon;
   const [armed, setArmed] = useState(false);
@@ -133,15 +177,15 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
   }, [loop]);
 
   if (isSymbol || isFavicon) {
-    const symbolSize = isFavicon ? BRAND_LOGO_SIZE.favicon : fontSize;
+    const symbolSize = resolveSymbolSize({ isFavicon });
 
     return (
       <span
         aria-label={BRAND_LOGO_LABEL[lang]}
         style={{
           display: 'inline-flex',
-          width: symbolSize,
-          height: symbolSize,
+          width: symbolSize.width,
+          height: symbolSize.height,
           color: 'var(--dt-accent)',
           userSelect: 'none',
           ...style,
@@ -150,7 +194,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
         <svg
           width="100%"
           height="100%"
-          viewBox={isFavicon ? '0 0 45 45' : '0 0 15 14'}
+          viewBox={isFavicon ? BRAND_SYMBOL_VIEW_BOX.favicon : BRAND_SYMBOL_VIEW_BOX.symbol}
           aria-hidden="true"
           focusable="false"
           style={{ display: 'block' }}
@@ -161,6 +205,8 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
     );
   }
 
+  const wordmarkSize = resolveWordmarkSize(size);
+
   return (
     <span
       aria-label={BRAND_LOGO_LABEL[lang]}
@@ -169,9 +215,10 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
       style={{
         display: 'inline-flex',
         alignItems: 'center',
+        width: wordmarkSize.width,
+        height: wordmarkSize.height,
         fontFamily: 'var(--dt-font-sans)',
         fontWeight: 780,
-        fontSize,
         letterSpacing: 0,
         lineHeight: 1,
         color: 'var(--dt-accent)',
@@ -179,9 +226,8 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
         ...style,
       }}
     >
-      <span className="dt-brand-logo-wordmark">
-        {BRAND_WORDMARK}
-        <span className="dt-brand-logo-dot">{BRAND_WORDMARK_PERIOD}</span>
+      <span className="dt-brand-logo-wordmark" aria-hidden="true">
+        {renderBrandWordmark()}
       </span>
     </span>
   );

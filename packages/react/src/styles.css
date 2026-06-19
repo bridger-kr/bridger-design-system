@@ -456,13 +456,14 @@
 }
 
 .dt-brand-logo-wordmark {
-  display: inline-flex;
-  align-items: baseline;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .dt-brand-logo-dot {
-  display: inline-block;
   color: var(--dt-accent);
+  transform-box: fill-box;
   transform-origin: center;
   transition:
     transform 180ms var(--dt-ease, ease),
@@ -470,7 +471,7 @@
 }
 
 .dt-brand-logo[data-armed='true'] .dt-brand-logo-dot {
-  transform: translateY(-0.05em) scale(1.08);
+  transform: translateY(-1px) scale(1.08);
 }
 
 @media (min-width: 768px) {

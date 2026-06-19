@@ -255,8 +255,8 @@
     {
       "name": "BrandLogo",
       "variants": [
-        { "props": { "Size": "lg" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "align": "CENTER", "children": [ { "type": "text", "text": "Bridger.", "size": 40, "weight": 780, "letterSpacing": 0, "color": "{color/accent/accent}" } ] } },
-        { "props": { "Size": "md" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "align": "CENTER", "children": [ { "type": "text", "text": "Bridger.", "size": 22, "weight": 780, "letterSpacing": 0, "color": "{color/accent/accent}" } ] } },
+        { "props": { "Size": "lg" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "align": "CENTER", "w": 148.484, "h": 43, "children": [ { "type": "vector", "name": "Bridger wordmark", "w": 148.484, "h": 43, "viewBox": "0 0 148.484 43", "fill": "{color/accent/accent}" } ] } },
+        { "props": { "Size": "md" }, "node": { "type": "frame", "name": "BrandLogo", "dir": "horizontal", "align": "CENTER", "w": 69.062, "h": 20, "children": [ { "type": "vector", "name": "Bridger wordmark", "w": 69.062, "h": 20, "viewBox": "0 0 148.484 43", "fill": "{color/accent/accent}" } ] } },
         { "props": { "Size": "Symbol" }, "node": { "type": "vector", "name": "BrandLogo symbol", "w": 15, "h": 14, "fill": "{color/accent/accent}" } },
         { "props": { "Size": "Favicon" }, "node": { "type": "frame", "name": "BrandLogo favicon", "w": 45, "h": 45, "fill": "{color/accent/accent}", "children": [ { "type": "vector", "name": "symbol-knockout", "w": 25, "h": 23, "fill": "{color/surface/paper}" } ] } }
       ]
