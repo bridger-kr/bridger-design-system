@@ -138,7 +138,7 @@
   --dt-product-accent-strong: #ec5e1f;
   --dt-product-ink: #15110c;
   --dt-product-muted: #786f63;
-  --dt-product-line: transparent;
+  --dt-product-line: color-mix(in srgb, var(--dt-product-ink) 12%, var(--dt-product-paper));
   min-height: 100vh;
   color: var(--dt-product-accent);
   font-family: var(--dt-font-sans);
@@ -164,16 +164,17 @@
 .dt-product-cinematic-wash {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, color-mix(in srgb, #ffffff 10%, transparent), transparent 58%);
+  background:
+    radial-gradient(circle at 50% 52%, color-mix(in srgb, var(--dt-product-accent) 16%, transparent), transparent 34%),
+    radial-gradient(circle at 74% 28%, color-mix(in srgb, var(--dt-product-card-strong) 68%, transparent), transparent 38%);
 }
 
 .dt-product-cinematic-lines {
   position: absolute;
   inset: auto 0 16px;
-  display: none;
   width: 100%;
   height: min(62vw, 620px);
-  opacity: 0;
+  opacity: 0.74;
 }
 
 .dt-product-cinematic-track,
@@ -183,8 +184,8 @@
 }
 
 .dt-product-cinematic-track {
-  stroke: transparent;
-  stroke-width: 0;
+  stroke: color-mix(in srgb, var(--dt-product-accent) 18%, transparent);
+  stroke-width: 1;
 }
 
 .dt-product-cinematic-flow {
@@ -233,9 +234,78 @@
   gap: 12px;
 }
 
+.dt-product-topbar-actions .dt-product-action-pill {
+  min-height: 40px;
+  padding-inline: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dt-product-topbar-actions .dt-product-action-pill-icon-only {
+  width: 40px;
+  min-width: 40px;
+  padding-inline: 0;
+}
+
 .dt-product-topbar-actions .dt-product-action-pill-icon:only-child,
 .dt-product-topbar-icon .dt-product-action-pill-icon {
   margin-inline: auto;
+}
+
+.dt-product-topbar-menu {
+  display: none;
+}
+
+.dt-product-topbar-menu-button {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 18px;
+  background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
+  color: var(--dt-product-accent);
+  cursor: pointer;
+  list-style: none;
+}
+
+.dt-product-topbar-menu-button::-webkit-details-marker {
+  display: none;
+}
+
+.dt-product-topbar-menu-button span {
+  width: 15px;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+}
+
+.dt-product-topbar-menu-panel {
+  position: fixed;
+  top: 76px;
+  right: 10px;
+  left: 10px;
+  z-index: 50;
+  display: grid;
+  gap: 8px;
+  border: 1px solid color-mix(in srgb, var(--dt-product-accent) 18%, transparent);
+  border-radius: 22px;
+  background: color-mix(in srgb, #ffffff 84%, var(--dt-product-paper));
+  box-shadow: var(--dt-shadow-lg);
+  padding: 10px;
+}
+
+.dt-product-topbar-menu-panel .dt-product-action-pill {
+  min-height: 44px;
+  justify-content: flex-start;
+  padding-inline: 16px;
+  font-size: 13px;
+}
+
+.dt-product-topbar-menu-panel .dt-product-action-pill-icon-only {
+  width: auto;
 }
 
 .dt-product-action-pill {
@@ -246,7 +316,7 @@
   border: none;
   border-radius: 18px;
   color: var(--dt-product-accent);
-  font-weight: 500;
+  font-weight: 560;
   text-decoration: none;
   transition:
     transform var(--dt-motion),
@@ -264,8 +334,8 @@
 }
 
 .dt-product-action-pill-compact {
-  min-height: 40px;
-  padding-inline: 20px;
+  min-height: 36px;
+  padding-inline: 18px;
   border-radius: 18px;
   font-size: 12px;
 }
@@ -273,9 +343,8 @@
 .dt-product-action-pill-hero {
   min-height: 56px;
   padding-inline: 26px;
-  border-radius: 18px;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 850;
 }
 
 .dt-product-action-pill-default {
@@ -316,7 +385,7 @@
 .dt-product-side-rail a {
   color: var(--dt-product-accent);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: 560;
   line-height: 1.2;
   text-decoration: none;
 }
@@ -375,8 +444,7 @@
   position: absolute;
   width: 68%;
   height: 1px;
-  background: var(--dt-product-accent);
-  opacity: 0.46;
+  background: color-mix(in srgb, var(--dt-product-accent) 46%, transparent);
 }
 
 .dt-product-motion-copy {
@@ -389,7 +457,7 @@
   background: var(--dt-product-accent);
   color: #ffffff;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 560;
   letter-spacing: 0;
 }
 
@@ -541,7 +609,11 @@
   }
 
   .dt-product-topbar-actions {
-    gap: 3px;
+    display: none;
+  }
+
+  .dt-product-topbar-menu {
+    display: block;
   }
 
   .dt-product-action-pill-compact {
@@ -555,7 +627,6 @@
     padding-inline: 18px;
     font-size: 13px;
   }
-
 }
 
 @media (prefers-reduced-motion: reduce) {

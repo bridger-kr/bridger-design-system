@@ -158,6 +158,12 @@ describe('Product components', () => {
       const { container } = render(
         <ProductTopbar
           brand={<a href="/">Bridger</a>}
+          mobileMenuLabel="메뉴 열기"
+          mobileActions={
+            <ProductActionPill href="/docs" leadingIcon={<span aria-hidden="true">?</span>}>
+              문서 보기
+            </ProductActionPill>
+          }
           actions={
             <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
               콘솔 열기
@@ -168,6 +174,9 @@ describe('Product components', () => {
 
       expect(screen.getByRole('banner').className).toContain('dt-product-topbar');
       expect(screen.getByRole('navigation', { name: 'Primary' })).toBeTruthy();
+      expect(screen.getByRole('navigation', { name: 'Mobile primary' })).toBeTruthy();
+      expect(screen.getByLabelText('메뉴 열기')).toBeTruthy();
+      expect(screen.getByText('문서 보기')).toBeTruthy();
       expect(container.querySelector('.dt-product-topbar .dt-product-action-pill-hero')).toBeTruthy();
     });
 
@@ -182,7 +191,7 @@ describe('Product components', () => {
       );
 
       const header = container.querySelector('.dt-product-page-header');
-      expect(header).toBeTruthy();
+      if (!(header instanceof HTMLElement)) throw new Error('ProductPageHeader root was not rendered');
       expect(within(header).getByRole('heading', { name: '연결 설정' })).toBeTruthy();
       expect(within(header).getByText('API')).toBeTruthy();
       expect(screen.getByRole('button', { name: '저장' })).toBeTruthy();

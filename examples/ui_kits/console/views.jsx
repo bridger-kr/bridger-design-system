@@ -1,5 +1,5 @@
 /* Bridger Console — catalog, logs views + App root */
-const { Icon: CIcon, BrandMark: CMark, Sidebar: CSidebar, Dashboard: CDashboard } = window.ConsoleParts;
+const { Icon: CIcon, Sidebar: CSidebar, Dashboard: CDashboard } = window.ConsoleParts;
 const { useState: useCS, useEffect: useCE } = React;
 
 const TOOLS = [

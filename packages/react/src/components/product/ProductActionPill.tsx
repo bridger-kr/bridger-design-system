@@ -39,13 +39,15 @@ export type ProductActionPillProps<T extends ElementType = 'a'> = {
 export function productActionPillClassName({
   variant = PRODUCT_ACTION_PILL_VARIANT.Default,
   size = PRODUCT_ACTION_PILL_SIZE.Compact,
+  iconOnly = false,
   className,
 }: {
   variant?: ProductActionPillVariant;
   size?: ProductActionPillSize;
+  iconOnly?: boolean;
   className?: string;
 } = {}) {
-  return cx('dt-product-action-pill', VARIANT_CLASS[variant], SIZE_CLASS[size], className);
+  return cx('dt-product-action-pill', VARIANT_CLASS[variant], SIZE_CLASS[size], iconOnly && 'dt-product-action-pill-icon-only', className);
 }
 
 export function ProductActionPill<T extends ElementType = 'a'>({
@@ -59,9 +61,10 @@ export function ProductActionPill<T extends ElementType = 'a'>({
   ...rest
 }: ProductActionPillProps<T>) {
   const Component = as ?? 'a';
+  const iconOnly = Boolean(!children && (leadingIcon || trailingIcon));
 
   return (
-    <Component className={productActionPillClassName({ variant, size, className })} {...rest}>
+    <Component className={productActionPillClassName({ variant, size, iconOnly, className })} {...rest}>
       {leadingIcon ? <span className="dt-product-action-pill-icon">{leadingIcon}</span> : null}
       {children ? <span className="dt-product-action-pill-label">{children}</span> : null}
       {trailingIcon ? <span className="dt-product-action-pill-icon">{trailingIcon}</span> : null}
