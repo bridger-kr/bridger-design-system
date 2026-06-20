@@ -205,6 +205,39 @@
   animation-delay: -4.2s;
 }
 
+.dt-product-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  min-height: 68px;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--dt-product-paper);
+  padding-inline: clamp(18px, 4vw, 56px);
+  backdrop-filter: blur(18px);
+}
+
+.dt-product-topbar-brand {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+}
+
+.dt-product-topbar-actions {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+}
+
+.dt-product-topbar-actions .dt-product-action-pill-icon:only-child,
+.dt-product-topbar-icon .dt-product-action-pill-icon {
+  margin-inline: auto;
+}
+
 .dt-product-action-pill {
   display: inline-flex;
   align-items: center;
@@ -237,11 +270,12 @@
   font-size: 12px;
 }
 
-.dt-product-action-pill-figma {
-  min-height: 72px;
-  padding-inline: 34px;
+.dt-product-action-pill-hero {
+  min-height: 56px;
+  padding-inline: 26px;
   border-radius: 18px;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .dt-product-action-pill-default {
@@ -502,17 +536,26 @@
 }
 
 @media (max-width: 520px) {
+  .dt-product-topbar {
+    padding-inline: 10px;
+  }
+
+  .dt-product-topbar-actions {
+    gap: 3px;
+  }
+
   .dt-product-action-pill-compact {
     min-height: 34px;
     padding-inline: 13px;
     font-size: 11px;
   }
 
-  .dt-product-action-pill-figma {
-    min-height: 56px;
-    padding-inline: 20px;
+  .dt-product-action-pill-hero {
+    min-height: 48px;
+    padding-inline: 18px;
     font-size: 13px;
   }
+
 }
 
 @media (prefers-reduced-motion: reduce) {

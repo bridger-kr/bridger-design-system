@@ -38,5 +38,6 @@ export {
   type ProductSideRailProps,
 } from './ProductCinematic';
 export { ProductPageHeader, type ProductPageHeaderProps } from './ProductPageHeader';
+export { ProductTopbar, type ProductTopbarProps } from './ProductTopbar';
 export { SectionCard, type SectionCardProps } from './SectionCard';
 export { ToolCard, type ToolCardProps } from './ToolCard';

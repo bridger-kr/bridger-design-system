@@ -9,7 +9,7 @@ export const PRODUCT_ACTION_PILL_VARIANT = {
 
 export const PRODUCT_ACTION_PILL_SIZE = {
   Compact: 'compact',
-  Figma: 'figma',
+  Hero: 'hero',
 } as const;
 
 export type ProductActionPillVariant = (typeof PRODUCT_ACTION_PILL_VARIANT)[keyof typeof PRODUCT_ACTION_PILL_VARIANT];
@@ -23,7 +23,7 @@ const VARIANT_CLASS: Record<ProductActionPillVariant, string> = {
 
 const SIZE_CLASS: Record<ProductActionPillSize, string> = {
   [PRODUCT_ACTION_PILL_SIZE.Compact]: 'dt-product-action-pill-compact',
-  [PRODUCT_ACTION_PILL_SIZE.Figma]: 'dt-product-action-pill-figma',
+  [PRODUCT_ACTION_PILL_SIZE.Hero]: 'dt-product-action-pill-hero',
 };
 
 export type ProductActionPillProps<T extends ElementType = 'a'> = {

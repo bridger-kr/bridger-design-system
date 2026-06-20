@@ -6,6 +6,7 @@ import {
   ActionList,
   ActionListIndex,
   BRAND_LOGO_LANGUAGE,
+  PRODUCT_ACTION_PILL_SIZE,
   PRODUCT_ACTION_PILL_VARIANT,
   PRODUCT_SHELL_TONE,
   BrandLogo,
@@ -15,6 +16,7 @@ import {
   ProductPageHeader,
   ProductShell,
   ProductSideRail,
+  ProductTopbar,
   SectionCard,
   ToolCard,
   actionListClassName,
@@ -115,9 +117,9 @@ describe('Product components', () => {
       expect(screen.getByText('1').className).toBe('dt-action-list-index');
     });
 
-    it('renders Figma navigation item variants through the action pill contract', () => {
+    it('renders product action pill variants through the shared contract', () => {
       render(
-        <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent}>
+        <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
           콘솔 열기
         </ProductActionPill>,
       );
@@ -125,9 +127,12 @@ describe('Product components', () => {
       const pill = screen.getByRole('link', { name: '콘솔 열기' });
       expect(pill.className).toContain('dt-product-action-pill');
       expect(pill.className).toContain('dt-product-action-pill-accent');
+      expect(pill.className).toContain('dt-product-action-pill-hero');
+      expect(productActionPillClassName()).toContain('dt-product-action-pill-compact');
       expect(productActionPillClassName({ variant: PRODUCT_ACTION_PILL_VARIANT.Outline })).toContain(
         'dt-product-action-pill-outline',
       );
+      expect(productActionPillClassName({ size: PRODUCT_ACTION_PILL_SIZE.Hero })).toContain('dt-product-action-pill-hero');
     });
 
     it('renders the cinematic shell, backdrop, and side rail used by marketing pages', () => {
@@ -149,8 +154,25 @@ describe('Product components', () => {
       expect(screen.getByRole('link', { name: 'Features' }).getAttribute('href')).toBe('#features');
     });
 
+    it('renders the product topbar without app-local button wrappers', () => {
+      const { container } = render(
+        <ProductTopbar
+          brand={<a href="/">Bridger</a>}
+          actions={
+            <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
+              콘솔 열기
+            </ProductActionPill>
+          }
+        />,
+      );
+
+      expect(screen.getByRole('banner').className).toContain('dt-product-topbar');
+      expect(screen.getByRole('navigation', { name: 'Primary' })).toBeTruthy();
+      expect(container.querySelector('.dt-product-topbar .dt-product-action-pill-hero')).toBeTruthy();
+    });
+
     it('renders the console page header without app-local layout wrappers', () => {
-      render(
+      const { container } = render(
         <ProductPageHeader
           eyebrow="API"
           title="연결 설정"
@@ -159,7 +181,8 @@ describe('Product components', () => {
         />,
       );
 
-      const header = screen.getByRole('banner');
+      const header = container.querySelector('.dt-product-page-header');
+      expect(header).toBeTruthy();
       expect(within(header).getByRole('heading', { name: '연결 설정' })).toBeTruthy();
       expect(within(header).getByText('API')).toBeTruthy();
       expect(screen.getByRole('button', { name: '저장' })).toBeTruthy();
