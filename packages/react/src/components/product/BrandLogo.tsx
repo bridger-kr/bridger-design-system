@@ -188,6 +188,8 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
           height: symbolSize.height,
           color: 'var(--dt-accent)',
           userSelect: 'none',
+          verticalAlign: 'middle',
+          flexShrink: 0,
           ...style,
         }}
       >
@@ -223,6 +225,8 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
         lineHeight: 1,
         color: 'var(--dt-accent)',
         userSelect: 'none',
+        verticalAlign: 'middle',
+        flexShrink: 0,
         ...style,
       }}
     >
