@@ -5,7 +5,7 @@ export interface BrandLogoHandle {
 }
 
 export interface BrandLogoProps {
-  size?: 'sm' | 'md' | 'lg' | 'xl' | number;
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'symbol' | 'favicon' | number;
   autoplay?: boolean;
   loop?: boolean;
   lang?: 'ko' | 'en';

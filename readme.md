@@ -22,14 +22,14 @@ private Figma plugin:
 
 | Package | Public? | What it is |
 | --- | --- | --- |
-| [`@bridger-ds/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
-| [`@bridger-ds/react`](packages/react) | ✅ npm | 40 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
+| [`@bridger-kr/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
+| [`@bridger-kr/react`](packages/react) | ✅ npm | 40 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
 | [`bridger-figma-plugin`](packages/figma-plugin) | 🔒 private | Figma Community plugin that builds Variables/Styles/40 Component Sets from the tokens. Not on npm. |
 
 ### Install
 
 ```sh
-pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
+pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 ```
 
 ### CSS setup
@@ -37,26 +37,26 @@ pnpm add @bridger-ds/react @bridger-ds/tokens react react-dom
 Import the token contract once, then the React component styles:
 
 ```ts
-import '@bridger-ds/tokens/css';   // --dt-* variables, fonts, base classes
-import '@bridger-ds/react/styles.css';
+import '@bridger-kr/tokens/css';   // --dt-* variables, fonts, base classes
+import '@bridger-kr/react/styles.css';
 ```
 
 ### React usage
 
 ```tsx
-import { Button, Table, CommandPalette } from '@bridger-ds/react';
+import { Button, Table, CommandPalette } from '@bridger-kr/react';
 ```
 
 Per-component subpath imports for maximum tree-shaking:
 
 ```tsx
-import { Button } from '@bridger-ds/react/components/core/Button';
+import { Button } from '@bridger-kr/react/components/core/Button';
 ```
 
 ### Tokens in TS/JS
 
 ```ts
-import { colors, spacing, typography } from '@bridger-ds/tokens';
+import { colors, spacing, typography } from '@bridger-kr/tokens';
 colors.light.accent; // "#ec5e1f"
 ```
 
@@ -101,7 +101,7 @@ or **브릿저**.
 Store these even though the reader may not have access — they are the source of truth.
 
 **GitHub (org `bridger-kr`)** — explore these to build better Bridger designs:
-- [`bridger-kr/bridger-web`](https://github.com/bridger-kr/bridger-web) — frontend monorepo: `landing/` (Vite marketing app) and `dashboard/` (Vite console app). It consumes this repo through `@bridger-ds/react` and `@bridger-ds/tokens`.
+- [`bridger-kr/bridger-web`](https://github.com/bridger-kr/bridger-web) — frontend monorepo: `landing/` (Vite marketing app) and `dashboard/` (Vite console app). It consumes this repo through `@bridger-kr/react` and `@bridger-kr/tokens`.
 - [`bridger-kr/bridger-ops-bot`](https://github.com/bridger-kr/bridger-ops-bot) — ops automation bot.
 - [`bridger-kr/bridger-spec`](https://github.com/bridger-kr/bridger-spec) — OpenAPI presets + codegen (mcp-gen, openapi-gen).
 
@@ -109,13 +109,11 @@ Key files lifted into this system: the original Bridger web token contract,
 `colors_and_type.css`, `dashboard/src/styles.css`, `dashboard/tailwind.config.ts`,
 `landing/src/components/BrandLogo.jsx`, plus agency logos and the Pretendard webfont.
 
-**Figma** — `제목 없음.fig` (mounted). An **early brand exploration** (Page-1, Page-2)
-that predates the production token contract: it uses Figtree / Funnel Display /
-Bitcount Single type and a hotter orange (`#fd4900`) + cobalt (`#1158fe`). The
-production system has since standardized on **Pretendard + JetBrains Mono** and
-persimmon `#ec5e1f` per `packages/tokens/css/contract.css` and `DESIGN.md`. We build on the
-**codebase contract**, not the Figma exploration — but the Figma's bridging-line
-brand mark concept carries through to the live logo.
+**Figma** — `DXAVhKo8uCGJ4HSQYAq9dY` (mounted). The production component
+library uses **Pretendard + JetBrains Mono** and persimmon `#ec5e1f` per
+`packages/tokens/css/contract.css` and `DESIGN.md`. The current BrandLogo source
+is the Figma component page: `BrandLogo` exposes wordmark `lg` / `md`, plus
+`Symbol` and `Favicon` variants for constrained icon surfaces.
 
 **`DESIGN.md`** (provided) — the brand's written design canon. Its rules are
 encoded throughout this system.
@@ -124,12 +122,13 @@ encoded throughout this system.
 
 ## Brand mark (v3)
 
-The logo is the **bridge-line symbol plus the Bridger wordmark**. The symbol is a
-compact two-line route mark in persimmon over a muted track; the visible wordmark
-is always `Bridger` across locales. Korean/English only change the accessible
-label (`브릿저` / `Bridger`) and surrounding product copy. Render it with the
-`BrandLogo` component from `@bridger-ds/react`; do not recreate a plain
-`Bridger.` text mark in product surfaces.
+The logo is the **Bridger. Figma vector wordmark plus a single persimmon period**.
+The wordmark renders in persimmon across product and marketing surfaces; `lg`
+matches the 148.484x43 Figma frame, `md` matches the 69.062x20 Figma frame, and
+`symbol` / `favicon` variants are reserved for tight icon slots. Korean/English
+only change the accessible label (`브릿저` / `Bridger.`) and surrounding product
+copy. Render it with the `BrandLogo` component from `@bridger-kr/react`; do not
+recreate a page-local logo.
 
 ---
 
@@ -264,8 +263,8 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 ## Index / manifest
 
 **`packages/`** — the monorepo workspaces (the publishable surface):
-- **`tokens/`** (`@bridger-ds/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
-- **`react/`** (`@bridger-ds/react`) — 40 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
+- **`tokens/`** (`@bridger-kr/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
+- **`react/`** (`@bridger-kr/react`) — 40 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
 - **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
 **Root sources** (still consumed by the Figma plugin + examples):
@@ -281,7 +280,7 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, **Drawer** (side sheet).
 - **data** — Table, StatTile, Avatar, Pagination, **CodeBlock** (dark code surface), **KeyValue** (spec metadata list), **LogRow** (execution-log stream), **UsageMeter** (quota bar).
 - **navigation** — Breadcrumb, Menu, **Sidebar** (console nav rail), **CommandPalette** (⌘K), **Stepper** (onboarding progress).
-- **product** — BrandLogo (bridge-line mark + wordmark), SectionCard, ToolCard.
+- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard.
 
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (3–6px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 

@@ -5,7 +5,7 @@ import React from 'react';
    without pulling a syntax lib into the design system. */
 function highlight(line) {
   const out = [];
-  const re = /("(?:[^"\\]|\\.)*"\s*:)|("(?:[^"\\]|\\.)*")|(\b-?\d+(?:\.\d+)?\b)|(\b(?:true|false|null|GET|POST|PUT|DELETE)\b)|([{}\[\],:])/g;
+  const re = /("(?:[^"\\]|\\.)*"\s*:)|("(?:[^"\\]|\\.)*")|(\b-?\d+(?:\.\d+)?\b)|(\b(?:true|false|null|GET|POST|PUT|DELETE)\b)|([{}[\],:])/g;
   let last = 0, m;
   while ((m = re.exec(line)) !== null) {
     if (m.index > last) out.push({ t: line.slice(last, m.index), c: 'plain' });
@@ -32,7 +32,7 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
   const lines = String(code).replace(/\n$/, '').split('\n');
 
   const copy = () => {
-    try { navigator.clipboard?.writeText(code); } catch (e) { /* noop */ }
+    try { navigator.clipboard?.writeText(code); } catch { /* noop */ }
     setCopied(true); setTimeout(() => setCopied(false), 1400);
   };
 

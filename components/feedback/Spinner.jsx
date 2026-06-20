@@ -2,7 +2,6 @@ import React from 'react';
 
 /** Spinner — a thin persimmon arc rotating on a faint track. */
 export function Spinner({ size = 18, stroke = 2, color = 'var(--dt-accent)', style }) {
-  const id = React.useId();
   return (
     <span style={{ display: 'inline-flex', ...style }} role="status" aria-label="로딩 중">
       <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ animation: 'dt-spin 0.7s linear infinite' }}>

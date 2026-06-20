@@ -1,8 +1,10 @@
 // @vitest-environment jsdom
 import { createRef } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import {
+  ActionList,
+  ActionListIndex,
   BRAND_LOGO_LANGUAGE,
   PRODUCT_ACTION_PILL_SIZE,
   PRODUCT_ACTION_PILL_VARIANT,
@@ -17,20 +19,56 @@ import {
   ProductTopbar,
   SectionCard,
   ToolCard,
+  actionListClassName,
+  actionListItemClassName,
   productActionPillClassName,
 } from './index';
+import {
+  BRAND_SYMBOL_VIEW_BOX,
+  BRAND_WORDMARK_PATHS,
+  BRAND_WORDMARK_SIZE,
+  BRAND_WORDMARK_VIEW_BOX,
+} from './brandLogoGeometry';
 import type { BrandLogoHandle } from './index';
 
 describe('Product components', () => {
   describe('BrandLogo', () => {
-    it('renders the bridge-line symbol and stable Bridger wordmark', () => {
+    it('renders the Figma wordmark with a persimmon period', () => {
       const { container } = render(<BrandLogo lang="ko" />);
 
       expect(screen.getByLabelText('브릿저')).toBeTruthy();
-      expect(screen.getByText('Bridger')).toBeTruthy();
-      expect(container.querySelector('svg[viewBox="0 0 44 24"]')).toBeTruthy();
+      expect(container.querySelector('.dt-brand-logo-wordmark svg[viewBox="0 0 148.484 43"]')).toBeTruthy();
+      expect(BRAND_WORDMARK_VIEW_BOX).toBe('0 0 148.484 43');
+      expect(BRAND_WORDMARK_PATHS).toHaveLength(9);
+      expect(container.querySelector('.dt-brand-logo-dot')).toBeTruthy();
       expect(container.textContent).not.toContain('Bridger.');
+      expect(container.querySelector('svg[viewBox="0 0 44 24"]')).toBeFalsy();
+      expect(container.querySelector('.dt-brand-logo-line')).toBeFalsy();
       expect(BRAND_LOGO_LANGUAGE.Korean).toBe('ko');
+    });
+
+    it('uses the current Figma BrandLogo variant dimensions', () => {
+      const { container, rerender } = render(<BrandLogo size="lg" lang="en" />);
+      const largeLogo = screen.getByLabelText('Bridger.');
+
+      expect(largeLogo.style.width).toBe('148.484px');
+      expect(largeLogo.style.height).toBe('43px');
+      expect(BRAND_WORDMARK_SIZE.lg).toEqual({ width: 148.484, height: 43 });
+      expect(container.querySelector('svg[viewBox="0 0 148.484 43"]')).toBeTruthy();
+
+      rerender(<BrandLogo size="md" lang="en" />);
+      expect(screen.getByLabelText('Bridger.').style.width).toBe('69.062px');
+      expect(screen.getByLabelText('Bridger.').style.height).toBe('20px');
+
+      rerender(<BrandLogo size="symbol" lang="en" />);
+      expect(screen.getByLabelText('Bridger.').style.width).toBe('15px');
+      expect(screen.getByLabelText('Bridger.').style.height).toBe('14px');
+      expect(container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX.symbol}"]`)).toBeTruthy();
+
+      rerender(<BrandLogo size="favicon" lang="en" />);
+      expect(screen.getByLabelText('Bridger.').style.width).toBe('45px');
+      expect(screen.getByLabelText('Bridger.').style.height).toBe('45px');
+      expect(container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX.favicon}"]`)).toBeTruthy();
     });
 
     it('exposes an imperative play handle for brand interactions', () => {
@@ -64,6 +102,21 @@ describe('Product components', () => {
   });
 
   describe('Product composition primitives', () => {
+    it('exports the console action-list contract for guide-first flows', () => {
+      render(
+        <ActionList aria-label="시작 경로">
+          <a href="/register" className={actionListItemClassName({ interactive: true })}>
+            <ActionListIndex>1</ActionListIndex>
+            API 등록
+          </a>
+        </ActionList>,
+      );
+
+      expect(screen.getByLabelText('시작 경로').className).toBe(actionListClassName());
+      expect(screen.getByRole('link', { name: /API 등록/ }).className).toContain('dt-action-list-item-interactive');
+      expect(screen.getByText('1').className).toBe('dt-action-list-index');
+    });
+
     it('renders product action pill variants through the shared contract', () => {
       render(
         <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
@@ -137,8 +190,10 @@ describe('Product components', () => {
         />,
       );
 
-      expect(screen.getByRole('heading', { name: '연결 설정' })).toBeTruthy();
-      expect(container.querySelector('.dt-product-page-header-eyebrow')?.textContent).toBe('API');
+      const header = container.querySelector('.dt-product-page-header');
+      if (!(header instanceof HTMLElement)) throw new Error('ProductPageHeader root was not rendered');
+      expect(within(header).getByRole('heading', { name: '연결 설정' })).toBeTruthy();
+      expect(within(header).getByText('API')).toBeTruthy();
       expect(screen.getByRole('button', { name: '저장' })).toBeTruthy();
     });
   });

@@ -6,6 +6,56 @@
   transform: scale(var(--dt-press-scale));
 }
 
+.dt-action-list {
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-md);
+  background: var(--dt-surface);
+}
+
+.dt-action-list-item {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--dt-border);
+  padding: 14px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.dt-action-list-item:last-child {
+  border-bottom: 0;
+}
+
+.dt-action-list-item-interactive {
+  transition:
+    background-color var(--dt-motion-fast),
+    color var(--dt-motion-fast);
+}
+
+.dt-action-list-item-interactive:hover,
+.dt-action-list-item-interactive:focus-visible {
+  background: var(--dt-surface-raised);
+}
+
+.dt-action-list-index {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-sm);
+  background: var(--dt-surface-sunken);
+  color: var(--dt-muted-strong);
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .dt-alert-motion-subtle {
   animation: dt-alert-enter var(--dt-motion-slow) both;
 }
@@ -507,6 +557,25 @@
   }
 }
 
+.dt-brand-logo-wordmark {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.dt-brand-logo-dot {
+  color: var(--dt-accent);
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 180ms var(--dt-ease, ease),
+    opacity 180ms var(--dt-ease, ease);
+}
+
+.dt-brand-logo[data-armed='true'] .dt-brand-logo-dot {
+  transform: translateY(-1px) scale(1.08);
+}
+
 @media (min-width: 768px) {
   .dt-product-page-header {
     padding: 24px;
@@ -573,5 +642,10 @@
 
   .dt-product-action-pill {
     transition: none;
+  }
+
+  .dt-brand-logo-dot {
+    transform: none !important;
+    transition: none !important;
   }
 }

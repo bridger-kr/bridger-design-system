@@ -1,3 +1,4 @@
+import type { ReactElement } from 'react';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -16,6 +17,12 @@ import {
   metricAccentColor,
 } from './index';
 
+function reactElementSymbol(element: ReactElement): symbol | undefined {
+  const descriptor = Object.getOwnPropertyDescriptor(element, '$$typeof');
+  const value: unknown = descriptor?.value;
+  return typeof value === 'symbol' ? value : undefined;
+}
+
 describe('core exports', () => {
   it('exports all core components as functions', () => {
     expect(Badge).toBeTypeOf('function');
@@ -33,6 +40,11 @@ describe('core exports', () => {
       type: 'button',
       props: expect.objectContaining({ type: 'button' }),
     });
+  });
+
+  it('emits React 18 element symbols for peer compatibility', () => {
+    expect(reactElementSymbol(Card({ children: 'x' }))).toBe(Symbol.for('react.element'));
+    expect(reactElementSymbol(Badge({ children: 'x' }))).toBe(Symbol.for('react.element'));
   });
 
   it('exports enum-like surface contracts used by apps', () => {
