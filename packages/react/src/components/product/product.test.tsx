@@ -119,7 +119,7 @@ describe('Product components', () => {
     });
 
     it('renders the console page header without app-local layout wrappers', () => {
-      render(
+      const { container } = render(
         <ProductPageHeader
           eyebrow="API"
           title="연결 설정"
@@ -129,7 +129,7 @@ describe('Product components', () => {
       );
 
       expect(screen.getByRole('heading', { name: '연결 설정' })).toBeTruthy();
-      expect(screen.getByText('API')).toBeTruthy();
+      expect(container.querySelector('.dt-product-page-header-eyebrow')?.textContent).toBe('API');
       expect(screen.getByRole('button', { name: '저장' })).toBeTruthy();
     });
   });
