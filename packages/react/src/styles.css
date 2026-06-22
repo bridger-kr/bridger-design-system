@@ -296,6 +296,11 @@
   padding: 10px;
 }
 
+.dt-product-topbar-menu:not([open]) .dt-product-topbar-menu-panel {
+  display: none;
+  pointer-events: none;
+}
+
 .dt-product-topbar-menu-panel .dt-product-action-pill {
   max-width: 100%;
   min-width: 0;
