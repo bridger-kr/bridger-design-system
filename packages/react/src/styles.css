@@ -297,6 +297,8 @@
 }
 
 .dt-product-topbar-menu-panel .dt-product-action-pill {
+  max-width: 100%;
+  min-width: 0;
   min-height: 44px;
   justify-content: flex-start;
   padding-inline: 16px;
@@ -369,6 +371,7 @@
 
 .dt-product-action-pill-label {
   min-width: 0;
+  max-width: 100%;
   overflow-wrap: anywhere;
 }
 
