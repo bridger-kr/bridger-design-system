@@ -234,15 +234,15 @@
 }
 
 .dt-product-topbar-actions .dt-product-action-pill {
-  min-height: 40px;
-  padding-inline: 20px;
+  min-height: 44px;
+  padding-inline: 22px;
   font-size: 12px;
   font-weight: 500;
 }
 
 .dt-product-topbar-actions .dt-product-action-pill-icon-only {
-  width: 40px;
-  min-width: 40px;
+  width: 44px;
+  min-width: 44px;
   padding-inline: 0;
 }
 
@@ -257,8 +257,8 @@
 
 .dt-product-topbar-menu-button {
   display: inline-flex;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -340,8 +340,8 @@
 }
 
 .dt-product-action-pill-compact {
-  min-height: 40px;
-  padding-inline: 20px;
+  min-height: 44px;
+  padding-inline: 22px;
   border-radius: 18px;
   font-size: 12px;
 }
@@ -626,8 +626,8 @@
   }
 
   .dt-product-action-pill-compact {
-    min-height: 34px;
-    padding-inline: 13px;
+    min-height: 44px;
+    padding-inline: 16px;
     font-size: 11px;
   }
 

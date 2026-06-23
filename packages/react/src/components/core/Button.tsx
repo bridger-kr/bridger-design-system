@@ -4,7 +4,7 @@ import type { ButtonHTMLAttributes, CSSProperties, ReactNode } from 'react';
    Horizontal padding only; vertical centering comes from the fixed height. */
 const SIZE = {
   sm: { height: 36, padding: '0 14px', fontSize: 13 },
-  md: { height: 40, padding: '0 16px', fontSize: 14 },
+  md: { height: 44, padding: '0 18px', fontSize: 14 },
   lg: { height: 48, padding: '0 20px', fontSize: 15 },
 };
 

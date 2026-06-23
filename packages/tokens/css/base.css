@@ -80,11 +80,11 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
 }
 
 /* ── Buttons ── */
-/* Buttons build from FILLS on a height grid (40 / 36px), never outlines.
+/* Buttons build from FILLS on a height grid (44 / 36px), never outlines.
    Hover = background-color shift; press = subtle scale. No translate-lift. */
 .btn-primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
-  height: 40px; padding: 0 16px; font-size: 14px; font-weight: 600; line-height: 1;
+  height: 44px; padding: 0 18px; font-size: 14px; font-weight: 600; line-height: 1;
   border-radius: var(--dt-radius-md);
   background: var(--dt-accent); color: var(--dt-accent-ink); border: none;
   box-shadow: var(--dt-shadow-xs);
@@ -96,7 +96,7 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
 
 .btn-secondary {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
-  height: 40px; padding: 0 16px; font-size: 14px; font-weight: 600; line-height: 1;
+  height: 44px; padding: 0 18px; font-size: 14px; font-weight: 600; line-height: 1;
   border-radius: var(--dt-radius-md);
   background: var(--dt-surface-sunken); color: var(--dt-ink-strong); border: none;
   text-decoration: none; cursor: pointer;

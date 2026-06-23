@@ -84,4 +84,10 @@ describe('core exports', () => {
     expect(el.type).toBe('button');
     expect(el.props.type).toBe('button');
   });
+
+  it('Button md size follows the shared 44px touch target', () => {
+    const el = Button({ children: '저장' });
+    expect(el.props.style.height).toBe(44);
+    expect(el.props.style.padding).toBe('0 18px');
+  });
 });
