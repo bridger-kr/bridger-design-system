@@ -348,6 +348,7 @@
 
 .dt-product-action-pill-hero {
   min-height: 56px;
+  min-width: 96px;
   padding-inline: 26px;
   border-radius: 18px;
   font-size: 14px;
