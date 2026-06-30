@@ -226,6 +226,23 @@
   align-items: center;
 }
 
+.dt-product-topbar-brand a {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  margin-inline-start: -10px;
+  padding-inline: 10px;
+  border-radius: 18px;
+  color: var(--dt-product-accent);
+  text-decoration: none;
+  transition: background-color var(--dt-motion-fast);
+}
+
+.dt-product-topbar-brand a:hover {
+  background: color-mix(in srgb, var(--dt-product-accent) 8%, transparent);
+}
+
 .dt-product-topbar-actions {
   display: flex;
   min-width: 0;
@@ -294,6 +311,8 @@
   background: color-mix(in srgb, #ffffff 84%, var(--dt-product-paper));
   box-shadow: var(--dt-shadow-lg);
   padding: 10px;
+  transform-origin: top right;
+  animation: dt-product-topbar-menu-reveal var(--dt-motion) both;
 }
 
 .dt-product-topbar-menu:not([open]) .dt-product-topbar-menu-panel {
@@ -567,6 +586,17 @@
   }
 }
 
+@keyframes dt-product-topbar-menu-reveal {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 .dt-brand-logo-wordmark {
   display: block;
   width: 100%;
@@ -658,5 +688,10 @@
   .dt-brand-logo-dot {
     transform: none !important;
     transition: none !important;
+  }
+
+  .dt-product-topbar-menu-panel {
+    animation: none;
+    transform: none;
   }
 }
