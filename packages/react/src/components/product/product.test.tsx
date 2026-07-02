@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { createRef } from 'react';
-import { render, screen, within } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import {
   ActionList,
@@ -174,6 +174,7 @@ describe('Product components', () => {
 
       expect(screen.getByRole('banner').className).toContain('dt-product-topbar');
       expect(screen.getByRole('navigation', { name: 'Primary' })).toBeTruthy();
+      fireEvent.click(screen.getByLabelText('메뉴 열기'));
       expect(screen.getByRole('navigation', { name: 'Mobile primary' })).toBeTruthy();
       expect(screen.getByLabelText('메뉴 열기')).toBeTruthy();
       expect(screen.getByText('문서 보기')).toBeTruthy();
@@ -192,6 +193,9 @@ describe('Product components', () => {
 
       const header = container.querySelector('.dt-product-page-header');
       expect(header).toBeTruthy();
+      if (!(header instanceof HTMLElement)) {
+        throw new TypeError('ProductPageHeader root missing');
+      }
       expect(within(header).getByRole('heading', { name: '연결 설정' })).toBeTruthy();
       expect(within(header).getByText('API')).toBeTruthy();
       expect(screen.getByRole('button', { name: '저장' })).toBeTruthy();

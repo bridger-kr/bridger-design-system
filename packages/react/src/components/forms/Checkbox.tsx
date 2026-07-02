@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Checkbox as BaseCheckbox } from '@base-ui-components/react/checkbox';
 import type { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
 
 export interface CheckboxProps
@@ -18,13 +18,6 @@ export interface CheckboxProps
 /** Checkbox — persimmon fill when checked. */
 export function Checkbox({ label, checked, defaultChecked, onChange, disabled, id, style }: CheckboxProps) {
   const cbId = id || (label ? `cb-${String(label).replace(/\s+/g, '-')}` : undefined);
-  const [internal, setInternal] = useState(defaultChecked ?? false);
-  const isOn = checked !== undefined ? checked : internal;
-  const toggle = () => {
-    if (disabled) return;
-    if (checked === undefined) setInternal((v) => !v);
-    onChange?.(!isOn);
-  };
   return (
     <label
       htmlFor={cbId}
@@ -37,15 +30,12 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
         ...style,
       }}
     >
-      <input
+      <BaseCheckbox.Root
         id={cbId}
-        type="checkbox"
-        checked={isOn}
-        onChange={toggle}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        onCheckedChange={onChange}
         disabled={disabled}
-        style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
-      />
-      <span
         style={{
           width: 18,
           height: 18,
@@ -53,12 +43,12 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
           borderRadius: 5,
           display: 'grid',
           placeItems: 'center',
-          background: isOn ? 'var(--dt-accent)' : 'var(--dt-surface)',
-          border: `1.5px solid ${isOn ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
+          background: 'var(--dt-surface)',
+          border: '1.5px solid var(--dt-border-strong)',
           transition: 'background-color 130ms, border-color 130ms',
         }}
       >
-        {isOn ? (
+        <BaseCheckbox.Indicator>
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
               d="M5 12l4.5 4.5L19 7"
@@ -68,8 +58,9 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
               strokeLinejoin="round"
             />
           </svg>
-        ) : null}
-      </span>
+        </BaseCheckbox.Indicator>
+      </BaseCheckbox.Root>
+      <style>{`[role="checkbox"][data-checked]{background:var(--dt-accent)!important;border-color:var(--dt-accent)!important}`}</style>
       {label ? <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
     </label>
   );

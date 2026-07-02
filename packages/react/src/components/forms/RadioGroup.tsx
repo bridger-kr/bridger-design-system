@@ -1,4 +1,6 @@
-import { useId, useState } from 'react';
+import { Radio as BaseRadio } from '@base-ui-components/react/radio';
+import { RadioGroup as BaseRadioGroup } from '@base-ui-components/react/radio-group';
+import { useId } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
 
 export interface RadioOption {
@@ -19,20 +21,19 @@ export interface RadioGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'd
 
 /** Radio group with optional per-option hint text. */
 export function RadioGroup({ name, options = [], value, defaultValue, onChange, disabled, style }: RadioGroupProps) {
-  const [internal, setInternal] = useState(defaultValue);
-  const current = value !== undefined ? value : internal;
   const generatedName = useId();
   const groupName = name || generatedName;
-  const select = (v: string) => {
-    if (disabled) return;
-    if (value === undefined) setInternal(v);
-    onChange?.(v);
-  };
   return (
-    <div role="radiogroup" style={{ display: 'grid', gap: 10, ...style }}>
+    <BaseRadioGroup
+      name={groupName}
+      value={value}
+      defaultValue={defaultValue}
+      disabled={disabled}
+      onValueChange={(nextValue) => { if (typeof nextValue === 'string') onChange?.(nextValue); }}
+      style={{ display: 'grid', gap: 10, ...style }}
+    >
       {options.map((o) => {
         const opt = typeof o === 'string' ? { value: o, label: o } : o;
-        const on = opt.value === current;
         return (
           <label
             key={opt.value}
@@ -44,11 +45,8 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
               opacity: disabled ? 0.55 : 1,
             }}
           >
-            <input
-              type="radio"
-              name={groupName}
-              checked={on}
-              onChange={() => select(opt.value)}
+            <BaseRadio.Root
+              value={opt.value}
               disabled={disabled}
               style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
             />
@@ -62,11 +60,13 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
                 display: 'grid',
                 placeItems: 'center',
                 background: 'var(--dt-surface)',
-                border: `1.5px solid ${on ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
+                border: '1.5px solid var(--dt-border-strong)',
                 transition: 'border-color 130ms',
               }}
             >
-              {on ? <span style={{ width: 9, height: 9, borderRadius: 9999, background: 'var(--dt-accent)' }} /> : null}
+              <BaseRadio.Indicator>
+                <span style={{ width: 9, height: 9, borderRadius: 9999, background: 'var(--dt-accent)', display: 'block' }} />
+              </BaseRadio.Indicator>
             </span>
             <span style={{ display: 'grid', gap: 2 }}>
               <span style={{ fontSize: 14, color: 'var(--dt-ink)', lineHeight: 1.3 }}>{opt.label}</span>
@@ -75,6 +75,7 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
           </label>
         );
       })}
-    </div>
+      <style>{`[role="radio"][data-checked] + span{border-color:var(--dt-accent)!important}`}</style>
+    </BaseRadioGroup>
   );
 }

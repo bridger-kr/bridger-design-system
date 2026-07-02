@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Switch as BaseSwitch } from '@base-ui-components/react/switch';
 import type { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
 
 export interface SwitchProps
@@ -17,20 +17,12 @@ export interface SwitchProps
 
 /** Toggle switch for instant on/off settings — persimmon track when on. */
 export function Switch({ checked, defaultChecked, onChange, disabled, label, style }: SwitchProps) {
-  const [internal, setInternal] = useState(defaultChecked ?? false);
-  const isOn = checked !== undefined ? checked : internal;
-  const toggle = () => {
-    if (disabled) return;
-    if (checked === undefined) setInternal((v) => !v);
-    onChange?.(!isOn);
-  };
   const sw = (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={isOn}
+    <BaseSwitch.Root
+      checked={checked}
+      defaultChecked={defaultChecked}
+      onCheckedChange={onChange}
       disabled={disabled}
-      onClick={toggle}
       style={{
         width: 38,
         height: 22,
@@ -38,25 +30,24 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
         borderRadius: 9999,
         border: 'none',
         padding: 2,
-        background: isOn ? 'var(--dt-accent)' : 'var(--dt-border-strong)',
+        background: 'var(--dt-border-strong)',
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.55 : 1,
         transition: 'background-color 160ms var(--dt-ease)',
         display: 'inline-flex',
       }}
     >
-      <span
+      <BaseSwitch.Thumb
         style={{
           width: 18,
           height: 18,
           borderRadius: 9999,
-          background: '#fff',
-          boxShadow: '0 1px 2px rgba(0,0,0,0.25)',
-          transform: isOn ? 'translateX(16px)' : 'translateX(0)',
+          background: 'var(--dt-surface)',
           transition: 'transform 160ms var(--dt-ease)',
         }}
       />
-    </button>
+      <style>{`[role="switch"][data-checked]{background:var(--dt-accent)!important}[role="switch"] span{transform:translateX(0);box-shadow:0 1px 2px color-mix(in srgb, var(--dt-ink-strong) 25%, transparent)}[role="switch"][data-checked] span{transform:translateX(16px)}`}</style>
+    </BaseSwitch.Root>
   );
   if (!label) return sw;
   return (
@@ -91,23 +82,21 @@ export function ToggleSwitch({
   className = '',
 }: ToggleSwitchProps) {
   return (
-    <button
-      type="button"
-      role="switch"
-      aria-checked={checked}
+    <BaseSwitch.Root
+      checked={checked}
       aria-label={label}
       disabled={disabled}
-      onClick={() => onChange(!checked)}
+      onCheckedChange={onChange}
       className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
         checked ? 'border-success/40 bg-success/80' : 'border-line-strong bg-raised'
       } ${className}`}
     >
-      <span
+      <BaseSwitch.Thumb
         aria-hidden
         className={`inline-block h-4 w-4 transform rounded-full bg-surface shadow-dtSubtle transition-transform ${
           checked ? 'translate-x-6' : 'translate-x-1'
         }`}
       />
-    </button>
+    </BaseSwitch.Root>
   );
 }

@@ -1,3 +1,4 @@
+import { Select as BaseSelect } from '@base-ui-components/react/select';
 import type { CSSProperties, SelectHTMLAttributes } from 'react';
 
 export interface SelectOption {
@@ -25,6 +26,8 @@ export interface SelectProps
 /** Flat native-backed select with a persimmon focus ring. */
 export function Select({ label, hint, options = [], value, defaultValue, onChange, placeholder, disabled, id, style }: SelectProps) {
   const selId = id || (label ? `sel-${label.replace(/\s+/g, '-')}` : undefined);
+  const normalizedOptions = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
+  const selectedOption = normalizedOptions.find((option) => option.value === value);
   return (
     <div style={{ display: 'grid', gap: 7 }}>
       {label ? (
@@ -33,40 +36,48 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
         </label>
       ) : null}
       <div style={{ position: 'relative', display: 'flex' }}>
-        <select
+        <BaseSelect.Root<string>
           id={selId}
-          className="dt-field"
           value={value}
           defaultValue={defaultValue}
           disabled={disabled}
-          onChange={(e) => onChange?.(e.target.value)}
-          style={{
-            appearance: 'none',
-            WebkitAppearance: 'none',
-            width: '100%',
-            padding: '10px 36px 10px 13px',
-            fontSize: 14,
-            fontFamily: 'inherit',
-            color: 'var(--dt-ink-strong)',
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            opacity: disabled ? 0.55 : 1,
-            ...style,
-          }}
+          onValueChange={(nextValue) => { if (nextValue !== null) onChange?.(nextValue); }}
         >
-          {placeholder ? (
-            <option value="" disabled>
-              {placeholder}
-            </option>
-          ) : null}
-          {options.map((o) => {
-            const opt = typeof o === 'string' ? { value: o, label: o } : o;
-            return (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            );
-          })}
-        </select>
+          <BaseSelect.Trigger
+            className="dt-field"
+            style={{
+              appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,
+              fontFamily: 'inherit', color: 'var(--dt-ink-strong)', cursor: disabled ? 'not-allowed' : 'pointer',
+              opacity: disabled ? 0.55 : 1, textAlign: 'left', border: '1px solid var(--dt-border-strong)', ...style,
+            }}
+          >
+            <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
+          </BaseSelect.Trigger>
+          <BaseSelect.Portal>
+            <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
+              <BaseSelect.Popup style={{
+                zIndex: 80, minWidth: 'var(--anchor-width)', padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
+                border: '1px solid var(--dt-border-strong)', boxShadow: 'var(--dt-shadow-lg)', animation: 'dt-menu 130ms var(--dt-ease)',
+              }}>
+                <BaseSelect.List>
+                  {normalizedOptions.map((opt) => (
+                    <BaseSelect.Item
+                      key={opt.value}
+                      value={opt.value}
+                      style={{
+                        display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '8px 10px',
+                        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-ink)',
+                      }}
+                    >
+                      <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>
+                    </BaseSelect.Item>
+                  ))}
+                </BaseSelect.List>
+                <style>{`@keyframes dt-menu{from{opacity:0;transform:translateY(-4px)}}[role="option"][data-highlighted]{background:var(--dt-surface-sunken)!important}`}</style>
+              </BaseSelect.Popup>
+            </BaseSelect.Positioner>
+          </BaseSelect.Portal>
+        </BaseSelect.Root>
         <svg
           width="16"
           height="16"
