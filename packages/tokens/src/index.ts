@@ -2,17 +2,17 @@ const freeze = <const TokenGroup extends Record<string, unknown>>(tokenGroup: To
   Object.freeze(tokenGroup);
 
 const lightColors = freeze({
-  paper: '#cfecd8',
-  surface: '#ecfff2',
+  paper: '#f3f6ef',
+  surface: '#fbfcf8',
   surfaceRaised: '#ffffff',
-  surfaceSunken: '#f4f3ef',
-  surfaceMuted: '#f8f7f4',
-  ink: '#0c0b08',
+  surfaceSunken: '#edf0e6',
+  surfaceMuted: '#f4f6ef',
+  ink: '#1b1a16',
   inkStrong: '#0c0b08',
   muted: '#79766e',
   mutedStrong: '#423f38',
-  border: '#d8d5ca',
-  borderStrong: '#b6cbbd',
+  border: '#e0e3d6',
+  borderStrong: '#c6cdba',
   divider: 'color-mix(in srgb, var(--dt-border) 50%, transparent)',
   accent: '#ec5e1f',
   accentStrong: '#ec5e1f',
@@ -151,8 +151,8 @@ const fontFamilies = freeze({
 } as const);
 
 const fontSizes = freeze({
-  h1: 'clamp(40px, 6vw, 72px)',
-  h2: 'clamp(28px, 3.5vw, 40px)',
+  h1: 'clamp(36px, 4.5vw, 54px)',
+  h2: 'clamp(26px, 3vw, 34px)',
   h3: '18px',
   body: '16px',
   small: '13px',
@@ -160,15 +160,15 @@ const fontSizes = freeze({
 } as const);
 
 const fontWeights = freeze({
-  h1: 560,
-  h2: 540,
+  h1: 650,
+  h2: 620,
   h3: 600,
   body: 400,
 } as const);
 
 const lineHeights = freeze({
-  h1: '1.08',
-  h2: '1.15',
+  h1: '1.12',
+  h2: '1.2',
   h3: '1.3',
   body: '1.6',
   small: '1.55',
@@ -176,8 +176,8 @@ const lineHeights = freeze({
 } as const);
 
 const letterSpacing = freeze({
-  h1: '0',
-  h2: '0',
+  h1: '-0.02em',
+  h2: '-0.015em',
   h3: '0',
 } as const);
 

@@ -18,6 +18,10 @@ export interface CheckboxProps
 /** Checkbox — persimmon fill when checked. */
 export function Checkbox({ label, checked, defaultChecked, onChange, disabled, id, style }: CheckboxProps) {
   const cbId = id || (label ? `cb-${String(label).replace(/\s+/g, '-')}` : undefined);
+  const handleCheckedChange = (nextChecked: boolean) => {
+    onChange?.(nextChecked);
+  };
+
   return (
     <label
       htmlFor={cbId}
@@ -31,10 +35,11 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
       }}
     >
       <BaseCheckbox.Root
+        render={<button type="button" />}
         id={cbId}
         checked={checked}
         defaultChecked={defaultChecked}
-        onCheckedChange={onChange}
+        onCheckedChange={handleCheckedChange}
         disabled={disabled}
         style={{
           width: 18,

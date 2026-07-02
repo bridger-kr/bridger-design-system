@@ -52,6 +52,14 @@ export function Combobox({
     setQuery('');
   };
 
+  const handleInputValueChange = (inputValue: string) => {
+    setQuery(inputValue);
+  };
+
+  const handleValueChange = (nextValue: ComboboxOption | null) => {
+    if (nextValue) commit(nextValue);
+  };
+
   return (
     <BaseCombobox.Root<ComboboxOption>
       open={open}
@@ -60,8 +68,8 @@ export function Combobox({
       items={filtered}
       itemToStringLabel={(option) => option.label}
       isItemEqualToValue={(itemValue, selectedValue) => itemValue.value === selectedValue.value}
-      onInputValueChange={(inputValue) => { setQuery(inputValue); }}
-      onValueChange={(nextValue) => { if (nextValue) commit(nextValue); }}
+      onInputValueChange={handleInputValueChange}
+      onValueChange={handleValueChange}
     >
     <div style={{ display: 'grid', gap: 7, position: 'relative', ...style }}>
       {label ? (

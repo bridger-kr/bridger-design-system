@@ -38,6 +38,7 @@ export function Menu({ trigger, items = [], align = 'left', width = 200, style, 
                   <BaseMenu.Item
                     key={i}
                     onClick={it.onClick}
+                    data-danger={it.danger ? '' : undefined}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
                       padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',

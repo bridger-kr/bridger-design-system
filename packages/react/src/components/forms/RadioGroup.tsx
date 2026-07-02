@@ -23,13 +23,17 @@ export interface RadioGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'd
 export function RadioGroup({ name, options = [], value, defaultValue, onChange, disabled, style }: RadioGroupProps) {
   const generatedName = useId();
   const groupName = name || generatedName;
+  const handleValueChange = (nextValue: unknown) => {
+    if (typeof nextValue === 'string') onChange?.(nextValue);
+  };
+
   return (
     <BaseRadioGroup
       name={groupName}
       value={value}
       defaultValue={defaultValue}
       disabled={disabled}
-      onValueChange={(nextValue) => { if (typeof nextValue === 'string') onChange?.(nextValue); }}
+      onValueChange={handleValueChange}
       style={{ display: 'grid', gap: 10, ...style }}
     >
       {options.map((o) => {
@@ -46,6 +50,7 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
             }}
           >
             <BaseRadio.Root
+              render={<button type="button" />}
               value={opt.value}
               disabled={disabled}
               style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}

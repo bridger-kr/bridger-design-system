@@ -22,8 +22,12 @@ export interface DrawerProps {
 export function Drawer({ open = false, side = 'right', title, children, footer, onClose, width = 420, style, 'aria-label': ariaLabel }: DrawerProps) {
   const titleId = useId();
   const fromRight = side === 'right';
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) onClose?.();
+  };
+
   return (
-    <BaseDialog.Root open={open} onOpenChange={(nextOpen) => { if (!nextOpen) onClose?.(); }}>
+    <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
         <div style={{ position: 'absolute', inset: 0, zIndex: 40, display: 'flex', justifyContent: fromRight ? 'flex-end' : 'flex-start' }}>
           <BaseDialog.Backdrop style={{ position: 'absolute', inset: 0, background: 'color-mix(in srgb, var(--dt-ink-strong) 32%, transparent)' }} />

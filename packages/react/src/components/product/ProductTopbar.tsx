@@ -1,4 +1,5 @@
 import { Menu as BaseMenu } from '@base-ui-components/react/menu';
+import { useState } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -9,16 +10,29 @@ export interface ProductTopbarProps extends HTMLAttributes<HTMLElement> {
   mobileMenuLabel?: string;
 }
 
-export interface ProductTopbarMenuProps extends HTMLAttributes<HTMLDivElement> {
+export interface ProductTopbarMenuProps extends HTMLAttributes<HTMLDetailsElement> {
   children: ReactNode;
   label?: string;
 }
 
 export function ProductTopbarMenu({ children, label = 'Menu', className, ...rest }: ProductTopbarMenuProps) {
+  const [open, setOpen] = useState(false);
+  const handleToggle = () => {
+    setOpen((currentOpen) => !currentOpen);
+  };
+
   return (
-    <BaseMenu.Root modal={false}>
-      <div className={cx('dt-product-topbar-menu', className)} {...rest}>
-        <BaseMenu.Trigger className="dt-product-topbar-menu-button" aria-label={label}>
+    <BaseMenu.Root modal={false} open={open} onOpenChange={setOpen}>
+      <details className={cx('dt-product-topbar-menu', className)} open={open} {...rest}>
+        <BaseMenu.Trigger
+          render={<summary />}
+          className="dt-product-topbar-menu-button"
+          aria-label={label}
+          onClick={(event) => {
+            event.preventDefault();
+            handleToggle();
+          }}
+        >
           <span aria-hidden="true" />
           <span aria-hidden="true" />
           <span aria-hidden="true" />
@@ -32,7 +46,7 @@ export function ProductTopbarMenu({ children, label = 'Menu', className, ...rest
             </BaseMenu.Popup>
           </BaseMenu.Positioner>
         </BaseMenu.Portal>
-      </div>
+      </details>
     </BaseMenu.Root>
   );
 }

@@ -22,11 +22,15 @@ export interface TabsProps {
  * `value` + `onChange`, or uncontrolled with `defaultValue`.
  */
 export function Tabs({ tabs = [], value, defaultValue, onChange, style }: TabsProps) {
+  const handleValueChange = (nextValue: string) => {
+    onChange?.(nextValue);
+  };
+
   return (
     <BaseTabs.Root
       value={value}
       defaultValue={defaultValue ?? tabs[0]?.id}
-      onValueChange={(nextValue) => { if (typeof nextValue === 'string') onChange?.(nextValue); }}
+      onValueChange={handleValueChange}
     >
       <BaseTabs.List
         style={{

@@ -28,6 +28,10 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
   const selId = id || (label ? `sel-${label.replace(/\s+/g, '-')}` : undefined);
   const normalizedOptions = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
   const selectedOption = normalizedOptions.find((option) => option.value === value);
+  const handleValueChange = (nextValue: string | null) => {
+    if (nextValue !== null) onChange?.(nextValue);
+  };
+
   return (
     <div style={{ display: 'grid', gap: 7 }}>
       {label ? (
@@ -41,9 +45,10 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
           value={value}
           defaultValue={defaultValue}
           disabled={disabled}
-          onValueChange={(nextValue) => { if (nextValue !== null) onChange?.(nextValue); }}
+          onValueChange={handleValueChange}
         >
           <BaseSelect.Trigger
+            id={selId}
             className="dt-field"
             style={{
               appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,

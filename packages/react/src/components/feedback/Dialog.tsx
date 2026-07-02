@@ -16,8 +16,12 @@ export interface DialogProps {
 /** Modal dialog with overlay, Esc/backdrop close, and a footer action bar. */
 export function Dialog({ open, onClose, title, description, children, footer, 'aria-label': ariaLabel, width = 460 }: DialogProps) {
   const titleId = useId();
+  const handleOpenChange = (nextOpen: boolean) => {
+    if (!nextOpen) onClose?.();
+  };
+
   return (
-    <BaseDialog.Root open={open} onOpenChange={(nextOpen) => { if (!nextOpen) onClose?.(); }}>
+    <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
         <BaseDialog.Backdrop style={{
           position: 'fixed', inset: 0, zIndex: 100, background: 'color-mix(in srgb, var(--dt-ink-strong) 32%, transparent)',

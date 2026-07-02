@@ -1,4 +1,5 @@
 import { Switch as BaseSwitch } from '@base-ui-components/react/switch';
+import { useState } from 'react';
 import type { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
 
 export interface SwitchProps
@@ -17,11 +18,20 @@ export interface SwitchProps
 
 /** Toggle switch for instant on/off settings — persimmon track when on. */
 export function Switch({ checked, defaultChecked, onChange, disabled, label, style }: SwitchProps) {
+  const [internal, setInternal] = useState(defaultChecked ?? false);
+  const isOn = checked !== undefined ? checked : internal;
+  const handleCheckedChange = (nextChecked: boolean) => {
+    if (checked === undefined) setInternal(nextChecked);
+    onChange?.(nextChecked);
+  };
+
   const sw = (
     <BaseSwitch.Root
-      checked={checked}
-      defaultChecked={defaultChecked}
-      onCheckedChange={onChange}
+      render={<button type="button" disabled={disabled} />}
+      checked={isOn}
+      onClick={() => {
+        if (!disabled) handleCheckedChange(!isOn);
+      }}
       disabled={disabled}
       style={{
         width: 38,
@@ -83,10 +93,14 @@ export function ToggleSwitch({
 }: ToggleSwitchProps) {
   return (
     <BaseSwitch.Root
+      render={<button type="button" disabled={disabled} />}
       checked={checked}
+      aria-checked={checked}
       aria-label={label}
       disabled={disabled}
-      onCheckedChange={onChange}
+      onClick={() => {
+        if (!disabled) onChange(!checked);
+      }}
       className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-full border transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${
         checked ? 'border-success/40 bg-success/80' : 'border-line-strong bg-raised'
       } ${className}`}

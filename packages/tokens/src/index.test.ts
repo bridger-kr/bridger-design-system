@@ -119,11 +119,11 @@ describe('@bridger-kr/tokens', () => {
   });
 
   it('preserves literal token types', () => {
-    expectTypeOf(colors.light.paper).toEqualTypeOf<'#cfecd8'>();
-    expectTypeOf(colors.light.surface).toEqualTypeOf<'#ecfff2'>();
-    expectTypeOf(colors.light.surfaceSunken).toEqualTypeOf<'#f4f3ef'>();
-    expectTypeOf(colors.light.ink).toEqualTypeOf<'#0c0b08'>();
-    expectTypeOf(colors.light.border).toEqualTypeOf<'#d8d5ca'>();
+    expectTypeOf(colors.light.paper).toEqualTypeOf<'#f3f6ef'>();
+    expectTypeOf(colors.light.surface).toEqualTypeOf<'#fbfcf8'>();
+    expectTypeOf(colors.light.surfaceSunken).toEqualTypeOf<'#edf0e6'>();
+    expectTypeOf(colors.light.ink).toEqualTypeOf<'#1b1a16'>();
+    expectTypeOf(colors.light.border).toEqualTypeOf<'#e0e3d6'>();
     expectTypeOf(colors.light.accent).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(colors.light.accentSoft).toEqualTypeOf<'color-mix(in srgb, var(--dt-accent) 14%, transparent)'>();
     expectTypeOf(colors.light.statusWarning).toEqualTypeOf<'#ffa71a'>();
