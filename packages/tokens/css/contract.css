@@ -39,6 +39,8 @@
   --dt-border: #23252e;
   --dt-border-strong: #2f323d;
   --dt-divider: color-mix(in srgb, var(--dt-border) 55%, transparent);
+  --dt-border-alpha: color-mix(in srgb, var(--dt-ink) 8%, transparent);
+  --dt-border-alpha-strong: color-mix(in srgb, var(--dt-ink) 14%, transparent);
 
   --dt-accent: #ec5e1f;
   --dt-accent-strong: #ec5e1f;
@@ -62,13 +64,31 @@
   --dt-code-ink: #f4f3ee;
   --dt-code-border: #23252e;
   --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
+  --dt-syntax-key: color-mix(in srgb, var(--dt-code-ink) 70%, var(--dt-info));
+  --dt-syntax-string: color-mix(in srgb, var(--dt-accent) 55%, var(--dt-code-ink));
+  --dt-syntax-number: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
+  --dt-syntax-comment: color-mix(in srgb, var(--dt-code-ink) 42%, transparent);
+  --dt-syntax-punctuation: color-mix(in srgb, var(--dt-code-ink) 55%, transparent);
+  --dt-syntax-success: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
 
   --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 14%, transparent);
+  --dt-tint-accent-06: color-mix(in srgb, var(--dt-accent) 6%, transparent);
+  --dt-tint-accent-10: color-mix(in srgb, var(--dt-accent) 10%, transparent);
+  --dt-tint-accent-16: color-mix(in srgb, var(--dt-accent) 16%, transparent);
   --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 14%, transparent);
   --dt-tint-success: color-mix(in srgb, var(--dt-success) 16%, transparent);
   --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 16%, transparent);
   --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 16%, transparent);
   --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 6%, transparent);
+  --dt-tint-ink-03: color-mix(in srgb, var(--dt-ink) 3%, transparent);
+  --dt-tint-ink-05: color-mix(in srgb, var(--dt-ink) 5%, transparent);
+  --dt-tint-ink-07: color-mix(in srgb, var(--dt-ink) 7%, transparent);
+
+  --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
+  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised));
+  --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
+  --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
+  --dt-chrome-divider: color-mix(in srgb, var(--dt-ink) 9%, transparent);
 
   --dt-space-1: 4px;
   --dt-space-2: 8px;
@@ -80,6 +100,9 @@
   --dt-space-8: 128px;
 
   --dt-radius-sm: 6px;
+  --dt-radius-inner: 6px;
+  --dt-radius-element: 10px;
+  --dt-radius-container: 14px;
   --dt-radius-md: 12px;
   --dt-radius-lg: 40px;
   --dt-radius-button: 18px;
@@ -101,17 +124,33 @@
                       0 0 0 1px rgba(255, 255, 255, 0.02);
   --dt-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.55),
                         0 0 0 1px rgba(255, 255, 255, 0.03);
+  --dt-ambient-01: 0 1px 3px color-mix(in srgb, var(--dt-ink) 4%, transparent),
+                   0 8px 24px -4px color-mix(in srgb, var(--dt-ink) 8%, transparent);
+  --dt-ambient-02: 0 1px 2px color-mix(in srgb, var(--dt-ink) 6%, transparent),
+                   0 16px 30px -16px color-mix(in srgb, var(--dt-ink) 12%, transparent),
+                   0 34px 64px -40px color-mix(in srgb, var(--dt-ink) 18%, transparent);
+  --dt-ambient-03: 0 2px 6px color-mix(in srgb, var(--dt-ink) 8%, transparent),
+                   0 24px 46px -20px color-mix(in srgb, var(--dt-ink) 16%, transparent),
+                   0 52px 88px -48px color-mix(in srgb, var(--dt-ink) 22%, transparent);
+  --dt-ambient-04: 0 4px 10px color-mix(in srgb, var(--dt-ink) 10%, transparent),
+                   0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent),
+                   0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent);
+  --dt-shadow-inset-crisp: inset 0 0 0 1px color-mix(in srgb, #ffffff 15%, transparent);
   --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
   --dt-card-rest: var(--dt-ring);
   --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
   --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
   --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
+  --dt-ease-decisive: cubic-bezier(0.2, 0, 0, 1);
   --dt-motion-fast: 120ms var(--dt-ease);
   --dt-motion-base: 160ms var(--dt-ease);
   --dt-motion: 200ms var(--dt-ease);
   --dt-motion-slow: 280ms var(--dt-ease);
+  --dt-motion-slower: 600ms var(--dt-ease);
   --dt-press-scale: 0.97;
+  --dt-hotspot-ring: var(--dt-accent);
+  --dt-hotspot-size: 8px;
 
   --dt-glass-bg: color-mix(in srgb, var(--dt-paper) 72%, transparent);
   --dt-glass-blur: saturate(180%) blur(16px);
@@ -166,6 +205,8 @@
   --dt-border: #eed5cb;
   --dt-border-strong: #b6cbbd;
   --dt-divider: color-mix(in srgb, var(--dt-border) 50%, transparent);
+  --dt-border-alpha: color-mix(in srgb, var(--dt-ink) 8%, transparent);
+  --dt-border-alpha-strong: color-mix(in srgb, var(--dt-ink) 14%, transparent);
 
   --dt-accent: #ec5e1f;
   --dt-accent-strong: #ec5e1f;
@@ -190,13 +231,31 @@
   --dt-code-ink: #e8e6df;
   --dt-code-border: #262a35;
   --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
+  --dt-syntax-key: color-mix(in srgb, var(--dt-code-ink) 70%, var(--dt-info));
+  --dt-syntax-string: color-mix(in srgb, var(--dt-accent) 55%, var(--dt-code-ink));
+  --dt-syntax-number: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
+  --dt-syntax-comment: color-mix(in srgb, var(--dt-code-ink) 42%, transparent);
+  --dt-syntax-punctuation: color-mix(in srgb, var(--dt-code-ink) 55%, transparent);
+  --dt-syntax-success: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
 
   --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 12%, transparent);
+  --dt-tint-accent-06: color-mix(in srgb, var(--dt-accent) 6%, transparent);
+  --dt-tint-accent-10: color-mix(in srgb, var(--dt-accent) 10%, transparent);
+  --dt-tint-accent-16: color-mix(in srgb, var(--dt-accent) 16%, transparent);
   --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 10%, transparent);
   --dt-tint-success: color-mix(in srgb, var(--dt-success) 12%, transparent);
   --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 14%, transparent);
   --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 12%, transparent);
   --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 5%, transparent);
+  --dt-tint-ink-03: color-mix(in srgb, var(--dt-ink) 3%, transparent);
+  --dt-tint-ink-05: color-mix(in srgb, var(--dt-ink) 5%, transparent);
+  --dt-tint-ink-07: color-mix(in srgb, var(--dt-ink) 7%, transparent);
+
+  --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
+  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised));
+  --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
+  --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
+  --dt-chrome-divider: color-mix(in srgb, var(--dt-ink) 9%, transparent);
 
   --dt-ring: 0 0 0 1px var(--dt-border);
   --dt-ring-strong: 0 0 0 1px var(--dt-border-strong);
@@ -209,14 +268,30 @@
                       0 0 0 1px rgba(24, 22, 18, 0.03);
   --dt-shadow-elevated: 0 8px 24px rgba(24, 22, 18, 0.10),
                         0 0 0 1px rgba(24, 22, 18, 0.04);
+  --dt-ambient-01: 0 1px 3px color-mix(in srgb, var(--dt-ink) 4%, transparent),
+                   0 8px 24px -4px color-mix(in srgb, var(--dt-ink) 8%, transparent);
+  --dt-ambient-02: 0 1px 2px color-mix(in srgb, var(--dt-ink) 6%, transparent),
+                   0 16px 30px -16px color-mix(in srgb, var(--dt-ink) 12%, transparent),
+                   0 34px 64px -40px color-mix(in srgb, var(--dt-ink) 18%, transparent);
+  --dt-ambient-03: 0 2px 6px color-mix(in srgb, var(--dt-ink) 8%, transparent),
+                   0 24px 46px -20px color-mix(in srgb, var(--dt-ink) 16%, transparent),
+                   0 52px 88px -48px color-mix(in srgb, var(--dt-ink) 22%, transparent);
+  --dt-ambient-04: 0 4px 10px color-mix(in srgb, var(--dt-ink) 10%, transparent),
+                   0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent),
+                   0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent);
+  --dt-shadow-inset-crisp: inset 0 0 0 1px color-mix(in srgb, var(--dt-ink) 6%, transparent);
   --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
   --dt-card-rest: var(--dt-ring);
   --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
   --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
   --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
+  --dt-ease-decisive: cubic-bezier(0.2, 0, 0, 1);
   --dt-motion-base: 160ms var(--dt-ease);
+  --dt-motion-slower: 600ms var(--dt-ease);
   --dt-press-scale: 0.97;
+  --dt-hotspot-ring: var(--dt-accent);
+  --dt-hotspot-size: 8px;
 
   --dt-glass-bg: color-mix(in srgb, var(--dt-paper) 78%, transparent);
 }

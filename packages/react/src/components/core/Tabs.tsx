@@ -1,5 +1,6 @@
 import { Tabs as BaseTabs } from '@base-ui-components/react/tabs';
 import type { CSSProperties, ReactNode } from 'react';
+import { cx } from '../../lib/cx';
 
 export interface TabItem {
   id: string;
@@ -10,6 +11,7 @@ export interface TabItem {
 
 export interface TabsProps {
   tabs?: TabItem[];
+  variant?: 'underline' | 'pill';
   /** Controlled active tab id. */
   value?: string;
   defaultValue?: string;
@@ -21,7 +23,7 @@ export interface TabsProps {
  * Underline-style tab bar for switching console views. Controlled via
  * `value` + `onChange`, or uncontrolled with `defaultValue`.
  */
-export function Tabs({ tabs = [], value, defaultValue, onChange, style }: TabsProps) {
+export function Tabs({ tabs = [], variant = 'underline', value, defaultValue, onChange, style }: TabsProps) {
   const handleValueChange = (nextValue: string) => {
     onChange?.(nextValue);
   };
@@ -33,10 +35,11 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, style }: TabsPr
       onValueChange={handleValueChange}
     >
       <BaseTabs.List
+        className={cx('dt-tabs-list', variant === 'pill' ? 'dt-tabs-list-pill' : 'dt-tabs-list-underline')}
         style={{
           display: 'flex',
           gap: 4,
-          borderBottom: '1px solid var(--dt-border)',
+          borderBottom: variant === 'underline' ? '1px solid var(--dt-border)' : '0',
           ...style,
         }}
       >
@@ -44,6 +47,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, style }: TabsPr
           <BaseTabs.Tab
             key={tab.id}
             value={tab.id}
+            className={cx('dt-tabs-tab', variant === 'pill' ? 'dt-tabs-tab-pill' : 'dt-tabs-tab-underline')}
             style={{
               position: 'relative', display: 'inline-flex', alignItems: 'center', gap: 7, background: 'transparent',
               border: 'none', cursor: 'pointer', padding: '10px 12px', marginBottom: -1, fontSize: 13, fontWeight: 600,
@@ -57,9 +61,9 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, style }: TabsPr
                 {tab.count}
               </span>
             ) : null}
-          </BaseTabs.Tab>
+            </BaseTabs.Tab>
         ))}
-        <style>{`[role="tab"][aria-selected="true"]{color:var(--dt-ink-strong)!important;border-bottom-color:var(--dt-accent)!important}`}</style>
+        <style>{`.dt-tabs-tab-underline[aria-selected="true"]{color:var(--dt-ink-strong)!important;border-bottom-color:var(--dt-accent)!important}.dt-tabs-tab-pill[aria-selected="true"]{color:var(--dt-ink-strong)!important;background:var(--dt-surface-raised)!important;box-shadow:var(--dt-ambient-01),var(--dt-shadow-inset-crisp)!important}`}</style>
       </BaseTabs.List>
     </BaseTabs.Root>
   );

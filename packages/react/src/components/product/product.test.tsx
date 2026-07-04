@@ -5,11 +5,13 @@ import { describe, it, expect } from 'vitest';
 import {
   ActionList,
   ActionListIndex,
+  AnnotationHotspot,
   BRAND_LOGO_LANGUAGE,
   PRODUCT_ACTION_PILL_SIZE,
   PRODUCT_ACTION_PILL_VARIANT,
   PRODUCT_SHELL_TONE,
   BrandLogo,
+  ChatBubble,
   ProductActionPill,
   ProductCinematicBackdrop,
   ProductMotionField,
@@ -17,8 +19,11 @@ import {
   ProductShell,
   ProductSideRail,
   ProductTopbar,
+  SearchPill,
   SectionCard,
   ToolCard,
+  WindowChrome,
+  WindowFrame,
   actionListClassName,
   actionListItemClassName,
   productActionPillClassName,
@@ -133,6 +138,23 @@ describe('Product components', () => {
         'dt-product-action-pill-outline',
       );
       expect(productActionPillClassName({ size: PRODUCT_ACTION_PILL_SIZE.Hero })).toContain('dt-product-action-pill-hero');
+    });
+
+    it('exports product mockup primitives for landing visual artifacts', () => {
+      const { container } = render(
+        <WindowFrame chrome={<WindowChrome title="bridger.kr" trailing="200" />}>
+          <AnnotationHotspot x="24%" y="40%" label="활성">
+            <SearchPill artifactLabel="검색" tone="accent">OpenAPI 검색</SearchPill>
+          </AnnotationHotspot>
+          <ChatBubble role="assistant">응답 준비 완료</ChatBubble>
+        </WindowFrame>,
+      );
+
+      expect(container.querySelector('.dt-window-frame')).toBeTruthy();
+      expect(container.querySelector('.dt-window-chrome-dot-3')).toBeTruthy();
+      expect(container.querySelector('.dt-annotation-hotspot-dot')).toBeTruthy();
+      expect(container.querySelector('.dt-search-pill-artifact')).toBeTruthy();
+      expect(container.querySelector('.dt-chat-message-assistant')).toBeTruthy();
     });
 
     it('renders the cinematic shell, backdrop, and side rail used by marketing pages', () => {

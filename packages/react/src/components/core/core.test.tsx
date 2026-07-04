@@ -6,10 +6,12 @@ import {
   Button,
   Card,
   CardTone,
+  Chip,
   FilterChip,
   Input,
   MetricAccent,
   Panel,
+  Section,
   StatusPill,
   SurfaceTone,
   Tabs,
@@ -28,9 +30,11 @@ describe('core exports', () => {
     expect(Badge).toBeTypeOf('function');
     expect(Button).toBeTypeOf('function');
     expect(Card).toBeTypeOf('function');
+    expect(Chip).toBeTypeOf('function');
     expect(Panel).toBeTypeOf('function');
     expect(FilterChip).toBeTypeOf('function');
     expect(Input).toBeTypeOf('function');
+    expect(Section).toBeTypeOf('function');
     expect(StatusPill).toBeTypeOf('function');
     expect(Tabs).toBeTypeOf('function');
   });
@@ -89,5 +93,11 @@ describe('core exports', () => {
     const el = Button({ children: '저장' });
     expect(el.props.style.height).toBe(44);
     expect(el.props.style.padding).toBe('0 18px');
+  });
+
+  it('exports chip, section, and pill tabs as additive contracts', () => {
+    expect(Chip({ variant: 'accent', size: 'sm', children: 'MCP' }).props.className).toContain('dt-chip-accent');
+    expect(Section({ variant: 'proof', tone: 'grid', children: '증거' }).props.className).toContain('dt-section-proof');
+    expect(Tabs({ variant: 'pill', tabs: [{ id: 'a', label: 'A' }] }).props.children.props.className).toContain('dt-tabs-list-pill');
   });
 });
