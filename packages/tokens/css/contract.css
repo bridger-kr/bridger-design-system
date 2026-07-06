@@ -202,7 +202,7 @@
   --dt-muted: #79766e;
   --dt-muted-strong: #423f38;
 
-  --dt-border: #eed5cb;
+  --dt-border: #d8ddd5;
   --dt-border-strong: #b6cbbd;
   --dt-divider: color-mix(in srgb, var(--dt-border) 50%, transparent);
   --dt-border-alpha: color-mix(in srgb, var(--dt-ink) 8%, transparent);
