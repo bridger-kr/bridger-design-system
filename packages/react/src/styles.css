@@ -280,15 +280,14 @@
   justify-content: center;
   flex-direction: column;
   gap: 4px;
+  border: 0;
   border-radius: 18px;
   background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
+  padding: 0;
   color: var(--dt-product-accent);
   cursor: pointer;
+  font: inherit;
   list-style: none;
-}
-
-.dt-product-topbar-menu-button::-webkit-details-marker {
-  display: none;
 }
 
 .dt-product-topbar-menu-button span {
@@ -315,7 +314,7 @@
   animation: dt-product-topbar-menu-reveal var(--dt-motion) both;
 }
 
-.dt-product-topbar-menu:not([open]) .dt-product-topbar-menu-panel {
+.dt-product-topbar-menu:not([data-open='true']) .dt-product-topbar-menu-panel {
   display: none;
   pointer-events: none;
 }

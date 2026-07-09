@@ -1,7 +1,8 @@
-import { Menu as BaseMenu } from '@base-ui-components/react/menu';
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import type { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+
+const PRODUCT_TOPBAR_MENU_CLOSE_KEY = 'Escape';
 
 export interface ProductTopbarProps extends HTMLAttributes<HTMLElement> {
   brand: ReactNode;
@@ -10,13 +11,16 @@ export interface ProductTopbarProps extends HTMLAttributes<HTMLElement> {
   mobileMenuLabel?: string;
 }
 
-export interface ProductTopbarMenuProps extends HTMLAttributes<HTMLDetailsElement> {
+export interface ProductTopbarMenuProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
   label?: string;
 }
 
 export function ProductTopbarMenu({ children, label = 'Menu', className, ...rest }: ProductTopbarMenuProps) {
   const [open, setOpen] = useState(false);
+  const panelId = useId();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const handleToggle = () => {
     setOpen((currentOpen) => !currentOpen);
   };
@@ -27,34 +31,53 @@ export function ProductTopbarMenu({ children, label = 'Menu', className, ...rest
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (!open) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      const menu = menuRef.current;
+      const target = event.target;
+      if (!menu || !(target instanceof Node) || menu.contains(target)) return;
+      setOpen(false);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== PRODUCT_TOPBAR_MENU_CLOSE_KEY) return;
+      event.preventDefault();
+      buttonRef.current?.focus();
+      setOpen(false);
+    };
+
+    document.addEventListener('pointerdown', handlePointerDown);
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.removeEventListener('pointerdown', handlePointerDown);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
+
   return (
-    <BaseMenu.Root modal={false} open={open} onOpenChange={setOpen}>
-      <details className={cx('dt-product-topbar-menu', className)} open={open} {...rest}>
-        <BaseMenu.Trigger
-          render={<summary />}
-          nativeButton={false}
-          className="dt-product-topbar-menu-button"
-          aria-label={label}
-          onClick={(event) => {
-            event.preventDefault();
-            handleToggle();
-          }}
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </BaseMenu.Trigger>
-        <BaseMenu.Portal>
-          <BaseMenu.Positioner sideOffset={8} align="end">
-            <BaseMenu.Popup>
-              <nav className="dt-product-topbar-menu-panel" aria-label="Mobile primary" onClick={handleMenuPanelClick}>
-                {children}
-              </nav>
-            </BaseMenu.Popup>
-          </BaseMenu.Positioner>
-        </BaseMenu.Portal>
-      </details>
-    </BaseMenu.Root>
+    <div {...rest} ref={menuRef} className={cx('dt-product-topbar-menu', className)} data-open={open ? 'true' : undefined}>
+      <button
+        ref={buttonRef}
+        type="button"
+        className="dt-product-topbar-menu-button"
+        aria-label={label}
+        aria-controls={panelId}
+        aria-expanded={open}
+        onClick={handleToggle}
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </button>
+      {open ? (
+        <nav id={panelId} className="dt-product-topbar-menu-panel" aria-label="Mobile primary" onClick={handleMenuPanelClick}>
+          {children}
+        </nav>
+      ) : null}
+    </div>
   );
 }
 
