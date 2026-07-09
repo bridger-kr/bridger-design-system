@@ -26,6 +26,7 @@ export function ProductTopbarMenu({ children, label = 'Menu', className, ...rest
       <details className={cx('dt-product-topbar-menu', className)} open={open} {...rest}>
         <BaseMenu.Trigger
           render={<summary />}
+          nativeButton={false}
           className="dt-product-topbar-menu-button"
           aria-label={label}
           onClick={(event) => {

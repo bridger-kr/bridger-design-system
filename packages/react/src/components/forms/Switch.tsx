@@ -28,6 +28,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
   const sw = (
     <BaseSwitch.Root
       render={<button type="button" disabled={disabled} />}
+      nativeButton={true}
       checked={isOn}
       onClick={() => {
         if (!disabled) handleCheckedChange(!isOn);
@@ -94,6 +95,7 @@ export function ToggleSwitch({
   return (
     <BaseSwitch.Root
       render={<button type="button" disabled={disabled} />}
+      nativeButton={true}
       checked={checked}
       aria-checked={checked}
       aria-label={label}

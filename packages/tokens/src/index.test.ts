@@ -123,14 +123,14 @@ describe('@bridger-kr/tokens', () => {
     expectTypeOf(colors.light.surface).toEqualTypeOf<'#ecfff2'>();
     expectTypeOf(colors.light.surfaceSunken).toEqualTypeOf<'#f1fff5'>();
     expectTypeOf(colors.light.ink).toEqualTypeOf<'#1b1a16'>();
-    expectTypeOf(colors.light.border).toEqualTypeOf<'#eed5cb'>();
+    expectTypeOf(colors.light.border).toEqualTypeOf<'#d8ddd5'>();
     expectTypeOf(colors.light.accent).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(colors.light.accentSoft).toEqualTypeOf<'color-mix(in srgb, var(--dt-accent) 14%, transparent)'>();
     expectTypeOf(colors.light.statusWarning).toEqualTypeOf<'#ffa71a'>();
     expectTypeOf(colors.dark.paper).toEqualTypeOf<'#0a0b0f'>();
     expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'#ec5e1f'>();
-    expectTypeOf(radius.lg).toEqualTypeOf<'40px'>();
-    expectTypeOf(radius.xl).toEqualTypeOf<'40px'>();
+    expectTypeOf(radius.lg).toEqualTypeOf<'14px'>();
+    expectTypeOf(radius.xl).toEqualTypeOf<'14px'>();
     expectTypeOf(typography.fontFamilies.sans).toEqualTypeOf<
       "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
     >();

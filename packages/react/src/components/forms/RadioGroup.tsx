@@ -51,6 +51,7 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
           >
             <BaseRadio.Root
               render={<button type="button" />}
+              nativeButton={true}
               value={opt.value}
               disabled={disabled}
               style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}

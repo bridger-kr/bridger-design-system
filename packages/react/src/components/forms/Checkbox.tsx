@@ -36,6 +36,7 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
     >
       <BaseCheckbox.Root
         render={<button type="button" />}
+        nativeButton={true}
         id={cbId}
         checked={checked}
         defaultChecked={defaultChecked}

@@ -104,9 +104,9 @@
   --dt-radius-element: 10px;
   --dt-radius-container: 14px;
   --dt-radius-md: 12px;
-  --dt-radius-lg: 40px;
+  --dt-radius-lg: 14px;
   --dt-radius-button: 18px;
-  --dt-radius-xl: 40px;
+  --dt-radius-xl: 14px;
   --dt-radius-full: 9999px;
 
   --dt-ring: 0 0 0 1px rgba(255, 255, 255, 0.04);
