@@ -1,6 +1,6 @@
 import { Menu as BaseMenu } from '@base-ui-components/react/menu';
 import { useState } from 'react';
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
 export interface ProductTopbarProps extends HTMLAttributes<HTMLElement> {
@@ -19,6 +19,12 @@ export function ProductTopbarMenu({ children, label = 'Menu', className, ...rest
   const [open, setOpen] = useState(false);
   const handleToggle = () => {
     setOpen((currentOpen) => !currentOpen);
+  };
+  const handleMenuPanelClick = (event: MouseEvent<HTMLElement>) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (!target.closest('a[href]')) return;
+    setOpen(false);
   };
 
   return (
@@ -41,7 +47,7 @@ export function ProductTopbarMenu({ children, label = 'Menu', className, ...rest
         <BaseMenu.Portal>
           <BaseMenu.Positioner sideOffset={8} align="end">
             <BaseMenu.Popup>
-              <nav className="dt-product-topbar-menu-panel" aria-label="Mobile primary">
+              <nav className="dt-product-topbar-menu-panel" aria-label="Mobile primary" onClick={handleMenuPanelClick}>
                 {children}
               </nav>
             </BaseMenu.Popup>

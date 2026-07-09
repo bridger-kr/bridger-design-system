@@ -203,6 +203,24 @@ describe('Product components', () => {
       expect(container.querySelector('.dt-product-topbar .dt-product-action-pill-hero')).toBeTruthy();
     });
 
+    it('closes the mobile menu after a menu link is selected', () => {
+      const { container } = render(
+        <ProductTopbar
+          brand={<a href="/">Bridger</a>}
+          mobileMenuLabel="메뉴 열기"
+          mobileActions={<a href="#how">작동 방식</a>}
+          actions={<a href="/console">콘솔 열기</a>}
+        />,
+      );
+
+      fireEvent.click(within(container).getByLabelText('메뉴 열기'));
+      expect(screen.getByRole('navigation', { name: 'Mobile primary' })).toBeTruthy();
+
+      fireEvent.click(screen.getByRole('link', { name: '작동 방식' }));
+
+      expect(screen.queryByRole('navigation', { name: 'Mobile primary' })).toBeNull();
+    });
+
     it('renders the console page header without app-local layout wrappers', () => {
       const { container } = render(
         <ProductPageHeader
