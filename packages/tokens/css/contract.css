@@ -199,7 +199,7 @@
 
   --dt-ink: #1b1a16;
   --dt-ink-strong: #0c0b08;
-  --dt-muted: #79766e;
+  --dt-muted: #69655d;
   --dt-muted-strong: #423f38;
 
   --dt-border: #d8ddd5;
@@ -209,7 +209,7 @@
   --dt-border-alpha-strong: color-mix(in srgb, var(--dt-ink) 14%, transparent);
 
   --dt-accent: #ec5e1f;
-  --dt-accent-strong: #ec5e1f;
+  --dt-accent-strong: #b83c0d;
   --dt-accent-bright: #ec5e1f;
   --dt-accent-ink: #ffffff;
 
