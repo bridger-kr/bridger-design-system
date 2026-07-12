@@ -19,7 +19,7 @@ describe('feedback component exports', () => {
     expect(Tooltip).toBeDefined();
   });
 
-  it('renders the Figma alert tone contract as a solid status pill', () => {
+  it('renders the alert tone contract as a semantic status panel', () => {
     const el = Alert({
       tone: AlertTone.Warning,
       title: '주의',
@@ -29,13 +29,30 @@ describe('feedback component exports', () => {
     expect(el.props.role).toBe('status');
     expect(el.props.style).toMatchObject({
       alignItems: 'flex-start',
-      background: 'var(--dt-status-warning)',
+      background: 'var(--dt-tint-warning)',
       borderRadius: '20px',
-      color: 'var(--dt-alert-ink)',
+      color: 'var(--dt-ink-strong)',
       minHeight: 62,
       padding: '13px 15px',
       width: 'min(100%, 380px)',
     });
+  });
+
+  it('uses adaptive strong contrast for every semantic tone', () => {
+    const toneBackgrounds = [
+      [AlertTone.Info, 'var(--dt-tint-cobalt)'],
+      [AlertTone.Success, 'var(--dt-tint-success)'],
+      [AlertTone.Warning, 'var(--dt-tint-warning)'],
+      [AlertTone.Danger, 'var(--dt-tint-danger)'],
+    ] as const;
+
+    for (const [tone, background] of toneBackgrounds) {
+      const el = Alert({ tone, title: '상태', children: '게이트웨이 상태를 확인했습니다.' });
+      expect(el.props.style).toMatchObject({
+        background,
+        color: 'var(--dt-ink-strong)',
+      });
+    }
   });
 
   it('supports opt-in motion while keeping the default static', () => {

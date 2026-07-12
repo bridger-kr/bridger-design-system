@@ -182,6 +182,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
     return (
       <span
         aria-label={BRAND_LOGO_LABEL[lang]}
+        role="img"
         style={{
           display: 'inline-flex',
           width: symbolSize.width,
@@ -212,6 +213,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
   return (
     <span
       aria-label={BRAND_LOGO_LABEL[lang]}
+      role="img"
       className="dt-brand-logo"
       data-armed={armed ? 'true' : 'false'}
       style={{

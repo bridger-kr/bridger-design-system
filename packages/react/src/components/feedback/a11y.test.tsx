@@ -95,6 +95,18 @@ describe('feedback a11y', () => {
     expect(svg?.getAttribute('aria-hidden')).toBe('true');
   });
 
+  it('Alert inherits the consumer word-break contract for Korean messages', () => {
+    const { container } = render(
+      <Alert tone="danger" title="호출 실패">
+        게이트웨이가 오류 응답을 반환했습니다.
+      </Alert>,
+    );
+
+    const content = container.querySelector('.dt-alert > div');
+    if (!(content instanceof HTMLElement)) throw new TypeError('Alert content wrapper missing');
+    expect(content.style.wordBreak).toBe('');
+  });
+
   it('Toast dismiss icon is aria-hidden', () => {
     const { container } = render(<Toast message="저장됨" onDismiss={() => {}} />);
     const svg = container.querySelector('svg[aria-hidden="true"]');

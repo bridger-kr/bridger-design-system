@@ -135,7 +135,7 @@
   --dt-product-card: #edfff3;
   --dt-product-card-strong: #f6fff9;
   --dt-product-accent: #ec5e1f;
-  --dt-product-accent-strong: #ec5e1f;
+  --dt-product-accent-strong: #b83c0d;
   --dt-product-ink: #15110c;
   --dt-product-muted: #786f63;
   --dt-product-line: transparent;
@@ -273,15 +273,16 @@
 }
 
 .dt-product-topbar-menu-button {
+  position: relative;
   display: inline-flex;
   width: 44px;
   height: 44px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
   border: 0;
-  border-radius: 18px;
+  border-radius: var(--dt-radius-lg);
   background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
   padding: 0;
   color: var(--dt-product-accent);
@@ -291,10 +292,33 @@
 }
 
 .dt-product-topbar-menu-button span {
+  position: absolute;
   width: 15px;
   height: 1.5px;
   border-radius: 999px;
   background: currentColor;
+  transform-origin: center;
+  transition: transform var(--dt-motion-fast), opacity var(--dt-motion-fast);
+}
+
+.dt-product-topbar-menu-line-top {
+  transform: translate3d(0, -5px, 0);
+}
+
+.dt-product-topbar-menu-line-bottom {
+  transform: translate3d(0, 5px, 0);
+}
+
+.dt-product-topbar-menu[data-open='true'] .dt-product-topbar-menu-line-top {
+  transform: rotate(45deg);
+}
+
+.dt-product-topbar-menu[data-open='true'] .dt-product-topbar-menu-line-middle {
+  opacity: 0;
+}
+
+.dt-product-topbar-menu[data-open='true'] .dt-product-topbar-menu-line-bottom {
+  transform: rotate(-45deg);
 }
 
 .dt-product-topbar-menu-panel {
@@ -306,12 +330,19 @@
   display: grid;
   gap: 8px;
   border: 1px solid color-mix(in srgb, var(--dt-product-accent) 18%, transparent);
-  border-radius: 22px;
+  border-radius: var(--dt-radius-container);
   background: color-mix(in srgb, #ffffff 84%, var(--dt-product-paper));
   box-shadow: var(--dt-shadow-lg);
   padding: 10px;
   transform-origin: top right;
   animation: dt-product-topbar-menu-reveal var(--dt-motion) both;
+}
+
+.dt-product-topbar-menu-navigation {
+  display: grid;
+  min-width: 0;
+  min-height: 0;
+  gap: 8px;
 }
 
 .dt-product-topbar-menu:not([data-open='true']) .dt-product-topbar-menu-panel {
@@ -324,6 +355,7 @@
   min-width: 0;
   min-height: 44px;
   justify-content: flex-start;
+  border-radius: var(--dt-radius-element);
   padding-inline: 16px;
   font-size: 13px;
 }
@@ -382,7 +414,7 @@
 }
 
 .dt-product-action-pill-accent {
-  background: var(--dt-product-accent);
+  background: var(--dt-product-accent-strong);
   color: #ffffff;
 }
 
@@ -1153,5 +1185,9 @@
   .dt-product-topbar-menu-panel {
     animation: none;
     transform: none;
+  }
+
+  .dt-product-topbar-menu-button span {
+    transition: none;
   }
 }
