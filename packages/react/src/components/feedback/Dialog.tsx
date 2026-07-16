@@ -23,18 +23,19 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
   return (
     <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop style={{
-          position: 'fixed', inset: 0, zIndex: 100, background: 'color-mix(in srgb, var(--dt-ink-strong) 32%, transparent)',
-          backdropFilter: 'blur(2px)', animation: 'dt-fade 160ms var(--dt-ease)',
+        <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay" style={{
+          position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-ink-strong) 32%, transparent)',
+          backdropFilter: 'blur(2px)',
         }} />
-        <div style={{ position: 'fixed', inset: 0, zIndex: 101, display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
+        <div data-dt-dialog-content style={{ position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-modal)', display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
           <BaseDialog.Popup
+            className="dt-dialog-popup"
             aria-labelledby={title ? titleId : undefined}
             aria-label={title ? undefined : ariaLabel}
             style={{
               width: '100%', maxWidth: width, background: 'var(--dt-surface)', pointerEvents: 'auto',
               borderRadius: 'var(--dt-radius-lg)', boxShadow: 'var(--dt-shadow-xl)',
-              animation: 'dt-pop 200ms var(--dt-ease)', overflow: 'hidden',
+              overflow: 'hidden',
             }}
           >
             <div style={{ padding: '22px 24px' }}>
@@ -45,7 +46,6 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
             {footer ? <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, padding: '14px 24px', background: 'var(--dt-surface-sunken)' }}>{footer}</div> : null}
           </BaseDialog.Popup>
         </div>
-        <style>{`@keyframes dt-fade{from{opacity:0}}@keyframes dt-pop{from{opacity:0;transform:translateY(8px) scale(.98)}}`}</style>
       </BaseDialog.Portal>
     </BaseDialog.Root>
   );

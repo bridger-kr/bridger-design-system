@@ -1,3 +1,7 @@
+// @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -65,10 +69,40 @@ describe('feedback component exports', () => {
     });
 
     expect(staticAlert.props.className).toBe('dt-alert');
+    expect(staticAlert.props.style.transition).toBeUndefined();
     expect(liveAlert.props.className).toBe('dt-alert dt-alert-motion-pulse');
+  });
+
+  it('does not attach hover or press motion to static alerts', () => {
+    const stylesheet = readFileSync(resolve(process.cwd(), 'packages/react/src/styles.css'), 'utf8');
+
+    expect(stylesheet).not.toContain('.dt-alert:hover');
+    expect(stylesheet).not.toContain('.dt-alert:active');
   });
 
   it('uses package stylesheet classes for feedback motion', () => {
     expect(Toast({ message: '저장됨' }).props.className).toBe('dt-toast');
+  });
+
+  it('uses the declared overlay and modal layers for dialogs', () => {
+    render(<Dialog open title="확인">내용</Dialog>);
+
+    expect(document.querySelector('[data-dt-dialog-overlay]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-overlay)');
+    expect(document.querySelector('[data-dt-dialog-content]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-modal)');
+  });
+
+  it('uses declared layers and a shared 40px close target for drawers', () => {
+    render(<Drawer open title="세부 정보">내용</Drawer>);
+
+    expect(document.querySelector('[data-dt-drawer-overlay]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-overlay)');
+    expect(document.querySelector('[data-dt-drawer-content]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-modal)');
+    expect(document.querySelector('[aria-label="닫기"]')?.className).toContain('dt-close-control');
+  });
+
+  it('uses the shared close target for dismissible alerts', () => {
+    const alert = Alert({ title: '안내', onDismiss: () => undefined });
+    const closeButton = alert.props.children[2];
+
+    expect(closeButton.props.className).toContain('dt-close-control');
   });
 });

@@ -49,26 +49,27 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
         >
           <BaseSelect.Trigger
             id={selId}
-            className="dt-field"
+            className="dt-field dt-select-trigger"
             style={{
               appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,
               fontFamily: 'inherit', color: 'var(--dt-ink-strong)', cursor: disabled ? 'not-allowed' : 'pointer',
-              opacity: disabled ? 0.55 : 1, textAlign: 'left', border: '1px solid var(--dt-border-strong)', ...style,
+              opacity: disabled ? 0.55 : 1, textAlign: 'left', border: '1px solid var(--dt-border)', ...style,
             }}
           >
             <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
           </BaseSelect.Trigger>
           <BaseSelect.Portal>
             <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
-              <BaseSelect.Popup style={{
-                zIndex: 80, minWidth: 'var(--anchor-width)', padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
-                border: '1px solid var(--dt-border-strong)', boxShadow: 'var(--dt-shadow-lg)', animation: 'dt-menu 130ms var(--dt-ease)',
+              <BaseSelect.Popup className="dt-select-popup" style={{
+                 zIndex: 'var(--dt-z-index-popover)', minWidth: 'var(--anchor-width)', padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
+                 border: '1px solid var(--dt-border-strong)', boxShadow: 'var(--dt-shadow-lg)',
               }}>
                 <BaseSelect.List>
                   {normalizedOptions.map((opt) => (
                     <BaseSelect.Item
                       key={opt.value}
                       value={opt.value}
+                      className="dt-select-option"
                       style={{
                         display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '8px 10px',
                         borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-ink)',
@@ -78,7 +79,6 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
                     </BaseSelect.Item>
                   ))}
                 </BaseSelect.List>
-                <style>{`@keyframes dt-menu{from{opacity:0;transform:translateY(-4px)}}[role="option"][data-highlighted]{background:var(--dt-surface-sunken)!important}`}</style>
               </BaseSelect.Popup>
             </BaseSelect.Positioner>
           </BaseSelect.Portal>

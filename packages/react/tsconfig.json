@@ -4,7 +4,7 @@
     "outDir": "dist",
     "jsx": "react-jsx",
     "ignoreDeprecations": "6.0",
-    "types": ["react", "react-dom"]
+    "types": ["node", "react", "react-dom"]
   },
   "include": ["src"]
 }

@@ -63,7 +63,6 @@ export function Tabs({ tabs = [], variant = 'underline', value, defaultValue, on
             ) : null}
             </BaseTabs.Tab>
         ))}
-        <style>{`.dt-tabs-tab-underline[aria-selected="true"]{color:var(--dt-ink-strong)!important;border-bottom-color:var(--dt-accent)!important}.dt-tabs-tab-pill[aria-selected="true"]{color:var(--dt-ink-strong)!important;background:var(--dt-surface-raised)!important;box-shadow:var(--dt-ambient-01),var(--dt-shadow-inset-crisp)!important}`}</style>
       </BaseTabs.List>
     </BaseTabs.Root>
   );

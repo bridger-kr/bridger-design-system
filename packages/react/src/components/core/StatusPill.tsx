@@ -22,11 +22,12 @@ export interface StatusPillProps extends Omit<HTMLAttributes<HTMLSpanElement>, '
 
 /**
  * Compact status pill: a tinted fill carrying a colored label — the console's
- * most-used status affordance (gateway / stream state). No outline, no dot;
- * an optional pulse marker appears only for live (`pulse`) states.
+ * most-used status affordance (gateway / stream state). Live states pulse by
+ * default; pass `pulse={false}` when a steady marker is more appropriate.
  */
-export function StatusPill({ status = 'idle', children, pulse = false, style, ...rest }: StatusPillProps) {
+export function StatusPill({ status = 'idle', children, pulse, style, ...rest }: StatusPillProps) {
   const tone = STATUS[status] ?? STATUS.idle;
+  const shouldPulse = pulse ?? (status === 'connected' || status === 'reconnecting');
   return (
     <span
       style={{
@@ -43,20 +44,19 @@ export function StatusPill({ status = 'idle', children, pulse = false, style, ..
       }}
       {...rest}
     >
-      {pulse ? (
+      {shouldPulse ? (
         <span
+          className="dt-status-pulse"
           aria-hidden="true"
           style={{
             width: 7,
             height: 7,
-            borderRadius: '9999px',
+            borderRadius: 'var(--dt-radius-full)',
             background: tone.fg,
-            animation: 'dt-status-pulse 1.6s var(--dt-ease) infinite',
           }}
         />
       ) : null}
       {children}
-      <style>{'@keyframes dt-status-pulse{0%,100%{opacity:1}50%{opacity:.35}}'}</style>
     </span>
   );
 }

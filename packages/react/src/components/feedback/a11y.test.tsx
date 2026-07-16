@@ -67,6 +67,9 @@ describe('feedback a11y', () => {
     await waitFor(() => expect(document.body.querySelector('[role="tooltip"]')).not.toBeNull());
     const tip = document.body.querySelector('[role="tooltip"]');
     expect(tip?.getAttribute('id')).toBeTruthy();
+    expect(tip?.className).toContain('dt-tooltip-popup');
+    expect(tip?.parentElement?.className).toContain('dt-tooltip-positioner');
+    expect(tip?.parentElement?.getAttribute('style')).toContain('z-index: var(--dt-z-index-popover)');
   });
 
   it('feedback motion classes render through package stylesheet hooks', () => {

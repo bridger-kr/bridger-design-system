@@ -65,7 +65,6 @@ export function Alert({
         overflow: 'clip',
         padding: '13px 15px',
         position: 'relative',
-        transition: 'filter var(--dt-motion-fast), transform var(--dt-motion-fast)',
         width: 'min(100%, 380px)',
         ...style,
       }}
@@ -78,7 +77,7 @@ export function Alert({
         {action ? <div style={{ marginTop: 10 }}>{action}</div> : null}
       </div>
       {onDismiss ? (
-        <button onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 2, lineHeight: 0 }}>
+        <button className="dt-close-control" onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
         </button>
       ) : null}

@@ -28,7 +28,7 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 9,
+        gap: 0,
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.55 : 1,
         ...style,
@@ -42,31 +42,45 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
         defaultChecked={defaultChecked}
         onCheckedChange={handleCheckedChange}
         disabled={disabled}
+        className="dt-checkbox-control"
         style={{
-          width: 18,
-          height: 18,
+          width: 'var(--dt-space-5)',
+          height: 'var(--dt-space-5)',
           flex: '0 0 auto',
-          borderRadius: 5,
           display: 'grid',
           placeItems: 'center',
-          background: 'var(--dt-surface)',
-          border: '1.5px solid var(--dt-border-strong)',
-          transition: 'background-color 130ms, border-color 130ms',
+          border: 0,
+          background: 'transparent',
+          padding: 0,
+          cursor: disabled ? 'not-allowed' : 'pointer',
         }}
       >
-        <BaseCheckbox.Indicator>
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M5 12l4.5 4.5L19 7"
-              stroke="var(--dt-accent-ink)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </BaseCheckbox.Indicator>
+        <span
+          className="dt-checkbox-box"
+          style={{
+            width: 18,
+            height: 18,
+            borderRadius: 5,
+            display: 'grid',
+            placeItems: 'center',
+            background: 'var(--dt-surface)',
+            border: '1.5px solid var(--dt-border-strong)',
+            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
+          }}
+        >
+          <BaseCheckbox.Indicator>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 12l4.5 4.5L19 7"
+                stroke="var(--dt-accent-ink)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </BaseCheckbox.Indicator>
+        </span>
       </BaseCheckbox.Root>
-      <style>{`[role="checkbox"][data-checked]{background:var(--dt-accent)!important;border-color:var(--dt-accent)!important}`}</style>
       {label ? <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
     </label>
   );

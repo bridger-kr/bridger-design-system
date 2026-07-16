@@ -1,4 +1,5 @@
 import type { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
+import { cx } from '../../lib/cx';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'style'> {
   label?: string;
@@ -23,6 +24,8 @@ export function Input({
   type = 'text',
   prefix = null,
   invalid = false,
+  disabled = false,
+  className,
   style,
   ...rest
 }: InputProps) {
@@ -50,6 +53,9 @@ export function Input({
         <input
           id={inputId}
           type={type}
+          className={cx('dt-input-control', className)}
+          disabled={disabled}
+          aria-invalid={invalid || undefined}
           style={{
             flex: 1,
             border: 'none',

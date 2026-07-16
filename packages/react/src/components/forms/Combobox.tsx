@@ -130,8 +130,9 @@ export function Combobox({
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner sideOffset={6}>
           <BaseCombobox.Popup
+            className="dt-combobox-popup"
             style={{
-              zIndex: 20,
+              zIndex: 'var(--dt-z-index-popover)',
               background: 'var(--dt-surface)',
               border: '1px solid var(--dt-border-strong)',
               borderRadius: 'var(--dt-radius-lg)',
@@ -151,6 +152,7 @@ export function Combobox({
                 <BaseCombobox.Item
                   key={o.value}
                   value={o}
+                  className="dt-combobox-option"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -209,7 +211,6 @@ export function Combobox({
             })}
             </BaseCombobox.List>
           )}
-            <style>{`[role="option"][data-highlighted]{background:var(--dt-surface-sunken)!important}`}</style>
           </BaseCombobox.Popup>
         </BaseCombobox.Positioner>
       </BaseCombobox.Portal>

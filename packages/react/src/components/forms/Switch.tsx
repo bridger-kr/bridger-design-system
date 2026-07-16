@@ -34,30 +34,47 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
         if (!disabled) handleCheckedChange(!isOn);
       }}
       disabled={disabled}
+      className="dt-switch-control"
       style={{
-        width: 38,
-        height: 22,
+        position: 'relative',
+        width: 'var(--dt-space-5)',
+        height: 'var(--dt-space-5)',
         flex: '0 0 auto',
         borderRadius: 9999,
         border: 'none',
-        padding: 2,
-        background: 'var(--dt-border-strong)',
+        padding: 0,
+        background: 'transparent',
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.55 : 1,
-        transition: 'background-color 160ms var(--dt-ease)',
         display: 'inline-flex',
+        alignItems: 'center',
       }}
     >
-      <BaseSwitch.Thumb
+      <span
+        aria-hidden="true"
+        className="dt-switch-track"
         style={{
-          width: 18,
-          height: 18,
+          position: 'absolute',
+          left: 1,
+          width: 38,
+          height: 22,
           borderRadius: 9999,
-          background: 'var(--dt-surface)',
-          transition: 'transform 160ms var(--dt-ease)',
+          background: 'var(--dt-border-strong)',
+          transition: 'background-color var(--dt-motion-fast)',
         }}
       />
-      <style>{`[role="switch"][data-checked]{background:var(--dt-accent)!important}[role="switch"] span{transform:translateX(0);box-shadow:0 1px 2px color-mix(in srgb, var(--dt-ink-strong) 25%, transparent)}[role="switch"][data-checked] span{transform:translateX(16px)}`}</style>
+      <BaseSwitch.Thumb
+        className="dt-switch-thumb"
+        style={{
+          position: 'relative',
+          width: 18,
+          height: 18,
+          marginLeft: 3,
+          borderRadius: 9999,
+          background: 'var(--dt-surface)',
+          transition: 'transform var(--dt-motion-fast)',
+        }}
+      />
     </BaseSwitch.Root>
   );
   if (!label) return sw;

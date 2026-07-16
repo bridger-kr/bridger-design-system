@@ -2,7 +2,7 @@
 
 React component library for the Bridger Design System.
 
-Exports 40 components across six categories (core, forms, feedback, data, navigation, product) plus the `cx` class-name helper, all consumable from the package root.
+Exports 60 components across six categories (core, forms, feedback, data, navigation, product) plus the `cx` class-name helper, all consumable from the package root.
 
 ## Install
 
