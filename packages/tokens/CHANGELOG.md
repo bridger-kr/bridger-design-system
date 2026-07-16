@@ -1,5 +1,11 @@
 # @bridger-kr/tokens
 
+## 0.2.0
+
+### Minor Changes
+
+- [#22](https://github.com/bridger-kr/bridger-design-system/pull/22) [`7736635`](https://github.com/bridger-kr/bridger-design-system/commit/77366358b49c802d75bd0cbbbdcffb66064247fa) Thanks [@happycastle114](https://github.com/happycastle114)! - Cut the Bridger cinematic redesign release. `@bridger-kr/react` now publishes 60 typed components across six families (core, forms, feedback, data, navigation, product) with the new `Panel`, `Chip`, `Section`, `CodePane`, `StatPanel`, `ActionList`, `AnnotationHotspot`, `ChatBubble`, `ProductActionPill`, `ProductShell`, `ProductCinematicBackdrop`, `ProductMotionField`, `ProductSideRail`, `ProductPageHeader`, `ProductTopbar`, `ProductTopbarMenu`, `SearchPill`, `WindowChrome`, and `WindowFrame` primitives. New product-side composition primitives (action list, annotation hotspot, chat bubble, motion field, side rail, topbar, window chrome, window frame) land alongside the existing core, forms, feedback, data, and navigation primitives. `@bridger-kr/tokens` keeps the persimmon `#ec5e1f` action color, Pretendard Variable, and JetBrains Mono roles; refines the dark parity contract, the focus and press scales, and the warm-paper light surface ladder. Hierarchy, density, and component state modeling were informed by Stripe marketing surfaces and the generated `getdesign` Stripe reference, but Bridger identity remains canonical: no Stripe palette, fonts, gradients, glows, marks, or copy are adopted (see `DESIGN.md` Section 10). Public API aliases (`ToggleSwitch`, `cx`) and token enums (`CardTone`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `AlertMotion`, `CODE_PANE_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`) are exported as documented in `DESIGN.md` Section 9.1. `DESIGN.md` is updated with the accurate 60-component manifest, anatomy and state tables per family, an explicit accepted-debt section, provenance and reference discipline, and a release evidence checklist covering viewports (375 / 768 / 1280), themes (light / dark), and interaction states (rest, hover, focus visible, disabled, loading, press, reduced motion); the checklist is currently `Pending` and must be `Captured` before the version PR merges.
+
 ## 0.1.2
 
 ### Patch Changes
