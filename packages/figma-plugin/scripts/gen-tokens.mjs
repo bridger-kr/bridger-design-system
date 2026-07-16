@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /* ============================================================
-   gen-tokens.mjs — parse tokens/*.css → packages/figma-plugin/bridger-tokens.tokens.json
+   gen-tokens.mjs — parse the canonical contract → packages/figma-plugin/bridger-tokens.tokens.json
    Deterministic. Resolves color-mix(... N%, transparent) → rgba(),
    and clamp() display sizes → fixed px midpoints (Figma has no clamp).
    Run: node packages/figma-plugin/scripts/gen-tokens.mjs   (from repo root)
@@ -11,7 +11,7 @@ import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..', '..');
-const TOKENS_DIR = resolve(ROOT, 'tokens');
+const CONTRACT = resolve(ROOT, 'packages', 'tokens', 'css', 'contract.css');
 const OUT = resolve(ROOT, 'packages', 'figma-plugin', 'bridger-tokens.tokens.json');
 
 // ---- tiny CSS custom-property extractor -----------------------------------
@@ -24,7 +24,7 @@ function extractVars(css) {
   return out;
 }
 
-// Split colors.css into light (:root) and dark blocks.
+// Split the contract into light (:root) and dark blocks.
 // Strip comments first so selectors mentioned in prose don't false-match,
 // then pull each top-level { ... } block by walking braces. The dark block is
 // the one whose selector text contains data-theme='dark' or .dark.
@@ -119,11 +119,9 @@ function prefixed(vars) {
 const px = (s) => `${parseFloat(s)}px`;
 
 function main() {
-  const colorsCss = readFileSync(resolve(TOKENS_DIR, 'colors.css'), 'utf8');
-  const spacingCss = readFileSync(resolve(TOKENS_DIR, 'spacing.css'), 'utf8');
-  const typoCss = readFileSync(resolve(TOKENS_DIR, 'typography.css'), 'utf8');
+  const contractCss = readFileSync(CONTRACT, 'utf8');
 
-  const { light, dark } = splitColorBlocks(colorsCss);
+  const { light, dark } = splitColorBlocks(contractCss);
 
   const out = {
     $schema: 'https://schemas.tokens.studio/latest/tokens-schema.json',
@@ -146,18 +144,21 @@ function main() {
   };
 
   // spacing 1..8 + radius
-  const sp = extractVars(spacingCss);
+  const sp = light;
   for (let i = 1; i <= 8; i += 1) {
     if (sp[`dt-space-${i}`]) out.spacing[String(i)] = { $value: px(sp[`dt-space-${i}`]) };
   }
-  const radiusMap = { sm: 'sm', md: 'md', lg: 'lg', xl: 'xl', '2xl': '2xl', full: 'full' };
+  const radiusMap = {
+    sm: 'sm', inner: 'inner', element: 'element', container: 'container',
+    md: 'md', lg: 'lg', button: 'button', xl: 'xl', full: 'full',
+  };
   for (const k in radiusMap) {
     const v = sp[`dt-radius-${k}`];
     if (v) out.radius[k] = { $value: v.includes('9999') ? '9999px' : px(v) };
   }
 
-  // fonts + sizes from typography.css
-  const ty = extractVars(typoCss);
+  // fonts + sizes from the canonical light contract
+  const ty = light;
   out.fontFamily.sans = { $value: 'Pretendard Variable' };
   out.fontFamily.mono = { $value: 'JetBrains Mono' };
 

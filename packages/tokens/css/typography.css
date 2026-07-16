@@ -1,1 +1,6 @@
 @import url('./contract.css');
+
+.font-tabular {
+  font-feature-settings: var(--dt-tabular);
+  font-variant-numeric: tabular-nums;
+}

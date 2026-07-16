@@ -28,7 +28,7 @@
           "$value": "#0c0b08"
         },
         "muted": {
-          "$value": "#79766e"
+          "$value": "#69655d"
         },
         "muted-strong": {
           "$value": "#423f38"
@@ -47,53 +47,53 @@
           "$value": "#ec5e1f"
         },
         "accent-strong": {
-          "$value": "#ec5e1f"
+          "$value": "#b83c0d"
         },
         "accent-bright": {
           "$value": "#ec5e1f"
         },
         "accent-ink": {
-          "$value": "#ffffff"
+          "$value": "#1a1206"
         },
         "accent-soft": {
-          "$value": "rgba(236,94,31,0.1)"
+          "$value": "rgba(236,94,31,0.14)"
         }
       },
       "status": {
         "cobalt": {
-          "$value": "#2f6bff"
+          "$value": "#256b5a"
         },
         "lime": {
-          "$value": "#c8e44a"
+          "$value": "#dce95b"
         },
         "success": {
-          "$value": "#1f9d57"
+          "$value": "#168044"
         },
         "warning": {
-          "$value": "#c9820f"
+          "$value": "#a85b08"
         },
         "danger": {
-          "$value": "#dc3a34"
+          "$value": "#c62828"
         },
         "info": {
-          "$value": "#2f6bff"
+          "$value": "#256b5a"
         }
       },
       "tint": {
         "tint-accent": {
-          "$value": "rgba(236,94,31,0.1)"
+          "$value": "rgba(236,94,31,0.12)"
         },
         "tint-cobalt": {
-          "$value": "rgba(47,107,255,0.09)"
+          "$value": "rgba(37,107,90,0.1)"
         },
         "tint-success": {
-          "$value": "rgba(31,157,87,0.11)"
+          "$value": "rgba(22,128,68,0.12)"
         },
         "tint-warning": {
-          "$value": "rgba(201,130,15,0.13)"
+          "$value": "rgba(168,91,8,0.14)"
         },
         "tint-danger": {
-          "$value": "rgba(220,58,52,0.1)"
+          "$value": "rgba(198,40,40,0.12)"
         },
         "tint-muted": {
           "$value": "rgba(27,26,22,0.05)"
@@ -115,16 +115,16 @@
       "$type": "color",
       "surface": {
         "paper": {
-          "$value": "#0b0c10"
+          "$value": "#0a0b0f"
         },
         "surface": {
-          "$value": "#14151b"
+          "$value": "#111218"
         },
         "surface-raised": {
-          "$value": "#1b1d25"
+          "$value": "#181a22"
         },
         "surface-sunken": {
-          "$value": "#08090c"
+          "$value": "#07080b"
         },
         "surface-muted": {
           "$value": "#16181f"
@@ -132,7 +132,7 @@
       },
       "ink": {
         "ink": {
-          "$value": "#f4f3ee"
+          "$value": "#f5f4ee"
         },
         "ink-strong": {
           "$value": "#ffffff"
@@ -141,7 +141,7 @@
           "$value": "#9a9ba6"
         },
         "muted-strong": {
-          "$value": "#c4c5ce"
+          "$value": "#c3c4cd"
         }
       },
       "border": {
@@ -149,7 +149,7 @@
           "$value": "#23252e"
         },
         "border-strong": {
-          "$value": "#31343f"
+          "$value": "#2f323d"
         }
       },
       "accent": {
@@ -191,22 +191,22 @@
       },
       "tint": {
         "tint-accent": {
-          "$value": "rgba(236,94,31,0.16)"
+          "$value": "rgba(236,94,31,0.14)"
         },
         "tint-cobalt": {
-          "$value": "rgba(122,162,255,0.16)"
+          "$value": "rgba(122,162,255,0.14)"
         },
         "tint-success": {
-          "$value": "rgba(52,211,153,0.18)"
+          "$value": "rgba(52,211,153,0.16)"
         },
         "tint-warning": {
-          "$value": "rgba(251,191,36,0.18)"
+          "$value": "rgba(251,191,36,0.16)"
         },
         "tint-danger": {
-          "$value": "rgba(248,113,113,0.18)"
+          "$value": "rgba(248,113,113,0.16)"
         },
         "tint-muted": {
-          "$value": "rgba(244,243,238,0.08)"
+          "$value": "rgba(245,244,238,0.06)"
         }
       },
       "code": {
@@ -252,19 +252,28 @@
   "radius": {
     "$type": "borderRadius",
     "sm": {
-      "$value": "3px"
-    },
-    "md": {
-      "$value": "4px"
-    },
-    "lg": {
       "$value": "6px"
     },
-    "xl": {
-      "$value": "8px"
+    "inner": {
+      "$value": "6px"
     },
-    "2xl": {
+    "element": {
       "$value": "10px"
+    },
+    "container": {
+      "$value": "14px"
+    },
+    "md": {
+      "$value": "12px"
+    },
+    "lg": {
+      "$value": "14px"
+    },
+    "button": {
+      "$value": "18px"
+    },
+    "xl": {
+      "$value": "14px"
     },
     "full": {
       "$value": "9999px"
@@ -294,10 +303,10 @@
   "fontSize": {
     "$type": "fontSizes",
     "h1": {
-      "$value": "56px"
+      "$value": "45px"
     },
     "h2": {
-      "$value": "34px"
+      "$value": "30px"
     },
     "h3": {
       "$value": "18px"
@@ -315,10 +324,10 @@
   "lineHeight": {
     "$type": "lineHeights",
     "h1": {
-      "$value": "1.08"
+      "$value": "1.12"
     },
     "h2": {
-      "$value": "1.15"
+      "$value": "1.2"
     },
     "h3": {
       "$value": "1.3"
@@ -339,10 +348,10 @@
       "$value": "0%"
     },
     "h1": {
-      "$value": "0%"
+      "$value": "-2%"
     },
     "h2": {
-      "$value": "0%"
+      "$value": "-1.5%"
     },
     "h3": {
       "$value": "0%"

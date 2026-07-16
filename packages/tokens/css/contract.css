@@ -12,9 +12,8 @@
    Do not import this file into those apps in the design-foundation
    lane. Update the app-local mirrors when changing this contract.
 
-   Theme contract: dark is the default token set; light activates with
-   :root[data-theme='light']. Runtime theme state is stored in the
-   `datari-theme` localStorage key only after an explicit user choice.
+   Theme contract: light is the default token set. Dark activates with
+   :root[data-theme='dark'] or .dark after an explicit user choice.
 ============================================================ */
 
 /*
@@ -22,7 +21,197 @@
   Runtime mirrors in landing/dashboard own their @font-face src paths.
 */
 
-:root {
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --dt-paper: #fbfaf8;
+  --dt-surface: #ffffff;
+  --dt-surface-raised: #ffffff;
+  --dt-surface-sunken: #f4f3ef;
+  --dt-surface-muted: #f8f7f4;
+
+  --dt-ink: #1b1a16;
+  --dt-ink-strong: #0c0b08;
+  --dt-muted: #69655d;
+  --dt-muted-strong: #423f38;
+
+  --dt-border: #eceae3;
+  --dt-border-strong: #ddd9cf;
+  --dt-divider: color-mix(in srgb, var(--dt-border) 50%, transparent);
+  --dt-border-alpha: color-mix(in srgb, var(--dt-ink) 8%, transparent);
+  --dt-border-alpha-strong: color-mix(in srgb, var(--dt-ink) 14%, transparent);
+
+  --dt-accent: #ec5e1f;
+  --dt-accent-strong: #b83c0d;
+  --dt-accent-bright: #ec5e1f;
+  --dt-accent-ink: #1a1206;
+
+  --dt-cobalt: #256b5a;
+  --dt-lime: #dce95b;
+  --dt-accent-soft: color-mix(in srgb, var(--dt-accent) 14%, transparent);
+
+  --dt-success: #168044;
+  --dt-warning: #a85b08;
+  --dt-danger: #c62828;
+  --dt-info: var(--dt-cobalt);
+  --dt-status-cobalt: #2f6bff;
+  --dt-status-success: #00b04e;
+  --dt-status-warning: #a85b08;
+  --dt-status-danger: #dc3a34;
+  --dt-alert-ink: #ecfff2;
+  --dt-code-bg: #14161d;
+  --dt-code-ink: #e8e6df;
+  --dt-code-border: #262a35;
+  --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
+  --dt-syntax-key: color-mix(in srgb, var(--dt-code-ink) 70%, var(--dt-info));
+  --dt-syntax-string: color-mix(in srgb, var(--dt-accent) 55%, var(--dt-code-ink));
+  --dt-syntax-number: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
+  --dt-syntax-comment: color-mix(in srgb, var(--dt-code-ink) 42%, transparent);
+  --dt-syntax-punctuation: color-mix(in srgb, var(--dt-code-ink) 55%, transparent);
+  --dt-syntax-success: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
+
+  --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 12%, transparent);
+  --dt-tint-accent-06: color-mix(in srgb, var(--dt-accent) 6%, transparent);
+  --dt-tint-accent-10: color-mix(in srgb, var(--dt-accent) 10%, transparent);
+  --dt-tint-accent-16: color-mix(in srgb, var(--dt-accent) 16%, transparent);
+  --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 10%, transparent);
+  --dt-tint-success: color-mix(in srgb, var(--dt-success) 12%, transparent);
+  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 14%, transparent);
+  --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 12%, transparent);
+  --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 5%, transparent);
+  --dt-tint-ink-03: color-mix(in srgb, var(--dt-ink) 3%, transparent);
+  --dt-tint-ink-05: color-mix(in srgb, var(--dt-ink) 5%, transparent);
+  --dt-tint-ink-07: color-mix(in srgb, var(--dt-ink) 7%, transparent);
+
+  --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
+  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised));
+  --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
+  --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
+  --dt-chrome-divider: color-mix(in srgb, var(--dt-ink) 9%, transparent);
+
+  --dt-space-1: 4px;
+  --dt-space-2: 8px;
+  --dt-space-3: 16px;
+  --dt-space-4: 24px;
+  --dt-space-5: 40px;
+  --dt-space-6: 64px;
+  --dt-space-7: 96px;
+  --dt-space-8: 128px;
+
+  --dt-radius-sm: 6px;
+  --dt-radius-inner: 6px;
+  --dt-radius-element: 10px;
+  --dt-radius-container: 14px;
+  --dt-radius-md: 12px;
+  --dt-radius-lg: 14px;
+  --dt-radius-button: 18px;
+  --dt-radius-xl: 14px;
+  --dt-radius-full: 9999px;
+
+  --dt-ring: 0 0 0 1px var(--dt-border);
+  --dt-ring-strong: 0 0 0 1px var(--dt-border-strong);
+  --dt-shadow-xs: none;
+  --dt-shadow-sm: 0 1px 2px rgba(24, 22, 18, 0.05);
+  --dt-shadow-md: 0 2px 6px rgba(24, 22, 18, 0.07);
+  --dt-shadow-lg: 0 6px 16px rgba(24, 22, 18, 0.10);
+  --dt-shadow-xl: 0 12px 30px rgba(24, 22, 18, 0.14);
+  --dt-shadow-subtle: 0 1px 2px rgba(24, 22, 18, 0.07),
+                      0 0 0 1px rgba(24, 22, 18, 0.03);
+  --dt-shadow-elevated: 0 8px 24px rgba(24, 22, 18, 0.10),
+                        0 0 0 1px rgba(24, 22, 18, 0.04);
+  --dt-z-index-base: 0;
+  --dt-z-index-raised: 10;
+  --dt-z-index-overlay: 40;
+  --dt-z-index-modal: 50;
+  --dt-z-index-popover: 60;
+  --dt-z-index-toast: 80;
+  --dt-shadow-gradient: radial-gradient(
+    ellipse at 50% 100%,
+    color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%,
+    color-mix(in srgb, var(--dt-accent) 4%, transparent) 42%,
+    transparent 72%
+  );
+  --dt-gradient-mesh:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--dt-accent) 18%, transparent) 0%, transparent 38%),
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%, transparent 34%),
+    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--dt-accent) 6%, transparent) 0%, transparent 48%);
+  --dt-ambient-01: 0 1px 3px color-mix(in srgb, var(--dt-ink) 4%, transparent),
+                   0 8px 24px -4px color-mix(in srgb, var(--dt-ink) 8%, transparent);
+
+  --dt-ambient-02: 0 1px 2px color-mix(in srgb, var(--dt-ink) 6%, transparent),
+                   0 16px 30px -16px color-mix(in srgb, var(--dt-ink) 12%, transparent),
+                   0 34px 64px -40px color-mix(in srgb, var(--dt-ink) 18%, transparent);
+  --dt-ambient-03: 0 2px 6px color-mix(in srgb, var(--dt-ink) 8%, transparent),
+                   0 24px 46px -20px color-mix(in srgb, var(--dt-ink) 16%, transparent),
+                   0 52px 88px -48px color-mix(in srgb, var(--dt-ink) 22%, transparent);
+  --dt-ambient-04: 0 4px 10px color-mix(in srgb, var(--dt-ink) 10%, transparent),
+                   0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent),
+                   0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent);
+  --dt-shadow-inset-crisp: inset 0 0 0 1px color-mix(in srgb, var(--dt-ink) 6%, transparent);
+  --dt-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-card-rest: var(--dt-ring);
+  --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
+  --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
+  --dt-moon-standard: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-moon-enter: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-moon-exit: cubic-bezier(0.4, 0, 1, 1);
+  --dt-duration-fast: 120ms;
+  --dt-duration-base: 200ms;
+  --dt-duration-slow: 280ms;
+  --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
+  --dt-ease-decisive: cubic-bezier(0.2, 0, 0, 1);
+  --dt-motion-fast: 120ms var(--dt-ease);
+  --dt-motion-base: 200ms var(--dt-ease);
+  --dt-motion: 200ms var(--dt-ease);
+  --dt-motion-slow: 280ms var(--dt-ease);
+  --dt-motion-slower: 600ms var(--dt-ease);
+  --dt-press-scale: 0.97;
+  --dt-hotspot-ring: var(--dt-accent);
+  --dt-hotspot-size: 8px;
+
+  --dt-glass-bg: color-mix(in srgb, var(--dt-paper) 78%, transparent);
+  --dt-glass-blur: saturate(180%) blur(16px);
+
+  --dt-font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  --dt-font-mono: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace;
+  --dt-tabular: 'tnum' 0;
+  --dt-display-tracking-tight: -0.04em;
+  --dt-display-tracking-display: -0.02em;
+
+  --dt-h1-size: clamp(36px, 4.5vw, 54px);
+  --dt-h1-leading: 1.12;
+  --dt-h1-tracking: -0.02em;
+  --dt-h1-weight: 650;
+
+  --dt-h2-size: clamp(26px, 3vw, 34px);
+  --dt-h2-leading: 1.2;
+  --dt-h2-tracking: -0.015em;
+  --dt-h2-weight: 620;
+
+  --dt-h3-size: 18px;
+  --dt-h3-leading: 1.3;
+  --dt-h3-tracking: 0;
+  --dt-h3-weight: 600;
+
+  --dt-body-size: 16px;
+  --dt-body-leading: 1.6;
+  --dt-body-weight: 400;
+
+  --dt-small-size: 13px;
+  --dt-small-leading: 1.55;
+
+  --dt-eyebrow-size: 11px;
+  --dt-eyebrow-tracking: 0.18em;
+  --dt-eyebrow-weight: 700;
+
+  --dt-mono-size: 13px;
+  --dt-mono-leading: 1.55;
+}
+
+:root[data-theme='dark'],
+.dark {
   color-scheme: dark;
 
   --dt-paper: #0a0b0f;
@@ -60,6 +249,7 @@
   --dt-status-warning: #ec5e1f;
   --dt-status-danger: #dc3a34;
   --dt-alert-ink: #ecfff2;
+
   --dt-code-bg: #0a0b0f;
   --dt-code-ink: #f4f3ee;
   --dt-code-border: #23252e;
@@ -124,8 +314,25 @@
                       0 0 0 1px rgba(255, 255, 255, 0.02);
   --dt-shadow-elevated: 0 12px 32px rgba(0, 0, 0, 0.55),
                         0 0 0 1px rgba(255, 255, 255, 0.03);
+  --dt-z-index-base: 0;
+  --dt-z-index-raised: 10;
+  --dt-z-index-overlay: 40;
+  --dt-z-index-modal: 50;
+  --dt-z-index-popover: 60;
+  --dt-z-index-toast: 80;
+  --dt-shadow-gradient: radial-gradient(
+    ellipse at 50% 100%,
+    color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%,
+    color-mix(in srgb, var(--dt-accent) 4%, transparent) 42%,
+    transparent 72%
+  );
+  --dt-gradient-mesh:
+    radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--dt-accent) 18%, transparent) 0%, transparent 38%),
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%, transparent 34%),
+    radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--dt-accent) 6%, transparent) 0%, transparent 48%);
   --dt-ambient-01: 0 1px 3px color-mix(in srgb, var(--dt-ink) 4%, transparent),
                    0 8px 24px -4px color-mix(in srgb, var(--dt-ink) 8%, transparent);
+
   --dt-ambient-02: 0 1px 2px color-mix(in srgb, var(--dt-ink) 6%, transparent),
                    0 16px 30px -16px color-mix(in srgb, var(--dt-ink) 12%, transparent),
                    0 34px 64px -40px color-mix(in srgb, var(--dt-ink) 18%, transparent);
@@ -136,15 +343,21 @@
                    0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent),
                    0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent);
   --dt-shadow-inset-crisp: inset 0 0 0 1px color-mix(in srgb, #ffffff 15%, transparent);
-  --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--dt-accent) 60%, transparent);
   --dt-card-rest: var(--dt-ring);
   --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
   --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
-  --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
   --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
   --dt-ease-decisive: cubic-bezier(0.2, 0, 0, 1);
+  --dt-moon-standard: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-moon-enter: cubic-bezier(0.23, 1, 0.32, 1);
+  --dt-moon-exit: cubic-bezier(0.4, 0, 1, 1);
+  --dt-duration-fast: 120ms;
+  --dt-duration-base: 200ms;
+  --dt-duration-slow: 280ms;
   --dt-motion-fast: 120ms var(--dt-ease);
-  --dt-motion-base: 160ms var(--dt-ease);
+  --dt-motion-base: 200ms var(--dt-ease);
   --dt-motion: 200ms var(--dt-ease);
   --dt-motion-slow: 280ms var(--dt-ease);
   --dt-motion-slower: 600ms var(--dt-ease);
@@ -154,146 +367,34 @@
 
   --dt-glass-bg: color-mix(in srgb, var(--dt-paper) 72%, transparent);
   --dt-glass-blur: saturate(180%) blur(16px);
-
   --dt-font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
   --dt-font-mono: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace;
+  --dt-tabular: 'tnum' 0;
+  --dt-display-tracking-tight: -0.04em;
+  --dt-display-tracking-display: -0.02em;
 
   --dt-h1-size: clamp(36px, 4.5vw, 54px);
   --dt-h1-leading: 1.12;
   --dt-h1-tracking: -0.02em;
   --dt-h1-weight: 650;
-
   --dt-h2-size: clamp(26px, 3vw, 34px);
   --dt-h2-leading: 1.2;
   --dt-h2-tracking: -0.015em;
   --dt-h2-weight: 620;
-
   --dt-h3-size: 18px;
   --dt-h3-leading: 1.3;
   --dt-h3-tracking: 0;
   --dt-h3-weight: 600;
-
   --dt-body-size: 16px;
   --dt-body-leading: 1.6;
   --dt-body-weight: 400;
-
   --dt-small-size: 13px;
   --dt-small-leading: 1.55;
-
   --dt-eyebrow-size: 11px;
   --dt-eyebrow-tracking: 0.18em;
   --dt-eyebrow-weight: 700;
-
   --dt-mono-size: 13px;
   --dt-mono-leading: 1.55;
-}
-
-:root[data-theme='light'] {
-  color-scheme: light;
-
-  --dt-paper: #cfecd8;
-  --dt-surface: #ecfff2;
-  --dt-surface-raised: #ffffff;
-  --dt-surface-sunken: #f1fff5;
-  --dt-surface-muted: #eef8f1;
-
-  --dt-ink: #1b1a16;
-  --dt-ink-strong: #0c0b08;
-  --dt-muted: #69655d;
-  --dt-muted-strong: #423f38;
-
-  --dt-border: #d8ddd5;
-  --dt-border-strong: #b6cbbd;
-  --dt-divider: color-mix(in srgb, var(--dt-border) 50%, transparent);
-  --dt-border-alpha: color-mix(in srgb, var(--dt-ink) 8%, transparent);
-  --dt-border-alpha-strong: color-mix(in srgb, var(--dt-ink) 14%, transparent);
-
-  --dt-accent: #ec5e1f;
-  --dt-accent-strong: #b83c0d;
-  --dt-accent-bright: #ec5e1f;
-  --dt-accent-ink: #ffffff;
-
-  --dt-cobalt: #256b5a;
-  --dt-lime: #dce95b;
-  --dt-accent-soft: color-mix(in srgb, var(--dt-accent) 14%, transparent);
-
-  --dt-success: #16a34a;
-  --dt-warning: #d97706;
-  --dt-danger: #dc2626;
-  --dt-info: var(--dt-cobalt);
-  --dt-status-cobalt: #2f6bff;
-  --dt-status-success: #00b04e;
-  --dt-status-warning: #ffa71a;
-  --dt-status-danger: #dc3a34;
-  --dt-alert-ink: #ecfff2;
-
-  --dt-code-bg: #14161d;
-  --dt-code-ink: #e8e6df;
-  --dt-code-border: #262a35;
-  --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
-  --dt-syntax-key: color-mix(in srgb, var(--dt-code-ink) 70%, var(--dt-info));
-  --dt-syntax-string: color-mix(in srgb, var(--dt-accent) 55%, var(--dt-code-ink));
-  --dt-syntax-number: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
-  --dt-syntax-comment: color-mix(in srgb, var(--dt-code-ink) 42%, transparent);
-  --dt-syntax-punctuation: color-mix(in srgb, var(--dt-code-ink) 55%, transparent);
-  --dt-syntax-success: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
-
-  --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 12%, transparent);
-  --dt-tint-accent-06: color-mix(in srgb, var(--dt-accent) 6%, transparent);
-  --dt-tint-accent-10: color-mix(in srgb, var(--dt-accent) 10%, transparent);
-  --dt-tint-accent-16: color-mix(in srgb, var(--dt-accent) 16%, transparent);
-  --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 10%, transparent);
-  --dt-tint-success: color-mix(in srgb, var(--dt-success) 12%, transparent);
-  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 14%, transparent);
-  --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 12%, transparent);
-  --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 5%, transparent);
-  --dt-tint-ink-03: color-mix(in srgb, var(--dt-ink) 3%, transparent);
-  --dt-tint-ink-05: color-mix(in srgb, var(--dt-ink) 5%, transparent);
-  --dt-tint-ink-07: color-mix(in srgb, var(--dt-ink) 7%, transparent);
-
-  --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
-  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised));
-  --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
-  --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
-  --dt-chrome-divider: color-mix(in srgb, var(--dt-ink) 9%, transparent);
-
-  --dt-ring: 0 0 0 1px var(--dt-border);
-  --dt-ring-strong: 0 0 0 1px var(--dt-border-strong);
-  --dt-shadow-xs: none;
-  --dt-shadow-sm: 0 1px 2px rgba(24, 22, 18, 0.05);
-  --dt-shadow-md: 0 2px 6px rgba(24, 22, 18, 0.07);
-  --dt-shadow-lg: 0 6px 16px rgba(24, 22, 18, 0.10);
-  --dt-shadow-xl: 0 12px 30px rgba(24, 22, 18, 0.14);
-  --dt-shadow-subtle: 0 1px 2px rgba(24, 22, 18, 0.07),
-                      0 0 0 1px rgba(24, 22, 18, 0.03);
-  --dt-shadow-elevated: 0 8px 24px rgba(24, 22, 18, 0.10),
-                        0 0 0 1px rgba(24, 22, 18, 0.04);
-  --dt-ambient-01: 0 1px 3px color-mix(in srgb, var(--dt-ink) 4%, transparent),
-                   0 8px 24px -4px color-mix(in srgb, var(--dt-ink) 8%, transparent);
-  --dt-ambient-02: 0 1px 2px color-mix(in srgb, var(--dt-ink) 6%, transparent),
-                   0 16px 30px -16px color-mix(in srgb, var(--dt-ink) 12%, transparent),
-                   0 34px 64px -40px color-mix(in srgb, var(--dt-ink) 18%, transparent);
-  --dt-ambient-03: 0 2px 6px color-mix(in srgb, var(--dt-ink) 8%, transparent),
-                   0 24px 46px -20px color-mix(in srgb, var(--dt-ink) 16%, transparent),
-                   0 52px 88px -48px color-mix(in srgb, var(--dt-ink) 22%, transparent);
-  --dt-ambient-04: 0 4px 10px color-mix(in srgb, var(--dt-ink) 10%, transparent),
-                   0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent),
-                   0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent);
-  --dt-shadow-inset-crisp: inset 0 0 0 1px color-mix(in srgb, var(--dt-ink) 6%, transparent);
-  --dt-shadow-focus: 0 0 0 2px color-mix(in srgb, var(--dt-accent) 60%, transparent);
-  --dt-card-rest: var(--dt-ring);
-  --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
-  --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
-  --dt-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  --dt-ease-in: cubic-bezier(0.55, 0.05, 0.55, 0.2);
-  --dt-ease-decisive: cubic-bezier(0.2, 0, 0, 1);
-  --dt-motion-base: 160ms var(--dt-ease);
-  --dt-motion-slower: 600ms var(--dt-ease);
-  --dt-press-scale: 0.97;
-  --dt-hotspot-ring: var(--dt-accent);
-  --dt-hotspot-size: 8px;
-
-  --dt-glass-bg: color-mix(in srgb, var(--dt-paper) 78%, transparent);
 }
 
 /*
