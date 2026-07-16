@@ -74,7 +74,8 @@ describe('feedback component exports', () => {
   });
 
   it('does not attach hover or press motion to static alerts', () => {
-    const stylesheet = readFileSync(resolve(process.cwd(), 'src/styles.css'), 'utf8');
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
 
     expect(stylesheet).not.toContain('.dt-alert:hover');
     expect(stylesheet).not.toContain('.dt-alert:active');
