@@ -41,14 +41,12 @@ export function Slider({
 
   return (
     <div style={{ display: 'grid', gap: 9, ...style }}>
-      {(label || true) ? (
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-          {label ? <label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>{label}</label> : <span />}
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--dt-ink-strong)', fontVariantNumeric: 'tabular-nums' }}>
-            {v}{unit ? <span style={{ color: 'var(--dt-muted)', fontWeight: 400 }}>{unit}</span> : null}
-          </span>
-        </div>
-      ) : null}
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+        {label ? <label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>{label}</label> : <span />}
+        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--dt-ink-strong)', fontVariantNumeric: 'tabular-nums' }}>
+          {v}{unit ? <span style={{ color: 'var(--dt-muted)', fontWeight: 400 }}>{unit}</span> : null}
+        </span>
+      </div>
       <div
         ref={trackRef}
         id={sId}

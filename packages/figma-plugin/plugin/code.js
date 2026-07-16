@@ -127,10 +127,10 @@ async function buildTextStyles(tokens) {
     let usedFamily = family; let usedStyle = style;
     try {
       await figma.loadFontAsync({ family, style });
-    } catch (e) {
+    } catch {
       usedFamily = 'Inter'; usedStyle = style === 'SemiBold' ? 'Semi Bold' : style;
       try { await figma.loadFontAsync({ family: usedFamily, style: usedStyle }); }
-      catch (e2) { usedStyle = 'Regular'; await figma.loadFontAsync({ family: 'Inter', style: 'Regular' }); }
+      catch { usedStyle = 'Regular'; await figma.loadFontAsync({ family: 'Inter', style: 'Regular' }); }
       ui(`  ⚠ ${family} ${style} 없음 → ${usedFamily} ${usedStyle} 대체`, 'dim');
     }
     const name = `Bridger/${key}`;
@@ -223,7 +223,7 @@ async function ensureFonts() {
     { family: 'Inter', style: 'Semi Bold' },
     { family: 'Inter', style: 'Bold' },
   ];
-  for (const f of tries) { try { await figma.loadFontAsync(f); } catch (e) { /* skip missing */ } }
+  for (const f of tries) { try { await figma.loadFontAsync(f); } catch { /* skip missing */ } }
   FONTS_READY = true;
 }
 
@@ -248,7 +248,7 @@ async function probeFonts() {
   for (const family of fams) {
     for (const style of styles) {
       try { await figma.loadFontAsync({ family, style }); AVAILABLE[`${family}__${style}`] = true; }
-      catch (e) { /* unavailable */ }
+      catch { /* unavailable */ }
     }
   }
 }
@@ -259,7 +259,7 @@ function applyChildSizing(node, def) {
   if (!def.grow) return;
   try {
     node.layoutSizingHorizontal = 'FILL';
-  } catch (e) {
+  } catch {
     node.layoutGrow = 1;
     node.layoutAlign = 'STRETCH';
   }

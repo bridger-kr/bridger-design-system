@@ -306,7 +306,7 @@ function DCViewport({ children, minScale = 0.1, maxScale = 8, style = {} }) {
     // window doesn't drop the last pan/zoom.
     window.addEventListener('pagehide', flush);
     return () => { window.removeEventListener('pagehide', flush); flush(); };
-  }, []);
+  }, [tfKey, maxScale, minScale, apply]);
 
   React.useEffect(() => {
     const vp = vpRef.current;
@@ -513,10 +513,8 @@ function DCSection({ id, title, subtitle, children, gap = 48 }) {
   const hidden = sec.srcKey === srcKey ? (sec.hidden || []) : [];
   const srcOrder = allIds.filter((k) => !hidden.includes(k));
 
-  const order = React.useMemo(() => {
-    const kept = (sec.order || []).filter((k) => srcOrder.includes(k));
-    return [...kept, ...srcOrder.filter((k) => !kept.includes(k))];
-  }, [sec.order, srcOrder.join('|')]);
+  const kept = (sec.order || []).filter((k) => srcOrder.includes(k));
+  const order = [...kept, ...srcOrder.filter((k) => !kept.includes(k))];
 
   const byId = Object.fromEntries(artboards.map((a) => [a.props.id ?? a.props.label, a]));
 
@@ -971,4 +969,3 @@ function DCPostIt({ children, top, left, right, bottom, rotate = -2, width = 180
 }
 
 Object.assign(window, { DesignCanvas, DCSection, DCArtboard, DCPostIt });
-

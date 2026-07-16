@@ -1,5 +1,5 @@
 /* Bridger Console — sidebar, shell, dashboard overview */
-const { useState, useEffect, useRef } = React;
+const { useEffect, useRef } = React;
 
 function Icon({ name, size = 16, strokeWidth = 1.9, style }) {
   const ref = useRef(null);

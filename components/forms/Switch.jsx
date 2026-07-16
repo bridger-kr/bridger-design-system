@@ -4,7 +4,7 @@ import React from 'react';
  * Switch / toggle. Persimmon track when on. Use for instant on/off settings
  * (not form submission). Controlled (checked) or uncontrolled (defaultChecked).
  */
-export function Switch({ checked, defaultChecked, onChange, disabled, label, id, style }) {
+export function Switch({ checked, defaultChecked, onChange, disabled, label, style }) {
   const [internal, setInternal] = React.useState(defaultChecked ?? false);
   const isOn = checked !== undefined ? checked : internal;
   const toggle = () => {
