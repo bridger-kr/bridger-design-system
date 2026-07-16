@@ -1,5 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
-import { useState, useId } from 'react';
+import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
+import type { ReactNode } from 'react';
+import { useId, useState } from 'react';
 
 export interface TooltipProps {
   label: ReactNode;
@@ -9,26 +10,46 @@ export interface TooltipProps {
 
 export function Tooltip({ label, position = 'top', children }: TooltipProps) {
   const tooltipId = useId();
-  const [show, setShow] = useState(false);
-  const pos: CSSProperties = {
-    top: { bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(-7px)' },
-    bottom: { top: '100%', left: '50%', transform: 'translateX(-50%) translateY(7px)' },
-    left: { right: '100%', top: '50%', transform: 'translateY(-50%) translateX(-7px)' },
-    right: { left: '100%', top: '50%', transform: 'translateY(-50%) translateX(7px)' },
-  }[position];
+  const [open, setOpen] = useState(false);
   return (
-    <span style={{ position: 'relative', display: 'inline-flex' }}
-      onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}
-      onFocus={() => setShow(true)} onBlur={() => setShow(false)}>
-      <span aria-describedby={show ? tooltipId : undefined}>{children}</span>
-      <span id={tooltipId} role="tooltip" style={{
-        position: 'absolute', zIndex: 60, whiteSpace: 'nowrap', pointerEvents: 'none',
-        opacity: show ? 1 : 0, visibility: show ? 'visible' : 'hidden',
-        padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
-        color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)',
-        borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-md)',
-        transition: 'opacity var(--dt-motion-fast), visibility var(--dt-motion-fast)', ...pos,
-      }}>{label}</span>
-    </span>
+    <BaseTooltip.Provider>
+      <BaseTooltip.Root open={open} onOpenChange={setOpen}>
+        <BaseTooltip.Trigger
+          render={
+            <span
+              className="dt-tooltip-trigger"
+              style={{ display: 'inline-flex' }}
+              onMouseEnter={() => setOpen(true)}
+              onMouseLeave={() => setOpen(false)}
+              onFocus={() => setOpen(true)}
+              onBlur={() => setOpen(false)}
+            />
+          }
+        >
+          {children}
+        </BaseTooltip.Trigger>
+        <BaseTooltip.Portal>
+          <BaseTooltip.Positioner
+            side={position}
+            sideOffset={7}
+            className="dt-tooltip-positioner"
+            style={{ zIndex: 'var(--dt-z-index-popover)' }}
+          >
+            <BaseTooltip.Popup
+              id={tooltipId}
+              role="tooltip"
+              className="dt-tooltip-popup"
+              style={{
+                whiteSpace: 'nowrap', pointerEvents: 'none', padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
+                color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)', borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-md)',
+                transition: 'opacity var(--dt-motion-fast), visibility var(--dt-motion-fast)',
+              }}
+            >
+              {label}
+            </BaseTooltip.Popup>
+          </BaseTooltip.Positioner>
+        </BaseTooltip.Portal>
+      </BaseTooltip.Root>
+    </BaseTooltip.Provider>
   );
 }

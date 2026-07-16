@@ -108,10 +108,9 @@ export function FileUpload({
             type="button"
             onClick={onRemove}
             aria-label="제거"
+            className="dt-file-upload-remove"
             style={{
               flex: '0 0 auto',
-              width: 30,
-              height: 30,
               display: 'grid',
               placeItems: 'center',
               border: 'none',
@@ -129,6 +128,8 @@ export function FileUpload({
       ) : (
         <label
           htmlFor={fId}
+          className="dt-file-upload-dropzone"
+          data-dragging={drag ? '' : undefined}
           onDragOver={(e: DragEvent<HTMLLabelElement>) => {
             e.preventDefault();
             setDrag(true);

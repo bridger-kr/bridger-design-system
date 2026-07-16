@@ -182,12 +182,15 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
     return (
       <span
         aria-label={BRAND_LOGO_LABEL[lang]}
+        role="img"
         style={{
           display: 'inline-flex',
           width: symbolSize.width,
           height: symbolSize.height,
           color: 'var(--dt-accent)',
           userSelect: 'none',
+          verticalAlign: 'middle',
+          flexShrink: 0,
           ...style,
         }}
       >
@@ -210,6 +213,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
   return (
     <span
       aria-label={BRAND_LOGO_LABEL[lang]}
+      role="img"
       className="dt-brand-logo"
       data-armed={armed ? 'true' : 'false'}
       style={{
@@ -223,6 +227,8 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
         lineHeight: 1,
         color: 'var(--dt-accent)',
         userSelect: 'none',
+        verticalAlign: 'middle',
+        flexShrink: 0,
         ...style,
       }}
     >

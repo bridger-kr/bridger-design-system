@@ -7,6 +7,7 @@ export {
   type ActionListItemClassNameOptions,
   type ActionListProps,
 } from './ActionList';
+export { AnnotationHotspot, type AnnotationHotspotProps } from './AnnotationHotspot';
 export {
   BRAND_LOGO_LANGUAGE,
   BrandLogo,
@@ -15,6 +16,7 @@ export {
   type BrandLogoProps,
   type BrandLogoSize,
 } from './BrandLogo';
+export { ChatBubble, type ChatBubbleProps } from './ChatBubble';
 export {
   PRODUCT_ACTION_PILL_SIZE,
   PRODUCT_ACTION_PILL_VARIANT,
@@ -38,6 +40,8 @@ export {
   type ProductSideRailProps,
 } from './ProductCinematic';
 export { ProductPageHeader, type ProductPageHeaderProps } from './ProductPageHeader';
-export { ProductTopbar, type ProductTopbarProps } from './ProductTopbar';
+export { ProductTopbar, ProductTopbarMenu, type ProductTopbarMenuProps, type ProductTopbarProps } from './ProductTopbar';
+export { SearchPill, type SearchPillProps, type SearchPillSize, type SearchPillTone } from './SearchPill';
 export { SectionCard, type SectionCardProps } from './SectionCard';
 export { ToolCard, type ToolCardProps } from './ToolCard';
+export { WindowChrome, WindowFrame, type WindowChromeProps, type WindowFrameProps } from './WindowChrome';

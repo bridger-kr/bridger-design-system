@@ -75,7 +75,6 @@ export function ToolCard({
           {path}
         </code>
       </div>
-      <style>{'.dt-tool-card:hover{box-shadow:var(--dt-ring), var(--dt-shadow-md)}.dt-chip{font-family:var(--dt-font-mono);font-size:11px;font-weight:600;letter-spacing:.02em;padding:3px 8px;border-radius:var(--dt-radius-sm);background:var(--dt-surface-sunken)}.dt-chip-muted{color:var(--dt-muted-strong)}.dt-chip-accent{color:var(--dt-accent)'}</style>
     </article>
   );
 }

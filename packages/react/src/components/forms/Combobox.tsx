@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import type { CSSProperties, HTMLAttributes, KeyboardEvent, MouseEvent } from 'react';
+import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
+import { useState } from 'react';
+import type { CSSProperties, HTMLAttributes } from 'react';
 
 export interface ComboboxOption {
   value: string;
@@ -37,20 +38,9 @@ export function Combobox({
 }: ComboboxProps) {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const [active, setActive] = useState(0);
-  const rootRef = useRef<HTMLDivElement>(null);
   const cbId = id || (label ? `cb-${label.replace(/\s+/g, '-')}` : undefined);
 
   const selected = options.find((o) => o.value === value) || null;
-
-  useEffect(() => {
-    const onDoc = (e: globalThis.MouseEvent) => {
-      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
-    };
-    document.addEventListener('mousedown', onDoc);
-    return () => document.removeEventListener('mousedown', onDoc);
-  }, []);
-
   const q = query.trim().toLowerCase();
   const filtered = q
     ? options.filter((o) => (o.label + ' ' + (o.meta || '')).toLowerCase().includes(q))
@@ -62,24 +52,26 @@ export function Combobox({
     setQuery('');
   };
 
-  const onKey = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setOpen(true);
-      setActive((i) => Math.min(i + 1, filtered.length - 1));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setActive((i) => Math.max(i - 1, 0));
-    } else if (e.key === 'Enter' && open && filtered[active]) {
-      e.preventDefault();
-      commit(filtered[active]);
-    } else if (e.key === 'Escape') {
-      setOpen(false);
-    }
+  const handleInputValueChange = (inputValue: string) => {
+    setQuery(inputValue);
+  };
+
+  const handleValueChange = (nextValue: ComboboxOption | null) => {
+    if (nextValue) commit(nextValue);
   };
 
   return (
-    <div ref={rootRef} style={{ display: 'grid', gap: 7, position: 'relative', ...style }}>
+    <BaseCombobox.Root<ComboboxOption>
+      open={open}
+      onOpenChange={setOpen}
+      value={selected ?? undefined}
+      items={filtered}
+      itemToStringLabel={(option) => option.label}
+      isItemEqualToValue={(itemValue, selectedValue) => itemValue.value === selectedValue.value}
+      onInputValueChange={handleInputValueChange}
+      onValueChange={handleValueChange}
+    >
+    <div style={{ display: 'grid', gap: 7, position: 'relative', ...style }}>
       {label ? (
         <label htmlFor={cbId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
           {label}
@@ -96,7 +88,6 @@ export function Combobox({
           boxShadow: open ? 'var(--dt-shadow-focus)' : undefined,
           background: open ? 'var(--dt-surface)' : 'var(--dt-surface-sunken)',
         }}
-        onClick={() => setOpen(true)}
       >
         <svg
           width="16"
@@ -109,17 +100,15 @@ export function Combobox({
           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
           <path d="M21 21l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
-        <input
+        <BaseCombobox.Input
           id={cbId}
           value={open ? query : selected ? selected.label : ''}
           placeholder={selected && !open ? selected.label : placeholder}
           onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
-            setActive(0);
           }}
           onFocus={() => setOpen(true)}
-          onKeyDown={onKey}
           style={{
             flex: 1,
             minWidth: 0,
@@ -138,40 +127,32 @@ export function Combobox({
         ) : null}
       </div>
 
-      {open ? (
-        <div
-          role="listbox"
-          style={{
-            position: 'absolute',
-            top: 'calc(100% + 6px)',
-            left: 0,
-            right: 0,
-            zIndex: 20,
-            background: 'var(--dt-surface)',
-            border: '1px solid var(--dt-border-strong)',
-            borderRadius: 'var(--dt-radius-lg)',
-            boxShadow: 'var(--dt-shadow-md)',
-            maxHeight: 240,
-            overflowY: 'auto',
-            padding: 4,
-          }}
-        >
+      <BaseCombobox.Portal>
+        <BaseCombobox.Positioner sideOffset={6}>
+          <BaseCombobox.Popup
+            className="dt-combobox-popup"
+            style={{
+              zIndex: 'var(--dt-z-index-popover)',
+              background: 'var(--dt-surface)',
+              border: '1px solid var(--dt-border-strong)',
+              borderRadius: 'var(--dt-radius-lg)',
+              boxShadow: 'var(--dt-shadow-md)',
+              maxHeight: 240,
+              overflowY: 'auto',
+              padding: 4,
+            }}
+          >
           {filtered.length === 0 ? (
-            <div style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-muted)' }}>{emptyText}</div>
+            <BaseCombobox.Empty style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-muted)' }}>{emptyText}</BaseCombobox.Empty>
           ) : (
-            filtered.map((o, i) => {
-              const isActive = i === active;
+            <BaseCombobox.List>
+            {filtered.map((o) => {
               const isSel = o.value === value;
               return (
-                <div
+                <BaseCombobox.Item
                   key={o.value}
-                  role="option"
-                  aria-selected={isSel}
-                  onMouseEnter={() => setActive(i)}
-                  onMouseDown={(e: MouseEvent<HTMLDivElement>) => {
-                    e.preventDefault();
-                    commit(o);
-                  }}
+                  value={o}
+                  className="dt-combobox-option"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -179,7 +160,6 @@ export function Combobox({
                     padding: '9px 10px',
                     borderRadius: 'var(--dt-radius-md)',
                     cursor: 'pointer',
-                    background: isActive ? 'var(--dt-surface-sunken)' : 'transparent',
                   }}
                 >
                   <span
@@ -226,13 +206,16 @@ export function Combobox({
                       />
                     </svg>
                   ) : null}
-                </div>
+                </BaseCombobox.Item>
               );
-            })
+            })}
+            </BaseCombobox.List>
           )}
-        </div>
-      ) : null}
+          </BaseCombobox.Popup>
+        </BaseCombobox.Positioner>
+      </BaseCombobox.Portal>
       {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
     </div>
+    </BaseCombobox.Root>
   );
 }

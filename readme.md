@@ -23,8 +23,8 @@ private Figma plugin:
 | Package | Public? | What it is |
 | --- | --- | --- |
 | [`@bridger-kr/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
-| [`@bridger-kr/react`](packages/react) | ✅ npm | 40 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
-| [`bridger-figma-plugin`](packages/figma-plugin) | 🔒 private | Figma Community plugin that builds Variables/Styles/40 Component Sets from the tokens. Not on npm. |
+| [`@bridger-kr/react`](packages/react) | ✅ npm | 60 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
+| [`bridger-figma-plugin`](packages/figma-plugin) | 🔒 private | Figma Community plugin that builds Variables/Styles/60 Component Sets from the tokens. Not on npm. |
 
 ### Install
 
@@ -264,7 +264,7 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 
 **`packages/`** — the monorepo workspaces (the publishable surface):
 - **`tokens/`** (`@bridger-kr/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
-- **`react/`** (`@bridger-kr/react`) — 40 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
+- **`react/`** (`@bridger-kr/react`) — 60 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
 - **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
 **Root sources** (still consumed by the Figma plugin + examples):
@@ -274,13 +274,13 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - `assets/` — `brand/` (logos, favicon), `agency-logos/` (KMA, MOLIT, BOK, Seoul, data.go.kr), `fonts/` (Pretendard Variable woff2).
 - `readme.md` — this guide. `SKILL.md` — Agent Skill wrapper.
 
-**The 40 components**, grouped:
-- **core** — Button, Badge, StatusPill, Card, Input, Tabs, **FilterChip** (toggleable catalog filter).
-- **forms** — Select, Checkbox, RadioGroup, Switch, Textarea, SegmentedControl, **Combobox** (searchable select), **Slider** (numeric range), **FileUpload** (OpenAPI-spec dropzone).
-- **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, **Drawer** (side sheet).
-- **data** — Table, StatTile, Avatar, Pagination, **CodeBlock** (dark code surface), **KeyValue** (spec metadata list), **LogRow** (execution-log stream), **UsageMeter** (quota bar).
-- **navigation** — Breadcrumb, Menu, **Sidebar** (console nav rail), **CommandPalette** (⌘K), **Stepper** (onboarding progress).
-- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard.
+**The 60 components**, grouped:
+- **core** — Button, Badge, StatusPill, Card, Input, Tabs, FilterChip (toggleable catalog filter), Chip (inline status and tag), Panel (flat section plane, exported from `core/Surface.tsx`), Section (landing band and console panel anchor).
+- **forms** — Select, Checkbox, RadioGroup, Switch (+ ToggleSwitch alias), Textarea, SegmentedControl, Combobox (searchable select), Slider (numeric range), FileUpload (OpenAPI-spec dropzone).
+- **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, Drawer (side sheet).
+- **data** — Table, StatTile, Avatar, Pagination, CodeBlock (dark code surface), KeyValue (spec metadata list), LogRow (execution-log stream), UsageMeter (quota bar), CodePane (tokenized code specimen), StatPanel (multi-stat plane).
+- **navigation** — Breadcrumb, Menu, Sidebar (console nav rail), CommandPalette (⌘K), Stepper (onboarding progress).
+- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard, ActionList + ActionListIndex (numbered guide list), AnnotationHotspot (annotated product proof), ChatBubble (composed conversation sample), ProductActionPill (CTA pill), ProductShell (composition host) + ProductSideRail + ProductCinematicBackdrop + ProductMotionField, ProductPageHeader (sub-page hero), ProductTopbar + ProductTopbarMenu (landing topbar with mobile drawer), SearchPill (topbar search), WindowChrome + WindowFrame (browser-window mockup wrapper).
 
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (3–6px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 

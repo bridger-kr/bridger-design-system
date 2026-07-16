@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Checkbox as BaseCheckbox } from '@base-ui-components/react/checkbox';
 import type { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
 
 export interface CheckboxProps
@@ -18,58 +18,69 @@ export interface CheckboxProps
 /** Checkbox — persimmon fill when checked. */
 export function Checkbox({ label, checked, defaultChecked, onChange, disabled, id, style }: CheckboxProps) {
   const cbId = id || (label ? `cb-${String(label).replace(/\s+/g, '-')}` : undefined);
-  const [internal, setInternal] = useState(defaultChecked ?? false);
-  const isOn = checked !== undefined ? checked : internal;
-  const toggle = () => {
-    if (disabled) return;
-    if (checked === undefined) setInternal((v) => !v);
-    onChange?.(!isOn);
+  const handleCheckedChange = (nextChecked: boolean) => {
+    onChange?.(nextChecked);
   };
+
   return (
     <label
       htmlFor={cbId}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
-        gap: 9,
+        gap: 0,
         cursor: disabled ? 'not-allowed' : 'pointer',
         opacity: disabled ? 0.55 : 1,
         ...style,
       }}
     >
-      <input
+      <BaseCheckbox.Root
+        render={<button type="button" />}
+        nativeButton={true}
         id={cbId}
-        type="checkbox"
-        checked={isOn}
-        onChange={toggle}
+        checked={checked}
+        defaultChecked={defaultChecked}
+        onCheckedChange={handleCheckedChange}
         disabled={disabled}
-        style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }}
-      />
-      <span
+        className="dt-checkbox-control"
         style={{
-          width: 18,
-          height: 18,
+          width: 'var(--dt-space-5)',
+          height: 'var(--dt-space-5)',
           flex: '0 0 auto',
-          borderRadius: 5,
           display: 'grid',
           placeItems: 'center',
-          background: isOn ? 'var(--dt-accent)' : 'var(--dt-surface)',
-          border: `1.5px solid ${isOn ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-          transition: 'background-color 130ms, border-color 130ms',
+          border: 0,
+          background: 'transparent',
+          padding: 0,
+          cursor: disabled ? 'not-allowed' : 'pointer',
         }}
       >
-        {isOn ? (
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path
-              d="M5 12l4.5 4.5L19 7"
-              stroke="var(--dt-accent-ink)"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        ) : null}
-      </span>
+        <span
+          className="dt-checkbox-box"
+          style={{
+            width: 18,
+            height: 18,
+            borderRadius: 5,
+            display: 'grid',
+            placeItems: 'center',
+            background: 'var(--dt-surface)',
+            border: '1.5px solid var(--dt-border-strong)',
+            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
+          }}
+        >
+          <BaseCheckbox.Indicator>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M5 12l4.5 4.5L19 7"
+                stroke="var(--dt-accent-ink)"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </BaseCheckbox.Indicator>
+        </span>
+      </BaseCheckbox.Root>
       {label ? <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
     </label>
   );

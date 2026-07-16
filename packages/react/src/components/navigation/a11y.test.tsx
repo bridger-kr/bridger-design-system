@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 
 import { CommandPalette, Menu } from './index';
 
@@ -54,5 +54,21 @@ describe('Menu a11y', () => {
     const trigger = container.querySelector('[aria-haspopup]');
     expect(trigger).not.toBeNull();
     expect(trigger?.getAttribute('aria-expanded')).toBe('false');
+  });
+
+  it('uses scoped menu hooks and the canonical popover layer', async () => {
+    const { container } = render(
+      <Menu trigger={<span>열기</span>} items={[{ label: '항목' }]} />,
+    );
+    const trigger = container.querySelector('[aria-haspopup]');
+    expect(trigger).not.toBeNull();
+    if (trigger) fireEvent.click(trigger);
+
+    await waitFor(() => expect(document.body.querySelector('[role="menu"]')).not.toBeNull());
+    const menu = document.body.querySelector('[role="menu"]');
+    expect(menu?.className).toContain('dt-menu-popup');
+    expect(menu?.getAttribute('style')).toContain('z-index: var(--dt-z-index-popover)');
+    expect(menu?.querySelector('.dt-menu-item')).not.toBeNull();
+    expect(menu?.querySelector('style')).toBeNull();
   });
 });
