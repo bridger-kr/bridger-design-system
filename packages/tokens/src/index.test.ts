@@ -140,6 +140,9 @@ function typographyValues(): TokenRecord {
     smallLeading: typography.lineHeights.small,
     monoSize: typography.fontSizes.mono,
     monoLeading: typography.lineHeights.mono,
+    eyebrowSize: typography.eyebrow.size,
+    eyebrowTracking: typography.eyebrow.tracking,
+    eyebrowWeight: typography.eyebrow.weight,
   };
 }
 
@@ -215,6 +218,9 @@ describe('@bridger-kr/tokens', () => {
     expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(radius.lg).toEqualTypeOf<'14px'>();
     expectTypeOf(radius.xl).toEqualTypeOf<'14px'>();
+    expectTypeOf(typography.eyebrow.size).toEqualTypeOf<'11px'>();
+    expectTypeOf(typography.eyebrow.tracking).toEqualTypeOf<'0.18em'>();
+    expectTypeOf(typography.eyebrow.weight).toEqualTypeOf<700>();
     expectTypeOf(typography.fontFamilies.sans).toEqualTypeOf<
       "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
     >();

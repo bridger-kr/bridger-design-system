@@ -296,6 +296,12 @@ const letterSpacing = freeze({
   h3: '0',
 } as const);
 
+const eyebrow = freeze({
+  size: '11px',
+  tracking: '0.18em',
+  weight: 700,
+} as const);
+
 const fontFeatures = freeze({
   tabular: "'tnum' 0",
 } as const);
@@ -313,6 +319,7 @@ export const typography = freeze({
   fontWeights,
   lineHeights,
   letterSpacing,
+  eyebrow,
 } as const);
 
 export const cssVarName = freeze({
@@ -482,6 +489,9 @@ export const cssVarName = freeze({
     smallLeading: '--dt-small-leading',
     monoSize: '--dt-mono-size',
     monoLeading: '--dt-mono-leading',
+    eyebrowSize: '--dt-eyebrow-size',
+    eyebrowTracking: '--dt-eyebrow-tracking',
+    eyebrowWeight: '--dt-eyebrow-weight',
   } as const),
 } as const);
 

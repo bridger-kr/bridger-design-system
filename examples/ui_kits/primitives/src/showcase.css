@@ -1,0 +1,74 @@
+:root {
+  color: var(--dt-ink);
+  background: var(--dt-paper);
+  font-family: var(--dt-font-sans);
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; min-width: 0; }
+
+.showcase {
+  display: grid;
+  width: min(100%, calc(var(--dt-space-8) * 10));
+  margin-inline: auto;
+  gap: var(--dt-space-5);
+  padding: var(--dt-space-5) var(--dt-space-3) var(--dt-space-6);
+}
+
+.showcase-intro,
+.showcase-intro > div,
+.showcase-content,
+.showcase-content > section,
+.showcase-result,
+.showcase-connect {
+  display: grid;
+  gap: var(--dt-space-3);
+}
+
+.showcase-intro { align-items: start; }
+.showcase-intro > div { max-width: calc(var(--dt-space-8) * 5); }
+.showcase-intro p:not(.showcase-eyebrow),
+.showcase-content > section > p,
+.showcase-result p:not(.showcase-eyebrow),
+.showcase-connect p:not(.showcase-eyebrow) { color: var(--dt-muted-strong); }
+
+.showcase-eyebrow {
+  margin: 0;
+  color: var(--dt-muted);
+  font-size: var(--dt-eyebrow-size);
+  font-weight: var(--dt-eyebrow-weight);
+  letter-spacing: var(--dt-eyebrow-tracking);
+}
+
+.showcase-theme {
+  overflow: hidden;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-container);
+  background: var(--dt-paper);
+}
+
+.showcase-theme-label {
+  border-bottom: 1px solid var(--dt-border);
+  padding: var(--dt-space-2) var(--dt-space-3);
+  color: var(--dt-muted);
+  font-family: var(--dt-font-mono);
+  font-size: var(--dt-small-size);
+}
+
+.showcase-shell { display: grid; min-width: 0; }
+.showcase-shell > .dt-sidebar { width: 100%; border-right: 0; border-bottom: 1px solid var(--dt-border); }
+.showcase-content { min-width: 0; padding: var(--dt-space-3); }
+.showcase-content > section { min-width: 0; }
+.showcase-actions { display: flex; flex-wrap: wrap; gap: var(--dt-space-2); }
+.showcase-result { grid-template-columns: minmax(0, 1fr); align-items: center; }
+.showcase-connect { align-items: start; }
+
+@media (min-width: 768px) {
+  .showcase { padding-inline: var(--dt-space-4); }
+  .showcase-intro { grid-template-columns: minmax(0, 1fr) auto; }
+  .showcase-shell { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+  .showcase-shell > .dt-sidebar { border-right: 1px solid var(--dt-border); border-bottom: 0; }
+  .showcase-content { padding: var(--dt-space-4); }
+  .showcase-result { grid-template-columns: minmax(0, 1fr) auto; }
+}
