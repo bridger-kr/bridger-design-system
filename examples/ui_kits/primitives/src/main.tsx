@@ -111,4 +111,8 @@ function PrimitiveShowcase() {
   );
 }
 
-createRoot(document.getElementById('root')!).render(<PrimitiveShowcase />);
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('The primitive showcase requires a root element.');
+}
+createRoot(rootElement).render(<PrimitiveShowcase />);

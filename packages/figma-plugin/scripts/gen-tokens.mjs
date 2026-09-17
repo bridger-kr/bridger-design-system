@@ -172,25 +172,30 @@ function main() {
     h1: clampMid(ty['dt-h1-size']), h2: clampMid(ty['dt-h2-size']),
     h3: px(ty['dt-h3-size']), body: px(ty['dt-body-size']),
     small: px(ty['dt-small-size']), mono: px(ty['dt-mono-size']),
+    eyebrow: px(ty['dt-eyebrow-size']),
   };
   for (const k in sizes) out.fontSize[k] = { $value: sizes[k] };
+
+  out.fontWeight.eyebrow = { $value: ty['dt-eyebrow-weight'] };
 
   const leads = {
     h1: ty['dt-h1-leading'], h2: ty['dt-h2-leading'], h3: ty['dt-h3-leading'],
     body: ty['dt-body-leading'], small: ty['dt-small-leading'], mono: ty['dt-mono-leading'],
+    eyebrow: ty['dt-small-leading'],
   };
   for (const k in leads) out.lineHeight[k] = { $value: leads[k] };
 
   const tracks = {
     h1: ty['dt-h1-tracking'], h2: ty['dt-h2-tracking'], h3: ty['dt-h3-tracking'],
+    eyebrow: ty['dt-eyebrow-tracking'],
   };
   const pctTrack = (em) => `${round(parseFloat(em) * 100)}%`;
   for (const k in tracks) if (tracks[k]) out.letterSpacing[k] = { $value: pctTrack(tracks[k]) };
 
   // composite typography
-  const weightRef = { h1: 'bold', h2: 'bold', h3: 'semibold', body: 'regular', small: 'regular', mono: 'regular' };
-  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', small: 'sans', mono: 'mono' };
-  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono']) {
+  const weightRef = { h1: 'bold', h2: 'bold', h3: 'semibold', body: 'regular', small: 'regular', mono: 'regular', eyebrow: 'eyebrow' };
+  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', small: 'sans', mono: 'mono', eyebrow: 'sans' };
+  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono', 'eyebrow']) {
     out.typography[k] = {
       $value: {
         fontFamily: `{fontFamily.${famRef[k]}}`,
@@ -220,7 +225,7 @@ function main() {
   const colorCount = Object.values(out.color.light).reduce(
     (n, g) => n + (typeof g === 'object' ? Object.keys(g).filter((x) => x !== '$type').length : 0), 0);
   console.log(`✓ wrote ${OUT}`);
-  console.log(`  colors(light): ${colorCount}, spacing: ${Object.keys(out.spacing).length - 1}, typography: 6`);
+  console.log(`  colors(light): ${colorCount}, spacing: ${Object.keys(out.spacing).length - 1}, typography: 7`);
 }
 
 main();

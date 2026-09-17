@@ -251,9 +251,10 @@ run().then(() => {
   if (state.collections[0].modes.length !== 2) fail(`모드 2개(Light/Dark) 기대, 실제 ${state.collections[0].modes.length}`);
   if (colorVars < 25) fail(`색상 변수 부족 (${colorVars})`);
   if (floatVars < 13) fail(`spacing+radius 변수 부족 (${floatVars})`);
-  if (state.textStyles.length !== 6) fail(`Text style 6개 기대, 실제 ${state.textStyles.length}`);
+  if (state.textStyles.length !== 7) fail(`Text style 7개 기대, 실제 ${state.textStyles.length}`);
   if (state.effectStyles.length !== 4) fail(`Effect style 4개 기대, 실제 ${state.effectStyles.length}`);
   if (sets.length !== 40) fail(`컴포넌트 40개 기대, 실제 ${sets.length}`);
+  if (!state.textStyles.some((style) => style.name === 'Bridger/eyebrow')) fail('Bridger/eyebrow Text style 없음');
 
   const componentSet = (name) => sets.find((set) => set.name === name);
   const variant = (set, name) => set?.children.find((component) => component.name === name);

@@ -298,6 +298,9 @@
     },
     "bold": {
       "$value": "700"
+    },
+    "eyebrow": {
+      "$value": "700"
     }
   },
   "fontSize": {
@@ -319,6 +322,9 @@
     },
     "mono": {
       "$value": "13px"
+    },
+    "eyebrow": {
+      "$value": "11px"
     }
   },
   "lineHeight": {
@@ -340,6 +346,9 @@
     },
     "mono": {
       "$value": "1.55"
+    },
+    "eyebrow": {
+      "$value": "1.55"
     }
   },
   "letterSpacing": {
@@ -355,6 +364,9 @@
     },
     "h3": {
       "$value": "0%"
+    },
+    "eyebrow": {
+      "$value": "18%"
     }
   },
   "typography": {
@@ -411,6 +423,15 @@
         "fontSize": "{fontSize.mono}",
         "lineHeight": "{lineHeight.mono}",
         "letterSpacing": "{letterSpacing.base}"
+      }
+    },
+    "eyebrow": {
+      "$value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontWeight": "{fontWeight.eyebrow}",
+        "fontSize": "{fontSize.eyebrow}",
+        "lineHeight": "{lineHeight.eyebrow}",
+        "letterSpacing": "{letterSpacing.eyebrow}"
       }
     }
   },

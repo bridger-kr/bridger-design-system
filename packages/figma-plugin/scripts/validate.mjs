@@ -62,9 +62,19 @@ if (tokens) {
     }
   }
   // required typography keys
-  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono']) {
+  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono', 'eyebrow']) {
     if (!tokens.typography || !tokens.typography[k]) err(`tokens: typography.${k} 누락`);
   }
+  const eyebrow = tokens.typography?.eyebrow?.$value;
+  if (tokens.fontSize?.eyebrow?.$value !== '11px') err('tokens: fontSize.eyebrow=11px 기대');
+  if (tokens.letterSpacing?.eyebrow?.$value !== '18%') err('tokens: letterSpacing.eyebrow=18% 기대');
+  if (tokens.fontWeight?.eyebrow?.$value !== '700') err('tokens: fontWeight.eyebrow=700 기대');
+  if (eyebrow?.fontFamily !== '{fontFamily.sans}') err('tokens: typography.eyebrow fontFamily 참조 기대');
+  if (eyebrow?.fontWeight !== '{fontWeight.eyebrow}') err('tokens: typography.eyebrow fontWeight 참조 기대');
+  if (eyebrow?.fontSize !== '{fontSize.eyebrow}') err('tokens: typography.eyebrow fontSize 참조 기대');
+  if (tokens.lineHeight?.eyebrow?.$value !== '1.55') err('tokens: lineHeight.eyebrow=1.55 기대');
+  if (eyebrow?.lineHeight !== '{lineHeight.eyebrow}') err('tokens: typography.eyebrow lineHeight 참조 기대');
+  if (eyebrow?.letterSpacing !== '{letterSpacing.eyebrow}') err('tokens: typography.eyebrow letterSpacing 참조 기대');
 }
 
 // ---- 2 & 3 & 4. spec checks ----------------------------------------------
