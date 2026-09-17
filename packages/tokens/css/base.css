@@ -112,7 +112,39 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
 .btn-ghost:not(:disabled):hover { background: var(--dt-tint-muted); border-color: var(--dt-border); color: var(--dt-ink-strong); }
 .btn-ghost:active { transform: scale(var(--dt-press-scale)); }
 
+.btn-danger {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--dt-space-2); white-space: nowrap;
+  border: 1px solid var(--dt-danger); border-radius: var(--dt-radius-md);
+  background: var(--dt-danger); color: var(--dt-surface);
+  font-weight: 600; line-height: 1;
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), transform var(--dt-motion-fast);
+}
+.btn-danger:not(:disabled):hover {
+  background: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-ink-strong));
+  border-color: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-ink-strong));
+  transform: translateY(-1px);
+}
+.btn-danger:active:not(:disabled) { transform: scale(var(--dt-press-scale)); }
+
 .dt-button { min-height: var(--dt-space-5); }
+.dt-button-sm {
+  height: var(--dt-space-5); min-height: var(--dt-space-5);
+  padding-inline: calc(var(--dt-space-2) + var(--dt-space-1));
+  font-size: var(--dt-small-size);
+}
+.dt-button-md {
+  height: calc(var(--dt-space-5) + var(--dt-space-1));
+  min-height: calc(var(--dt-space-5) + var(--dt-space-1));
+  padding-inline: var(--dt-space-3);
+  font-size: var(--dt-small-size);
+}
+.dt-button-lg {
+  height: calc(var(--dt-space-5) + var(--dt-space-2));
+  min-height: calc(var(--dt-space-5) + var(--dt-space-2));
+  padding-inline: calc(var(--dt-space-3) + var(--dt-space-1));
+  font-size: var(--dt-body-size);
+}
 .dt-button:disabled { cursor: not-allowed; opacity: 0.55; }
 
 .dt-field {
