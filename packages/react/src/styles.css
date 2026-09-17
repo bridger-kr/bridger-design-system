@@ -248,10 +248,22 @@
   cursor: pointer;
 }
 
+.dt-card {
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-container);
+  color: var(--dt-ink);
+}
+
+.dt-card-default,
+.dt-card-panel { background: var(--dt-surface); }
+.dt-card-muted { background: var(--dt-surface-sunken); }
+.dt-card-raised { background: var(--dt-surface-raised); box-shadow: var(--dt-card-float); }
+
 .dt-card-action:hover:not(:disabled) {
   border-color: var(--dt-border-strong) !important;
-  box-shadow: var(--dt-shadow-sm) !important;
-  transform: translateY(-2px);
+  background: var(--dt-surface-muted) !important;
+  box-shadow: var(--dt-ring-strong) !important;
+  transform: translateY(-1px);
 }
 
 .dt-card-action:active:not(:disabled) {
@@ -262,6 +274,63 @@
   opacity: 0.55;
   cursor: not-allowed;
 }
+
+.dt-sidebar {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  border-right: 1px solid var(--dt-border);
+  background: var(--dt-surface);
+  color: var(--dt-ink);
+  font-family: var(--dt-font-sans);
+}
+
+.dt-sidebar-brand {
+  border-bottom: 1px solid var(--dt-border);
+  padding: var(--dt-space-3);
+}
+
+.dt-sidebar-body {
+  display: grid;
+  flex: 1;
+  align-content: start;
+  gap: var(--dt-space-3);
+  overflow-y: auto;
+  padding: var(--dt-space-3) var(--dt-space-2);
+}
+
+.dt-sidebar-section { display: grid; gap: var(--dt-space-1); }
+
+.dt-sidebar-heading {
+  padding: var(--dt-space-1) var(--dt-space-2);
+  color: var(--dt-muted);
+  font-size: var(--dt-small-size);
+  font-weight: 650;
+}
+
+.dt-sidebar-item {
+  position: relative;
+  display: flex;
+  min-height: var(--dt-space-5);
+  align-items: center;
+  gap: var(--dt-space-2);
+  border-radius: var(--dt-radius-element);
+  padding: var(--dt-space-2);
+  color: var(--dt-muted-strong);
+  font-size: var(--dt-small-size);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color var(--dt-motion-fast), color var(--dt-motion-fast);
+}
+
+.dt-sidebar-item:hover { background: var(--dt-surface-muted); color: var(--dt-ink-strong); }
+.dt-sidebar-item-active { background: var(--dt-surface-sunken); color: var(--dt-ink-strong); font-weight: 620; }
+.dt-sidebar-item-marker { position: absolute; inset-block: var(--dt-space-2); left: 0; width: 3px; border-radius: var(--dt-radius-full); background: var(--dt-accent); }
+.dt-sidebar-item-icon { display: inline-flex; flex: 0 0 auto; color: var(--dt-muted); }
+.dt-sidebar-item-active .dt-sidebar-item-icon { color: var(--dt-accent-strong); }
+.dt-sidebar-item-label { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dt-sidebar-item-badge { color: var(--dt-muted); font-family: var(--dt-font-mono); font-size: 11px; font-variant-numeric: tabular-nums; }
+.dt-sidebar-footer { border-top: 1px solid var(--dt-border); padding: var(--dt-space-2) var(--dt-space-3); }
 
 .dt-tabs-tab-underline[aria-selected='true'] {
   border-bottom-color: var(--dt-accent) !important;
@@ -745,8 +814,8 @@
 }
 
 .dt-product-action-pill-accent {
-  background: var(--dt-product-accent-strong);
-  color: #ffffff;
+  background: var(--dt-ink-strong);
+  color: var(--dt-surface);
 }
 
 .dt-product-action-pill-icon {
@@ -863,10 +932,7 @@
 .dt-product-page-header {
   border: 1px solid var(--dt-border);
   border-radius: var(--dt-radius-lg);
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--dt-accent) 8%, transparent), transparent 48%),
-    var(--dt-surface);
-  box-shadow: var(--dt-ring), var(--dt-shadow-xs);
+  background: var(--dt-surface);
   padding: 20px;
 }
 
@@ -886,12 +952,9 @@
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  border-radius: var(--dt-radius-full);
-  background: var(--dt-tint-accent);
-  padding: 4px 10px;
-  color: var(--dt-accent);
-  font-size: 11px;
-  font-weight: 750;
+  color: var(--dt-accent-strong);
+  font-size: 12px;
+  font-weight: 680;
 }
 
 .dt-product-page-header-text {
@@ -1188,13 +1251,13 @@
 }
 
 .dt-search-pill-neutral {
-  background: var(--dt-tint-ink-03);
+  background: var(--dt-surface-muted);
 }
 
 .dt-search-pill-accent {
-  border-color: color-mix(in srgb, var(--dt-accent) 28%, var(--dt-border-alpha));
-  background: var(--dt-tint-accent-10);
-  color: var(--dt-accent);
+  border-color: var(--dt-border-strong);
+  background: var(--dt-surface);
+  color: var(--dt-ink-strong);
 }
 
 .dt-search-pill-sm {

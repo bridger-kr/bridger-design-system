@@ -62,9 +62,19 @@ if (tokens) {
     }
   }
   // required typography keys
-  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono']) {
+  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono', 'eyebrow']) {
     if (!tokens.typography || !tokens.typography[k]) err(`tokens: typography.${k} 누락`);
   }
+  const eyebrow = tokens.typography?.eyebrow?.$value;
+  if (tokens.fontSize?.eyebrow?.$value !== '11px') err('tokens: fontSize.eyebrow=11px 기대');
+  if (tokens.letterSpacing?.eyebrow?.$value !== '18%') err('tokens: letterSpacing.eyebrow=18% 기대');
+  if (tokens.fontWeight?.eyebrow?.$value !== '700') err('tokens: fontWeight.eyebrow=700 기대');
+  if (eyebrow?.fontFamily !== '{fontFamily.sans}') err('tokens: typography.eyebrow fontFamily 참조 기대');
+  if (eyebrow?.fontWeight !== '{fontWeight.eyebrow}') err('tokens: typography.eyebrow fontWeight 참조 기대');
+  if (eyebrow?.fontSize !== '{fontSize.eyebrow}') err('tokens: typography.eyebrow fontSize 참조 기대');
+  if (tokens.lineHeight?.eyebrow?.$value !== '1.55') err('tokens: lineHeight.eyebrow=1.55 기대');
+  if (eyebrow?.lineHeight !== '{lineHeight.eyebrow}') err('tokens: typography.eyebrow lineHeight 참조 기대');
+  if (eyebrow?.letterSpacing !== '{letterSpacing.eyebrow}') err('tokens: typography.eyebrow letterSpacing 참조 기대');
 }
 
 // ---- 2 & 3 & 4. spec checks ----------------------------------------------
@@ -110,6 +120,61 @@ if (spec) {
     }
   }
 }
+
+function componentByName(name) {
+  return spec?.components?.find((component) => component.name === name);
+}
+
+function findVariant(component, props) {
+  return component?.variants?.find((variant) => Object.entries(props).every(([key, value]) => variant.props?.[key] === value));
+}
+
+function expectNodeValue(componentName, props, property, expected) {
+  const variant = findVariant(componentByName(componentName), props);
+  if (!variant) {
+    err(`spec: ${componentName} ${JSON.stringify(props)} variant 없음`);
+    return;
+  }
+  if (variant.node?.[property] !== expected) {
+    err(`spec: ${componentName} ${JSON.stringify(props)} ${property}=${JSON.stringify(expected)} 기대`);
+  }
+}
+
+function findNode(node, name) {
+  if (node?.name === name) return node;
+  for (const child of node?.children || []) {
+    const match = findNode(child, name);
+    if (match) return match;
+  }
+  return undefined;
+}
+
+function expectNamedNodeValue(componentName, props, nodeName, property, expected) {
+  const variant = findVariant(componentByName(componentName), props);
+  const node = findNode(variant?.node, nodeName);
+  if (!node) {
+    err(`spec: ${componentName} ${JSON.stringify(props)} ${nodeName} 노드 없음`);
+    return;
+  }
+  if (node[property] !== expected) {
+    err(`spec: ${componentName} ${JSON.stringify(props)} ${nodeName}.${property}=${JSON.stringify(expected)} 기대`);
+  }
+}
+
+// The Figma recipe is an executable consumer contract. These checks pin the
+// neutral primitives at the public states consumers actually receive.
+expectNodeValue('Button', { Variant: 'Primary', Size: 'sm' }, 'h', 40);
+expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'h', 44);
+expectNodeValue('Button', { Variant: 'Primary', Size: 'lg' }, 'h', 48);
+expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'fill', '{color/ink/ink-strong}');
+expectNodeValue('Button', { Variant: 'Danger', Size: 'md' }, 'fill', '{color/status/danger}');
+expectNodeValue('Card', { Variant: 'default' }, 'radius', 14);
+expectNodeValue('Card', { Variant: 'raised' }, 'fill', '{color/surface/surface-raised}');
+expectNodeValue('Card', { Variant: 'panel' }, 'fill', '{color/surface/surface}');
+expectNamedNodeValue('Input', { State: 'default' }, 'field', 'h', 44);
+expectNamedNodeValue('Input', { State: 'default' }, 'field', 'fill', '{color/surface/surface}');
+expectNamedNodeValue('Sidebar', { State: 'default' }, 'item-active', 'fill', '{color/surface/surface-sunken}');
+expectNamedNodeValue('Sidebar', { State: 'default' }, 'active-marker', 'fill', '{color/accent/accent}');
 
 // ---- report ---------------------------------------------------------------
 if (warns.length) {

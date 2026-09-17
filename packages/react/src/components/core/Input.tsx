@@ -31,25 +31,16 @@ export function Input({
 }: InputProps) {
   const inputId = id || (label ? `in-${label.replace(/\s+/g, '-')}` : undefined);
   return (
-    <div style={{ display: 'grid', gap: 8 }}>
+    <div className="dt-input">
       {label ? (
-        <label
-          htmlFor={inputId}
-          style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}
-        >
+        <label className="dt-input-label" htmlFor={inputId}>
           {label}
         </label>
       ) : null}
       <div
-        className={invalid ? 'dt-field dt-field-invalid' : 'dt-field'}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-          padding: '0 12px',
-        }}
+        className={cx('dt-field', invalid && 'dt-field-invalid')}
       >
-        {prefix ? <span style={{ color: 'var(--dt-muted)', display: 'inline-flex' }}>{prefix}</span> : null}
+        {prefix ? <span className="dt-input-prefix">{prefix}</span> : null}
         <input
           id={inputId}
           type={type}
@@ -57,20 +48,13 @@ export function Input({
           disabled={disabled}
           aria-invalid={invalid || undefined}
           style={{
-            flex: 1,
-            border: 'none',
-            outline: 'none',
-            background: 'transparent',
-            color: 'var(--dt-ink-strong)',
-            padding: '11px 0',
             fontFamily: mono ? 'var(--dt-font-mono)' : 'var(--dt-font-sans)',
-            fontSize: mono ? 13 : 14,
             ...style,
           }}
           {...rest}
         />
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span className="dt-input-hint">{hint}</span> : null}
     </div>
   );
 }

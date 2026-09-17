@@ -2,17 +2,17 @@ const freeze = <const TokenGroup extends Record<string, unknown>>(tokenGroup: To
   Object.freeze(tokenGroup);
 
 const lightColors = freeze({
-  paper: '#fbfaf8',
+  paper: '#f7f7f5',
   surface: '#ffffff',
   surfaceRaised: '#ffffff',
-  surfaceSunken: '#f4f3ef',
-  surfaceMuted: '#f8f7f4',
-  ink: '#1b1a16',
-  inkStrong: '#0c0b08',
-  muted: '#69655d',
-  mutedStrong: '#423f38',
-  border: '#eceae3',
-  borderStrong: '#ddd9cf',
+  surfaceSunken: '#efefec',
+  surfaceMuted: '#f3f3f0',
+  ink: '#20201d',
+  inkStrong: '#0d0d0c',
+  muted: '#6f6f68',
+  mutedStrong: '#4a4943',
+  border: '#e5e5e0',
+  borderStrong: '#d5d5ce',
   divider: 'color-mix(in srgb, var(--dt-border) 50%, transparent)',
   borderAlpha: 'color-mix(in srgb, var(--dt-ink) 8%, transparent)',
   borderAlphaStrong: 'color-mix(in srgb, var(--dt-ink) 14%, transparent)',
@@ -62,17 +62,17 @@ const lightColors = freeze({
 } as const);
 
 const darkColors = freeze({
-  paper: '#0a0b0f',
-  surface: '#111218',
-  surfaceRaised: '#181a22',
-  surfaceSunken: '#07080b',
-  surfaceMuted: '#16181f',
-  ink: '#f5f4ee',
+  paper: '#11110f',
+  surface: '#181815',
+  surfaceRaised: '#20201d',
+  surfaceSunken: '#0c0c0b',
+  surfaceMuted: '#1d1d1a',
+  ink: '#ecece7',
   inkStrong: '#ffffff',
-  muted: '#9a9ba6',
-  mutedStrong: '#c3c4cd',
-  border: '#23252e',
-  borderStrong: '#2f323d',
+  muted: '#a2a29a',
+  mutedStrong: '#cacac3',
+  border: '#2b2b27',
+  borderStrong: '#3a3a34',
   divider: 'color-mix(in srgb, var(--dt-border) 55%, transparent)',
   borderAlpha: 'color-mix(in srgb, var(--dt-ink) 8%, transparent)',
   borderAlphaStrong: 'color-mix(in srgb, var(--dt-ink) 14%, transparent)',
@@ -296,6 +296,12 @@ const letterSpacing = freeze({
   h3: '0',
 } as const);
 
+const eyebrow = freeze({
+  size: '11px',
+  tracking: '0.18em',
+  weight: 700,
+} as const);
+
 const fontFeatures = freeze({
   tabular: "'tnum' 0",
 } as const);
@@ -313,6 +319,7 @@ export const typography = freeze({
   fontWeights,
   lineHeights,
   letterSpacing,
+  eyebrow,
 } as const);
 
 export const cssVarName = freeze({
@@ -482,6 +489,9 @@ export const cssVarName = freeze({
     smallLeading: '--dt-small-leading',
     monoSize: '--dt-mono-size',
     monoLeading: '--dt-mono-leading',
+    eyebrowSize: '--dt-eyebrow-size',
+    eyebrowTracking: '--dt-eyebrow-tracking',
+    eyebrowWeight: '--dt-eyebrow-weight',
   } as const),
 } as const);
 

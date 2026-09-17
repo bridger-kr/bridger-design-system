@@ -41,7 +41,14 @@ export {
 } from './ProductCinematic';
 export { ProductPageHeader, type ProductPageHeaderProps } from './ProductPageHeader';
 export { ProductTopbar, ProductTopbarMenu, type ProductTopbarMenuProps, type ProductTopbarProps } from './ProductTopbar';
-export { SearchPill, type SearchPillProps, type SearchPillSize, type SearchPillTone } from './SearchPill';
+export {
+  SEARCH_PILL_SIZE,
+  SEARCH_PILL_TONE,
+  SearchPill,
+  type SearchPillProps,
+  type SearchPillSize,
+  type SearchPillTone,
+} from './SearchPill';
 export { SectionCard, type SectionCardProps } from './SectionCard';
 export { ToolCard, type ToolCardProps } from './ToolCard';
 export { WindowChrome, WindowFrame, type WindowChromeProps, type WindowFrameProps } from './WindowChrome';

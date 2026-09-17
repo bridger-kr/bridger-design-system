@@ -72,7 +72,7 @@ export function Card({
 }: CardProps) {
   const selectedTone = tone ?? variant ?? CardTone.Default;
   return (
-    <div className={className} style={cardStyle(selectedTone, padding, style)} {...rest}>
+    <div className={cx('dt-card', `dt-card-${selectedTone}`, className)} style={cardStyle(selectedTone, padding, style)} {...rest}>
       {children}
     </div>
   );
@@ -96,7 +96,7 @@ export function CardButton({
       {...rest}
       type={type}
       disabled={disabled}
-      className={cx('dt-card-action', className)}
+      className={cx('dt-card', `dt-card-${selectedTone}`, 'dt-card-action', className)}
       style={{
         appearance: 'none',
         display: 'block',
@@ -128,7 +128,7 @@ export function CardLink({
     <a
       {...rest}
       href={href}
-      className={cx('dt-card-action', className)}
+      className={cx('dt-card', `dt-card-${selectedTone}`, 'dt-card-action', className)}
       style={{
         display: 'block',
         minHeight: 'var(--dt-space-5)',

@@ -171,7 +171,9 @@ const figma = {
   createComponentFromNode(node) {
     if (!node || !(node instanceof BaseNode)) fail('createComponentFromNode: SceneNode 아님');
     const c = new ComponentNode();
-    c.width = node.width; c.height = node.height; c.children = node.children;
+    c.name = node.name; c.width = node.width; c.height = node.height; c.children = node.children;
+    c._fills = node.fills; c._strokes = node.strokes;
+    c.cornerRadius = node.cornerRadius; c.effectStyleId = node.effectStyleId;
     return c;
   },
   combineAsVariants(components, parent) {
@@ -249,9 +251,44 @@ run().then(() => {
   if (state.collections[0].modes.length !== 2) fail(`모드 2개(Light/Dark) 기대, 실제 ${state.collections[0].modes.length}`);
   if (colorVars < 25) fail(`색상 변수 부족 (${colorVars})`);
   if (floatVars < 13) fail(`spacing+radius 변수 부족 (${floatVars})`);
-  if (state.textStyles.length !== 6) fail(`Text style 6개 기대, 실제 ${state.textStyles.length}`);
+  if (state.textStyles.length !== 7) fail(`Text style 7개 기대, 실제 ${state.textStyles.length}`);
   if (state.effectStyles.length !== 4) fail(`Effect style 4개 기대, 실제 ${state.effectStyles.length}`);
   if (sets.length !== 40) fail(`컴포넌트 40개 기대, 실제 ${sets.length}`);
+  if (!state.textStyles.some((style) => style.name === 'Bridger/eyebrow')) fail('Bridger/eyebrow Text style 없음');
+
+  const componentSet = (name) => sets.find((set) => set.name === name);
+  const variant = (set, name) => set?.children.find((component) => component.name === name);
+  const nodeByName = (node, name) => {
+    if (node?.name === name) return node;
+    for (const child of node?.children || []) {
+      const match = nodeByName(child, name);
+      if (match) return match;
+    }
+    return undefined;
+  };
+  const buttonSet = componentSet('Button');
+  const primarySmall = variant(buttonSet, 'Variant=Primary, Size=sm');
+  const primaryMedium = variant(buttonSet, 'Variant=Primary, Size=md');
+  const primaryLarge = variant(buttonSet, 'Variant=Primary, Size=lg');
+  const dangerMedium = variant(buttonSet, 'Variant=Danger, Size=md');
+  if (primarySmall?.height !== 40) fail(`Button sm 40px 기대, 실제 ${primarySmall?.height}`);
+  if (primaryMedium?.height !== 44) fail(`Button md 44px 기대, 실제 ${primaryMedium?.height}`);
+  if (primaryLarge?.height !== 48) fail(`Button lg 48px 기대, 실제 ${primaryLarge?.height}`);
+  if (dangerMedium?.cornerRadius !== 12) fail(`Button danger radius 12px 기대, 실제 ${dangerMedium?.cornerRadius}`);
+
+  const defaultInput = variant(componentSet('Input'), 'State=default');
+  const inputField = defaultInput?.children.find((child) => child.name === 'field');
+  if (inputField?.height !== 44) fail(`Input field 44px 기대, 실제 ${inputField?.height}`);
+  if (inputField?.cornerRadius !== 12) fail(`Input field radius 12px 기대, 실제 ${inputField?.cornerRadius}`);
+
+  const defaultCard = variant(componentSet('Card'), 'Variant=default');
+  const panelCard = variant(componentSet('Card'), 'Variant=panel');
+  if (defaultCard?.cornerRadius !== 14) fail(`Card radius 14px 기대, 실제 ${defaultCard?.cornerRadius}`);
+  if (!panelCard) fail('Card panel variant 없음');
+
+  const sidebar = componentSet('Sidebar');
+  const sidebarMarker = nodeByName(sidebar, 'active-marker');
+  if (!sidebarMarker) fail('Sidebar active-marker 없음');
 
   // every COLOR variable must have a value for BOTH modes
   const [m1, m2] = state.collections[0].modes.map((m) => m.modeId);

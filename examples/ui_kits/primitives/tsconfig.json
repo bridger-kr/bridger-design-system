@@ -1,0 +1,12 @@
+{
+  "extends": "../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node", "react", "react-dom", "vite/client"],
+    "paths": {
+      "@bridger-kr/react": ["../../../packages/react/src/index.ts"],
+      "@bridger-kr/tokens/css": ["../../../packages/tokens/css/index.css"]
+    }
+  },
+  "include": ["src", "vite.config.ts"]
+}

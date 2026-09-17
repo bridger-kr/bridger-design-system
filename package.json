@@ -8,11 +8,14 @@
   "packageManager": "pnpm@11.5.2",
   "scripts": {
     "build": "pnpm -r --filter './packages/**' run build",
-    "typecheck": "pnpm -r run typecheck",
+    "typecheck": "pnpm -r run typecheck && pnpm typecheck:example:primitives",
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "oxlint -c _adherence.oxlintrc.json .",
     "pack:dry-run": "pnpm -r --filter './packages/tokens' --filter './packages/react' exec npm pack --dry-run",
+    "dev:example:primitives": "vite --config examples/ui_kits/primitives/vite.config.ts",
+    "build:example:primitives": "vite build --config examples/ui_kits/primitives/vite.config.ts",
+    "typecheck:example:primitives": "tsc --noEmit -p examples/ui_kits/primitives/tsconfig.json",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "pnpm build && changeset publish"
@@ -23,9 +26,13 @@
     "@types/node": "^26.0.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^6.0.2",
     "oxlint": "^1.68.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3",
+    "vite": "^8.0.16",
     "vitest": "^4.1.8"
   }
 }

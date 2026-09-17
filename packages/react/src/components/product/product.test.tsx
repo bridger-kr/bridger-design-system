@@ -10,6 +10,8 @@ import {
   PRODUCT_ACTION_PILL_SIZE,
   PRODUCT_ACTION_PILL_VARIANT,
   PRODUCT_SHELL_TONE,
+  SEARCH_PILL_SIZE,
+  SEARCH_PILL_TONE,
   BrandLogo,
   ChatBubble,
   ProductActionPill,
@@ -108,6 +110,17 @@ describe('Product components', () => {
   });
 
   describe('Product composition primitives', () => {
+    it('publishes enum-like search specimen variants for consumers', () => {
+      const pill = SearchPill({
+        tone: SEARCH_PILL_TONE.Accent,
+        size: SEARCH_PILL_SIZE.Large,
+        children: '날씨 데이터 찾기',
+      });
+
+      expect(pill.props.className).toContain('dt-search-pill-accent');
+      expect(pill.props.className).toContain('dt-search-pill-lg');
+    });
+
     it('exports the console action-list contract for guide-first flows', () => {
       render(
         <ActionList aria-label="시작 경로">

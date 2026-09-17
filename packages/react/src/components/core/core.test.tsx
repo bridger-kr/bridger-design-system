@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import type { ReactElement } from 'react';
 import { Children, isValidElement } from 'react';
 import { render, screen } from '@testing-library/react';
@@ -7,6 +9,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   Badge,
+  BUTTON_SIZE,
+  BUTTON_VARIANT,
   Button,
   Card,
   CardButton,
@@ -118,16 +122,37 @@ describe('core exports', () => {
     expect(Badge({ tone: 'danger', children: 'x' }).props.className).toBe('badge badge-danger');
   });
 
-  it('Button forwards variant/size without dropping the native button type', () => {
-    const el = Button({ variant: 'secondary', size: 'lg', children: '연결' });
-    expect(el.type).toBe('button');
-    expect(el.props.type).toBe('button');
+  it('Button maps every public variant and size to semantic CSS hooks', () => {
+    const danger = Button({ variant: BUTTON_VARIANT.Danger, size: BUTTON_SIZE.Small, children: '삭제' });
+    const secondary = Button({ variant: BUTTON_VARIANT.Secondary, size: BUTTON_SIZE.Large, children: '연결' });
+
+    expect(danger.props.className).toContain('btn-danger');
+    expect(danger.props.className).toContain('dt-button-sm');
+    expect(secondary.props.className).toContain('btn-secondary');
+    expect(secondary.props.className).toContain('dt-button-lg');
   });
 
-  it('Button md size follows the shared 44px touch target', () => {
-    const el = Button({ children: '저장' });
-    expect(el.props.style.height).toBe(44);
-    expect(el.props.style.padding).toBe('0 18px');
+  it('Button keeps the native type and forwards only consumer-supplied inline style', () => {
+    const style = { height: 20 };
+    const el = Button({ children: '저장', style });
+
+    expect(el.type).toBe('button');
+    expect(el.props.type).toBe('button');
+    expect(el.props.className).toContain('btn-primary');
+    expect(el.props.className).toContain('dt-button-md');
+    expect(el.props.style).toBe(style);
+  });
+
+  it('defines token-backed Button size floors and disabled state in CSS', () => {
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, '../tokens/css/base.css'), 'utf8');
+
+    expect(stylesheet).toMatch(/\.dt-button\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
+    expect(stylesheet).toMatch(/\.dt-button-sm\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
+    expect(stylesheet).toMatch(/\.dt-button-md\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-1\)\)/s);
+    expect(stylesheet).toMatch(/\.dt-button-lg\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-2\)\)/s);
+    expect(stylesheet).toMatch(/\.dt-button:disabled\s*\{[^}]*cursor:\s*not-allowed[^}]*opacity:\s*0\.55/s);
+    expect(stylesheet).toMatch(/\.btn-danger\s*\{[^}]*border:\s*1px solid var\(--dt-danger\)[^}]*background:\s*var\(--dt-danger\)[^}]*color:\s*var\(--dt-surface\)/s);
   });
 
   it('exports chip, section, and pill tabs as additive contracts', () => {
