@@ -145,7 +145,7 @@ function typographyValues(): TokenRecord {
 
 describe('@bridger-kr/tokens', () => {
   it('publishes the light theme at :root with an explicit equivalent light selector', () => {
-    expect(lightDefaultContract.get('--dt-paper')).toBe('#fbfaf8');
+    expect(lightDefaultContract.get('--dt-paper')).toBe('#f7f7f5');
     expect(lightDefaultContract.get('--dt-surface')).toBe('#ffffff');
     expect(lightDefaultContract).toEqual(lightContract);
   });
@@ -161,14 +161,17 @@ describe('@bridger-kr/tokens', () => {
     expect([...darkContract.keys()].sort()).toEqual([...lightDefaultContract.keys()].sort());
   });
 
-  it('uses accessible persimmon fill and small-text roles', () => {
+  it('uses accessible persimmon identity and neutral primary-action roles', () => {
     expect(colors.light.accent).toBe('#ec5e1f');
     expect(contrastRatio(colors.light.accentInk, colors.light.accent)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio(colors.light.accentStrong, colors.light.paper)).toBeGreaterThanOrEqual(4.5);
     expect(contrastRatio(colors.dark.accentStrong, colors.dark.surface)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(colors.light.inkStrong, colors.light.surface)).toBeGreaterThanOrEqual(4.5);
+    expect(contrastRatio(colors.dark.inkStrong, colors.dark.surface)).toBeGreaterThanOrEqual(4.5);
     expect(baseCss).toContain('a { color: var(--dt-accent-strong);');
     expect(baseCss).toContain('.badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-strong);');
-    expect(baseCss).toContain('.btn-primary:not(:disabled):hover { background: var(--dt-accent);');
+    expect(baseCss).toContain('background: var(--dt-ink-strong); color: var(--dt-surface);');
+    expect(baseCss).toContain('.btn-primary:not(:disabled):hover { background: var(--dt-ink);');
   });
 
   it('keeps exported color tokens aligned with the CSS contract', () => {
@@ -199,16 +202,16 @@ describe('@bridger-kr/tokens', () => {
   });
 
   it('preserves literal token types', () => {
-    expectTypeOf(colors.light.paper).toEqualTypeOf<'#fbfaf8'>();
+    expectTypeOf(colors.light.paper).toEqualTypeOf<'#f7f7f5'>();
     expectTypeOf(colors.light.surface).toEqualTypeOf<'#ffffff'>();
-    expectTypeOf(colors.light.surfaceSunken).toEqualTypeOf<'#f4f3ef'>();
-    expectTypeOf(colors.light.ink).toEqualTypeOf<'#1b1a16'>();
-    expectTypeOf(colors.light.border).toEqualTypeOf<'#eceae3'>();
+    expectTypeOf(colors.light.surfaceSunken).toEqualTypeOf<'#efefec'>();
+    expectTypeOf(colors.light.ink).toEqualTypeOf<'#20201d'>();
+    expectTypeOf(colors.light.border).toEqualTypeOf<'#e5e5e0'>();
     expectTypeOf(colors.light.accent).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(colors.light.accentInk).toEqualTypeOf<'#1a1206'>();
     expectTypeOf(motion.transitions.base).toEqualTypeOf<'200ms var(--dt-ease)'>();
     expectTypeOf(layers.popover).toEqualTypeOf<60>();
-    expectTypeOf(colors.dark.paper).toEqualTypeOf<'#0a0b0f'>();
+    expectTypeOf(colors.dark.paper).toEqualTypeOf<'#11110f'>();
     expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(radius.lg).toEqualTypeOf<'14px'>();
     expectTypeOf(radius.xl).toEqualTypeOf<'14px'>();

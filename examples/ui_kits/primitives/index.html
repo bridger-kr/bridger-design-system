@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bridger primitive showcase</title>
+    <link rel="stylesheet" href="../../../packages/tokens/css/index.css">
+    <link rel="stylesheet" href="../../../packages/react/src/styles.css">
+    <link rel="stylesheet" href="showcase.css">
+  </head>
+  <body>
+    <main class="showcase" aria-labelledby="showcase-title">
+      <header class="showcase-intro">
+        <span class="showcase-brand" aria-label="Bridger">Bridger<span aria-hidden="true">.</span></span>
+        <div>
+          <h1 id="showcase-title">처음 써도 흐름이 보이는 기본 UI</h1>
+          <p>중립적인 표면과 잉크색 주 행동, 브릿저의 주황색 포커스 신호를 확인하는 UI 예시입니다. 표시된 데이터와 연결 상태는 예시입니다.</p>
+        </div>
+      </header>
+
+      <div class="showcase-themes">
+        <section class="showcase-theme" aria-labelledby="light-title">
+          <div class="showcase-theme-label" id="light-title">Light default</div>
+          <div class="showcase-shell">
+            <nav class="dt-sidebar showcase-sidebar" aria-label="시작 메뉴">
+              <div class="dt-sidebar-brand"><strong>데이터 시작하기</strong></div>
+              <div class="dt-sidebar-body">
+                <div class="dt-sidebar-section">
+                  <div class="dt-sidebar-heading">처음 사용</div>
+                  <a class="dt-sidebar-item dt-sidebar-item-active" href="#light-search" aria-current="page">
+                    <span class="dt-sidebar-item-marker"></span>
+                    <span class="dt-sidebar-item-label">데이터 찾기</span>
+                  </a>
+                  <a class="dt-sidebar-item" href="#light-result"><span class="dt-sidebar-item-label">결과 확인</span></a>
+                  <a class="dt-sidebar-item" href="#light-connect"><span class="dt-sidebar-item-label">AI에 연결</span></a>
+                </div>
+              </div>
+              <div class="dt-sidebar-footer">고급 설정은 나중에</div>
+            </nav>
+
+            <div class="showcase-content">
+              <header class="dt-product-page-header">
+                <div class="dt-product-page-header-row">
+                  <div class="dt-product-page-header-copy">
+                    <span class="dt-product-page-header-eyebrow">1단계</span>
+                    <div class="dt-product-page-header-text">
+                      <h2>필요한 공공데이터를 찾아보세요</h2>
+                      <p>일상 표현으로 검색하고, 사용할 수 있는 항목부터 바로 시험합니다.</p>
+                    </div>
+                  </div>
+                </div>
+              </header>
+
+              <form class="showcase-form" id="light-search">
+                <label class="dt-input">
+                  <span class="dt-input-label">무엇을 찾고 있나요?</span>
+                  <span class="dt-field">
+                    <input class="dt-input-control" value="서울 날씨" aria-label="공공데이터 검색">
+                  </span>
+                  <span class="dt-input-hint">예: 서울 날씨, 사업자 정보, 미세먼지</span>
+                </label>
+                <div class="showcase-actions">
+                  <button class="dt-button dt-button-md btn-primary" type="button">데이터 찾기</button>
+                  <button class="dt-button dt-button-md btn-secondary" type="button">예시 보기</button>
+                  <button class="dt-button dt-button-md btn-ghost" type="button" disabled>불러오는 중</button>
+                </div>
+              </form>
+
+              <article class="dt-card dt-card-default showcase-result" id="light-result">
+                <div class="showcase-result-copy">
+                  <span class="dt-search-pill dt-search-pill-neutral dt-search-pill-sm">예시 데이터</span>
+                  <h3>단기예보 조회</h3>
+                  <p>지역과 날짜를 고르면 날씨 예보를 읽기 쉬운 표로 보여줍니다.</p>
+                </div>
+                <button class="dt-button dt-button-sm btn-primary" type="button">바로 시험하기</button>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="showcase-theme dark" aria-labelledby="dark-title">
+          <div class="showcase-theme-label" id="dark-title">Dark parity</div>
+          <div class="showcase-content showcase-dark-content">
+            <header class="dt-product-page-header">
+              <div class="dt-product-page-header-row">
+                <div class="dt-product-page-header-copy">
+                  <span class="dt-product-page-header-eyebrow">연결 준비</span>
+                  <div class="dt-product-page-header-text">
+                    <h2>확인한 데이터를 AI에 연결하세요</h2>
+                    <p>시험한 결과를 보고 난 뒤 연결 방법을 선택할 수 있습니다.</p>
+                  </div>
+                </div>
+              </div>
+            </header>
+            <div class="showcase-dark-grid" id="light-connect">
+              <article class="dt-card dt-card-default showcase-choice">
+                <div class="dt-search-pill dt-search-pill-neutral dt-search-pill-md">ChatGPT</div>
+                <h3>대화에서 바로 사용</h3>
+                <p>연결 주소를 한 번 등록하면 데이터 이름으로 요청할 수 있습니다.</p>
+                <button class="dt-button dt-button-md btn-primary" type="button">연결 방법 보기</button>
+              </article>
+              <article class="dt-card dt-card-muted showcase-choice">
+                <div class="dt-search-pill dt-search-pill-neutral dt-search-pill-md">개발 도구</div>
+                <h3>API로 연결</h3>
+                <p>필요할 때만 키와 엔드포인트 같은 고급 설정을 확인합니다.</p>
+                <button class="dt-button dt-button-md btn-secondary" type="button">고급 설정 보기</button>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

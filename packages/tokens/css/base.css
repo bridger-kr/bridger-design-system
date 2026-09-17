@@ -1,6 +1,5 @@
 /* ============================================================
    Bridger — Base elements + shared primitive vocabulary  (v2)
-   Light-first. Premium SaaS depth: hairline ring + layered soft shadow.
 ============================================================ */
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -70,7 +69,6 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
   box-shadow: var(--dt-card-rest);
   transition: box-shadow var(--dt-motion), transform var(--dt-motion);
 }
-.card:hover { box-shadow: var(--dt-card-hover); }
 .card-muted  { background: var(--dt-surface-sunken); border: 1px solid var(--dt-border); border-radius: var(--dt-radius-lg); }
 .card-raised { background: var(--dt-surface-raised); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-card-float); }
 .glass-card {
@@ -80,18 +78,16 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
 }
 
 /* ── Buttons ── */
-/* Buttons build from fills on a height grid (44 / 36px).
-   Hover strengthens the edge and lifts; press contracts decisively. */
 .btn-primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
   height: 44px; padding: 0 18px; font-size: 14px; font-weight: 600; line-height: 1;
   border-radius: var(--dt-radius-md);
-  background: var(--dt-accent); color: var(--dt-accent-ink); border: 1px solid transparent;
+  background: var(--dt-ink-strong); color: var(--dt-surface); border: 1px solid var(--dt-ink-strong);
   box-shadow: var(--dt-shadow-xs);
   text-decoration: none; cursor: pointer;
   transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), transform var(--dt-motion-fast);
 }
-.btn-primary:not(:disabled):hover { background: var(--dt-accent); border-color: var(--dt-border-strong); box-shadow: var(--dt-shadow-sm); transform: translateY(-2px); }
+.btn-primary:not(:disabled):hover { background: var(--dt-ink); border-color: var(--dt-ink); box-shadow: var(--dt-shadow-sm); transform: translateY(-1px); }
 .btn-primary:active { transform: scale(var(--dt-press-scale)); }
 
 .btn-secondary {
@@ -102,7 +98,7 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
   text-decoration: none; cursor: pointer;
   transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), transform var(--dt-motion-fast);
 }
-.btn-secondary:not(:disabled):hover { background: color-mix(in srgb, var(--dt-surface-sunken) 90%, var(--dt-ink)); border-color: var(--dt-border-strong); box-shadow: var(--dt-shadow-sm); transform: translateY(-2px); }
+.btn-secondary:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); transform: translateY(-1px); }
 .btn-secondary:active { transform: scale(var(--dt-press-scale)); }
 
 .btn-ghost {
@@ -113,17 +109,33 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
   text-decoration: none; cursor: pointer;
   transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), color var(--dt-motion-fast), transform var(--dt-motion-fast);
 }
-.btn-ghost:not(:disabled):hover { background: var(--dt-tint-muted); border-color: var(--dt-border-strong); box-shadow: var(--dt-shadow-sm); color: var(--dt-ink-strong); transform: translateY(-2px); }
+.btn-ghost:not(:disabled):hover { background: var(--dt-tint-muted); border-color: var(--dt-border); color: var(--dt-ink-strong); }
 .btn-ghost:active { transform: scale(var(--dt-press-scale)); }
 
-/* ── Form fields — filled, no outline. Focus lifts to white + accent ring. ── */
+.dt-button { min-height: var(--dt-space-5); }
+.dt-button:disabled { cursor: not-allowed; opacity: 0.55; }
+
 .dt-field {
-  background: var(--dt-surface-sunken); border: none;
+  min-height: 44px;
+  background: var(--dt-surface); border: 1px solid var(--dt-border-strong);
   border-radius: var(--dt-radius-md);
-  transition: background-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast);
+  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast);
 }
-.dt-field:focus, .dt-field:focus-within { background: var(--dt-surface); box-shadow: var(--dt-shadow-focus); outline: none; }
+.dt-field:hover { border-color: color-mix(in srgb, var(--dt-ink) 28%, var(--dt-border-strong)); }
+.dt-field:focus, .dt-field:focus-within { background: var(--dt-surface); border-color: var(--dt-accent); box-shadow: var(--dt-shadow-focus); outline: none; }
 .dt-field-invalid { box-shadow: 0 0 0 1.5px var(--dt-danger); }
+
+.dt-button-icon { display: inline-flex; }
+
+.dt-input { display: grid; gap: var(--dt-space-2); }
+.dt-input-label { color: var(--dt-muted-strong); font-size: 13px; font-weight: 600; }
+.dt-input .dt-field { display: flex; align-items: center; gap: var(--dt-space-2); padding-inline: calc(var(--dt-space-2) + var(--dt-space-1)); }
+.dt-input-prefix { display: inline-flex; color: var(--dt-muted); }
+.dt-input-control {
+  min-width: 0; flex: 1; border: 0; outline: 0; background: transparent;
+  color: var(--dt-ink-strong); padding-block: var(--dt-space-2); font-size: 14px;
+}
+.dt-input-hint { color: var(--dt-muted); font-size: 12px; }
 
 /* ── Spec strip ── */
 .spec-strip {

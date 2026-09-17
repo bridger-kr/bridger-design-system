@@ -8,6 +8,7 @@ that load React + Babel from a CDN.
 | --- | --- |
 | `ui_kits/console/` | Full-page recreation of the Bridger portal console (`portal.datari.kr`). Open `index.html` in a browser. |
 | `ui_kits/landing/` | Marketing-site recreation (`datari.kr`). `app.jsx` / `app2.jsx` / `app3.jsx` are iteration variants. |
+| `ui_kits/primitives/` | Canonical light and dark first-use primitives using package token and React styles directly. |
 | `foundations/` | 13 specimen cards (color, type, spacing, brand) — design-system documentation visuals. |
 | `design-canvas.jsx` | A Figma-like pan/zoom design canvas used to compose specimens. |
 

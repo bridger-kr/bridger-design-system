@@ -7,6 +7,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import {
   Badge,
+  BUTTON_SIZE,
+  BUTTON_VARIANT,
   Button,
   Card,
   CardButton,
@@ -119,15 +121,26 @@ describe('core exports', () => {
   });
 
   it('Button forwards variant/size without dropping the native button type', () => {
-    const el = Button({ variant: 'secondary', size: 'lg', children: '연결' });
+    const el = Button({ variant: BUTTON_VARIANT.Secondary, size: BUTTON_SIZE.Large, children: '연결' });
     expect(el.type).toBe('button');
     expect(el.props.type).toBe('button');
+    expect(el.props.className).toContain('dt-button-lg');
   });
 
   it('Button md size follows the shared 44px touch target', () => {
     const el = Button({ children: '저장' });
     expect(el.props.style.height).toBe(44);
     expect(el.props.style.padding).toBe('0 18px');
+  });
+
+  it('keeps every Button size on the shared minimum touch target', () => {
+    const small = Button({ size: 'sm', children: '작게 표시' });
+    const medium = Button({ size: 'md', children: '기본 표시' });
+    const large = Button({ size: 'lg', children: '크게 표시' });
+
+    expect(small.props.style.height).toBe(40);
+    expect(medium.props.style.height).toBe(44);
+    expect(large.props.style.height).toBe(48);
   });
 
   it('exports chip, section, and pill tabs as additive contracts', () => {

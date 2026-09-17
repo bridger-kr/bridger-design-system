@@ -1,0 +1,38 @@
+body { min-width: 0; }
+
+.showcase {
+  display: grid;
+  width: min(100%, calc(var(--dt-space-8) * 10));
+  margin-inline: auto;
+  gap: var(--dt-space-5);
+  padding: var(--dt-space-5) var(--dt-space-3) var(--dt-space-6);
+}
+
+.showcase-intro { display: grid; gap: var(--dt-space-3); }
+.showcase-intro > div { display: grid; gap: var(--dt-space-2); max-width: calc(var(--dt-space-8) * 5); }
+.showcase-intro p { color: var(--dt-muted-strong); }
+.showcase-brand { color: var(--dt-ink-strong); font-size: var(--dt-h3-size); font-weight: 750; }
+.showcase-brand span { color: var(--dt-accent); }
+.showcase-themes { display: grid; gap: var(--dt-space-4); }
+.showcase-theme { overflow: hidden; border: 1px solid var(--dt-border); border-radius: var(--dt-radius-container); background: var(--dt-paper); }
+.showcase-theme-label { border-bottom: 1px solid var(--dt-border); padding: var(--dt-space-2) var(--dt-space-3); color: var(--dt-muted); font-family: var(--dt-font-mono); font-size: var(--dt-small-size); }
+.showcase-shell { display: grid; min-width: 0; }
+.showcase-sidebar { width: 100% !important; border-right: 0; border-bottom: 1px solid var(--dt-border); }
+.showcase-content { display: grid; min-width: 0; gap: var(--dt-space-3); padding: var(--dt-space-3); }
+.showcase-form { display: grid; gap: var(--dt-space-3); padding: var(--dt-space-3); border: 1px solid var(--dt-border); border-radius: var(--dt-radius-container); background: var(--dt-surface); }
+.showcase-actions { display: flex; flex-wrap: wrap; gap: var(--dt-space-2); }
+.showcase-result { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--dt-space-3); padding: var(--dt-space-3) !important; }
+.showcase-result-copy { display: grid; flex: 1; gap: var(--dt-space-2); min-width: min(100%, calc(var(--dt-space-8) * 2)); }
+.showcase-result-copy p, .showcase-choice p { color: var(--dt-muted-strong); }
+.showcase-dark-content { background: var(--dt-paper); color: var(--dt-ink); }
+.showcase-dark-grid { display: grid; gap: var(--dt-space-3); }
+.showcase-choice { display: grid; align-content: start; gap: var(--dt-space-3); padding: var(--dt-space-3) !important; }
+.showcase-choice .dt-search-pill { width: fit-content; }
+
+@media (min-width: 768px) {
+  .showcase { padding-inline: var(--dt-space-4); }
+  .showcase-shell { grid-template-columns: 1fr 2fr; }
+  .showcase-sidebar { border-right: 1px solid var(--dt-border); border-bottom: 0; }
+  .showcase-content { padding: var(--dt-space-4); }
+  .showcase-dark-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

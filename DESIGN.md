@@ -8,7 +8,7 @@ Bridger connects difficult Korean public APIs through one managed service. The d
 ## 1. Governing principles
 
 1. **Stripe-level precision, not Stripe visual imitation.** Use the reference only for useful quality principles such as clear hierarchy, careful spacing, strong states, and complete interaction details. Do not copy its visual identity, proprietary colors, proprietary fonts, gradients, or component styling.
-2. **Bridger identity is the source.** Persimmon `#ec5e1f`, Pretendard Variable, JetBrains Mono, Korean-first content, quiet console density, and restrained technical confidence are non-negotiable.
+2. **Bridger identity is the source.** Persimmon `#ec5e1f`, Pretendard Variable, JetBrains Mono, Korean-first content, quiet console density, and restrained technical confidence are non-negotiable. Persimmon identifies Bridger and visible focus; near-black ink carries ordinary primary actions.
 3. **One contract, two surfaces.** Landing and console share tokens and primitives. Their density, composition, and decoration differ by purpose, not by an unrelated visual language.
 4. **Structure before decoration.** Hairline borders, typography, spacing, and semantic state carry hierarchy. Shadows and decorative backgrounds are exceptions with named uses.
 5. **Every rule is testable.** New design decisions must become a token, component state, test, or documented exception. Do not add page-local primitives when an existing package primitive can express the intent.
@@ -67,14 +67,14 @@ The palette is warm, restrained, and semantic. Use the token variables, not copi
 | Strong ink | `--dt-ink-strong` | Headings, primary values, and high-emphasis text. |
 | Muted text | `--dt-muted`, `--dt-muted-strong` | Helper text and secondary labels. Maintain WCAG AA contrast. |
 | Border | `--dt-border`, `--dt-border-strong` | Primary structure and stronger framing. |
-| Brand action | `--dt-accent` | Persimmon `#ec5e1f`. Use for the primary action, active state, and focus. |
+| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Use for identity, focus, selection markers, and status emphasis. |
 | Brand action strength | `--dt-accent-strong`, `--dt-accent-bright`, `--dt-accent-ink` | Theme-specific contrast and interaction roles. |
 | Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only. Never use them as decoration. |
 | Supporting status | `--dt-cobalt`, `--dt-lime`, and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
 | Code | `--dt-code-bg`, `--dt-code-ink`, `--dt-code-border`, `--dt-syntax-*` | Dark, high-contrast technical surfaces in both themes. |
 | Tints | `--dt-tint-*` | Low-opacity fills for badges, chips, and semantic state. Do not use tint as a substitute for readable text. |
 
-Persimmon remains the only decorative brand accent. Cobalt, lime, success, warning, danger, and info colors communicate status or data meaning only. Purple and indigo are not Bridger brand replacements. Do not add a second decorative accent, glow, or color ramp without a new approved token role.
+Persimmon remains the only decorative brand accent. Primary actions use `--dt-ink-strong` with a surface-colored label so the interface stays calm and the brand accent keeps meaning. Cobalt, lime, success, warning, danger, and info colors communicate status or data meaning only. Purple and indigo are not Bridger brand replacements. Do not add a second decorative accent, glow, or color ramp without a new approved token role.
 
 ### 4.3 Typography
 
@@ -170,8 +170,8 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 ### 5.1 Landing, `bridger.kr`
 
 - The landing surface is Korean-first, confident, technical, and restrained. English is a parity locale under `/en`.
-- Light paper is the default. Use the persimmon action color for the primary action and active navigation state, with one dominant action per meaningful band or decision point.
-- A cinematic hero may use the low-opacity warm radial wash, dot grid, and `--dt-gradient-mesh`. Keep decoration behind the content and mask it with a radial fade.
+- Light paper is the default. Use near-black ink for the primary action, and reserve persimmon for the Bridger mark, focus, selection markers, and status emphasis. Keep one dominant action per meaningful band or decision point.
+- Keep the hero on a flat paper or surface plane. Use typography, spacing, and real product content for hierarchy; avoid decorative radial washes, dot grids, and mesh gradients.
 - Explain the product with composed product proof, connector guides, tool categories, and real interface specimens. Do not use a generic SaaS hero, full-bleed stock photography, or decorative illustration in place of product evidence.
 - Marketing sections may breathe more than console sections, but they still use the shared spacing scale, semantic headings, and package primitives.
 - Landing navigation may use the glass token treatment. Other content remains flat or bordered by default.
@@ -262,7 +262,7 @@ Naming note: `Panel` is the React component exported from `packages/react/src/co
 
 ### 9.2 Core family
 
-Resting on the canonical persimmon-led border plane. Every component supports rest, hover, press, focus-visible, disabled, loading, and reduced-motion.
+Resting on the canonical neutral border plane with persimmon focus and selection cues. Every component supports rest, hover, press, focus-visible, disabled, loading, and reduced-motion.
 
 | Component | Anatomy | Variant axes | Notes |
 | --- | --- | --- | --- |
@@ -394,6 +394,8 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | `getdesign` generated Stripe mock | Layout grammar and spacing rhythm for cinematic hero composition | Generated reference visual identity, decorative gradients, glow effects |
 | `flex.team`, `channel.io` | Korean-product-native tone, restrained decoration | Their respective brand marks, palettes, or proprietary imagery |
 | Linear, Vercel, Notion | Console density and tabular discipline | Their respective brand marks, palettes, or signature component treatments |
+| OpenAI web surfaces | Neutral paper and ink hierarchy, restrained primary controls, direct task language | OpenAI marks, copy, proprietary assets, or exact component styling |
+| `aside.com` | Spacious product framing, clear action hierarchy, and calm browser-like presentation | Aside marks, cyan atmosphere, clouds, browser artwork, or exact layout |
 
 ### 10.3 Do-not-copy rules
 

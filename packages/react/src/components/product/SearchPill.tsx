@@ -1,8 +1,20 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
-export type SearchPillTone = 'accent' | 'neutral';
-export type SearchPillSize = 'sm' | 'md' | 'lg';
+export const SEARCH_PILL_TONE = {
+  Accent: 'accent',
+  Neutral: 'neutral',
+} as const;
+
+export type SearchPillTone = (typeof SEARCH_PILL_TONE)[keyof typeof SEARCH_PILL_TONE];
+
+export const SEARCH_PILL_SIZE = {
+  Small: 'sm',
+  Medium: 'md',
+  Large: 'lg',
+} as const;
+
+export type SearchPillSize = (typeof SEARCH_PILL_SIZE)[keyof typeof SEARCH_PILL_SIZE];
 
 export interface SearchPillProps extends HTMLAttributes<HTMLDivElement> {
   tone?: SearchPillTone;
@@ -14,8 +26,8 @@ export interface SearchPillProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export function SearchPill({
-  tone = 'neutral',
-  size = 'md',
+  tone = SEARCH_PILL_TONE.Neutral,
+  size = SEARCH_PILL_SIZE.Medium,
   leadingIcon,
   trailingIcon,
   artifactLabel,

@@ -5,7 +5,7 @@
       "$type": "color",
       "surface": {
         "paper": {
-          "$value": "#fbfaf8"
+          "$value": "#f7f7f5"
         },
         "surface": {
           "$value": "#ffffff"
@@ -14,32 +14,32 @@
           "$value": "#ffffff"
         },
         "surface-sunken": {
-          "$value": "#f4f3ef"
+          "$value": "#efefec"
         },
         "surface-muted": {
-          "$value": "#f8f7f4"
+          "$value": "#f3f3f0"
         }
       },
       "ink": {
         "ink": {
-          "$value": "#1b1a16"
+          "$value": "#20201d"
         },
         "ink-strong": {
-          "$value": "#0c0b08"
+          "$value": "#0d0d0c"
         },
         "muted": {
-          "$value": "#69655d"
+          "$value": "#6f6f68"
         },
         "muted-strong": {
-          "$value": "#423f38"
+          "$value": "#4a4943"
         }
       },
       "border": {
         "border": {
-          "$value": "#eceae3"
+          "$value": "#e5e5e0"
         },
         "border-strong": {
-          "$value": "#ddd9cf"
+          "$value": "#d5d5ce"
         }
       },
       "accent": {
@@ -96,7 +96,7 @@
           "$value": "rgba(198,40,40,0.12)"
         },
         "tint-muted": {
-          "$value": "rgba(27,26,22,0.05)"
+          "$value": "rgba(32,32,29,0.05)"
         }
       },
       "code": {
@@ -115,41 +115,41 @@
       "$type": "color",
       "surface": {
         "paper": {
-          "$value": "#0a0b0f"
+          "$value": "#11110f"
         },
         "surface": {
-          "$value": "#111218"
+          "$value": "#181815"
         },
         "surface-raised": {
-          "$value": "#181a22"
+          "$value": "#20201d"
         },
         "surface-sunken": {
-          "$value": "#07080b"
+          "$value": "#0c0c0b"
         },
         "surface-muted": {
-          "$value": "#16181f"
+          "$value": "#1d1d1a"
         }
       },
       "ink": {
         "ink": {
-          "$value": "#f5f4ee"
+          "$value": "#ecece7"
         },
         "ink-strong": {
           "$value": "#ffffff"
         },
         "muted": {
-          "$value": "#9a9ba6"
+          "$value": "#a2a29a"
         },
         "muted-strong": {
-          "$value": "#c3c4cd"
+          "$value": "#cacac3"
         }
       },
       "border": {
         "border": {
-          "$value": "#23252e"
+          "$value": "#2b2b27"
         },
         "border-strong": {
-          "$value": "#2f323d"
+          "$value": "#3a3a34"
         }
       },
       "accent": {
@@ -206,7 +206,7 @@
           "$value": "rgba(248,113,113,0.16)"
         },
         "tint-muted": {
-          "$value": "rgba(245,244,238,0.06)"
+          "$value": "rgba(236,236,231,0.06)"
         }
       },
       "code": {
