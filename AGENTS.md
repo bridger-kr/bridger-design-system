@@ -89,6 +89,13 @@ Provenance:
   `@bridger-kr/react` barrel. Re-verify whenever `DESIGN.md` or the package
   barrel changes.
 
+Codex Cloud:
+
+- Use Node 22 or a compatible newer LTS runtime; `.github/workflows/ci.yml` is the CI runtime reference. Setup and maintenance use `bash .codex/setup.sh`, which reads the exact pnpm version from `package.json` and installs the committed lockfile.
+- Run `bash .codex/verify.sh` for package, example type, lint, plugin harness, and packaging checks. The offline pnpm launcher requires setup to have run in the same cached environment.
+- The Figma harness is simulated plugin execution, not browser or Figma UI proof. Component changes also require the consuming `bridger-web` browser matrix and token mirror check.
+- Use the [Bridger OKF knowledge bundle](https://github.com/bridger-kr/bridger-roadmap/tree/codex/cloud-e2e-setup/knowledge) for cross-repo ownership and assignment evidence. Do not create a parallel design-system workspace.
+
 Scope precedence:
 
 <!-- rule:meta:closest-scope-wins owner:bridger-kr since:2026-07 source:https://agents.md/ -->
