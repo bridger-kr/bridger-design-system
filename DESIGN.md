@@ -153,9 +153,10 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 - Use the shared easing `--dt-ease: cubic-bezier(0.23, 1, 0.32, 1)` and the duration tokens `120ms`, `200ms`, and `280ms` for normal interaction.
 - Use `--dt-motion-fast`, `--dt-motion-base`, `--dt-motion`, `--dt-motion-slow`, and `--dt-motion-slower` rather than inventing transition strings.
-- Motion must clarify a state change. Do not use bounce, spring overshoot, or infinite decorative loops.
-- Entrances may use a short fade and upward movement. Landing hero decoration may use the static gradient mesh, but the mesh must not pulse or glow.
-- All components must implement `prefers-reduced-motion: reduce`. Remove nonessential transforms and entrance motion, shorten transitions to an instant state change, and stop status pulses. Content and state must remain available.
+- Motion must clarify a state change. Do not use bounce, spring overshoot, or infinite decorative loops in components.
+- Landing surfaces may additionally use the ambient tier — `--dt-motion-ambient`, `--dt-motion-ambient-slow`, `--dt-motion-flow`, and `--dt-motion-flow-slow` — for slow, low-amplitude decoration loops such as a drifting gradient-mesh wash, thin data-flow lines, or a quiet content ticker. Ambient loops are decoration only: they must sit behind content, must not pulse or glow at readable contrast, must pause on hover/focus where they carry text, and must stop entirely under `prefers-reduced-motion: reduce`.
+- Entrances may use a short fade and upward movement. Landing hero decoration may use the gradient mesh; it may drift within the ambient tier but must never read as a glow.
+- All components must implement `prefers-reduced-motion: reduce`. Remove nonessential transforms and entrance motion, shorten transitions to an instant state change, and stop status pulses and ambient loops. Content and state must remain available.
 
 ### 4.9 Gradient mesh and transparency
 
@@ -171,7 +172,7 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 - The landing surface is Korean-first, confident, technical, and restrained. English is a parity locale under `/en`.
 - Light paper is the default. Use near-black ink for the primary action, and reserve persimmon for the Bridger mark, focus, selection markers, and status emphasis. Keep one dominant action per meaningful band or decision point.
-- Keep the hero on a flat paper or surface plane. Use typography, spacing, and real product content for hierarchy; avoid decorative radial washes, dot grids, and mesh gradients.
+- Keep the hero on a flat paper or surface plane. Use typography, spacing, and real product content for hierarchy. The hero may carry one ambient decoration layer (the persimmon gradient mesh, drifting within the ambient motion tier, plus thin data-flow lines) masked behind content; avoid additional decorative radial washes, dot grids, or competing fields.
 - Explain the product with composed product proof, connector guides, tool categories, and real interface specimens. Do not use a generic SaaS hero, full-bleed stock photography, or decorative illustration in place of product evidence.
 - Marketing sections may breathe more than console sections, but they still use the shared spacing scale, semantic headings, and package primitives.
 - Landing navigation may use the glass token treatment. Other content remains flat or bordered by default.
@@ -396,6 +397,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | Linear, Vercel, Notion | Console density and tabular discipline | Their respective brand marks, palettes, or signature component treatments |
 | OpenAI web surfaces | Neutral paper and ink hierarchy, restrained primary controls, direct task language | OpenAI marks, copy, proprietary assets, or exact component styling |
 | `aside.com` | Spacious product framing, clear action hierarchy, and calm browser-like presentation | Aside marks, cyan atmosphere, clouds, browser artwork, or exact layout |
+| `tinyfish.ai` | Alive, fluid marketing quality bar: ambient color field, live-looking product specimens, quiet ticker momentum, staggered entrances | TinyFish marks, fish mascot, palette, dark-first theme, copy, demo chrome, or animation code |
 
 ### 10.3 Do-not-copy rules
 

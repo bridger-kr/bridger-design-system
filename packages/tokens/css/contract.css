@@ -167,6 +167,10 @@
   --dt-motion: 200ms var(--dt-ease);
   --dt-motion-slow: 280ms var(--dt-ease);
   --dt-motion-slower: 600ms var(--dt-ease);
+  --dt-motion-ambient: 16000ms ease-in-out;
+  --dt-motion-ambient-slow: 24000ms ease-in-out;
+  --dt-motion-flow: 8000ms linear;
+  --dt-motion-flow-slow: 32000ms linear;
   --dt-press-scale: 0.97;
   --dt-hotspot-ring: var(--dt-accent);
   --dt-hotspot-size: 8px;
@@ -361,6 +365,10 @@
   --dt-motion: 200ms var(--dt-ease);
   --dt-motion-slow: 280ms var(--dt-ease);
   --dt-motion-slower: 600ms var(--dt-ease);
+  --dt-motion-ambient: 16000ms ease-in-out;
+  --dt-motion-ambient-slow: 24000ms ease-in-out;
+  --dt-motion-flow: 8000ms linear;
+  --dt-motion-flow-slow: 32000ms linear;
   --dt-press-scale: 0.97;
   --dt-hotspot-ring: var(--dt-accent);
   --dt-hotspot-size: 8px;

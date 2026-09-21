@@ -226,6 +226,10 @@ const motionTransitions = freeze({
   default: '200ms var(--dt-ease)',
   slow: '280ms var(--dt-ease)',
   slower: '600ms var(--dt-ease)',
+  ambient: '16000ms ease-in-out',
+  ambientSlow: '24000ms ease-in-out',
+  flow: '8000ms linear',
+  flowSlow: '32000ms linear',
 } as const);
 
 const motionInteraction = freeze({
@@ -451,6 +455,10 @@ export const cssVarName = freeze({
       default: '--dt-motion',
       slow: '--dt-motion-slow',
       slower: '--dt-motion-slower',
+      ambient: '--dt-motion-ambient',
+      ambientSlow: '--dt-motion-ambient-slow',
+      flow: '--dt-motion-flow',
+      flowSlow: '--dt-motion-flow-slow',
     } as const),
     interaction: freeze({
       pressScale: '--dt-press-scale',
