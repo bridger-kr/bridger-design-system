@@ -62,7 +62,7 @@ if (tokens) {
     }
   }
   // required typography keys
-  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono', 'eyebrow']) {
+  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono', 'eyebrow']) {
     if (!tokens.typography || !tokens.typography[k]) err(`tokens: typography.${k} 누락`);
   }
   const eyebrow = tokens.typography?.eyebrow?.$value;
