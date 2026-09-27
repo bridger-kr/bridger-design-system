@@ -82,9 +82,10 @@ Persimmon remains the only decorative brand accent. Primary actions use `--dt-in
 - Use `--dt-font-mono`: `'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace` for code, API paths, request IDs, timestamps, methods, and other technical values.
 - Pretendard Variable is the required Bridger UI font. Do not substitute a proprietary reference font or ship a reference brand font.
 - Body and labels use `0` letter spacing. Negative tracking is limited to real H1 and H2 display headings.
-- H1 uses `--dt-h1-size`, `--dt-h1-leading`, `--dt-h1-tracking`, and `--dt-h1-weight`. H2 uses the corresponding H2 tokens. H3 is `18px`, `1.3` line height, and weight `600` through the H3 tokens.
+- H1 uses `--dt-h1-size`, `--dt-h1-leading`, `--dt-h1-tracking`, and `--dt-h1-weight`. H2 uses the corresponding H2 tokens. H3 is `20px`, `1.3` line height, and weight `600` through the H3 tokens.
 - H1 and H2 are reserved for actual page headings. H3 titles panels and sections. Do not skip heading levels to obtain a visual size.
-- Body uses `--dt-body-size: 16px`, `--dt-body-leading: 1.6`, and `--dt-body-weight: 400`. Small text uses the small tokens. Mono text uses `--dt-mono-size: 13px` and `--dt-mono-leading: 1.55` unless a component defines a documented scale.
+- UI text has five steps: `--dt-caption-size: 12px`, `--dt-small-size: 13px`, `--dt-label-size: 14px`, `--dt-body-size: 16px`, and `--dt-h3-size: 20px`, plus the H1/H2 display steps. Do not introduce other font-size literals; `10px` and other sub-caption sizes are banned (Hangul is illegible below 12px).
+- Body uses `--dt-body-size: 16px`, `--dt-body-leading: 1.6`, and `--dt-body-weight: 400`. Label-sized controls and dense rows use the label tokens. Small text uses the small tokens. Captions, badges, and metadata use the caption tokens. Mono text uses `--dt-mono-size: 13px` and `--dt-mono-leading: 1.55` unless a component defines a documented scale.
 - Apply tabular figures to counts, prices, quotas, durations, timestamps, IDs, and table values with `font-variant-numeric: tabular-nums` or the `--dt-tabular` contract. Numeric alignment must not depend on a fallback font.
 - Do not use decorative uppercase eyebrows. A section starts with its real heading. Short uppercase technical terms may appear in inline mono chips when they convey a real value.
 
@@ -96,8 +97,10 @@ Use only the shared spacing scale unless a component contract explicitly defines
 | --- | --- |
 | `--dt-space-1` | `4px` |
 | `--dt-space-2` | `8px` |
+| `--dt-space-12` | `12px` |
 | `--dt-space-3` | `16px` |
 | `--dt-space-4` | `24px` |
+| `--dt-space-32` | `32px` |
 | `--dt-space-5` | `40px` |
 | `--dt-space-6` | `64px` |
 | `--dt-space-7` | `96px` |
@@ -110,19 +113,15 @@ Use only the shared spacing scale unless a component contract explicitly defines
 
 ### 4.5 Radius and shape
 
-Use the radius tokens according to semantic role:
+Use the four semantic radius roles. The older scale names (`sm`, `inner`, `element`, `container`, `md`, `lg`, `button`, `xl`, `full`) remain as compatibility aliases — prefer the role tokens in new code.
 
 | Token | Value | Allowed use |
 | --- | --- | --- |
-| `--dt-radius-sm` | `6px` | Compact controls, tags, and bordered planes. |
-| `--dt-radius-inner` | `6px` | Inner component surfaces. |
-| `--dt-radius-element` | `10px` | Larger standalone controls or elements where the component contract calls for it. |
-| `--dt-radius-container` | `14px` | Large surface containers. |
-| `--dt-radius-md` | `12px` | Medium surfaces. |
-| `--dt-radius-lg` | `14px` | Large surfaces and composed product proof. |
-| `--dt-radius-button` | `18px` | Button geometry when the component contract calls for a softer action control. |
-| `--dt-radius-xl` | `14px` | Large overlays and palettes. |
-| `--dt-radius-full` | `9999px` | True pills, avatars, status pills, and dots only. |
+| `--dt-radius-chip` | `6px` | Compact controls, tags, badges, and bordered planes. |
+| `--dt-radius-control` | `10px` | Interactive controls: buttons, inputs, selects, small panels. |
+| `--dt-radius-card` | `14px` | Cards, containers, overlays, and composed surfaces. |
+| `--dt-radius-pill` | `9999px` | True pills, avatars, status pills, and dots only. |
+| `--dt-radius-md` | `12px` | Legacy medium surfaces. Prefer `--dt-radius-control` or `--dt-radius-card`. |
 
 Radius must be paired with a border or a clear surface role. Avoid bubbly geometry. Classification badges are crisp tags, not rounded-full cushions. Status pills remain full because the shape communicates live state.
 
@@ -153,9 +152,10 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 - Use the shared easing `--dt-ease: cubic-bezier(0.23, 1, 0.32, 1)` and the duration tokens `120ms`, `200ms`, and `280ms` for normal interaction.
 - Use `--dt-motion-fast`, `--dt-motion-base`, `--dt-motion`, `--dt-motion-slow`, and `--dt-motion-slower` rather than inventing transition strings.
-- Motion must clarify a state change. Do not use bounce, spring overshoot, or infinite decorative loops.
-- Entrances may use a short fade and upward movement. Landing hero decoration may use the static gradient mesh, but the mesh must not pulse or glow.
-- All components must implement `prefers-reduced-motion: reduce`. Remove nonessential transforms and entrance motion, shorten transitions to an instant state change, and stop status pulses. Content and state must remain available.
+- Motion must clarify a state change. Do not use bounce, spring overshoot, or infinite decorative loops in components.
+- Landing surfaces may additionally use the ambient tier — `--dt-motion-ambient`, `--dt-motion-ambient-slow`, `--dt-motion-flow`, and `--dt-motion-flow-slow` — for slow, low-amplitude decoration loops such as a drifting gradient-mesh wash, thin data-flow lines, or a quiet content ticker. Ambient loops are decoration only: they must sit behind content, must not pulse or glow at readable contrast, must pause on hover/focus where they carry text, and must stop entirely under `prefers-reduced-motion: reduce`.
+- Entrances may use a short fade and upward movement. Landing hero decoration may use the gradient mesh; it may drift within the ambient tier but must never read as a glow.
+- All components must implement `prefers-reduced-motion: reduce`. Remove nonessential transforms and entrance motion, shorten transitions to an instant state change, and stop status pulses and ambient loops. Content and state must remain available.
 
 ### 4.9 Gradient mesh and transparency
 
@@ -171,7 +171,7 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 - The landing surface is Korean-first, confident, technical, and restrained. English is a parity locale under `/en`.
 - Light paper is the default. Use near-black ink for the primary action, and reserve persimmon for the Bridger mark, focus, selection markers, and status emphasis. Keep one dominant action per meaningful band or decision point.
-- Keep the hero on a flat paper or surface plane. Use typography, spacing, and real product content for hierarchy; avoid decorative radial washes, dot grids, and mesh gradients.
+- Keep the hero on a flat paper or surface plane. Use typography, spacing, and real product content for hierarchy. The hero may carry one ambient decoration layer (the persimmon gradient mesh, drifting within the ambient motion tier, plus thin data-flow lines) masked behind content; avoid additional decorative radial washes, dot grids, or competing fields.
 - Explain the product with composed product proof, connector guides, tool categories, and real interface specimens. Do not use a generic SaaS hero, full-bleed stock photography, or decorative illustration in place of product evidence.
 - Marketing sections may breathe more than console sections, but they still use the shared spacing scale, semantic headings, and package primitives.
 - Landing navigation may use the glass token treatment. Other content remains flat or bordered by default.
@@ -396,6 +396,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | Linear, Vercel, Notion | Console density and tabular discipline | Their respective brand marks, palettes, or signature component treatments |
 | OpenAI web surfaces | Neutral paper and ink hierarchy, restrained primary controls, direct task language | OpenAI marks, copy, proprietary assets, or exact component styling |
 | `aside.com` | Spacious product framing, clear action hierarchy, and calm browser-like presentation | Aside marks, cyan atmosphere, clouds, browser artwork, or exact layout |
+| `tinyfish.ai` | Alive, fluid marketing quality bar: ambient color field, live-looking product specimens, quiet ticker momentum, staggered entrances | TinyFish marks, fish mascot, palette, dark-first theme, copy, demo chrome, or animation code |
 
 ### 10.3 Do-not-copy rules
 

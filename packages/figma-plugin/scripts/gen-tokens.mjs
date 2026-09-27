@@ -143,12 +143,13 @@ function main() {
     boxShadow: { $type: 'boxShadow' },
   };
 
-  // spacing 1..8 + radius
+  // spacing 1..8 + px-named fill steps + radius
   const sp = light;
-  for (let i = 1; i <= 8; i += 1) {
+  for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 12, 32]) {
     if (sp[`dt-space-${i}`]) out.spacing[String(i)] = { $value: px(sp[`dt-space-${i}`]) };
   }
   const radiusMap = {
+    chip: 'chip', control: 'control', card: 'card', pill: 'pill',
     sm: 'sm', inner: 'inner', element: 'element', container: 'container',
     md: 'md', lg: 'lg', button: 'button', xl: 'xl', full: 'full',
   };
@@ -171,7 +172,8 @@ function main() {
   const sizes = {
     h1: clampMid(ty['dt-h1-size']), h2: clampMid(ty['dt-h2-size']),
     h3: px(ty['dt-h3-size']), body: px(ty['dt-body-size']),
-    small: px(ty['dt-small-size']), mono: px(ty['dt-mono-size']),
+    label: px(ty['dt-label-size']), small: px(ty['dt-small-size']),
+    caption: px(ty['dt-caption-size']), mono: px(ty['dt-mono-size']),
     eyebrow: px(ty['dt-eyebrow-size']),
   };
   for (const k in sizes) out.fontSize[k] = { $value: sizes[k] };
@@ -180,7 +182,9 @@ function main() {
 
   const leads = {
     h1: ty['dt-h1-leading'], h2: ty['dt-h2-leading'], h3: ty['dt-h3-leading'],
-    body: ty['dt-body-leading'], small: ty['dt-small-leading'], mono: ty['dt-mono-leading'],
+    body: ty['dt-body-leading'], label: ty['dt-label-leading'],
+    small: ty['dt-small-leading'], caption: ty['dt-caption-leading'],
+    mono: ty['dt-mono-leading'],
     eyebrow: ty['dt-small-leading'],
   };
   for (const k in leads) out.lineHeight[k] = { $value: leads[k] };
@@ -193,9 +197,9 @@ function main() {
   for (const k in tracks) if (tracks[k]) out.letterSpacing[k] = { $value: pctTrack(tracks[k]) };
 
   // composite typography
-  const weightRef = { h1: 'bold', h2: 'bold', h3: 'semibold', body: 'regular', small: 'regular', mono: 'regular', eyebrow: 'eyebrow' };
-  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', small: 'sans', mono: 'mono', eyebrow: 'sans' };
-  for (const k of ['h1', 'h2', 'h3', 'body', 'small', 'mono', 'eyebrow']) {
+  const weightRef = { h1: 'bold', h2: 'bold', h3: 'semibold', body: 'regular', label: 'regular', small: 'regular', caption: 'regular', mono: 'regular', eyebrow: 'eyebrow' };
+  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', label: 'sans', small: 'sans', caption: 'sans', mono: 'mono', eyebrow: 'sans' };
+  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono', 'eyebrow']) {
     out.typography[k] = {
       $value: {
         fontFamily: `{fontFamily.${famRef[k]}}`,
@@ -225,7 +229,7 @@ function main() {
   const colorCount = Object.values(out.color.light).reduce(
     (n, g) => n + (typeof g === 'object' ? Object.keys(g).filter((x) => x !== '$type').length : 0), 0);
   console.log(`✓ wrote ${OUT}`);
-  console.log(`  colors(light): ${colorCount}, spacing: ${Object.keys(out.spacing).length - 1}, typography: 7`);
+  console.log(`  colors(light): ${colorCount}, spacing: ${Object.keys(out.spacing).length - 1}, typography: ${Object.keys(out.typography).length - 1}`);
 }
 
 main();

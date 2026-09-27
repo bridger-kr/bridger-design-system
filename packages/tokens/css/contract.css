@@ -56,7 +56,7 @@
   --dt-danger: #c62828;
   --dt-info: var(--dt-cobalt);
   --dt-status-cobalt: #2f6bff;
-  --dt-status-success: #00b04e;
+  --dt-status-success: var(--dt-success);
   --dt-status-warning: #a85b08;
   --dt-status-danger: #dc3a34;
   --dt-alert-ink: #ecfff2;
@@ -98,14 +98,23 @@
   --dt-space-6: 64px;
   --dt-space-7: 96px;
   --dt-space-8: 128px;
+  /* Pixel-named fill steps for the two most common off-scale values. */
+  --dt-space-12: 12px;
+  --dt-space-32: 32px;
 
+  /* Semantic radius roles. */
+  --dt-radius-chip: 6px;
+  --dt-radius-control: 10px;
+  --dt-radius-card: 14px;
+  --dt-radius-pill: 9999px;
+  /* Legacy aliases kept for compatibility; prefer the role tokens above. */
   --dt-radius-sm: 6px;
   --dt-radius-inner: 6px;
   --dt-radius-element: 10px;
   --dt-radius-container: 14px;
   --dt-radius-md: 12px;
   --dt-radius-lg: 14px;
-  --dt-radius-button: 18px;
+  --dt-radius-button: 10px;
   --dt-radius-xl: 14px;
   --dt-radius-full: 9999px;
 
@@ -167,6 +176,10 @@
   --dt-motion: 200ms var(--dt-ease);
   --dt-motion-slow: 280ms var(--dt-ease);
   --dt-motion-slower: 600ms var(--dt-ease);
+  --dt-motion-ambient: 16000ms ease-in-out;
+  --dt-motion-ambient-slow: 24000ms ease-in-out;
+  --dt-motion-flow: 8000ms linear;
+  --dt-motion-flow-slow: 32000ms linear;
   --dt-press-scale: 0.97;
   --dt-hotspot-ring: var(--dt-accent);
   --dt-hotspot-size: 8px;
@@ -190,7 +203,7 @@
   --dt-h2-tracking: -0.015em;
   --dt-h2-weight: 620;
 
-  --dt-h3-size: 18px;
+  --dt-h3-size: 20px;
   --dt-h3-leading: 1.3;
   --dt-h3-tracking: 0;
   --dt-h3-weight: 600;
@@ -199,8 +212,14 @@
   --dt-body-leading: 1.6;
   --dt-body-weight: 400;
 
+  --dt-label-size: 14px;
+  --dt-label-leading: 1.5;
+
   --dt-small-size: 13px;
   --dt-small-leading: 1.55;
+
+  --dt-caption-size: 12px;
+  --dt-caption-leading: 1.5;
 
   --dt-eyebrow-size: 11px;
   --dt-eyebrow-tracking: 0.18em;
@@ -245,7 +264,7 @@
   --dt-danger: #f87171;
   --dt-info: var(--dt-cobalt);
   --dt-status-cobalt: #2f6bff;
-  --dt-status-success: #00b04e;
+  --dt-status-success: var(--dt-success);
   --dt-status-warning: #ec5e1f;
   --dt-status-danger: #dc3a34;
   --dt-alert-ink: #ecfff2;
@@ -288,14 +307,23 @@
   --dt-space-6: 64px;
   --dt-space-7: 96px;
   --dt-space-8: 128px;
+  /* Pixel-named fill steps for the two most common off-scale values. */
+  --dt-space-12: 12px;
+  --dt-space-32: 32px;
 
+  /* Semantic radius roles. */
+  --dt-radius-chip: 6px;
+  --dt-radius-control: 10px;
+  --dt-radius-card: 14px;
+  --dt-radius-pill: 9999px;
+  /* Legacy aliases kept for compatibility; prefer the role tokens above. */
   --dt-radius-sm: 6px;
   --dt-radius-inner: 6px;
   --dt-radius-element: 10px;
   --dt-radius-container: 14px;
   --dt-radius-md: 12px;
   --dt-radius-lg: 14px;
-  --dt-radius-button: 18px;
+  --dt-radius-button: 10px;
   --dt-radius-xl: 14px;
   --dt-radius-full: 9999px;
 
@@ -361,6 +389,10 @@
   --dt-motion: 200ms var(--dt-ease);
   --dt-motion-slow: 280ms var(--dt-ease);
   --dt-motion-slower: 600ms var(--dt-ease);
+  --dt-motion-ambient: 16000ms ease-in-out;
+  --dt-motion-ambient-slow: 24000ms ease-in-out;
+  --dt-motion-flow: 8000ms linear;
+  --dt-motion-flow-slow: 32000ms linear;
   --dt-press-scale: 0.97;
   --dt-hotspot-ring: var(--dt-accent);
   --dt-hotspot-size: 8px;
@@ -381,15 +413,19 @@
   --dt-h2-leading: 1.2;
   --dt-h2-tracking: -0.015em;
   --dt-h2-weight: 620;
-  --dt-h3-size: 18px;
+  --dt-h3-size: 20px;
   --dt-h3-leading: 1.3;
   --dt-h3-tracking: 0;
   --dt-h3-weight: 600;
   --dt-body-size: 16px;
   --dt-body-leading: 1.6;
   --dt-body-weight: 400;
+  --dt-label-size: 14px;
+  --dt-label-leading: 1.5;
   --dt-small-size: 13px;
   --dt-small-leading: 1.55;
+  --dt-caption-size: 12px;
+  --dt-caption-leading: 1.5;
   --dt-eyebrow-size: 11px;
   --dt-eyebrow-tracking: 0.18em;
   --dt-eyebrow-weight: 700;
