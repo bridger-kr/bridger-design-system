@@ -247,10 +247,28 @@
     "8": {
       "$value": "128px"
     },
+    "12": {
+      "$value": "12px"
+    },
+    "32": {
+      "$value": "32px"
+    },
     "$type": "spacing"
   },
   "radius": {
     "$type": "borderRadius",
+    "chip": {
+      "$value": "6px"
+    },
+    "control": {
+      "$value": "10px"
+    },
+    "card": {
+      "$value": "14px"
+    },
+    "pill": {
+      "$value": "9999px"
+    },
     "sm": {
       "$value": "6px"
     },
@@ -270,7 +288,7 @@
       "$value": "14px"
     },
     "button": {
-      "$value": "18px"
+      "$value": "10px"
     },
     "xl": {
       "$value": "14px"
@@ -312,13 +330,19 @@
       "$value": "30px"
     },
     "h3": {
-      "$value": "18px"
+      "$value": "20px"
     },
     "body": {
       "$value": "16px"
     },
+    "label": {
+      "$value": "14px"
+    },
     "small": {
       "$value": "13px"
+    },
+    "caption": {
+      "$value": "12px"
     },
     "mono": {
       "$value": "13px"
@@ -341,8 +365,14 @@
     "body": {
       "$value": "1.6"
     },
+    "label": {
+      "$value": "1.5"
+    },
     "small": {
       "$value": "1.55"
+    },
+    "caption": {
+      "$value": "1.5"
     },
     "mono": {
       "$value": "1.55"
@@ -407,12 +437,30 @@
         "letterSpacing": "{letterSpacing.base}"
       }
     },
+    "label": {
+      "$value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontWeight": "{fontWeight.regular}",
+        "fontSize": "{fontSize.label}",
+        "lineHeight": "{lineHeight.label}",
+        "letterSpacing": "{letterSpacing.base}"
+      }
+    },
     "small": {
       "$value": {
         "fontFamily": "{fontFamily.sans}",
         "fontWeight": "{fontWeight.regular}",
         "fontSize": "{fontSize.small}",
         "lineHeight": "{lineHeight.small}",
+        "letterSpacing": "{letterSpacing.base}"
+      }
+    },
+    "caption": {
+      "$value": {
+        "fontFamily": "{fontFamily.sans}",
+        "fontWeight": "{fontWeight.regular}",
+        "fontSize": "{fontSize.caption}",
+        "lineHeight": "{lineHeight.caption}",
         "letterSpacing": "{letterSpacing.base}"
       }
     },

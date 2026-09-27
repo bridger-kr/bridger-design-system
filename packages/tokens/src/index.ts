@@ -28,7 +28,7 @@ const lightColors = freeze({
   danger: '#c62828',
   info: 'var(--dt-cobalt)',
   statusCobalt: '#2f6bff',
-  statusSuccess: '#00b04e',
+  statusSuccess: 'var(--dt-success)',
   statusWarning: '#a85b08',
   statusDanger: '#dc3a34',
   alertInk: '#ecfff2',
@@ -88,7 +88,7 @@ const darkColors = freeze({
   danger: '#f87171',
   info: 'var(--dt-cobalt)',
   statusCobalt: '#2f6bff',
-  statusSuccess: '#00b04e',
+  statusSuccess: 'var(--dt-success)',
   statusWarning: '#ec5e1f',
   statusDanger: '#dc3a34',
   alertInk: '#ecfff2',
@@ -135,9 +135,15 @@ export const spacing = freeze({
   6: '64px',
   7: '96px',
   8: '128px',
+  12: '12px',
+  32: '32px',
 } as const);
 
 export const radius = freeze({
+  chip: '6px',
+  control: '10px',
+  card: '14px',
+  pill: '9999px',
   sm: '6px',
   inner: '6px',
   element: '10px',
@@ -145,7 +151,7 @@ export const radius = freeze({
   md: '12px',
   lg: '14px',
   xl: '14px',
-  'button': '18px',
+  'button': '10px',
   full: '9999px',
 } as const);
 
@@ -272,9 +278,11 @@ const fontFamilies = freeze({
 const fontSizes = freeze({
   h1: 'clamp(36px, 4.5vw, 54px)',
   h2: 'clamp(26px, 3vw, 34px)',
-  h3: '18px',
+  h3: '20px',
   body: '16px',
+  label: '14px',
   small: '13px',
+  caption: '12px',
   mono: '13px',
 } as const);
 
@@ -290,7 +298,9 @@ const lineHeights = freeze({
   h2: '1.2',
   h3: '1.3',
   body: '1.6',
+  label: '1.5',
   small: '1.55',
+  caption: '1.5',
   mono: '1.55',
 } as const);
 
@@ -395,8 +405,14 @@ export const cssVarName = freeze({
     6: '--dt-space-6',
     7: '--dt-space-7',
     8: '--dt-space-8',
+    12: '--dt-space-12',
+    32: '--dt-space-32',
   } as const),
   radius: freeze({
+    chip: '--dt-radius-chip',
+    control: '--dt-radius-control',
+    card: '--dt-radius-card',
+    pill: '--dt-radius-pill',
     sm: '--dt-radius-sm',
     inner: '--dt-radius-inner',
     element: '--dt-radius-element',
@@ -493,8 +509,12 @@ export const cssVarName = freeze({
     bodySize: '--dt-body-size',
     bodyLeading: '--dt-body-leading',
     bodyWeight: '--dt-body-weight',
+    labelSize: '--dt-label-size',
+    labelLeading: '--dt-label-leading',
     smallSize: '--dt-small-size',
     smallLeading: '--dt-small-leading',
+    captionSize: '--dt-caption-size',
+    captionLeading: '--dt-caption-leading',
     monoSize: '--dt-mono-size',
     monoLeading: '--dt-mono-leading',
     eyebrowSize: '--dt-eyebrow-size',
