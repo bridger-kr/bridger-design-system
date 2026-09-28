@@ -69,22 +69,23 @@ The palette is chroma-0 neutral and semantic. Neutrals carry zero chroma — red
 | Ink | `--dt-ink` | Default readable text. |
 | Strong ink | `--dt-ink-strong` | Headings, primary values, and high-emphasis text. |
 | Muted text | `--dt-muted`, `--dt-muted-strong` | Helper text and secondary labels. Maintain WCAG AA contrast. |
-| Border | `--dt-border`, `--dt-border-strong` | Primary structure and stronger framing. |
-| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Use for identity, focus, selection markers, and status emphasis. |
+| Border | `--dt-border`, `--dt-border-strong` | 1px hairlines — light `rgba(0,0,0,.08)`, dark `rgba(255,255,255,.08)`. Layers separate by borders, not shadows. |
+| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Only on the brand mark, focus ring, selection markers, primary action, and status emphasis. Never in body copy, headings, or eyebrows. |
 | Brand action strength | `--dt-accent-strong`, `--dt-accent-bright`, `--dt-accent-ink` | Theme-specific contrast and interaction roles. |
 | Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only. Never use them as decoration. |
 | Supporting status | `--dt-cobalt`, `--dt-lime`, and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
 | Code | `--dt-code-bg`, `--dt-code-ink`, `--dt-code-border`, `--dt-syntax-*` | Dark, high-contrast technical surfaces in both themes. |
 | Tints | `--dt-tint-*` | Low-opacity fills for badges, chips, and semantic state. Do not use tint as a substitute for readable text. |
 
-Persimmon is the only decorative brand accent. Primary actions use `--dt-ink-strong` with a surface-colored label so the interface stays calm and the brand accent keeps meaning. Cobalt, lime, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
+Persimmon is the only decorative brand accent. It may fill the single primary action on a surface; persimmon never appears in body text, headings, eyebrows, or decorative punctuation. Cobalt, lime, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
 
 ### 4.3 Typography
 
 - Use `--dt-font-sans`: `'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif` for Korean and interface text.
-- Use `--dt-font-mono`: `'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace` for code, API paths, request IDs, timestamps, methods, and other technical values.
+- Use `--dt-font-mono`: `'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace` for code, API paths, request IDs, timestamps, methods, and other technical values. Mono is never applied to Korean or prose copy.
 - Pretendard Variable is the required Bridger UI font. Do not substitute a reference font or ship a reference brand font.
 - All font sizes live inside the 12–36px range. The type scale is fixed steps, not fluid `clamp()` expressions: caption `12px`, small `13px`, label `14px`, body `16px`, H3 `20px`, H2 `28px`, H1 `36px`, and mono `13px`. No size outside this scale is permitted.
+- Font weights are `400`, `500`, and `600` only. Display headings do not exceed `600` under v2.
 - Body and labels use `0` letter spacing. Negative tracking is limited to real H1 and H2 display headings.
 - H1 uses the `--dt-h1-*` tokens, H2 the `--dt-h2-*` tokens, and H3 the `--dt-h3-*` tokens. H1 and H2 are reserved for actual page headings. H3 titles panels and sections. Do not skip heading levels to obtain a visual size.
 - Body uses `--dt-body-size: 16px`, `--dt-body-leading: 1.6`, and `--dt-body-weight: 400`. Label-sized controls and dense rows use the label tokens. Small text uses the small tokens. Captions, badges, and metadata use the caption tokens. Mono text uses `--dt-mono-size: 13px` and `--dt-mono-leading: 1.55` unless a component defines a documented scale.
@@ -124,7 +125,7 @@ The radius scale is `4px`, `6px`, and `8px`, plus `9999px` for true pills. Seman
 | `--dt-radius-chip` | `4px` | Compact controls, tags, badges, and bordered planes. |
 | `--dt-radius-control` | `6px` | Interactive controls: buttons, inputs, selects, small panels. |
 | `--dt-radius-card` | `8px` | Cards, containers, overlays, and composed surfaces. |
-| `--dt-radius-pill` | `9999px` | True pills, avatars, status dots only. |
+| `--dt-radius-pill` | `9999px` | Small status badges, dots, and avatars only. Never on cards, panels, or inputs. |
 
 No other radius value is permitted. Legacy scale names (`sm`, `inner`, `element`, `container`, `md`, `lg`, `button`, `xl`, `full`) remain as compatibility aliases while the contract migrates; prefer the role tokens in new code. Radius must be paired with a border or a clear surface role. Classification badges are crisp tags, not rounded-full cushions.
 
@@ -156,6 +157,7 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 - Use the `--dt-motion-*` token set rather than inventing transition strings. Durations outside the band — including the legacy 200ms, 280ms, and 600ms steps and every long-duration loop tier — are retired; see Section 12.
 - Motion must clarify a state change. Do not use bounce, spring overshoot, or staggered entrance choreography in components.
 - No repeating or looping animation is permitted. The single exception is a loading indicator (spinner) that runs only while an operation is genuinely in progress and stops under `prefers-reduced-motion`. Idle pulses, breathing dots, drifting fields, tickers, and marquee content are prohibited.
+- Scroll-reveal animation is prohibited. Content must not depend on scroll position to appear.
 - Entrances may use a short fade plus a small upward translate within the 120–180ms band, once per mount. Elements must never animate continuously.
 - All components must implement `prefers-reduced-motion: reduce`. Remove nonessential transforms and entrance motion and shorten transitions to an instant state change. Content and state must remain available.
 
@@ -163,16 +165,17 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 - Every surface is a solid fill. Gradient fills of any kind — multi-stop, single-hue, radial washes, conic, or gradient text — are prohibited.
 - Backdrop blur and translucency are prohibited. `backdrop-filter`, `filter: blur()`, and semi-transparent surface fills are not used for navigation, scrims, cards, or any other plane. Scrims use a flat translucent ink overlay only.
-- Product mockups are plain bordered frames. Fake browser chrome — traffic-light dots, fake URL bars, fake tab strips — is prohibited; see Section 11.
-- Realtime is real. Simulated "LIVE" badges, fake streaming or typing indicators, and decorative activity animations are prohibited. A live state may be shown only when backed by a real connection or data feed, and it is rendered as a static dot plus text.
+- `text-shadow` and outline-based text decoration are prohibited. Hierarchy comes from size, weight, and color roles.
+- Product mockups are plain bordered frames. Fake browser chrome — traffic-light dots, fake URL bars, fake tab strips — and fake terminal or CLI windows are prohibited; see Section 11.
+- Realtime is real. Simulated "LIVE" or "DEMO" labels, fake streaming or typing indicators, decorative activity animations, and invented metrics or response times are prohibited. A live state may be shown only when backed by a real connection or data feed, and it is rendered as a static dot plus text.
 
 ## 5. Surface rules
 
 ### 5.1 Landing, `bridger.kr`
 
 - The landing surface is Korean-first, confident, technical, and restrained. English is a parity locale under `/en`.
-- Light paper is the default. Use near-black ink for the primary action, and reserve persimmon for the Bridger mark, focus, selection markers, and status emphasis. Keep one dominant action per meaningful band or decision point.
-- The hero is a flat paper or surface plane: left-aligned headline, supporting copy, primary action, and real product proof. No decorative background layers, washes, dot grids, or drifting fields.
+- Light paper is the default. Reserve persimmon for the Bridger mark, focus, selection markers, status emphasis, and at most one primary action per surface. Keep one dominant action per meaningful band or decision point.
+- The hero is a flat paper or surface plane: left-aligned headline, supporting copy, exactly one primary action plus at most one text link, and real product proof. No decorative background layers, washes, dot grids, or drifting fields.
 - Explain the product with composed product proof, connector guides, tool categories, and real interface specimens. Do not use a generic SaaS hero, full-bleed stock photography, or decorative illustration in place of product evidence.
 - Marketing sections may breathe more than console sections, but they still use the shared spacing scale, semantic headings, left-aligned composition, and package primitives.
 - Landing navigation is a solid surface with a bottom hairline. It does not use translucency or backdrop blur.
@@ -396,6 +399,21 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | Kumo (`@cloudflare/kumo`, `kumo-ui.com`) | Quality bar for flat neutral surfaces: hairline borders, small-radius controls, compact type scale, complete state coverage on Base UI primitives, left-aligned documentation density | Cloudflare brand marks, fonts, palette, orange ramp, Tailwind distribution, Base UI dependency, or exact component styling |
 | Open WebUI (`open-webui/open-webui`) | Quality bar for dense product surfaces: strict chroma-0 neutrals, flat panels separated by borders, compact sidebar-led navigation, restrained motion, no decorative chrome | Open WebUI marks, fonts, default dark-first theme, layout specifics, or code |
 
+Measured values taken from the references and adopted as Bridger v2 targets:
+
+| Dimension | v2 target | Source of the discipline |
+| --- | --- | --- |
+| Neutral ink | `oklch(0.205 0 0)` text, `oklch(0.556 0 0)` muted | Kumo |
+| Neutral canvas (light) | `#ffffff` surface, `oklch(0.9875 0 0)` paper | Kumo |
+| Neutral canvas (dark) | `oklch(0.1 0 0)` paper, `oklch(0.17 0 0)` surface; text `oklch(0.97 0 0)`, muted `oklch(0.708 0 0)` | Kumo |
+| Hairline border | 1px `rgba(0,0,0,0.08)` light / `rgba(255,255,255,0.08)` dark | Kumo |
+| Radius | `4px` chip / `6px` control / `8px` card | Kumo |
+| Type range | `12–36px`, fixed steps, weights `400/500/600` | Kumo + Open WebUI |
+| Motion | `120–180ms`, state changes only, no loops | Open WebUI |
+| Accent count | one accent `#ec5e1f` | Open WebUI |
+
+These values become contract values only through the token retarget tracked in Section 12.
+
 ### 10.3 Do-not-copy rules
 
 The following are explicitly forbidden in Bridger surfaces even when a reference uses them well:
@@ -416,11 +434,12 @@ The following are invalid Bridger design decisions and must be rejected in revie
 - Copying another product's proprietary colors, fonts, visual marks, or signature component treatment.
 - Adding gradient fills of any kind — multi-stop, single-hue, radial washes, conic, or gradient text.
 - Adding translucency, backdrop blur, or `backdrop-filter` treatments to any surface, navigation, or scrim.
-- Adding glows, bloom, neon edges, or dark-glow developer SaaS decoration.
+- Adding glows, bloom, neon edges, `text-shadow`, or dark-glow developer SaaS decoration.
 - Adding resting or hover shadows to cards, panels, or any element in normal document flow. Shadows belong to floating overlays only.
-- Adding fake browser chrome — traffic-light dots, fake URL bars, fake tab strips — or dressing product specimens as fake operating-system windows.
-- Adding "LIVE" badges, fake streaming or typing indicators, fake activity feeds, or any realtime theatre not backed by a real connection.
-- Adding decorative motion: idle pulses, breathing elements, drifting fields, tickers, marquees, staggered entrance choreography, or any animation outside the 120–180ms band.
+- Adding fake browser chrome — traffic-light dots, fake URL bars, fake tab strips — fake terminal or CLI windows, or dressing product specimens as fake operating-system windows.
+- Adding "LIVE" or "DEMO" badges, fake streaming or typing indicators, fake activity feeds, invented metrics or response times, or any realtime theatre not backed by a real connection.
+- Ending a heading with an accent-colored period or other decorative punctuation. The persimmon period belongs to the `BrandLogo` wordmark only.
+- Adding decorative motion: idle pulses, breathing elements, drifting fields, tickers, marquees, scroll-reveal, staggered entrance choreography, or any animation outside the 120–180ms band.
 - Nesting card-in-card structures without a clear code, data, or form-group semantic role.
 - Using emoji, unicode pictograms, or decorative icon sets in product UI.
 - Adding decorative uppercase eyebrows above ordinary headings.
@@ -511,6 +530,7 @@ This checklist is the explicit, reproducible record for each release. Every row 
 | Interaction state | Press | Playwright pressed-state screenshot (`scale(0.97)`) | Not applicable |
 | Motion | Reduced motion | Screenshot with `prefers-reduced-motion: reduce` emulated; confirm transforms are removed | Not applicable |
 | CJK content | Korean label rendering | Korean copy renders without mid-word breaks (`word-break: keep-all`) | Not applicable |
+| Locale parity | ko/en | Korean (default) and English `/en` render the same surface with matching structure and copy meaning | Not applicable |
 | Contrast | WCAG AA text | Automated contrast check (axe / Playwright `toHaveAccessibleName` and contrast assertion) | Not applicable |
 | Contrast | WCAG AA non-text | Border, focus, and interactive control contrast against their surface | Not applicable |
 | Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable |
