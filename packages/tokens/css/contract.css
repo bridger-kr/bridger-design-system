@@ -27,7 +27,7 @@
 
   --dt-paper: #f7f7f5;
   --dt-surface: #ffffff;
-  --dt-surface-raised: #ffffff;
+  --dt-surface-raised: #fbfbf9;
   --dt-surface-sunken: #efefec;
   --dt-surface-muted: #f3f3f0;
 
@@ -158,7 +158,8 @@
                    0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent),
                    0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent);
   --dt-shadow-inset-crisp: inset 0 0 0 1px color-mix(in srgb, var(--dt-ink) 6%, transparent);
-  --dt-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-shadow-focus: 0 0 0 2px var(--dt-surface),
+                     0 0 0 5px var(--dt-accent);
   --dt-card-rest: var(--dt-ring);
   --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
   --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);
@@ -371,7 +372,8 @@
                    0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent),
                    0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent);
   --dt-shadow-inset-crisp: inset 0 0 0 1px color-mix(in srgb, #ffffff 15%, transparent);
-  --dt-shadow-focus: 0 0 0 3px color-mix(in srgb, var(--dt-accent) 60%, transparent);
+  --dt-shadow-focus: 0 0 0 2px var(--dt-surface),
+                     0 0 0 5px var(--dt-accent);
   --dt-card-rest: var(--dt-ring);
   --dt-card-hover: var(--dt-ring-strong), var(--dt-shadow-sm);
   --dt-card-float: var(--dt-ring-strong), var(--dt-shadow-md);

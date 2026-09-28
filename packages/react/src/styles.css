@@ -28,9 +28,14 @@
     color var(--dt-motion-fast);
 }
 
-.dt-action-list-item-interactive:hover,
+.dt-action-list-item-interactive:hover {
+  background: var(--dt-surface-muted);
+}
+
 .dt-action-list-item-interactive:focus-visible {
   background: var(--dt-surface-raised);
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
 }
 
 .dt-action-list-index {
