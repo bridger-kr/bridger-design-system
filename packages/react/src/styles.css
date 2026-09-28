@@ -179,6 +179,56 @@
   transform: scale(var(--dt-press-scale));
 }
 
+.dt-theme-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  border-radius: var(--dt-radius-md);
+  background: var(--dt-surface-sunken);
+  padding: 3px;
+}
+
+.dt-theme-switch-option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: var(--dt-radius-sm);
+  background: transparent;
+  padding: 0 12px;
+  color: var(--dt-muted);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--dt-motion-fast),
+    color var(--dt-motion-fast);
+}
+
+.dt-theme-switch-option-icon {
+  padding: 0;
+}
+
+.dt-theme-switch-option[aria-pressed='true'] {
+  background: var(--dt-surface);
+  box-shadow: var(--dt-ring), var(--dt-shadow-xs);
+  color: var(--dt-ink-strong);
+}
+
+.dt-theme-switch-option:focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
+}
+
+.dt-theme-switch-option:hover:not([aria-pressed='true']) {
+  color: var(--dt-ink-strong);
+}
+
 .dt-filter-chip-group {
   display: inline-flex;
   align-items: stretch;
@@ -529,6 +579,7 @@
   .dt-switch-thumb,
   .dt-switch-track,
   .dt-table-row-action,
+  .dt-theme-switch-option,
   .dt-tabs-tab,
   .dt-tr {
     transition: none !important;

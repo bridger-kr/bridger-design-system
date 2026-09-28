@@ -16,3 +16,10 @@ export { Switch, ToggleSwitch } from './Switch';
 export type { SwitchProps, ToggleSwitchProps } from './Switch';
 export { Textarea } from './Textarea';
 export type { TextareaProps } from './Textarea';
+export { DEFAULT_THEME_STORAGE_KEY, THEME_PREFERENCE, ThemeSwitch } from './ThemeSwitch';
+export type {
+  ResolvedTheme,
+  ThemePreference,
+  ThemeSwitchLabels,
+  ThemeSwitchProps,
+} from './ThemeSwitch';
