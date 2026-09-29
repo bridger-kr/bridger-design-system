@@ -221,9 +221,8 @@ Press = `scale(0.97)`. Entrances are short fade-ups (`opacity 0→1, y 22→0`, 
 No bounce, no infinite decorative loops (except the deliberate logo line-draw and
 status pulses). All of it collapses under `prefers-reduced-motion`.
 
-**Transparency / blur.** Used sparingly: glassy navbar (`--dt-glass-bg` +
-`saturate(180%) blur(16px)`) and mobile drawer scrims. Tints (`color-mix … 14%`)
-fill badges and chips.
+**Transparency.** Surfaces are opaque; mobile drawer scrims use a flat
+`rgba(0,0,0,.4)` veil. Tints (`color-mix … 14%`) fill badges and chips.
 
 **Cards.** `background: surface`, 1px border, 6px radius, **no resting shadow**;
 on hover the border strengthens to `--dt-border-strong` and a tight `sm` shadow

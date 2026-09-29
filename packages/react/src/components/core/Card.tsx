@@ -46,7 +46,7 @@ export type CardLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'child
 
 function cardStyle(tone: CardTone, padding: number, style?: CSSProperties): CSSProperties {
   return {
-    borderRadius: 'var(--dt-radius-lg)',
+    borderRadius: 'var(--dt-radius-card)',
     border: '1px solid var(--dt-border)',
     color: 'var(--dt-ink)',
     padding,

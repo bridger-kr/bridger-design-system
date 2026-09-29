@@ -27,8 +27,8 @@ export function UsageMeter({ label, value = 0, max = 100, unit = '', hint, style
           <span style={{ color: 'var(--dt-muted)' }}> / {max.toLocaleString()}{unit}</span>
         </span>
       </div>
-      <div style={{ position: 'relative', height: 8, borderRadius: 'var(--dt-radius-sm)', background: 'var(--dt-surface-sunken)', boxShadow: 'inset 0 0 0 1px var(--dt-border-strong)', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, width: `${pct}%`, background: fill, borderRadius: 'var(--dt-radius-sm)', transition: 'width var(--dt-motion)' }} />
+      <div style={{ position: 'relative', height: 8, borderRadius: 'var(--dt-radius-chip)', background: 'var(--dt-surface-sunken)', boxShadow: 'inset 0 0 0 1px var(--dt-border-strong)', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, width: `${pct}%`, background: fill, borderRadius: 'var(--dt-radius-chip)', transition: 'width var(--dt-motion)' }} />
       </div>
       {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
     </div>

@@ -16,7 +16,7 @@ export function Toast({ tone = 'success', title, message, action, onDismiss, sty
     <div role="status" className="dt-toast" style={{
       display: 'flex', alignItems: 'flex-start', gap: 11, width: 340, maxWidth: '90vw',
       padding: '13px 15px', background: 'var(--dt-surface)',
-      borderRadius: 'var(--dt-radius-md)', boxShadow: 'var(--dt-shadow-lg)',
+      borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-lg)',
       ...style,
     }}>
       <span style={{ width: 8, height: 8, borderRadius: 9999, marginTop: 5, flex: '0 0 auto', background: DOT[tone] ?? DOT.success }} />

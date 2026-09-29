@@ -39,7 +39,7 @@ export function SegmentedControl({
         padding: 3,
         gap: 2,
         background: 'var(--dt-surface-sunken)',
-        borderRadius: 'var(--dt-radius-md)',
+        borderRadius: 'var(--dt-radius-control)',
         ...style,
       }}
     >
@@ -55,7 +55,7 @@ export function SegmentedControl({
               border: 'none',
               cursor: 'pointer',
               padding: pad,
-              borderRadius: 'var(--dt-radius-sm)',
+              borderRadius: 'var(--dt-radius-chip)',
               fontSize: size === 'sm' ? 12 : 13,
               fontWeight: 600,
               fontFamily: 'inherit',

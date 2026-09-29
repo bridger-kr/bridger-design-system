@@ -49,7 +49,7 @@ export function Drawer({ open = false, side = 'right', title, children, footer, 
               <BaseDialog.Close
                 aria-label="닫기"
                 className="dt-close-control"
-                style={{ flex: '0 0 auto', display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-sm)', color: 'var(--dt-muted-strong)', cursor: 'pointer' }}
+                style={{ flex: '0 0 auto', display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-chip)', color: 'var(--dt-muted-strong)', cursor: 'pointer' }}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
               </BaseDialog.Close>

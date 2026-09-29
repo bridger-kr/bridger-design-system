@@ -110,7 +110,7 @@ export function Table<Row extends TableRow = TableRow>({
       className={cx('dt-table', className)}
       style={{
         overflowX: 'auto',
-        borderRadius: 'var(--dt-radius-lg)',
+        borderRadius: 'var(--dt-radius-card)',
         background: 'var(--dt-surface)',
         boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
         ...style,

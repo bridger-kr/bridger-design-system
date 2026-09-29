@@ -28,7 +28,7 @@ export function FilterChip({ label, count, active = false, removable = false, on
       aria-pressed={active}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 7, minHeight: 'var(--dt-space-5)', padding: '0 10px',
-        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
+        borderRadius: 'var(--dt-radius-chip)', cursor: 'pointer',
         fontFamily: 'var(--dt-font-sans)', fontSize: 13, fontWeight: active ? 650 : 500,
         background: active ? 'var(--dt-tint-accent)' : 'var(--dt-surface)',
         color: active ? 'var(--dt-accent)' : 'var(--dt-muted-strong)',

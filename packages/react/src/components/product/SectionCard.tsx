@@ -31,7 +31,7 @@ export function SectionCard({
     <section
       {...rest}
       style={{
-        borderRadius: 'var(--dt-radius-lg)',
+        borderRadius: 'var(--dt-radius-card)',
         background: 'var(--dt-surface)',
         boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
         padding: 'var(--dt-space-4)',

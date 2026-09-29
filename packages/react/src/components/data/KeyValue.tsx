@@ -25,7 +25,7 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }: KeyValuePr
     <dl {...rest} style={{
       margin: 0, display: 'grid',
       gridTemplateColumns: columns === 2 ? '1fr 1fr' : '1fr',
-      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden',
+      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
       ...style,
     }}>
       {items.map((item, index) => {

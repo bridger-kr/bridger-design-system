@@ -135,7 +135,7 @@ export function Combobox({
               zIndex: 'var(--dt-z-index-popover)',
               background: 'var(--dt-surface)',
               border: '1px solid var(--dt-border-strong)',
-              borderRadius: 'var(--dt-radius-lg)',
+              borderRadius: 'var(--dt-radius-card)',
               boxShadow: 'var(--dt-shadow-md)',
               maxHeight: 240,
               overflowY: 'auto',
@@ -158,7 +158,7 @@ export function Combobox({
                     alignItems: 'center',
                     gap: 10,
                     padding: '9px 10px',
-                    borderRadius: 'var(--dt-radius-md)',
+                    borderRadius: 'var(--dt-radius-control)',
                     cursor: 'pointer',
                   }}
                 >

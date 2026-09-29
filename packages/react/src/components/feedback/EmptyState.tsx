@@ -13,13 +13,13 @@ export function EmptyState({ icon, title, description, action, style }: EmptySta
   return (
     <div style={{
       display: 'grid', placeItems: 'center', gap: 10, textAlign: 'center',
-      padding: '40px 24px', borderRadius: 'var(--dt-radius-lg)',
+      padding: '40px 24px', borderRadius: 'var(--dt-radius-card)',
       background: 'var(--dt-surface-sunken)', ...style,
     }}>
       {icon ? (
         <span style={{
           display: 'inline-flex', width: 44, height: 44, alignItems: 'center', justifyContent: 'center',
-          borderRadius: 'var(--dt-radius-md)', background: 'var(--dt-surface)', color: 'var(--dt-muted)',
+          borderRadius: 'var(--dt-radius-control)', background: 'var(--dt-surface)', color: 'var(--dt-muted)',
           boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
         }}>{icon}</span>
       ) : null}
