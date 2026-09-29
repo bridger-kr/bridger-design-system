@@ -7,16 +7,10 @@ import {
   ActionListIndex,
   AnnotationHotspot,
   BRAND_LOGO_LANGUAGE,
-  PRODUCT_ACTION_PILL_SIZE,
-  PRODUCT_ACTION_PILL_VARIANT,
-  PRODUCT_SHELL_TONE,
   SEARCH_PILL_SIZE,
   SEARCH_PILL_TONE,
   BrandLogo,
   ChatBubble,
-  ProductActionPill,
-  ProductCinematicBackdrop,
-  ProductMotionField,
   ProductPageHeader,
   ProductShell,
   ProductSideRail,
@@ -24,11 +18,8 @@ import {
   SearchPill,
   SectionCard,
   ToolCard,
-  WindowChrome,
-  WindowFrame,
   actionListClassName,
   actionListItemClassName,
-  productActionPillClassName,
 } from './index';
 import {
   BRAND_SYMBOL_VIEW_BOX,
@@ -136,56 +127,29 @@ describe('Product components', () => {
       expect(screen.getByText('1').className).toBe('dt-action-list-index');
     });
 
-    it('renders product action pill variants through the shared contract', () => {
-      render(
-        <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
-          콘솔 열기
-        </ProductActionPill>,
-      );
-
-      const pill = screen.getByRole('link', { name: '콘솔 열기' });
-      expect(pill.className).toContain('dt-product-action-pill');
-      expect(pill.className).toContain('dt-product-action-pill-accent');
-      expect(pill.className).toContain('dt-product-action-pill-hero');
-      expect(productActionPillClassName()).toContain('dt-product-action-pill-compact');
-      expect(productActionPillClassName({ variant: PRODUCT_ACTION_PILL_VARIANT.Outline })).toContain(
-        'dt-product-action-pill-outline',
-      );
-      expect(productActionPillClassName({ size: PRODUCT_ACTION_PILL_SIZE.Hero })).toContain('dt-product-action-pill-hero');
-    });
-
-    it('exports product mockup primitives for landing visual artifacts', () => {
+    it('exports product proof primitives for landing visual artifacts', () => {
       const { container } = render(
-        <WindowFrame chrome={<WindowChrome title="bridger.kr" trailing="200" />}>
+        <div>
           <AnnotationHotspot x="24%" y="40%" label="활성">
             <SearchPill artifactLabel="검색" tone="accent">OpenAPI 검색</SearchPill>
           </AnnotationHotspot>
           <ChatBubble role="assistant">응답 준비 완료</ChatBubble>
-        </WindowFrame>,
+        </div>,
       );
 
-      expect(container.querySelector('.dt-window-frame')).toBeTruthy();
-      expect(container.querySelector('.dt-window-chrome-dot-3')).toBeTruthy();
       expect(container.querySelector('.dt-annotation-hotspot-dot')).toBeTruthy();
       expect(container.querySelector('.dt-search-pill-artifact')).toBeTruthy();
       expect(container.querySelector('.dt-chat-message-assistant')).toBeTruthy();
     });
 
-    it('renders the cinematic shell, backdrop, and side rail used by marketing pages', () => {
+    it('renders the flat product shell and side rail used by marketing pages', () => {
       const { container } = render(
-        <ProductShell tone={PRODUCT_SHELL_TONE.Cinematic}>
-          <ProductCinematicBackdrop />
-          <ProductMotionField gridSrc="/grid.svg" />
+        <ProductShell>
           <ProductSideRail label="Sections" items={[{ key: 'features', href: '#features', label: 'Features' }]} />
         </ProductShell>,
       );
 
-      expect(container.querySelector('.dt-product-shell-cinematic')).toBeTruthy();
-      expect(container.querySelector('.dt-product-cinematic-lines')).toBeTruthy();
-      expect(container.querySelector('.dt-product-motion-field')).toBeTruthy();
-      expect(container.querySelector('.dt-product-motion-grid')?.getAttribute('src')).toBe('/grid.svg');
-      expect(container.querySelector('.dt-product-motion-orbit')).toBeTruthy();
-      expect(container.querySelector('.dt-product-motion-node')).toBeTruthy();
+      expect(container.querySelector('.dt-product-shell')).toBeTruthy();
       expect(screen.getByRole('complementary', { name: 'Sections' })).toBeTruthy();
       expect(screen.getByRole('link', { name: 'Features' }).getAttribute('href')).toBe('#features');
     });
@@ -196,16 +160,8 @@ describe('Product components', () => {
           brand={<a href="/">Bridger</a>}
           mobileMenuCloseLabel="메뉴 닫기"
           mobileMenuLabel="메뉴 열기"
-          mobileActions={
-            <ProductActionPill href="/docs" leadingIcon={<span aria-hidden="true">?</span>}>
-              문서 보기
-            </ProductActionPill>
-          }
-          actions={
-            <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
-              콘솔 열기
-            </ProductActionPill>
-          }
+          mobileActions={<a href="/docs">문서 보기</a>}
+          actions={<a href="/console">콘솔 열기</a>}
         />,
       );
 
@@ -216,7 +172,6 @@ describe('Product components', () => {
       expect(within(container).getByRole('navigation', { name: 'Mobile primary' })).toBeTruthy();
       expect(screen.getByLabelText('메뉴 닫기')).toBeTruthy();
       expect(screen.getByText('문서 보기')).toBeTruthy();
-      expect(container.querySelector('.dt-product-topbar .dt-product-action-pill-hero')).toBeTruthy();
     });
 
     it('closes the mobile menu after a menu link is selected', () => {
