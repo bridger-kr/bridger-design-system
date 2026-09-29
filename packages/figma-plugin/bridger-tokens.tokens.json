@@ -11,7 +11,7 @@
           "$value": "#ffffff"
         },
         "surface-raised": {
-          "$value": "#ffffff"
+          "$value": "#fbfbf9"
         },
         "surface-sunken": {
           "$value": "#efefec"

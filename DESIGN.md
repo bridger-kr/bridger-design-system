@@ -240,7 +240,7 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **60 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **61 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
@@ -296,6 +296,7 @@ Each form control owns its label, hint, error message, and focus ring. Disabled 
 | `Combobox` | input + popover list | size, error | Searchable single-select; option list virtualization expected. |
 | `SegmentedControl` | segmented button group | size, error | Roving tabindex; arrow keys move between segments. |
 | `Slider` | track + thumb, value bubble | range, min/max/step | Numeric range; arrow keys nudge, `Home`/`End` jump. |
+| `ThemeSwitch` | three-option segmented group | `system` / `light` / `dark`, labels, icons | Owns `:root[data-theme]` and the stored preference; `system` follows `prefers-color-scheme` and clears the storage key. |
 | `Textarea` | multi-line input with label, hint, mono toggle | rows, mono | Mono toggle is for technical content. |
 | `FileUpload` | dropzone + file list | size, accept list | OpenAPI-spec dropzone role. |
 

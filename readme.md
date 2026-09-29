@@ -23,7 +23,7 @@ private Figma plugin:
 | Package | Public? | What it is |
 | --- | --- | --- |
 | [`@bridger-kr/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
-| [`@bridger-kr/react`](packages/react) | ✅ npm | 60 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
+| [`@bridger-kr/react`](packages/react) | ✅ npm | 61 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
 | [`bridger-figma-plugin`](packages/figma-plugin) | 🔒 private | Figma Community plugin that builds Variables/Styles/60 Component Sets from the tokens. Not on npm. |
 
 ### Install
@@ -264,7 +264,7 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 
 **`packages/`** — the monorepo workspaces (the publishable surface):
 - **`tokens/`** (`@bridger-kr/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
-- **`react/`** (`@bridger-kr/react`) — 60 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
+- **`react/`** (`@bridger-kr/react`) — 61 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
 - **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
 **Root sources** (still consumed by the Figma plugin + examples):
