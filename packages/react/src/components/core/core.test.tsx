@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import type { ReactElement } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { Children, isValidElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -28,6 +28,21 @@ import {
   cx,
   metricAccentColor,
 } from './index';
+
+// React 19 types ReactElement.props as unknown; these tests inspect the
+// rendered DOM-prop shape directly, so view elements structurally.
+type RenderedElement = ReactElement<{
+  children?: ReactNode;
+  className?: string;
+  style: CSSProperties;
+  type?: string;
+  variant?: string;
+  size?: string;
+}>;
+
+const rendered = (element: ReactElement): RenderedElement => element as RenderedElement;
+const renderedChild = (element: RenderedElement): RenderedElement => element.props.children as RenderedElement;
+const renderedChildren = (element: RenderedElement): RenderedElement[] => element.props.children as RenderedElement[];
 
 function reactElementSymbol(element: ReactElement): symbol | undefined {
   const descriptor = Object.getOwnPropertyDescriptor(element, '$$typeof');
@@ -56,9 +71,9 @@ describe('core exports', () => {
     });
   });
 
-  it('emits React 18 element symbols for peer compatibility', () => {
-    expect(reactElementSymbol(Card({ children: 'x' }))).toBe(Symbol.for('react.element'));
-    expect(reactElementSymbol(Badge({ children: 'x' }))).toBe(Symbol.for('react.element'));
+  it('emits React 19 element symbols for peer compatibility', () => {
+    expect(reactElementSymbol(Card({ children: 'x' }))).toBe(Symbol.for('react.transitional.element'));
+    expect(reactElementSymbol(Badge({ children: 'x' }))).toBe(Symbol.for('react.transitional.element'));
   });
 
   it('exports enum-like surface contracts used by apps', () => {
@@ -156,14 +171,14 @@ describe('core exports', () => {
   });
 
   it('exports chip, section, and pill tabs as additive contracts', () => {
-    expect(Chip({ variant: 'accent', size: 'sm', children: 'MCP' }).props.className).toContain('dt-chip-accent');
-    expect(Section({ variant: 'proof', tone: 'grid', children: '증거' }).props.className).toContain('dt-section-proof');
-    expect(Tabs({ variant: 'pill', tabs: [{ id: 'a', label: 'A' }] }).props.children.props.className).toContain('dt-tabs-list-pill');
+    expect(rendered(Chip({ variant: 'accent', size: 'sm', children: 'MCP' })).props.className).toContain('dt-chip-accent');
+    expect(rendered(Section({ variant: 'proof', tone: 'grid', children: '증거' })).props.className).toContain('dt-section-proof');
+    expect(renderedChild(rendered(Tabs({ variant: 'pill', tabs: [{ id: 'a', label: 'A' }] }))).props.className).toContain('dt-tabs-list-pill');
   });
 
   it('renders static chips as spans and actionable chips as native buttons', () => {
-    const staticChip = Chip({ children: '상태' });
-    const actionChip = Chip({ children: '재시도', onClick: () => undefined });
+    const staticChip = rendered(Chip({ children: '상태' }));
+    const actionChip = rendered(Chip({ children: '재시도', onClick: () => undefined }));
 
     expect(staticChip.type).toBe('span');
     expect(staticChip.props.className).not.toContain('dt-chip-interactive');
@@ -174,8 +189,8 @@ describe('core exports', () => {
     expect(actionChip.props.style.minWidth).toBe('var(--dt-space-5)');
     expect(actionChip.props.variant).toBeUndefined();
     expect(staticChip.props.size).toBeUndefined();
-    expect(FilterChip({ label: '날씨' }).props.className).toContain('dt-filter-chip');
-    expect(FilterChip({ label: '날씨', active: true }).props.className).toContain('dt-filter-chip-active');
+    expect(rendered(FilterChip({ label: '날씨' })).props.className).toContain('dt-filter-chip');
+    expect(rendered(FilterChip({ label: '날씨', active: true })).props.className).toContain('dt-filter-chip-active');
   });
 
   it('activates actionable chips with Enter and Space and blocks disabled actions', async () => {
@@ -196,25 +211,25 @@ describe('core exports', () => {
   });
 
   it('uses stylesheet state hooks without injecting Tabs styles', () => {
-    const tabs = Tabs({ tabs: [{ id: 'weather', label: '날씨' }] });
-    const list = tabs.props.children;
+    const tabs = rendered(Tabs({ tabs: [{ id: 'weather', label: '날씨' }] }));
+    const list = renderedChild(tabs);
     const tab = Children.toArray(list.props.children).find(
-      (child) => isValidElement(child) && child.props.className?.includes('dt-tabs-tab'),
+      (child) => isValidElement(child) && (child as RenderedElement).props.className?.includes('dt-tabs-tab'),
     );
 
     expect(list.props.className).toContain('dt-tabs-list-underline');
-    expect(isValidElement(tab) && tab.props.className).toContain('dt-tabs-tab-underline');
+    expect(isValidElement(tab) && (tab as RenderedElement).props.className).toContain('dt-tabs-tab-underline');
     expect(Children.toArray(list.props.children).some((child) => isValidElement(child) && child.type === 'style')).toBe(false);
   });
 
   it('gives FilterChip toggle and remove controls canonical target hooks', () => {
-    const toggle = FilterChip({ label: '날씨' });
-    const removable = FilterChip({ label: '날씨', removable: true });
+    const toggle = rendered(FilterChip({ label: '날씨' }));
+    const removable = rendered(FilterChip({ label: '날씨', removable: true }));
 
     expect(toggle.props.className).toContain('dt-filter-chip');
     expect(toggle.props.style.minHeight).toBe('var(--dt-space-5)');
     expect(removable.props.className).toContain('dt-filter-chip-group');
-    expect(removable.props.children[1].props.className).toContain('dt-filter-chip-remove');
+    expect(renderedChildren(removable)[1].props.className).toContain('dt-filter-chip-remove');
   });
 
   it('marks input controls and pulses live statuses by default', () => {
