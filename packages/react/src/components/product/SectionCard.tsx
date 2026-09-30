@@ -33,7 +33,7 @@ export function SectionCard({
       style={{
         borderRadius: 'var(--dt-radius-lg)',
         background: 'var(--dt-surface)',
-        boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+        boxShadow: 'var(--dt-ring)',
         padding: 'var(--dt-space-4)',
         ...style,
       }}
@@ -54,7 +54,7 @@ export function SectionCard({
                 style={{
                   marginBottom: 6,
                   fontSize: 12,
-                  fontWeight: 650,
+                  fontWeight: 600,
                   textTransform: 'uppercase',
                   color: 'var(--dt-muted)',
                 }}
@@ -63,7 +63,7 @@ export function SectionCard({
               </p>
             ) : null}
             {title ? (
-              <h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>
+              <h3 style={{ fontSize: 20, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>
                 {title}
               </h3>
             ) : null}

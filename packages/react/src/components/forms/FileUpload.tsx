@@ -100,7 +100,7 @@ export function FileUpload({
             >
               {file.name}
             </div>
-            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)', marginTop: 2 }}>
+            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)', marginTop: 2 }}>
               {fmtSize(file.size)} · 업로드 완료
             </div>
           </div>
@@ -148,9 +148,6 @@ export function FileUpload({
             textAlign: 'center',
             cursor: 'pointer',
             borderRadius: 'var(--dt-radius-lg)',
-            border: `1.5px dashed ${drag ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-            background: drag ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
           }}
         >
           <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-muted)' }}>
@@ -170,10 +167,10 @@ export function FileUpload({
               />
             </svg>
           </span>
-          <span style={{ fontSize: 13.5, color: 'var(--dt-ink-strong)' }}>
+          <span style={{ fontSize: 13, color: 'var(--dt-ink-strong)' }}>
             <span style={{ fontWeight: 600, color: 'var(--dt-accent)' }}>파일 선택</span> 또는 끌어다 놓기
           </span>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>{hint}</span>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)' }}>{hint}</span>
           <input
             ref={inputRef}
             id={fId}

@@ -64,14 +64,14 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
           display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px',
           borderBottom: '1px solid var(--dt-code-border)',
         }}>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: '#8a91a3' }}>{label || language}</span>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: '#8a91a3' }}>{label || language}</span>
           {copyable ? (
             <button
               type="button" onClick={copy}
               style={{
                 marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, border: 'none',
                 background: 'transparent', color: copied ? '#34d399' : '#8a91a3', cursor: 'pointer',
-                fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, padding: 0,
+                fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', fontWeight: 600, padding: 0,
               }}
             >
               {copied ? (
@@ -85,7 +85,7 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
       ) : null}
       <div style={{ padding: '12px 0', overflowX: 'auto' }}>
         {lines.map((line, index) => (
-          <div key={index} style={{ display: 'grid', gridTemplateColumns: showLineNumbers ? '38px 1fr' : '1fr', fontFamily: 'var(--dt-font-mono)', fontSize: 12.5, lineHeight: 1.75 }}>
+          <div key={index} style={{ display: 'grid', gridTemplateColumns: showLineNumbers ? '38px 1fr' : '1fr', fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-mono-size)', lineHeight: 1.75 }}>
             {showLineNumbers ? <span style={{ textAlign: 'right', paddingRight: 14, color: '#5a6273', userSelect: 'none' }}>{index + 1}</span> : null}
             <code style={{ color: COLOR.plain, whiteSpace: 'pre', paddingRight: 14 }}>
               {highlight(line).map((segment, segmentIndex) => <span key={segmentIndex} style={{ color: COLOR[segment.c] }}>{segment.t}</span>)}

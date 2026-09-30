@@ -34,7 +34,7 @@ describe('feedback component exports', () => {
     expect(el.props.style).toMatchObject({
       alignItems: 'flex-start',
       background: 'var(--dt-tint-warning)',
-      borderRadius: '20px',
+      borderRadius: 'var(--dt-radius-card)',
       color: 'var(--dt-ink-strong)',
       minHeight: 62,
       padding: '13px 15px',

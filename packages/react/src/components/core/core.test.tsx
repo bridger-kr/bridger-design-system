@@ -62,19 +62,19 @@ describe('core exports', () => {
   });
 
   it('exports enum-like surface contracts used by apps', () => {
-    expect(Card({ tone: CardTone.Raised, children: '상태' }).props.style.background).toBe('var(--dt-surface-raised)');
+    expect(Card({ tone: CardTone.Raised, children: '상태' }).props.className).toContain('dt-card-raised');
     expect(Panel({ tone: SurfaceTone.Raised, children: '패널' }).props.className).toContain('bg-[var(--dt-surface-raised)]');
     expect(metricAccentColor(MetricAccent.Success)).toBe('text-[var(--dt-success)]');
     expect(cx('a', false, 'b')).toBe('a b');
   });
 
-  it('maps every Card tone to its surface token (contract apps depend on)', () => {
-    expect(Card({ tone: CardTone.Default, children: 'x' }).props.style.background).toBe('var(--dt-surface)');
-    expect(Card({ tone: CardTone.Muted, children: 'x' }).props.style.background).toBe('var(--dt-surface-sunken)');
-    expect(Card({ tone: CardTone.Raised, children: 'x' }).props.style.background).toBe('var(--dt-surface-raised)');
-    expect(Card({ tone: CardTone.Panel, children: 'x' }).props.style.background).toBe('var(--dt-surface)');
-    expect(Card({ variant: CardTone.Muted, children: 'x' }).props.style.background).toBe('var(--dt-surface-sunken)');
-    expect(Card({ children: 'x' }).props.style.background).toBe('var(--dt-surface)');
+  it('maps every Card tone to its surface class hook (contract apps depend on)', () => {
+    expect(Card({ tone: CardTone.Default, children: 'x' }).props.className).toContain('dt-card-default');
+    expect(Card({ tone: CardTone.Muted, children: 'x' }).props.className).toContain('dt-card-muted');
+    expect(Card({ tone: CardTone.Raised, children: 'x' }).props.className).toContain('dt-card-raised');
+    expect(Card({ tone: CardTone.Panel, children: 'x' }).props.className).toContain('dt-card-panel');
+    expect(Card({ variant: CardTone.Muted, children: 'x' }).props.className).toContain('dt-card-muted');
+    expect(Card({ children: 'x' }).props.className).toContain('dt-card-default');
   });
 
   it('keeps Card non-actionable and exposes native action variants', () => {
@@ -84,8 +84,11 @@ describe('core exports', () => {
 
     expect(defaultCard.type).toBe('div');
     expect(defaultCard.props.style.padding).toBe(20);
-    expect(defaultCard.props.style.border).toBe('1px solid var(--dt-border)');
-    expect(defaultCard.props.style.boxShadow).toBe('none');
+    expect(defaultCard.props.className).toContain('dt-card');
+    /* Surface visuals (border, radius, no shadow) live on .dt-card in
+       styles.css so action states win by cascade without !important. */
+    expect(defaultCard.props.style.border).toBeUndefined();
+    expect(defaultCard.props.style.boxShadow).toBeUndefined();
     expect(Card({ padding: 8, children: 'x' }).props.style.padding).toBe(8);
     expect(cardButton.type).toBe('button');
     expect(cardButton.props.type).toBe('button');
@@ -148,9 +151,9 @@ describe('core exports', () => {
     const stylesheet = readFileSync(resolve(packageRoot, '../tokens/css/base.css'), 'utf8');
 
     expect(stylesheet).toMatch(/\.dt-button\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
-    expect(stylesheet).toMatch(/\.dt-button-sm\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
-    expect(stylesheet).toMatch(/\.dt-button-md\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-1\)\)/s);
-    expect(stylesheet).toMatch(/\.dt-button-lg\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-2\)\)/s);
+    expect(stylesheet).toMatch(/\.dt-button-sm\s*\{[^}]*min-height:\s*32px/s);
+    expect(stylesheet).toMatch(/\.dt-button-md\s*\{[^}]*min-height:\s*36px/s);
+    expect(stylesheet).toMatch(/\.dt-button-lg\s*\{[^}]*min-height:\s*40px/s);
     expect(stylesheet).toMatch(/\.dt-button:disabled\s*\{[^}]*cursor:\s*not-allowed[^}]*opacity:\s*0\.55/s);
     expect(stylesheet).toMatch(/\.btn-danger\s*\{[^}]*border:\s*1px solid var\(--dt-danger\)[^}]*background:\s*var\(--dt-danger\)[^}]*color:\s*var\(--dt-surface\)/s);
   });
@@ -231,5 +234,32 @@ describe('core exports', () => {
     const liveStatus = StatusPill({ status: 'reconnecting', children: '재연결 중' });
 
     expect(Children.toArray(liveStatus.props.children).some((child) => isValidElement(child) && child.type === 'style')).toBe(false);
+  });
+});
+
+describe('styles.css canon gates (EDD-232)', () => {
+  const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+  const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+
+  it('contains no backdrop blur, loops, or gradients', () => {
+    expect(stylesheet.match(/backdrop-filter|infinite|radial-gradient|linear-gradient/g)).toBeNull();
+  });
+
+  it('keeps !important at or below three documented uses', () => {
+    const count = stylesheet.match(/!important/g)?.length ?? 0;
+    expect(count).toBeLessThanOrEqual(3);
+  });
+
+  it('declares no font-size below the 12px floor', () => {
+    const offenders = [...stylesheet.matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)]
+      .map((match) => Number(match[1]))
+      .filter((px) => px < 12);
+    expect(offenders).toEqual([]);
+  });
+
+  it('defaults Tabs to the underline variant', () => {
+    const tabs = Tabs({ tabs: [{ id: 'a', label: 'A' }] });
+    expect(tabs.props.children.props.className).toContain('dt-tabs-list-underline');
+    expect(tabs.props.children.props.className).not.toContain('dt-tabs-list-pill');
   });
 });

@@ -16,13 +16,6 @@ export const CardTone = {
 
 export type CardTone = (typeof CardTone)[keyof typeof CardTone];
 
-const VARIANT_STYLE = {
-  default: { background: 'var(--dt-surface)', boxShadow: 'none' },
-  muted: { background: 'var(--dt-surface-sunken)', boxShadow: 'none' },
-  raised: { background: 'var(--dt-surface-raised)', boxShadow: 'var(--dt-card-float)' },
-  panel: { background: 'var(--dt-surface)', boxShadow: 'none' },
-} satisfies Record<CardTone, CSSProperties>;
-
 interface CardVisualProps {
   readonly children?: ReactNode;
   /** default = flat bordered plane; muted = sunken well; raised = elevated; panel = flat console panel. */
@@ -44,16 +37,10 @@ export type CardLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'child
     readonly href: string;
   };
 
-function cardStyle(tone: CardTone, padding: number, style?: CSSProperties): CSSProperties {
-  return {
-    borderRadius: 'var(--dt-radius-lg)',
-    border: '1px solid var(--dt-border)',
-    color: 'var(--dt-ink)',
-    padding,
-    transition: 'border-color var(--dt-motion), box-shadow var(--dt-motion), background-color var(--dt-motion), transform var(--dt-motion)',
-    ...VARIANT_STYLE[tone],
-    ...style,
-  };
+/* Surface, border, and shadow visuals live in styles.css (.dt-card*) so that
+   hover/active/disabled states win by cascade without !important. */
+function cardStyle(padding: number, style?: CSSProperties): CSSProperties {
+  return { padding, ...style };
 }
 
 /**
@@ -72,7 +59,7 @@ export function Card({
 }: CardProps) {
   const selectedTone = tone ?? variant ?? CardTone.Default;
   return (
-    <div className={cx('dt-card', `dt-card-${selectedTone}`, className)} style={cardStyle(selectedTone, padding, style)} {...rest}>
+    <div className={cx('dt-card', `dt-card-${selectedTone}`, className)} style={cardStyle(padding, style)} {...rest}>
       {children}
     </div>
   );
@@ -104,7 +91,7 @@ export function CardButton({
         minHeight: 'var(--dt-space-5)',
         textAlign: 'inherit',
         width: '100%',
-        ...cardStyle(selectedTone, padding, style),
+        ...cardStyle(padding, style),
       }}
     >
       {children}
@@ -134,7 +121,7 @@ export function CardLink({
         minHeight: 'var(--dt-space-5)',
         textDecoration: 'none',
         width: '100%',
-        ...cardStyle(selectedTone, padding, style),
+        ...cardStyle(padding, style),
       }}
     >
       {children}

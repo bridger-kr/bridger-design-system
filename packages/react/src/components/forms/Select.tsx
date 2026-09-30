@@ -53,7 +53,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
             style={{
               appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,
               fontFamily: 'inherit', color: 'var(--dt-ink-strong)', cursor: disabled ? 'not-allowed' : 'pointer',
-              opacity: disabled ? 0.55 : 1, textAlign: 'left', border: '1px solid var(--dt-border)', ...style,
+              opacity: disabled ? 0.55 : 1, textAlign: 'left', ...style,
             }}
           >
             <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
@@ -72,7 +72,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
                       className="dt-select-option"
                       style={{
                         display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '8px 10px',
-                        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-ink)',
+                        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13, fontWeight: 500, color: 'var(--dt-ink)',
                       }}
                     >
                       <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>

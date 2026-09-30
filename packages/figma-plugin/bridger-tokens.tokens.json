@@ -258,13 +258,13 @@
   "radius": {
     "$type": "borderRadius",
     "chip": {
-      "$value": "6px"
+      "$value": "4px"
     },
     "control": {
-      "$value": "10px"
+      "$value": "6px"
     },
     "card": {
-      "$value": "14px"
+      "$value": "8px"
     },
     "pill": {
       "$value": "9999px"
@@ -276,22 +276,22 @@
       "$value": "6px"
     },
     "element": {
-      "$value": "10px"
+      "$value": "6px"
     },
     "container": {
-      "$value": "14px"
+      "$value": "8px"
     },
     "md": {
-      "$value": "12px"
+      "$value": "8px"
     },
     "lg": {
-      "$value": "14px"
+      "$value": "8px"
     },
     "button": {
-      "$value": "10px"
+      "$value": "6px"
     },
     "xl": {
-      "$value": "14px"
+      "$value": "8px"
     },
     "full": {
       "$value": "9999px"
@@ -318,7 +318,7 @@
       "$value": "700"
     },
     "eyebrow": {
-      "$value": "700"
+      "$value": "600"
     }
   },
   "fontSize": {
@@ -348,7 +348,7 @@
       "$value": "13px"
     },
     "eyebrow": {
-      "$value": "11px"
+      "$value": "12px"
     }
   },
   "lineHeight": {

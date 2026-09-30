@@ -25,7 +25,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
           style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 15, fontFamily: 'inherit', color: 'var(--dt-ink-strong)' }}
         />
         <kbd style={{
-          fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--dt-muted)',
+          fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', fontWeight: 600, color: 'var(--dt-muted)',
           border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '2px 7px',
         }}>⌘K</kbd>
       </div>
@@ -35,7 +35,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
         {groups.map((g, gi) => (
           <div key={gi} style={{ marginBottom: 4 }}>
             {g.heading ? (
-              <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--dt-muted)', padding: '8px 10px 5px' }}>{g.heading}</div>
+              <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--dt-muted)', padding: '8px 10px 5px' }}>{g.heading}</div>
             ) : null}
             {g.items.map((it, ii) => (
               <div
@@ -48,12 +48,12 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
                 }}
               >
                 {it.icon ? <span style={{ display: 'inline-flex', flex: '0 0 auto', color: it.active ? 'var(--dt-accent)' : 'var(--dt-muted)' }} aria-hidden="true">{it.icon}</span> : null}
-                <span style={{ flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: it.active ? 600 : 500, color: it.active ? 'var(--dt-accent)' : 'var(--dt-ink-strong)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <span style={{ flex: 1, minWidth: 0, fontSize: 13, fontWeight: it.active ? 600 : 500, color: it.active ? 'var(--dt-accent)' : 'var(--dt-ink-strong)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {it.label}
-                  {it.meta ? <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)', fontWeight: 400, marginLeft: 8 }}>{it.meta}</span> : null}
+                  {it.meta ? <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)', fontWeight: 400, marginLeft: 8 }}>{it.meta}</span> : null}
                 </span>
                 {it.shortcut ? (
-                  <kbd style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted-strong)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '1px 6px' }}>{it.shortcut}</kbd>
+                  <kbd style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted-strong)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '1px 6px' }}>{it.shortcut}</kbd>
                 ) : null}
               </div>
             ))}
@@ -62,7 +62,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
       </div>
 
       {footerHint ? (
-        <div style={{ borderTop: '1px solid var(--dt-border)', padding: '8px 14px', fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>{footerHint}</div>
+        <div style={{ borderTop: '1px solid var(--dt-border)', padding: '8px 14px', fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)' }}>{footerHint}</div>
       ) : null}
     </div>
   );

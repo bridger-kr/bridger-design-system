@@ -25,7 +25,6 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
       <BaseDialog.Portal>
         <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay" style={{
           position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-ink-strong) 32%, transparent)',
-          backdropFilter: 'blur(2px)',
         }} />
         <div data-dt-dialog-content style={{ position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-modal)', display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
           <BaseDialog.Popup
@@ -39,7 +38,7 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
             }}
           >
             <div style={{ padding: '22px 24px' }}>
-              {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }} />}>{title}</BaseDialog.Title> : null}
+              {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ fontSize: 20, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }} />}>{title}</BaseDialog.Title> : null}
               {description ? <BaseDialog.Description render={<p style={{ marginTop: 8, fontSize: 14, lineHeight: 1.55, color: 'var(--dt-muted-strong)' }} />}>{description}</BaseDialog.Description> : null}
               {children ? <div style={{ marginTop: title || description ? 16 : 0 }}>{children}</div> : null}
             </div>

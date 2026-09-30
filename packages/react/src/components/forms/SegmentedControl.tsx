@@ -62,7 +62,7 @@ export function SegmentedControl({
               whiteSpace: 'nowrap',
               color: on ? 'var(--dt-ink-strong)' : 'var(--dt-muted)',
               background: on ? 'var(--dt-surface)' : 'transparent',
-              boxShadow: on ? 'var(--dt-ring), var(--dt-shadow-xs)' : 'none',
+              boxShadow: on ? 'var(--dt-ring)' : 'none',
               transition: 'color 130ms, background-color 130ms',
             }}
           >

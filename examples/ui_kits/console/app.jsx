@@ -15,7 +15,7 @@ function Icon({ name, size = 16, strokeWidth = 1.9, style }) {
 
 function BrandMark({ size = 20 }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 780, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-ink-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
+    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 600, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-ink-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
       Bridger<span style={{ color: 'var(--dt-accent)' }}>.</span>
     </span>
   );
@@ -54,7 +54,7 @@ function Sidebar({ active, onNav, theme, onTheme, locale, onLocale }) {
             <div className="side-sub">{locale === 'ko' ? '운영 콘솔' : 'Operations console'}</div>
           </div>
           <div className="side-toggles">
-            <button className="icon-btn-sm" style={{ width: 'auto', padding: '0 10px', fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 700 }} onClick={onLocale}>{locale === 'ko' ? 'EN' : '한'}</button>
+            <button className="icon-btn-sm" style={{ width: 'auto', padding: '0 10px', fontFamily: 'var(--dt-font-mono)', fontSize: 12, fontWeight: 600 }} onClick={onLocale}>{locale === 'ko' ? 'EN' : '한'}</button>
             <button className="icon-btn-sm" onClick={onTheme} aria-label="테마"><Icon name={theme === 'dark' ? 'Sun' : 'Moon'} size={16} /></button>
           </div>
         </div>

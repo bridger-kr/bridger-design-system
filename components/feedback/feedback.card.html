@@ -9,10 +9,10 @@
   body { margin: 0; background: var(--dt-paper); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
 
   /* One cohesive panel — the only elevated surface. No inner outlines. */
-  .panel { background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-sm); padding: 22px; display: grid; gap: 20px; align-items: start; }
+  .panel { background: var(--dt-surface); border-radius: var(--dt-radius-lg); border: 1px solid var(--dt-border); padding: 22px; display: grid; gap: 20px; align-items: start; }
   .grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 22px; align-items: start; }
   .col { display: grid; gap: 16px; align-content: start; }
-  .cap { font-size: 11px; color: var(--dt-muted); }
+  .cap { font-size: var(--dt-caption-size); color: var(--dt-muted); }
   .cap b { color: var(--dt-muted-strong); font-weight: 600; }
 
   .alerts { display: grid; grid-template-columns: repeat(2, minmax(0, 380px)); gap: 10px; }
@@ -33,10 +33,10 @@
 
   /* EmptyState — sunken fill well, no outline */
   .empty { display: grid; place-items: center; gap: 9px; text-align: center; padding: 26px 20px; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-lg); }
-  .ei { width: 42px; height: 42px; display: grid; place-items: center; border-radius: var(--dt-radius-full); background: var(--dt-surface); color: var(--dt-muted); box-shadow: var(--dt-shadow-xs); }
-  .et { font-size: 15px; font-weight: 650; color: var(--dt-ink-strong); white-space: nowrap; }
+  .ei { width: 42px; height: 42px; display: grid; place-items: center; border-radius: var(--dt-radius-full); background: var(--dt-surface); color: var(--dt-muted); box-shadow: var(--dt-ring); }
+  .et { font-size: 15px; font-weight: 600; color: var(--dt-ink-strong); white-space: nowrap; }
   .ed { font-size: 13px; line-height: 1.5; color: var(--dt-muted); max-width: 230px; }
-  .e-act { margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: var(--dt-radius-md); background: var(--dt-accent); color: var(--dt-accent-ink); font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: var(--dt-shadow-xs); transition: background-color var(--dt-motion-fast); }
+  .e-act { margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: var(--dt-radius-md); background: var(--dt-accent); color: var(--dt-accent-ink); font-size: 13px; font-weight: 600; cursor: pointer; transition: background-color var(--dt-motion-fast); }
   .e-act:hover { background: var(--dt-accent-strong); }
   .e-act [data-ico] { display: inline-flex; }
 
@@ -45,16 +45,14 @@
   .toast .tico { flex: 0 0 auto; margin-top: 1px; display: inline-flex; color: var(--dt-success); }
   .tx { margin-top: 1px; font-size: 13px; line-height: 1.5; color: var(--dt-muted-strong); }
   .tx .k { font-family: var(--dt-font-mono); color: var(--dt-ink-strong); }
-  .tx b { display: block; font-weight: 650; color: var(--dt-ink-strong); margin-bottom: 2px; }
+  .tx b { display: block; font-weight: 600; color: var(--dt-ink-strong); margin-bottom: 2px; }
   .tclose { margin-left: auto; flex: 0 0 auto; display: inline-flex; color: var(--dt-muted); cursor: pointer; }
 
   /* Loading — inline, no box */
   .loading { display: flex; align-items: center; gap: 13px; }
-  .spin { width: 20px; height: 20px; flex: 0 0 auto; animation: r .8s linear infinite; }
-  @keyframes r { to { transform: rotate(360deg); } }
+  .spin { width: 20px; height: 20px; flex: 0 0 auto; }
   .skel { flex: 1; display: grid; gap: 8px; }
-  .sk { height: 10px; border-radius: 6px; background: linear-gradient(90deg, var(--dt-surface-sunken) 0%, var(--dt-surface-muted) 50%, var(--dt-surface-sunken) 100%); background-size: 200% 100%; animation: sh 1.4s ease-in-out infinite; }
-  @keyframes sh { to { background-position: -200% 0; } }
+  .sk { height: 10px; border-radius: 6px; background: var(--dt-surface-sunken); }
 
   /* Tooltip — on a trigger, no bordered mount */
   .tip-row { display: flex; align-items: center; gap: 10px; }
@@ -149,6 +147,12 @@
     n.setAttribute('width', sz); n.setAttribute('height', sz); n.setAttribute('stroke-width', 1.9);
     el.appendChild(n);
   });
+  /* Spinner loop via WAAPI — honours prefers-reduced-motion, matches
+     packages/react Spinner (no CSS `infinite` loop). */
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.spin').forEach((el) =>
+      el.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: 800, iterations: Infinity, easing: 'linear' }));
+  }
 </script>
 </body>
 </html>

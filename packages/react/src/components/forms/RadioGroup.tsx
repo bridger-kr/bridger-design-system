@@ -78,9 +78,6 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
                   borderRadius: 9999,
                   display: 'grid',
                   placeItems: 'center',
-                  background: 'var(--dt-surface)',
-                  border: '1.5px solid var(--dt-border-strong)',
-                  transition: 'border-color var(--dt-motion-fast)',
                 }}
               >
                 <BaseRadio.Indicator>

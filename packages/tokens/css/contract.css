@@ -102,20 +102,20 @@
   --dt-space-12: 12px;
   --dt-space-32: 32px;
 
-  /* Semantic radius roles. */
-  --dt-radius-chip: 6px;
-  --dt-radius-control: 10px;
-  --dt-radius-card: 14px;
+  /* Semantic radius roles — canonical 4/6/8 scale (DESIGN.md §6). */
+  --dt-radius-chip: 4px;
+  --dt-radius-control: 6px;
+  --dt-radius-card: 8px;
   --dt-radius-pill: 9999px;
   /* Legacy aliases kept for compatibility; prefer the role tokens above. */
   --dt-radius-sm: 6px;
   --dt-radius-inner: 6px;
-  --dt-radius-element: 10px;
-  --dt-radius-container: 14px;
-  --dt-radius-md: 12px;
-  --dt-radius-lg: 14px;
-  --dt-radius-button: 10px;
-  --dt-radius-xl: 14px;
+  --dt-radius-element: 6px;
+  --dt-radius-container: 8px;
+  --dt-radius-md: 8px;
+  --dt-radius-lg: 8px;
+  --dt-radius-button: 6px;
+  --dt-radius-xl: 8px;
   --dt-radius-full: 9999px;
 
   --dt-ring: 0 0 0 1px var(--dt-border);
@@ -222,9 +222,9 @@
   --dt-caption-size: 12px;
   --dt-caption-leading: 1.5;
 
-  --dt-eyebrow-size: 11px;
+  --dt-eyebrow-size: 12px;
   --dt-eyebrow-tracking: 0.18em;
-  --dt-eyebrow-weight: 700;
+  --dt-eyebrow-weight: 600;
 
   --dt-mono-size: 13px;
   --dt-mono-leading: 1.55;
@@ -312,20 +312,20 @@
   --dt-space-12: 12px;
   --dt-space-32: 32px;
 
-  /* Semantic radius roles. */
-  --dt-radius-chip: 6px;
-  --dt-radius-control: 10px;
-  --dt-radius-card: 14px;
+  /* Semantic radius roles — canonical 4/6/8 scale (DESIGN.md §6). */
+  --dt-radius-chip: 4px;
+  --dt-radius-control: 6px;
+  --dt-radius-card: 8px;
   --dt-radius-pill: 9999px;
   /* Legacy aliases kept for compatibility; prefer the role tokens above. */
   --dt-radius-sm: 6px;
   --dt-radius-inner: 6px;
-  --dt-radius-element: 10px;
-  --dt-radius-container: 14px;
-  --dt-radius-md: 12px;
-  --dt-radius-lg: 14px;
-  --dt-radius-button: 10px;
-  --dt-radius-xl: 14px;
+  --dt-radius-element: 6px;
+  --dt-radius-container: 8px;
+  --dt-radius-md: 8px;
+  --dt-radius-lg: 8px;
+  --dt-radius-button: 6px;
+  --dt-radius-xl: 8px;
   --dt-radius-full: 9999px;
 
   --dt-ring: 0 0 0 1px rgba(255, 255, 255, 0.04);
@@ -428,9 +428,9 @@
   --dt-small-leading: 1.55;
   --dt-caption-size: 12px;
   --dt-caption-leading: 1.5;
-  --dt-eyebrow-size: 11px;
+  --dt-eyebrow-size: 12px;
   --dt-eyebrow-tracking: 0.18em;
-  --dt-eyebrow-weight: 700;
+  --dt-eyebrow-weight: 600;
   --dt-mono-size: 13px;
   --dt-mono-leading: 1.55;
 }

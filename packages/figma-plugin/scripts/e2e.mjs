@@ -272,19 +272,19 @@ run().then(() => {
   const primaryMedium = variant(buttonSet, 'Variant=Primary, Size=md');
   const primaryLarge = variant(buttonSet, 'Variant=Primary, Size=lg');
   const dangerMedium = variant(buttonSet, 'Variant=Danger, Size=md');
-  if (primarySmall?.height !== 40) fail(`Button sm 40px 기대, 실제 ${primarySmall?.height}`);
-  if (primaryMedium?.height !== 44) fail(`Button md 44px 기대, 실제 ${primaryMedium?.height}`);
-  if (primaryLarge?.height !== 48) fail(`Button lg 48px 기대, 실제 ${primaryLarge?.height}`);
-  if (dangerMedium?.cornerRadius !== 12) fail(`Button danger radius 12px 기대, 실제 ${dangerMedium?.cornerRadius}`);
+  if (primarySmall?.height !== 32) fail(`Button sm 32px 기대, 실제 ${primarySmall?.height}`);
+  if (primaryMedium?.height !== 36) fail(`Button md 36px 기대, 실제 ${primaryMedium?.height}`);
+  if (primaryLarge?.height !== 40) fail(`Button lg 40px 기대, 실제 ${primaryLarge?.height}`);
+  if (dangerMedium?.cornerRadius !== 6) fail(`Button danger radius 6px 기대, 실제 ${dangerMedium?.cornerRadius}`);
 
   const defaultInput = variant(componentSet('Input'), 'State=default');
   const inputField = defaultInput?.children.find((child) => child.name === 'field');
   if (inputField?.height !== 44) fail(`Input field 44px 기대, 실제 ${inputField?.height}`);
-  if (inputField?.cornerRadius !== 12) fail(`Input field radius 12px 기대, 실제 ${inputField?.cornerRadius}`);
+  if (inputField?.cornerRadius !== 6) fail(`Input field radius 6px 기대, 실제 ${inputField?.cornerRadius}`);
 
   const defaultCard = variant(componentSet('Card'), 'Variant=default');
   const panelCard = variant(componentSet('Card'), 'Variant=panel');
-  if (defaultCard?.cornerRadius !== 14) fail(`Card radius 14px 기대, 실제 ${defaultCard?.cornerRadius}`);
+  if (defaultCard?.cornerRadius !== 8) fail(`Card radius 8px 기대, 실제 ${defaultCard?.cornerRadius}`);
   if (!panelCard) fail('Card panel variant 없음');
 
   const sidebar = componentSet('Sidebar');

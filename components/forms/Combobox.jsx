@@ -64,7 +64,7 @@ export function Combobox({
           }}
         />
         {selected && !open ? (
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>{selected.meta}</span>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)' }}>{selected.meta}</span>
         ) : null}
       </div>
 
@@ -95,8 +95,8 @@ export function Combobox({
                   background: isActive ? 'var(--dt-surface-sunken)' : 'transparent',
                 }}
               >
-                <span style={{ flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: isSel ? 600 : 500, color: 'var(--dt-ink-strong)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.label}</span>
-                {o.meta ? <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)', flex: '0 0 auto' }}>{o.meta}</span> : null}
+                <span style={{ flex: 1, minWidth: 0, fontSize: 13, fontWeight: isSel ? 600 : 500, color: 'var(--dt-ink-strong)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{o.label}</span>
+                {o.meta ? <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)', flex: '0 0 auto' }}>{o.meta}</span> : null}
                 {isSel ? (
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ color: 'var(--dt-accent)', flex: '0 0 auto' }}><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 ) : null}

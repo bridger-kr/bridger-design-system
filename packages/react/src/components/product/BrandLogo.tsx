@@ -222,7 +222,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
         width: wordmarkSize.width,
         height: wordmarkSize.height,
         fontFamily: 'var(--dt-font-sans)',
-        fontWeight: 780,
+        fontWeight: 600,
         letterSpacing: 0,
         lineHeight: 1,
         color: 'var(--dt-accent)',

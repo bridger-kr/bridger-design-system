@@ -62,58 +62,61 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
 .badge-warning { background: var(--dt-tint-warning); color: var(--dt-warning); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-warning) 32%, transparent); }
 .badge-danger  { background: var(--dt-tint-danger);  color: var(--dt-danger); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dt-danger) 32%, transparent); }
 
-/* ── Cards — bordered planes. At rest they sit on a hairline, no lift. ── */
+/* ── Cards — bordered planes. At rest they sit on a hairline, no lift,
+   no ambient shadow (DESIGN.md §4.6). ── */
 .card {
   background: var(--dt-surface); color: var(--dt-ink);
+  border: 1px solid var(--dt-border);
   border-radius: var(--dt-radius-card);
-  box-shadow: var(--dt-card-rest);
-  transition: box-shadow var(--dt-motion), transform var(--dt-motion);
+  transition: border-color var(--dt-motion-fast), background-color var(--dt-motion-fast);
 }
 .card-muted  { background: var(--dt-surface-sunken); border: 1px solid var(--dt-border); border-radius: var(--dt-radius-card); }
-.card-raised { background: var(--dt-surface-raised); border-radius: var(--dt-radius-card); box-shadow: var(--dt-card-float); }
+.card-raised { background: var(--dt-surface-raised); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); }
+/* Deprecated alias kept as a class hook: glass/translucency is prohibited
+   (DESIGN.md §4.9), so it now renders as a flat raised card. */
 .glass-card {
-  background: var(--dt-glass-bg);
-  backdrop-filter: var(--dt-glass-blur); -webkit-backdrop-filter: var(--dt-glass-blur);
-  border: 1px solid var(--dt-border); border-radius: var(--dt-radius-card); box-shadow: var(--dt-shadow-sm);
+  background: var(--dt-surface-raised);
+  border: 1px solid var(--dt-border); border-radius: var(--dt-radius-card);
 }
 
-/* ── Buttons ── */
+/* ── Buttons — compact scale (sm 32 / md 36 / lg 40), 6px control radius,
+   no hover lift, no resting or hover shadow (DESIGN.md §7, §11). ── */
 .btn-primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
-  height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
   border-radius: var(--dt-radius-control);
   background: var(--dt-ink-strong); color: var(--dt-surface); border: 1px solid var(--dt-ink-strong);
-  box-shadow: var(--dt-shadow-xs);
   text-decoration: none; cursor: pointer;
-  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), transform var(--dt-motion-fast);
+  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), transform var(--dt-motion-fast);
 }
-.btn-primary:not(:disabled):hover { background: var(--dt-ink); border-color: var(--dt-ink); box-shadow: var(--dt-shadow-sm); transform: translateY(-1px); }
+.btn-primary:not(:disabled):hover { background: var(--dt-ink); border-color: var(--dt-ink); }
 .btn-primary:active { transform: scale(var(--dt-press-scale)); }
 
 .btn-secondary {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
-  height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
   border-radius: var(--dt-radius-control);
   background: var(--dt-surface-sunken); color: var(--dt-ink-strong); border: 1px solid var(--dt-border);
   text-decoration: none; cursor: pointer;
-  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), transform var(--dt-motion-fast);
+  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), transform var(--dt-motion-fast);
 }
-.btn-secondary:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); transform: translateY(-1px); }
+.btn-secondary:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); }
 .btn-secondary:active { transform: scale(var(--dt-press-scale)); }
 
 .btn-ghost {
   display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
-  height: 36px; padding: 0 var(--dt-space-12); font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  padding: 0 var(--dt-space-12); font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
   border-radius: var(--dt-radius-control);
   background: transparent; color: var(--dt-muted-strong); border: 1px solid transparent;
   text-decoration: none; cursor: pointer;
-  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), color var(--dt-motion-fast), transform var(--dt-motion-fast);
+  transition: background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), color var(--dt-motion-fast), transform var(--dt-motion-fast);
 }
 .btn-ghost:not(:disabled):hover { background: var(--dt-tint-muted); border-color: var(--dt-border); color: var(--dt-ink-strong); }
 .btn-ghost:active { transform: scale(var(--dt-press-scale)); }
 
 .btn-danger {
   display: inline-flex; align-items: center; justify-content: center; gap: var(--dt-space-2); white-space: nowrap;
+  padding: 0 18px; font-size: var(--dt-label-size);
   border: 1px solid var(--dt-danger); border-radius: var(--dt-radius-control);
   background: var(--dt-danger); color: var(--dt-surface);
   font-weight: 600; line-height: 1;
@@ -123,25 +126,22 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
 .btn-danger:not(:disabled):hover {
   background: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-ink-strong));
   border-color: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-ink-strong));
-  transform: translateY(-1px);
 }
 .btn-danger:active:not(:disabled) { transform: scale(var(--dt-press-scale)); }
 
 .dt-button { min-height: var(--dt-space-5); }
 .dt-button-sm {
-  height: var(--dt-space-5); min-height: var(--dt-space-5);
+  height: 32px; min-height: 32px;
   padding-inline: calc(var(--dt-space-2) + var(--dt-space-1));
   font-size: var(--dt-small-size);
 }
 .dt-button-md {
-  height: calc(var(--dt-space-5) + var(--dt-space-1));
-  min-height: calc(var(--dt-space-5) + var(--dt-space-1));
+  height: 36px; min-height: 36px;
   padding-inline: var(--dt-space-3);
   font-size: var(--dt-small-size);
 }
 .dt-button-lg {
-  height: calc(var(--dt-space-5) + var(--dt-space-2));
-  min-height: calc(var(--dt-space-5) + var(--dt-space-2));
+  height: 40px; min-height: 40px;
   padding-inline: calc(var(--dt-space-3) + var(--dt-space-1));
   font-size: var(--dt-body-size);
 }
@@ -173,19 +173,11 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
 .spec-strip {
   display: inline-flex; align-items: center; gap: var(--dt-space-12);
   padding: 7px 15px; border-radius: var(--dt-radius-full);
-  background: var(--dt-surface); box-shadow: var(--dt-ring), var(--dt-shadow-xs);
+  background: var(--dt-surface); box-shadow: var(--dt-ring);
   font-size: var(--dt-caption-size); color: var(--dt-muted);
 }
 .spec-strip-item { display: inline-flex; align-items: center; gap: 5px; font-weight: 500; }
 .spec-strip-sep  { display: inline-block; width: 1px; height: 12px; background: var(--dt-border-strong); }
-
-/* ── Decorative dot grid (hero backdrops only) ── */
-.dt-grid-paper {
-  background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--dt-ink) 9%, transparent) 1px, transparent 0);
-  background-size: 26px 26px;
-  -webkit-mask-image: radial-gradient(120% 90% at 70% 0%, black 25%, transparent 72%);
-          mask-image: radial-gradient(120% 90% at 70% 0%, black 25%, transparent 72%);
-}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -28,7 +28,7 @@ export function ToolCard({
       style={{
         borderRadius: 'var(--dt-radius-md)',
         background: 'var(--dt-surface)',
-        boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+        boxShadow: 'var(--dt-ring)',
         padding: '16px 18px',
         transition: 'box-shadow var(--dt-motion), background-color var(--dt-motion)',
         ...style,
@@ -40,7 +40,7 @@ export function ToolCard({
             <span className="dt-chip dt-chip-muted">{cat}</span>
             <span className="dt-chip dt-chip-accent">{method}</span>
           </div>
-          <h4 style={{ marginTop: 11, fontSize: 15, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)', wordBreak: 'break-all' }}>
+          <h4 style={{ marginTop: 11, fontSize: 15, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)', wordBreak: 'break-all' }}>
             {name}
           </h4>
         </div>

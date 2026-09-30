@@ -28,19 +28,15 @@ export function FilterChip({ label, count, active = false, removable = false, on
       aria-pressed={active}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 7, minHeight: 'var(--dt-space-5)', padding: '0 10px',
-        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
-        fontFamily: 'var(--dt-font-sans)', fontSize: 13, fontWeight: active ? 650 : 500,
-        background: active ? 'var(--dt-tint-accent)' : 'var(--dt-surface)',
-        color: active ? 'var(--dt-accent)' : 'var(--dt-muted-strong)',
-        border: `1px solid ${active ? 'color-mix(in srgb, var(--dt-accent) 40%, transparent)' : 'var(--dt-border)'}`,
-        transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), transform var(--dt-motion-fast)',
+        cursor: 'pointer',
+        fontFamily: 'var(--dt-font-sans)', fontSize: 13, fontWeight: active ? 600 : 500,
         ...style,
       }}
     >
       {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent)' : 'var(--dt-muted)' }} aria-hidden="true">{icon}</span> : null}
       <span>{label}</span>
       {count != null ? (
-        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: active ? 'var(--dt-accent)' : 'var(--dt-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
+        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', fontWeight: 600, color: active ? 'var(--dt-accent)' : 'var(--dt-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
       ) : null}
     </button>
   );

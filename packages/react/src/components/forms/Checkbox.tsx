@@ -60,12 +60,8 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
           style={{
             width: 18,
             height: 18,
-            borderRadius: 5,
             display: 'grid',
             placeItems: 'center',
-            background: 'var(--dt-surface)',
-            border: '1.5px solid var(--dt-border-strong)',
-            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
           }}
         >
           <BaseCheckbox.Indicator>

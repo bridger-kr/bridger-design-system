@@ -121,7 +121,7 @@ export function Combobox({
           }}
         />
         {selected && !open ? (
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)' }}>
             {selected.meta}
           </span>
         ) : null}
@@ -166,7 +166,7 @@ export function Combobox({
                     style={{
                       flex: 1,
                       minWidth: 0,
-                      fontSize: 13.5,
+                      fontSize: 13,
                       fontWeight: isSel ? 600 : 500,
                       color: 'var(--dt-ink-strong)',
                       overflow: 'hidden',
@@ -180,7 +180,7 @@ export function Combobox({
                     <span
                       style={{
                         fontFamily: 'var(--dt-font-mono)',
-                        fontSize: 11,
+                        fontSize: 'var(--dt-caption-size)',
                         color: 'var(--dt-muted)',
                         flex: '0 0 auto',
                       }}

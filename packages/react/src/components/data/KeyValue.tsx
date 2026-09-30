@@ -43,11 +43,11 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }: KeyValuePr
               borderRight: columns === 2 && col === 0 ? '1px solid var(--dt-border)' : 'none',
             }}
           >
-            <dt style={{ fontSize: 12.5, color: 'var(--dt-muted)', flex: '0 0 auto' }}>{item.key}</dt>
+            <dt style={{ fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)', flex: '0 0 auto' }}>{item.key}</dt>
             <dd style={{
               margin: 0, textAlign: 'right', minWidth: 0,
               fontFamily: item.mono ? 'var(--dt-font-mono)' : 'inherit',
-              fontSize: item.mono ? 12.5 : 13, fontWeight: 600,
+              fontSize: item.mono ? 'var(--dt-mono-size)' : 13, fontWeight: 600,
               color: item.accent ? 'var(--dt-accent)' : 'var(--dt-ink-strong)',
               fontVariantNumeric: 'tabular-nums',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',

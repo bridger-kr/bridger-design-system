@@ -8,12 +8,12 @@
   body { margin: 0; background: var(--dt-paper); padding: 26px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; max-width: 720px; }
   .spec { display: grid; gap: 11px; }
-  .lbl { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; }
+  .lbl { font-family: var(--dt-font-mono); font-size: var(--dt-caption-size); letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; }
   .lbl::before { content: ""; width: 5px; height: 5px; background: var(--dt-accent); }
 
   /* CodeBlock */
   .code { background: var(--dt-code-bg); border: 1px solid var(--dt-code-border); border-radius: var(--dt-radius-lg); overflow: hidden; }
-  .code .bar { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--dt-code-border); font-family: var(--dt-font-mono); font-size: 11px; color: #8a91a3; }
+  .code .bar { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--dt-code-border); font-family: var(--dt-font-mono); font-size: var(--dt-caption-size); color: #8a91a3; }
   .code .cp { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; color: #8a91a3; font-weight: 600; }
   .code .body { padding: 12px 0; }
   .ln { display: grid; grid-template-columns: 38px 1fr; font-family: var(--dt-font-mono); font-size: 12.5px; line-height: 1.75; }

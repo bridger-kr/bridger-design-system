@@ -42,12 +42,10 @@ export function StatusPill({ status = 'idle', children, pulse = false, style, ..
             height: 7,
             borderRadius: '9999px',
             background: tone.fg,
-            animation: 'dt-status-pulse 1.6s var(--dt-ease) infinite',
           }}
         />
       ) : null}
       {children}
-      <style>{'@keyframes dt-status-pulse{0%,100%{opacity:1}50%{opacity:.35}}'}</style>
     </span>
   );
 }
