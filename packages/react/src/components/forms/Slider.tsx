@@ -1,4 +1,4 @@
-import { Slider as BaseSlider } from '@base-ui-components/react/slider';
+import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { useState } from 'react';
 import type { CSSProperties, InputHTMLAttributes } from 'react';
 
@@ -14,7 +14,7 @@ export interface SliderProps
   value?: number;
   defaultValue?: number;
   onChange?: (value: number) => void;
-  /** Suffix shown after the value readout, e.g. "회/일" or "ms". */
+  /** Suffix shown after the value readout, e.g. "req/day" or "ms". */
   unit?: string;
   hint?: string;
   id?: string;

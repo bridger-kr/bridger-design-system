@@ -34,14 +34,14 @@ describe('data exports', () => {
     const { container } = render(<CodePane label="response" lines={[{ segments: [{ text: 'status', tone: 'key' }] }]} />);
 
     expect(container.querySelector('.dt-code-pane-token-key')).toBeTruthy();
-    expect(StatPanel({ items: [{ value: '47.2%', label: '성공률' }] }).props.className).toContain('dt-stat-panel-card');
+    expect(StatPanel({ items: [{ value: '47.2%', label: 'Success rate' }] }).props.className).toContain('dt-stat-panel-card');
   });
 
   it('renders table interaction hooks without injecting a style tag', () => {
     const { container } = render(
       <Table
-        columns={[{ key: 'name', header: '이름' }]}
-        rows={[{ name: '서울' }]}
+        columns={[{ key: 'name', header: 'Name' }]}
+        rows={[{ name: 'Seoul' }]}
       />,
     );
 
@@ -52,17 +52,17 @@ describe('data exports', () => {
   it('renders row actions as native buttons inside valid table cells', () => {
     render(
       <Table
-        columns={[{ key: 'name', header: '이름' }]}
-        rows={[{ name: '서울' }]}
+        columns={[{ key: 'name', header: 'Name' }]}
+        rows={[{ name: 'Seoul' }]}
         rowAction={{
           kind: 'button',
-          label: (row) => `${row.name} 열기`,
+          label: (row) => `Open ${row.name}`,
           onActivate: () => undefined,
         }}
       />,
     );
 
-    const action = screen.getByRole('button', { name: '서울 열기' });
+    const action = screen.getByRole('button', { name: 'Open Seoul' });
     expect(action.closest('td')).toBeTruthy();
     expect(action.closest('tr')?.children[0]?.tagName).toBe('TD');
   });
@@ -72,41 +72,41 @@ describe('data exports', () => {
     const onActivate = vi.fn();
     render(
       <Table
-        columns={[{ key: 'name', header: '이름' }]}
-        rows={[{ name: '서울' }, { name: '부산' }]}
+        columns={[{ key: 'name', header: 'Name' }]}
+        rows={[{ name: 'Seoul' }, { name: 'Busan' }]}
         rowAction={{
           kind: 'button',
-          label: (row) => `${row.name} 열기`,
+          label: (row) => `Open ${row.name}`,
           onActivate,
-          disabled: (row) => row.name === '부산',
+          disabled: (row) => row.name === 'Busan',
         }}
       />,
     );
 
-    const action = screen.getByRole('button', { name: '서울 열기' });
+    const action = screen.getByRole('button', { name: 'Open Seoul' });
     action.focus();
     expect(document.activeElement).toBe(action);
     await user.keyboard('{Enter}');
     await user.keyboard(' ');
     expect(onActivate).toHaveBeenCalledTimes(2);
 
-    await user.click(screen.getByRole('button', { name: '부산 열기' }));
+    await user.click(screen.getByRole('button', { name: 'Open Busan' }));
     expect(onActivate).toHaveBeenCalledTimes(2);
   });
 
   it('renders navigation row actions as native links', () => {
     render(
       <Table
-        columns={[{ key: 'name', header: '이름' }]}
-        rows={[{ name: '서울' }]}
+        columns={[{ key: 'name', header: 'Name' }]}
+        rows={[{ name: 'Seoul' }]}
         rowAction={{
           kind: 'link',
-          label: (row) => `${row.name} 상세`,
+          label: (row) => `${row.name} details`,
           href: () => '/regions/seoul',
         }}
       />,
     );
 
-    expect(screen.getByRole('link', { name: '서울 상세' }).getAttribute('href')).toBe('/regions/seoul');
+    expect(screen.getByRole('link', { name: 'Seoul details' }).getAttribute('href')).toBe('/regions/seoul');
   });
 });

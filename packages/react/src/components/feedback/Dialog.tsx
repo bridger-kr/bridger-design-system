@@ -1,4 +1,4 @@
-import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
+import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import type { ReactNode } from 'react';
 import { useId } from 'react';
 
@@ -25,7 +25,6 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
       <BaseDialog.Portal>
         <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay" style={{
           position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-ink-strong) 32%, transparent)',
-          backdropFilter: 'blur(2px)',
         }} />
         <div data-dt-dialog-content style={{ position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-modal)', display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
           <BaseDialog.Popup

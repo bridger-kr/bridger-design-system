@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from 'react';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 const STATE_COLOR: Record<'available' | 'managed' | 'locked', string> = {
   available: 'var(--dt-success)',
@@ -27,15 +28,17 @@ export function ToolCard({
   name,
   method = 'GET',
   category,
-  description = '설명 없음',
+  description,
   path = '/',
   state = 'available',
   stateLabel,
   style,
   ...rest
 }: ToolCardProps) {
+  const messages = useDSMessages();
   const cat = category ?? (name ? name.split('_')[0] : 'etc');
-  const labels = { available: '사용 가능', managed: '관리형 키', locked: '키 등록' };
+  const labels = messages.toolCard.state;
+  const resolvedDescription = description ?? messages.toolCard.emptyDescription;
   return (
     <article
       className="dt-tool-card"
@@ -68,7 +71,7 @@ export function ToolCard({
         marginTop: 12, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-muted-strong)',
         display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
       }}>
-        {description}
+        {resolvedDescription}
       </p>
       <div style={{ marginTop: 14, paddingTop: 13, borderTop: '1px solid var(--dt-divider)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
         <code style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface FilterChipProps {
   label: string;
@@ -9,17 +10,20 @@ export interface FilterChipProps {
   removable?: boolean;
   onToggle?: () => void;
   onRemove?: () => void;
+  /** Accessible name for the remove button; defaults to the ambient locale. */
+  removeAriaLabel?: string;
   icon?: ReactNode;
   style?: CSSProperties;
 }
 
 /**
- * FilterChip — a toggleable filter / tag for catalog facets (분야, 프로토콜, 상태).
+ * FilterChip — a toggleable filter / tag for catalog facets (category, protocol, status).
  * Crisp small-radius tag with a hairline, NOT a rounded-full cushion. Active =
  * persimmon tint + border + bold. Optional count (mono) and a removable ✕.
  * @startingPoint section="Core" subtitle="Toggleable catalog filter" viewport="520x80"
  */
-export function FilterChip({ label, count, active = false, removable = false, onToggle, onRemove, icon, style }: FilterChipProps) {
+export function FilterChip({ label, count, active = false, removable = false, onToggle, onRemove, removeAriaLabel, icon, style }: FilterChipProps) {
+  const messages = useDSMessages();
   const toggle = (
     <button
       type="button"
@@ -53,7 +57,7 @@ export function FilterChip({ label, count, active = false, removable = false, on
       <button
         type="button"
         className="dt-filter-chip-remove"
-        aria-label={`${label} 제거`}
+        aria-label={removeAriaLabel ?? messages.filterChip.removeAriaLabel(label)}
         onClick={onRemove}
         style={{ color: active ? 'var(--dt-accent)' : 'var(--dt-muted)' }}
       >

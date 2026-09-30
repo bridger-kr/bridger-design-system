@@ -1,4 +1,4 @@
-import { Select as BaseSelect } from '@base-ui-components/react/select';
+import { Select as BaseSelect } from '@base-ui/react/select';
 import type { CSSProperties, SelectHTMLAttributes } from 'react';
 
 export interface SelectOption {

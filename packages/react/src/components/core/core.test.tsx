@@ -50,7 +50,7 @@ describe('core exports', () => {
   });
 
   it('creates a valid Button React element with minimal props', () => {
-    expect(Button({ children: '저장' })).toMatchObject({
+    expect(Button({ children: 'Save' })).toMatchObject({
       type: 'button',
       props: expect.objectContaining({ type: 'button' }),
     });
@@ -62,8 +62,8 @@ describe('core exports', () => {
   });
 
   it('exports enum-like surface contracts used by apps', () => {
-    expect(Card({ tone: CardTone.Raised, children: '상태' }).props.style.background).toBe('var(--dt-surface-raised)');
-    expect(Panel({ tone: SurfaceTone.Raised, children: '패널' }).props.className).toContain('bg-[var(--dt-surface-raised)]');
+    expect(Card({ tone: CardTone.Raised, children: 'Status' }).props.style.background).toBe('var(--dt-surface-raised)');
+    expect(Panel({ tone: SurfaceTone.Raised, children: 'Panel' }).props.className).toContain('bg-[var(--dt-surface-raised)]');
     expect(metricAccentColor(MetricAccent.Success)).toBe('text-[var(--dt-success)]');
     expect(cx('a', false, 'b')).toBe('a b');
   });
@@ -79,8 +79,8 @@ describe('core exports', () => {
 
   it('keeps Card non-actionable and exposes native action variants', () => {
     const defaultCard = Card({ children: 'x' });
-    const cardButton = CardButton({ children: '실행' });
-    const cardLink = CardLink({ href: '/tools', children: '도구 열기' });
+    const cardButton = CardButton({ children: 'Run' });
+    const cardLink = CardLink({ href: '/tools', children: 'Open tools' });
 
     expect(defaultCard.type).toBe('div');
     expect(defaultCard.props.style.padding).toBe(20);
@@ -99,17 +99,17 @@ describe('core exports', () => {
   it('activates CardButton with Enter and Space while respecting disabled state', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();
-    render(<CardButton onClick={onClick}>도구 실행</CardButton>);
+    render(<CardButton onClick={onClick}>Run tool</CardButton>);
 
-    const action = screen.getByRole('button', { name: '도구 실행' });
+    const action = screen.getByRole('button', { name: 'Run tool' });
     action.focus();
     expect(document.activeElement).toBe(action);
     await user.keyboard('{Enter}');
     await user.keyboard(' ');
     expect(onClick).toHaveBeenCalledTimes(2);
 
-    render(<CardButton disabled onClick={onClick}>비활성 도구</CardButton>);
-    await user.click(screen.getByRole('button', { name: '비활성 도구' }));
+    render(<CardButton disabled onClick={onClick}>Disabled tool</CardButton>);
+    await user.click(screen.getByRole('button', { name: 'Disabled tool' }));
     expect(onClick).toHaveBeenCalledTimes(2);
   });
 
@@ -123,8 +123,8 @@ describe('core exports', () => {
   });
 
   it('Button maps every public variant and size to semantic CSS hooks', () => {
-    const danger = Button({ variant: BUTTON_VARIANT.Danger, size: BUTTON_SIZE.Small, children: '삭제' });
-    const secondary = Button({ variant: BUTTON_VARIANT.Secondary, size: BUTTON_SIZE.Large, children: '연결' });
+    const danger = Button({ variant: BUTTON_VARIANT.Danger, size: BUTTON_SIZE.Small, children: 'Delete' });
+    const secondary = Button({ variant: BUTTON_VARIANT.Secondary, size: BUTTON_SIZE.Large, children: 'Connect' });
 
     expect(danger.props.className).toContain('btn-danger');
     expect(danger.props.className).toContain('dt-button-sm');
@@ -134,7 +134,7 @@ describe('core exports', () => {
 
   it('Button keeps the native type and forwards only consumer-supplied inline style', () => {
     const style = { height: 20 };
-    const el = Button({ children: '저장', style });
+    const el = Button({ children: 'Save', style });
 
     expect(el.type).toBe('button');
     expect(el.props.type).toBe('button');
@@ -157,13 +157,13 @@ describe('core exports', () => {
 
   it('exports chip, section, and pill tabs as additive contracts', () => {
     expect(Chip({ variant: 'accent', size: 'sm', children: 'MCP' }).props.className).toContain('dt-chip-accent');
-    expect(Section({ variant: 'proof', tone: 'grid', children: '증거' }).props.className).toContain('dt-section-proof');
+    expect(Section({ variant: 'proof', tone: 'grid', children: 'Evidence' }).props.className).toContain('dt-section-proof');
     expect(Tabs({ variant: 'pill', tabs: [{ id: 'a', label: 'A' }] }).props.children.props.className).toContain('dt-tabs-list-pill');
   });
 
   it('renders static chips as spans and actionable chips as native buttons', () => {
-    const staticChip = Chip({ children: '상태' });
-    const actionChip = Chip({ children: '재시도', onClick: () => undefined });
+    const staticChip = Chip({ children: 'Status' });
+    const actionChip = Chip({ children: 'Retry', onClick: () => undefined });
 
     expect(staticChip.type).toBe('span');
     expect(staticChip.props.className).not.toContain('dt-chip-interactive');
@@ -174,29 +174,32 @@ describe('core exports', () => {
     expect(actionChip.props.style.minWidth).toBe('var(--dt-space-5)');
     expect(actionChip.props.variant).toBeUndefined();
     expect(staticChip.props.size).toBeUndefined();
-    expect(FilterChip({ label: '날씨' }).props.className).toContain('dt-filter-chip');
-    expect(FilterChip({ label: '날씨', active: true }).props.className).toContain('dt-filter-chip-active');
+    const { container, unmount } = render(<FilterChip label="Weather" />);
+    expect(container.querySelector('.dt-filter-chip')).not.toBeNull();
+    unmount();
+    const active = render(<FilterChip label="Weather" active />);
+    expect(active.container.querySelector('.dt-filter-chip-active')).not.toBeNull();
   });
 
   it('activates actionable chips with Enter and Space and blocks disabled actions', async () => {
     const user = userEvent.setup();
     const onClick = vi.fn();
-    render(<Chip onClick={onClick}>재시도</Chip>);
+    render(<Chip onClick={onClick}>Retry</Chip>);
 
-    const action = screen.getByRole('button', { name: '재시도' });
+    const action = screen.getByRole('button', { name: 'Retry' });
     action.focus();
     expect(document.activeElement).toBe(action);
     await user.keyboard('{Enter}');
     await user.keyboard(' ');
     expect(onClick).toHaveBeenCalledTimes(2);
 
-    render(<Chip disabled onClick={onClick}>사용 불가</Chip>);
-    await user.click(screen.getByRole('button', { name: '사용 불가' }));
+    render(<Chip disabled onClick={onClick}>Unavailable</Chip>);
+    await user.click(screen.getByRole('button', { name: 'Unavailable' }));
     expect(onClick).toHaveBeenCalledTimes(2);
   });
 
   it('uses stylesheet state hooks without injecting Tabs styles', () => {
-    const tabs = Tabs({ tabs: [{ id: 'weather', label: '날씨' }] });
+    const tabs = Tabs({ tabs: [{ id: 'weather', label: 'Weather' }] });
     const list = tabs.props.children;
     const tab = Children.toArray(list.props.children).find(
       (child) => isValidElement(child) && child.props.className?.includes('dt-tabs-tab'),
@@ -208,19 +211,25 @@ describe('core exports', () => {
   });
 
   it('gives FilterChip toggle and remove controls canonical target hooks', () => {
-    const toggle = FilterChip({ label: '날씨' });
-    const removable = FilterChip({ label: '날씨', removable: true });
+    const { container } = render(
+      <>
+        <FilterChip label="Weather" />
+        <FilterChip label="Dust" removable />
+      </>,
+    );
+    const toggle = container.querySelector('.dt-filter-chip');
+    const removable = container.querySelector('.dt-filter-chip-group');
 
-    expect(toggle.props.className).toContain('dt-filter-chip');
-    expect(toggle.props.style.minHeight).toBe('var(--dt-space-5)');
-    expect(removable.props.className).toContain('dt-filter-chip-group');
-    expect(removable.props.children[1].props.className).toContain('dt-filter-chip-remove');
+    expect(toggle).not.toBeNull();
+    expect((toggle as HTMLElement).style.minHeight).toBe('var(--dt-space-5)');
+    expect(removable).not.toBeNull();
+    expect(removable?.querySelector('.dt-filter-chip-remove')).not.toBeNull();
   });
 
   it('marks input controls and pulses live statuses by default', () => {
     const input = Input({ disabled: true });
     const inputControl = input.props.children[1].props.children[1];
-    const liveStatus = StatusPill({ status: 'connected', children: '연결됨' });
+    const liveStatus = StatusPill({ status: 'connected', children: 'Connected' });
 
     expect(inputControl.props.className).toContain('dt-input-control');
     expect(inputControl.props.disabled).toBe(true);
@@ -228,7 +237,7 @@ describe('core exports', () => {
   });
 
   it('renders status motion without injecting a style tag', () => {
-    const liveStatus = StatusPill({ status: 'reconnecting', children: '재연결 중' });
+    const liveStatus = StatusPill({ status: 'reconnecting', children: 'Reconnecting' });
 
     expect(Children.toArray(liveStatus.props.children).some((child) => isValidElement(child) && child.type === 'style')).toBe(false);
   });

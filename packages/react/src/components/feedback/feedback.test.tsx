@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 import { render } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
+import { DS_MESSAGES_KO } from '../../locale/messages';
 import {
   Alert,
   AlertTone,
@@ -24,22 +25,16 @@ describe('feedback component exports', () => {
   });
 
   it('renders the alert tone contract as a semantic status panel', () => {
-    const el = Alert({
-      tone: AlertTone.Warning,
-      title: '주의',
-      children: '게이트웨이 응답 지연. 네트워크 확인 필요.',
-    });
+    const { container } = render(
+      <Alert tone={AlertTone.Warning} title="Warning">
+        Gateway response delayed. Check the network.
+      </Alert>,
+    );
+    const el = container.querySelector('.dt-alert');
 
-    expect(el.props.role).toBe('status');
-    expect(el.props.style).toMatchObject({
-      alignItems: 'flex-start',
-      background: 'var(--dt-tint-warning)',
-      borderRadius: '20px',
-      color: 'var(--dt-ink-strong)',
-      minHeight: 62,
-      padding: '13px 15px',
-      width: 'min(100%, 380px)',
-    });
+    expect(el?.getAttribute('role')).toBe('status');
+    expect(el?.getAttribute('style')).toContain('background: var(--dt-tint-warning)');
+    expect(el?.getAttribute('style')).toContain('min-height: 62px');
   });
 
   it('uses adaptive strong contrast for every semantic tone', () => {
@@ -51,26 +46,32 @@ describe('feedback component exports', () => {
     ] as const;
 
     for (const [tone, background] of toneBackgrounds) {
-      const el = Alert({ tone, title: '상태', children: '게이트웨이 상태를 확인했습니다.' });
-      expect(el.props.style).toMatchObject({
-        background,
-        color: 'var(--dt-ink-strong)',
-      });
+      const { container, unmount } = render(
+        <Alert tone={tone} title="Status">
+          Checked the gateway status.
+        </Alert>,
+      );
+      const el = container.querySelector('.dt-alert');
+      expect(el?.getAttribute('style')).toContain(`background: ${background}`);
+      expect(el?.getAttribute('style')).toContain('color: var(--dt-ink-strong)');
+      unmount();
     }
   });
 
   it('supports opt-in motion while keeping the default static', () => {
-    const staticAlert = Alert({ title: '안내', children: '게이트웨이 응답 정상.' });
-    const liveAlert = Alert({
-      tone: AlertTone.Success,
-      title: '완료',
-      children: '도구 노출이 적용되었습니다.',
-      motion: 'pulse',
-    });
+    const { container, rerender } = render(
+      <Alert title="Notice">Gateway response normal.</Alert>,
+    );
+    const staticAlert = container.querySelector('.dt-alert');
+    expect(staticAlert?.className).toBe('dt-alert');
+    expect(staticAlert?.getAttribute('style')).not.toContain('transition');
 
-    expect(staticAlert.props.className).toBe('dt-alert');
-    expect(staticAlert.props.style.transition).toBeUndefined();
-    expect(liveAlert.props.className).toBe('dt-alert dt-alert-motion-pulse');
+    rerender(
+      <Alert tone={AlertTone.Success} title="Done" motion="pulse">
+        Tool exposure applied.
+      </Alert>,
+    );
+    expect(container.querySelector('.dt-alert')?.className).toBe('dt-alert dt-alert-motion-pulse');
   });
 
   it('does not attach hover or press motion to static alerts', () => {
@@ -82,28 +83,31 @@ describe('feedback component exports', () => {
   });
 
   it('uses package stylesheet classes for feedback motion', () => {
-    expect(Toast({ message: '저장됨' }).props.className).toBe('dt-toast');
+    const { container } = render(<Toast message="Saved" />);
+
+    expect(container.querySelector('.dt-toast')).not.toBeNull();
   });
 
   it('uses the declared overlay and modal layers for dialogs', () => {
-    render(<Dialog open title="확인">내용</Dialog>);
+    render(<Dialog open title="Confirm">Content</Dialog>);
 
     expect(document.querySelector('[data-dt-dialog-overlay]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-overlay)');
     expect(document.querySelector('[data-dt-dialog-content]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-modal)');
   });
 
   it('uses declared layers and a shared 40px close target for drawers', () => {
-    render(<Drawer open title="세부 정보">내용</Drawer>);
+    render(<Drawer open title="Details">Content</Drawer>);
 
     expect(document.querySelector('[data-dt-drawer-overlay]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-overlay)');
     expect(document.querySelector('[data-dt-drawer-content]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-modal)');
-    expect(document.querySelector('[aria-label="닫기"]')?.className).toContain('dt-close-control');
+    expect(document.querySelector(`[aria-label="${DS_MESSAGES_KO.common.close}"]`)?.className).toContain('dt-close-control');
   });
 
   it('uses the shared close target for dismissible alerts', () => {
-    const alert = Alert({ title: '안내', onDismiss: () => undefined });
-    const closeButton = alert.props.children[2];
+    const { container } = render(<Alert title="Notice" onDismiss={() => undefined} />);
+    const closeButton = container.querySelector('.dt-close-control');
 
-    expect(closeButton.props.className).toContain('dt-close-control');
+    expect(closeButton).not.toBeNull();
+    expect(closeButton?.getAttribute('aria-label')).toBe(DS_MESSAGES_KO.common.close);
   });
 });

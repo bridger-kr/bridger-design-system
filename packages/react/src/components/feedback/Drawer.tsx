@@ -1,6 +1,7 @@
-import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
+import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import type { CSSProperties, ReactNode } from 'react';
 import { useId } from 'react';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface DrawerProps {
   open?: boolean;
@@ -10,6 +11,8 @@ export interface DrawerProps {
   footer?: ReactNode;
   onClose?: () => void;
   width?: number;
+  /** Accessible name for the close button; defaults to the ambient locale. */
+  closeLabel?: string;
   style?: CSSProperties;
   'aria-label'?: string;
 }
@@ -19,8 +22,9 @@ export interface DrawerProps {
  * Render inside a positioned container (the panel fills its height).
  * @startingPoint section="Feedback" subtitle="Side sheet over a scrim" viewport="560x420"
  */
-export function Drawer({ open = false, side = 'right', title, children, footer, onClose, width = 420, style, 'aria-label': ariaLabel }: DrawerProps) {
+export function Drawer({ open = false, side = 'right', title, children, footer, onClose, width = 420, closeLabel, style, 'aria-label': ariaLabel }: DrawerProps) {
   const titleId = useId();
+  const messages = useDSMessages();
   const fromRight = side === 'right';
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) onClose?.();
@@ -47,7 +51,7 @@ export function Drawer({ open = false, side = 'right', title, children, footer, 
             <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 18px', borderBottom: '1px solid var(--dt-border)' }}>
               {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }} />}>{title}</BaseDialog.Title> : null}
               <BaseDialog.Close
-                aria-label="닫기"
+                aria-label={closeLabel ?? messages.common.close}
                 className="dt-close-control"
                 style={{ flex: '0 0 auto', display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-sm)', color: 'var(--dt-muted-strong)', cursor: 'pointer' }}
               >

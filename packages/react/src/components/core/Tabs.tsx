@@ -1,4 +1,4 @@
-import { Tabs as BaseTabs } from '@base-ui-components/react/tabs';
+import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 import type { CSSProperties, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 

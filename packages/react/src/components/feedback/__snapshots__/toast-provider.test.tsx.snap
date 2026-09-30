@@ -1,0 +1,119 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ToastProvider > matches the en snapshot for a queued toast 1`] = `
+<div
+  aria-describedby=":rl:"
+  aria-labelledby=":rk:"
+  aria-modal="false"
+  class="dt-toast"
+  data-type="warning"
+  role="dialog"
+  style="--toast-swipe-movement-x: 0px; --toast-swipe-movement-y: 0px; --toast-index: 0; --toast-offset-y: 0px; display: flex; align-items: flex-start; gap: 11px; width: 340px; max-width: 90vw; padding: 13px 15px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-md); box-shadow: var(--dt-shadow-lg);"
+  tabindex="0"
+>
+  <span
+    aria-hidden="true"
+    style="width: 8px; height: 8px; border-radius: 9999px; margin-top: 5px; flex: 0 0 auto; background: var(--dt-warning);"
+  />
+  <div
+    style="flex: 1 1 0%; min-width: 0px;"
+  >
+    <h2
+      data-type="warning"
+      id=":rk:"
+      style="font-size: 14px; font-weight: 650; color: var(--dt-ink-strong);"
+    >
+      Saved
+    </h2>
+    <p
+      data-type="warning"
+      id=":rl:"
+      style="margin-top: 2px; font-size: 13px; line-height: 1.5; color: var(--dt-muted-strong);"
+    >
+      Changes applied
+    </p>
+  </div>
+  <button
+    aria-hidden="true"
+    aria-label="Close"
+    data-type="warning"
+    style="flex: 0 0 auto; border: medium; background: transparent; cursor: pointer; color: var(--dt-muted); padding: 2px; line-height: 0;"
+    tabindex="0"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      fill="none"
+      height="15"
+      viewBox="0 0 24 24"
+      width="15"
+    >
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-width="2"
+      />
+    </svg>
+  </button>
+</div>
+`;
+
+exports[`ToastProvider > matches the ko snapshot for a queued toast 1`] = `
+<div
+  aria-describedby=":ri:"
+  aria-labelledby=":rh:"
+  aria-modal="false"
+  class="dt-toast"
+  data-type="warning"
+  role="dialog"
+  style="--toast-swipe-movement-x: 0px; --toast-swipe-movement-y: 0px; --toast-index: 0; --toast-offset-y: 0px; display: flex; align-items: flex-start; gap: 11px; width: 340px; max-width: 90vw; padding: 13px 15px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-md); box-shadow: var(--dt-shadow-lg);"
+  tabindex="0"
+>
+  <span
+    aria-hidden="true"
+    style="width: 8px; height: 8px; border-radius: 9999px; margin-top: 5px; flex: 0 0 auto; background: var(--dt-warning);"
+  />
+  <div
+    style="flex: 1 1 0%; min-width: 0px;"
+  >
+    <h2
+      data-type="warning"
+      id=":rh:"
+      style="font-size: 14px; font-weight: 650; color: var(--dt-ink-strong);"
+    >
+      Saved
+    </h2>
+    <p
+      data-type="warning"
+      id=":ri:"
+      style="margin-top: 2px; font-size: 13px; line-height: 1.5; color: var(--dt-muted-strong);"
+    >
+      Changes applied
+    </p>
+  </div>
+  <button
+    aria-hidden="true"
+    aria-label="닫기"
+    data-type="warning"
+    style="flex: 0 0 auto; border: medium; background: transparent; cursor: pointer; color: var(--dt-muted); padding: 2px; line-height: 0;"
+    tabindex="0"
+    type="button"
+  >
+    <svg
+      aria-hidden="true"
+      fill="none"
+      height="15"
+      viewBox="0 0 24 24"
+      width="15"
+    >
+      <path
+        d="M6 6l12 12M18 6L6 18"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-width="2"
+      />
+    </svg>
+  </button>
+</div>
+`;

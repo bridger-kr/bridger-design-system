@@ -30,6 +30,7 @@ import {
   actionListItemClassName,
   productActionPillClassName,
 } from './index';
+import { DS_MESSAGES_KO } from '../../locale/messages';
 import {
   BRAND_SYMBOL_VIEW_BOX,
   BRAND_WORDMARK_PATHS,
@@ -43,8 +44,8 @@ describe('Product components', () => {
     it('renders the Figma wordmark with a persimmon period', () => {
       const { container } = render(<BrandLogo lang="ko" />);
 
-      expect(screen.getByLabelText('브릿저')).toBeTruthy();
-      expect(screen.getByRole('img', { name: '브릿저' })).toBeTruthy();
+      expect(screen.getByLabelText(DS_MESSAGES_KO.brand.wordmark.ko)).toBeTruthy();
+      expect(screen.getByRole('img', { name: DS_MESSAGES_KO.brand.wordmark.ko })).toBeTruthy();
       expect(container.querySelector('.dt-brand-logo-wordmark svg[viewBox="0 0 148.484 43"]')).toBeTruthy();
       expect(BRAND_WORDMARK_VIEW_BOX).toBe('0 0 148.484 43');
       expect(BRAND_WORDMARK_PATHS).toHaveLength(9);
@@ -114,7 +115,7 @@ describe('Product components', () => {
       const pill = SearchPill({
         tone: SEARCH_PILL_TONE.Accent,
         size: SEARCH_PILL_SIZE.Large,
-        children: '날씨 데이터 찾기',
+        children: 'Find weather data',
       });
 
       expect(pill.props.className).toContain('dt-search-pill-accent');
@@ -123,27 +124,27 @@ describe('Product components', () => {
 
     it('exports the console action-list contract for guide-first flows', () => {
       render(
-        <ActionList aria-label="시작 경로">
+        <ActionList aria-label="Getting started">
           <a href="/register" className={actionListItemClassName({ interactive: true })}>
             <ActionListIndex>1</ActionListIndex>
-            API 등록
+            Register API
           </a>
         </ActionList>,
       );
 
-      expect(screen.getByLabelText('시작 경로').className).toBe(actionListClassName());
-      expect(screen.getByRole('link', { name: /API 등록/ }).className).toContain('dt-action-list-item-interactive');
+      expect(screen.getByLabelText('Getting started').className).toBe(actionListClassName());
+      expect(screen.getByRole('link', { name: /Register API/ }).className).toContain('dt-action-list-item-interactive');
       expect(screen.getByText('1').className).toBe('dt-action-list-index');
     });
 
     it('renders product action pill variants through the shared contract', () => {
       render(
         <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
-          콘솔 열기
+          Open console
         </ProductActionPill>,
       );
 
-      const pill = screen.getByRole('link', { name: '콘솔 열기' });
+      const pill = screen.getByRole('link', { name: 'Open console' });
       expect(pill.className).toContain('dt-product-action-pill');
       expect(pill.className).toContain('dt-product-action-pill-accent');
       expect(pill.className).toContain('dt-product-action-pill-hero');
@@ -157,10 +158,10 @@ describe('Product components', () => {
     it('exports product mockup primitives for landing visual artifacts', () => {
       const { container } = render(
         <WindowFrame chrome={<WindowChrome title="bridger.kr" trailing="200" />}>
-          <AnnotationHotspot x="24%" y="40%" label="활성">
-            <SearchPill artifactLabel="검색" tone="accent">OpenAPI 검색</SearchPill>
+          <AnnotationHotspot x="24%" y="40%" label="Active">
+            <SearchPill artifactLabel="Search" tone="accent">OpenAPI search</SearchPill>
           </AnnotationHotspot>
-          <ChatBubble role="assistant">응답 준비 완료</ChatBubble>
+          <ChatBubble role="assistant">Response ready</ChatBubble>
         </WindowFrame>,
       );
 
@@ -194,16 +195,16 @@ describe('Product components', () => {
       const { container } = render(
         <ProductTopbar
           brand={<a href="/">Bridger</a>}
-          mobileMenuCloseLabel="메뉴 닫기"
-          mobileMenuLabel="메뉴 열기"
+          mobileMenuCloseLabel="Close menu"
+          mobileMenuLabel="Open menu"
           mobileActions={
             <ProductActionPill href="/docs" leadingIcon={<span aria-hidden="true">?</span>}>
-              문서 보기
+              View docs
             </ProductActionPill>
           }
           actions={
             <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
-              콘솔 열기
+              Open console
             </ProductActionPill>
           }
         />,
@@ -211,11 +212,11 @@ describe('Product components', () => {
 
       expect(screen.getByRole('banner').className).toContain('dt-product-topbar');
       expect(screen.getByRole('navigation', { name: 'Primary' })).toBeTruthy();
-      fireEvent.click(screen.getByLabelText('메뉴 열기'));
+      fireEvent.click(screen.getByLabelText('Open menu'));
       expect(within(container).getByRole('dialog', { name: 'Mobile menu' })).toBeTruthy();
       expect(within(container).getByRole('navigation', { name: 'Mobile primary' })).toBeTruthy();
-      expect(screen.getByLabelText('메뉴 닫기')).toBeTruthy();
-      expect(screen.getByText('문서 보기')).toBeTruthy();
+      expect(screen.getByLabelText('Close menu')).toBeTruthy();
+      expect(screen.getByText('View docs')).toBeTruthy();
       expect(container.querySelector('.dt-product-topbar .dt-product-action-pill-hero')).toBeTruthy();
     });
 
@@ -223,16 +224,16 @@ describe('Product components', () => {
       const { container } = render(
         <ProductTopbar
           brand={<a href="/">Bridger</a>}
-          mobileMenuLabel="메뉴 열기"
-          mobileActions={<a href="#how">작동 방식</a>}
-          actions={<a href="/console">콘솔 열기</a>}
+          mobileMenuLabel="Open menu"
+          mobileActions={<a href="#how">How it works</a>}
+          actions={<a href="/console">Open console</a>}
         />,
       );
 
-      fireEvent.click(within(container).getByLabelText('메뉴 열기'));
+      fireEvent.click(within(container).getByLabelText('Open menu'));
       expect(within(container).getByRole('navigation', { name: 'Mobile primary' })).toBeTruthy();
 
-      fireEvent.click(within(container).getByRole('link', { name: '작동 방식' }));
+      fireEvent.click(within(container).getByRole('link', { name: 'How it works' }));
 
       expect(within(container).queryByRole('navigation', { name: 'Mobile primary' })).toBeNull();
     });
@@ -241,15 +242,15 @@ describe('Product components', () => {
       const { container } = render(
         <ProductTopbar
           brand={<a href="/">Bridger</a>}
-          mobileMenuLabel="메뉴 열기"
-          mobileActions={<a href="#how">작동 방식</a>}
-          actions={<a href="/console">콘솔 열기</a>}
+          mobileMenuLabel="Open menu"
+          mobileActions={<a href="#how">How it works</a>}
+          actions={<a href="/console">Open console</a>}
         />,
       );
 
-      const menuButton = within(container).getByLabelText('메뉴 열기');
+      const menuButton = within(container).getByLabelText('Open menu');
       fireEvent.click(menuButton);
-      const menuLink = within(container).getByRole('link', { name: '작동 방식' });
+      const menuLink = within(container).getByRole('link', { name: 'How it works' });
       expect(within(container).getByRole('navigation', { name: 'Mobile primary' })).toBeTruthy();
 
       menuLink.focus();
@@ -270,24 +271,24 @@ describe('Product components', () => {
       const { container } = render(
         <ProductTopbar
           brand={<a href="/">Bridger</a>}
-          mobileMenuLabel="메뉴 열기"
+          mobileMenuLabel="Open menu"
           mobileActions={
             <>
-              <a href="#how">작동 방식</a>
-              <button type="button">콘솔 열기</button>
-              <a href="#excluded" tabIndex={-1}>탭 제외</a>
+              <a href="#how">How it works</a>
+              <button type="button">Open console</button>
+              <a href="#excluded" tabIndex={-1}>Skipped link</a>
               <div style={{ display: 'none' }}>
-                <a href="#hidden">숨김 링크</a>
+                <a href="#hidden">Hidden link</a>
               </div>
             </>
           }
-          actions={<a href="/console">콘솔 열기</a>}
+          actions={<a href="/console">Open console</a>}
         />,
       );
 
-      const menuButton = within(container).getByLabelText('메뉴 열기');
+      const menuButton = within(container).getByLabelText('Open menu');
       fireEvent.click(menuButton);
-      const finalAction = within(container).getByRole('button', { name: '콘솔 열기' });
+      const finalAction = within(container).getByRole('button', { name: 'Open console' });
 
       finalAction.focus();
       fireEvent.keyDown(document, { key: 'Tab' });
@@ -304,16 +305,16 @@ describe('Product components', () => {
         <>
           <ProductTopbar
             brand={<a href="/">Bridger</a>}
-            mobileMenuCloseLabel="메뉴 닫기"
-            mobileMenuLabel="메뉴 열기"
-            mobileActions={<a href="#how">작동 방식</a>}
-            actions={<a href="/console">콘솔 열기</a>}
+            mobileMenuCloseLabel="Close menu"
+            mobileMenuLabel="Open menu"
+            mobileActions={<a href="#how">How it works</a>}
+            actions={<a href="/console">Open console</a>}
           />
-          <main>페이지 본문</main>
+          <main>Page body</main>
         </>,
       );
 
-      const menuButton = within(container).getByLabelText('메뉴 열기');
+      const menuButton = within(container).getByLabelText('Open menu');
       const main = within(container).getByRole('main');
       fireEvent.click(menuButton);
 
@@ -343,18 +344,18 @@ describe('Product components', () => {
       const { container, unmount } = render(
         <ProductTopbar
           brand={<a href="/">Bridger</a>}
-          mobileMenuLabel="메뉴 열기"
-          mobileActions={<a href="#how">작동 방식</a>}
-          actions={<a href="/console">콘솔 열기</a>}
+          mobileMenuLabel="Open menu"
+          mobileActions={<a href="#how">How it works</a>}
+          actions={<a href="/console">Open console</a>}
         />,
       );
 
-      const menuButton = within(container).getByLabelText('메뉴 열기');
+      const menuButton = within(container).getByLabelText('Open menu');
       fireEvent.click(menuButton);
       expect(document.body.style.overflow).toBe('hidden');
       expect(document.body.style.overscrollBehavior).toBe('none');
 
-      fireEvent.click(within(container).getByRole('link', { name: '작동 방식' }));
+      fireEvent.click(within(container).getByRole('link', { name: 'How it works' }));
       expect(document.body.style.overflow).toBe('auto');
       expect(document.body.style.overscrollBehavior).toBe('contain');
 
@@ -367,9 +368,9 @@ describe('Product components', () => {
       const { container } = render(
         <ProductPageHeader
           eyebrow="API"
-          title="연결 설정"
-          description="운영 화면에서 사용할 엔드포인트를 관리합니다."
-          actions={<button type="button">저장</button>}
+          title="Connection settings"
+          description="Manage the endpoints used on the console."
+          actions={<button type="button">Save</button>}
         />,
       );
 
@@ -378,15 +379,15 @@ describe('Product components', () => {
       if (!(header instanceof HTMLElement)) {
         throw new TypeError('ProductPageHeader root missing');
       }
-      expect(within(header).getByRole('heading', { name: '연결 설정' })).toBeTruthy();
+      expect(within(header).getByRole('heading', { name: 'Connection settings' })).toBeTruthy();
       expect(within(header).getByText('API')).toBeTruthy();
-      expect(screen.getByRole('button', { name: '저장' })).toBeTruthy();
+      expect(screen.getByRole('button', { name: 'Save' })).toBeTruthy();
     });
   });
 
   describe('SectionCard', () => {
     it('accepts optional headers and content class names', () => {
-      expect(SectionCard({ contentClassName: 'body', children: '내용' })).toMatchObject({
+      expect(SectionCard({ contentClassName: 'body', children: 'Content' })).toMatchObject({
         props: expect.objectContaining({ children: expect.any(Array) }),
       });
     });

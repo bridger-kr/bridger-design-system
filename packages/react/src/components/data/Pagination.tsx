@@ -1,4 +1,5 @@
 import type { CSSProperties, HTMLAttributes } from 'react';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 type PageItem = number | '…';
 
@@ -6,11 +7,16 @@ export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onCh
   page?: number;
   pageCount?: number;
   onChange?: (page: number) => void;
+  /** Accessible names; default to the ambient locale. */
+  navLabel?: string;
+  previousLabel?: string;
+  nextLabel?: string;
   style?: CSSProperties;
 }
 
 /** Pagination — prev/next plus compact page numbers with an ellipsis. */
-export function Pagination({ page = 1, pageCount = 1, onChange, style, ...rest }: PaginationProps) {
+export function Pagination({ page = 1, pageCount = 1, onChange, navLabel, previousLabel, nextLabel, style, ...rest }: PaginationProps) {
+  const messages = useDSMessages();
   const go = (targetPage: number) => { if (targetPage >= 1 && targetPage <= pageCount && targetPage !== page) onChange?.(targetPage); };
   const pages: PageItem[] = [];
   const add = (targetPage: PageItem) => pages.push(targetPage);
@@ -33,14 +39,14 @@ export function Pagination({ page = 1, pageCount = 1, onChange, style, ...rest }
   const arrow = (disabled: boolean): CSSProperties => ({ ...cell(false), opacity: disabled ? 0.4 : 1, cursor: disabled ? 'not-allowed' : 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' });
 
   return (
-    <nav {...rest} style={{ display: 'inline-flex', alignItems: 'center', gap: 2, ...style }} aria-label="페이지">
-      <button style={arrow(page <= 1)} onClick={() => go(page - 1)} disabled={page <= 1} aria-label="이전">
+    <nav {...rest} style={{ display: 'inline-flex', alignItems: 'center', gap: 2, ...style }} aria-label={navLabel ?? messages.pagination.nav}>
+      <button style={arrow(page <= 1)} onClick={() => go(page - 1)} disabled={page <= 1} aria-label={previousLabel ?? messages.pagination.previous}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
       {pages.map((pageItem, index) => pageItem === '…'
         ? <span key={`e${index}`} style={{ minWidth: 22, textAlign: 'center', color: 'var(--dt-muted)' }}>…</span>
         : <button key={pageItem} style={cell(pageItem === page)} onClick={() => go(pageItem)} aria-current={pageItem === page ? 'page' : undefined}>{pageItem}</button>)}
-      <button style={arrow(page >= pageCount)} onClick={() => go(page + 1)} disabled={page >= pageCount} aria-label="다음">
+      <button style={arrow(page >= pageCount)} onClick={() => go(page + 1)} disabled={page >= pageCount} aria-label={nextLabel ?? messages.pagination.next}>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
     </nav>

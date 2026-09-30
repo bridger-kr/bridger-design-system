@@ -1,5 +1,6 @@
 import type { ChangeEvent, CSSProperties, HTMLAttributes, KeyboardEvent, MouseEvent as ReactMouseEvent, ReactNode } from 'react';
 import { useState, useEffect } from 'react';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface CommandItem {
   label: string;
@@ -20,11 +21,15 @@ export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>
   onQueryChange?: (q: string) => void;
   groups?: CommandGroup[];
   footerHint?: string;
+  placeholder?: string;
   onSelect?: (item: CommandItem) => void;
   style?: CSSProperties;
 }
 
-export function CommandPalette({ open = true, query = '', onQueryChange, groups = [], footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기', onSelect, style, ...rest }: CommandPaletteProps) {
+export function CommandPalette({ open = true, query = '', onQueryChange, groups = [], footerHint, placeholder, onSelect, style, ...rest }: CommandPaletteProps) {
+  const messages = useDSMessages();
+  const resolvedFooterHint = footerHint ?? messages.commandPalette.footerHint;
+  const resolvedPlaceholder = placeholder ?? messages.commandPalette.placeholder;
   const [activeIndex, setActiveIndex] = useState([0, 0]);
   const [isOpen, setIsOpen] = useState(open);
 
@@ -86,7 +91,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
         </svg>
         <input
           autoFocus value={query} onChange={(e: ChangeEvent<HTMLInputElement>) => onQueryChange?.(e.target.value)}
-          placeholder="도구 · 액션 검색…"
+          placeholder={resolvedPlaceholder}
           style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 15, fontFamily: 'inherit', color: 'var(--dt-ink-strong)' }}
         />
         <kbd style={{
@@ -133,8 +138,8 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
         ))}
       </div>
 
-      {footerHint ? (
-        <div style={{ borderTop: '1px solid var(--dt-border)', padding: '8px 14px', fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>{footerHint}</div>
+      {resolvedFooterHint ? (
+        <div style={{ borderTop: '1px solid var(--dt-border)', padding: '8px 14px', fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>{resolvedFooterHint}</div>
       ) : null}
     </div>
   );

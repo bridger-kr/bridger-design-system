@@ -2,6 +2,7 @@
 import { fireEvent, render } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { DS_MESSAGES_KO } from '../../locale/messages';
 import {
   Checkbox,
   Combobox,
@@ -32,14 +33,14 @@ describe('forms exports', () => {
   });
 
   it('exposes Select trigger hooks for hover and focus polish', () => {
-    const select = Select({ options: ['서울'], placeholder: '선택' });
+    const select = Select({ options: ['Seoul'], placeholder: 'Select' });
     const trigger = select.props.children[1].props.children[0].props.children[0];
 
     expect(trigger.props.className).toContain('dt-select-trigger');
   });
 
   it('uses the popover layer token without injecting Select styles', () => {
-    const { container } = render(<Select options={['서울']} placeholder="선택" />);
+    const { container } = render(<Select options={['Seoul']} placeholder="Select" />);
     const trigger = container.querySelector('button');
 
     expect(trigger).not.toBeNull();
@@ -52,7 +53,7 @@ describe('forms exports', () => {
 
   it('uses the popover layer token without injecting Combobox styles', () => {
     const { container } = render(
-      <Combobox label="지역" options={[{ value: 'seoul', label: '서울' }]} />,
+      <Combobox label="Region" options={[{ value: 'seoul', label: 'Seoul' }]} />,
     );
     const input = container.querySelector('input');
 
@@ -67,9 +68,9 @@ describe('forms exports', () => {
   it('exposes stylesheet hooks for checked form control states', () => {
     const { container } = render(
       <>
-        <Checkbox label="동의" defaultChecked />
-        <RadioGroup options={['서울']} defaultValue="서울" />
-        <Switch label="활성" defaultChecked />
+        <Checkbox label="Agree" defaultChecked />
+        <RadioGroup options={['Seoul']} defaultValue="Seoul" />
+        <Switch label="Enabled" defaultChecked />
       </>,
     );
 
@@ -85,12 +86,14 @@ describe('forms exports', () => {
     expect(container.querySelector('label[for="spec"]')?.className).toContain('dt-file-upload-dropzone');
 
     rerender(<FileUpload id="spec" file={{ name: 'openapi.yaml' }} />);
-    expect(container.querySelector('button[aria-label="제거"]')?.className).toContain('dt-file-upload-remove');
+    expect(
+      container.querySelector(`button[aria-label="${DS_MESSAGES_KO.fileUpload.remove}"]`)?.className,
+    ).toContain('dt-file-upload-remove');
   });
 });
 
 describe('ThemeSwitch', () => {
-  const labels = { group: '테마', system: '시스템', light: '라이트', dark: '다크' };
+  const labels = { group: 'Theme', system: 'System', light: 'Light', dark: 'Dark' };
 
   const stubSystemTheme = (light: boolean) => {
     vi.stubGlobal(
@@ -124,7 +127,7 @@ describe('ThemeSwitch', () => {
     const { container } = render(<ThemeSwitch labels={labels} />);
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
+    expect(container.querySelector('button[aria-label="System"]')?.getAttribute('aria-pressed')).toBe('true');
     expect(window.localStorage.getItem('bridger-theme')).toBeNull();
   });
 
@@ -140,14 +143,14 @@ describe('ThemeSwitch', () => {
     stubSystemTheme(true);
     const { container, getByRole } = render(<ThemeSwitch labels={labels} />);
 
-    fireEvent.click(getByRole('button', { name: '다크' }));
+    fireEvent.click(getByRole('button', { name: 'Dark' }));
     expect(window.localStorage.getItem('bridger-theme')).toBe('dark');
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
 
-    fireEvent.click(getByRole('button', { name: '시스템' }));
+    fireEvent.click(getByRole('button', { name: 'System' }));
     expect(window.localStorage.getItem('bridger-theme')).toBeNull();
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
-    expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
+    expect(container.querySelector('button[aria-label="System"]')?.getAttribute('aria-pressed')).toBe('true');
   });
 
   it('keeps the group semantics and option order stable', () => {
@@ -155,8 +158,8 @@ describe('ThemeSwitch', () => {
     const { container } = render(<ThemeSwitch labels={labels} />);
 
     const group = container.querySelector('[role="group"]');
-    expect(group?.getAttribute('aria-label')).toBe('테마');
+    expect(group?.getAttribute('aria-label')).toBe('Theme');
     const options = [...(group?.querySelectorAll('button') ?? [])].map((b) => b.getAttribute('aria-label'));
-    expect(options).toEqual(['시스템', '라이트', '다크']);
+    expect(options).toEqual(['System', 'Light', 'Dark']);
   });
 });

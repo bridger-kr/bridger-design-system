@@ -1,5 +1,6 @@
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export const AlertTone = {
   Info: 'info',
@@ -33,6 +34,8 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'
   action?: ReactNode;
   motion?: AlertMotion;
   onDismiss?: () => void;
+  /** Accessible name for the dismiss button; defaults to the ambient locale. */
+  closeLabel?: string;
   style?: CSSProperties;
 }
 
@@ -44,10 +47,12 @@ export function Alert({
   action,
   motion = AlertMotion.None,
   onDismiss,
+  closeLabel,
   className,
   style,
   ...rest
 }: AlertProps) {
+  const messages = useDSMessages();
   const background = TONE_BACKGROUND[tone] ?? TONE_BACKGROUND[AlertTone.Info];
   const motionClass = motion === AlertMotion.None ? undefined : `dt-alert-motion-${motion}`;
   return (
@@ -77,7 +82,7 @@ export function Alert({
         {action ? <div style={{ marginTop: 10 }}>{action}</div> : null}
       </div>
       {onDismiss ? (
-        <button className="dt-close-control" onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
+        <button className="dt-close-control" onClick={onDismiss} aria-label={closeLabel ?? messages.common.close} style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
         </button>
       ) : null}

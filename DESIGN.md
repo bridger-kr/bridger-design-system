@@ -240,12 +240,14 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **61 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **62 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper, locale plumbing, and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
 - `ToggleSwitch` is a legacy alias of `Switch` and resolves to the same component.
 - `cx` is a class-name helper re-exported from the package root.
+- `DSLocaleProvider` + `useDSMessages` supply the `ko`/`en` message dictionaries (`DS_MESSAGES_KO`, `DS_MESSAGES_EN`) that back every localized default in the package.
+- `ToastProvider` hosts the toast queue and `useToast` exposes it to callers; the counted primitive remains `Toast`.
 - Token enums: `CardTone`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `AlertMotion`, `CODE_PANE_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
 - Class-name helpers: `metricAccentColor`, `actionListClassName`, `actionListItemClassName`, `productActionPillClassName`.
 - Companion types only (no runtime export): `BrandLogoHandle`, `BrandLogoLanguage`, `BrandLogoSize`, and the per-component `*Props` / option types in each file.
@@ -259,12 +261,12 @@ Deprecation note: several v1 product-family exports exist only to render decorat
 | Family | Count | Components |
 | --- | --- | --- |
 | core | 10 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Input`, `Panel`, `Section`, `StatusPill`, `Tabs` |
-| forms | 9 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
-| feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
+| forms | 10 | `Checkbox`, `Combobox`, `Field`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
+| feedback | 9 | `Alert`, `ConfirmDialog`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast` (+ `ToastProvider`, `useToast`), `Tooltip` |
 | data | 10 | `Avatar`, `CodeBlock`, `CodePane`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
 | navigation | 5 | `Breadcrumb`, `CommandPalette`, `Menu`, `Sidebar`, `Stepper` |
 | product | 18 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductActionPill`, `ProductShell` (+ `ProductMotionField`, `ProductSideRail`, decorative hero backdrop), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard`, `WindowChrome` (+ `WindowFrame`) |
-| **Total** | **60** | |
+| **Total** | **62** | |
 
 ### 9.2 Core family
 
@@ -290,6 +292,7 @@ Each form control owns its label, hint, error message, and focus ring. Disabled 
 | Component | Anatomy | Variant axes | Notes |
 | --- | --- | --- | --- |
 | `Checkbox` | box + label, indeterminate state | checked, indeterminate, disabled | Native semantics, custom paint only on top. |
+| `Field` | label + control + hint/error | required, invalid, disabled | Wraps any control; links hint/error through `aria-describedby` and marks invalid controls with `aria-invalid`. |
 | `RadioGroup` | labelled group of radios | orientation, error | Arrow-key navigation across the group. |
 | `Switch` | track + thumb + label | checked, disabled, loading | `ToggleSwitch` is the legacy alias. |
 | `Select` | trigger + menu | size, error, placeholder | Single-select with search affordance on long lists. |
@@ -307,8 +310,9 @@ Layered on the shared z-index stack. Motion collapses to an instant state change
 | Component | Anatomy | Variant axes | Notes |
 | --- | --- | --- | --- |
 | `Alert` | icon + title + body + optional action | tone (`info`, `success`, `warning`, `danger`), motion (`fade`, `slide`) | Status color paired with icon and label, never color-only. Motion stays inside 120–180ms. |
-| `Toast` | icon + title + message + optional action | tone (`info`, `success`, `warning`, `danger`) | Stack at `--dt-z-index-toast`. |
+| `Toast` | icon + title + message + optional action | tone (`info`, `success`, `warning`, `danger`) | Stack at `--dt-z-index-toast`. `ToastProvider` + `useToast` supply the queue, 5s default timeout, and `aria-live` viewport. |
 | `Dialog` | modal frame with title, body, footer | width, destructive flag | Focus trap, escape closes, focus returns to trigger. Flat translucent scrim. |
+| `ConfirmDialog` | title + named target + impact copy + confirm/cancel | danger confirm | Destructive confirmation; names the target and states the impact in the body. |
 | `Drawer` | side sheet, scrim, optional footer | side (`left`, `right`), width | Flat translucent scrim; no backdrop blur. |
 | `Tooltip` | label popover | position (`top`, `right`, `bottom`, `left`) | Supplements a visible label; not the only label. |
 | `EmptyState` | icon + title + description + action | tone | Calm copy; pairs a condition with a next action. Left-aligned. |
@@ -388,7 +392,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | --- | --- | --- |
 | `packages/tokens/css/contract.css` | Canonical CSS custom-property token contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/css/contract.css` |
 | `packages/tokens/src/index.ts` | Frozen TS token objects mirrored from the contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/src/index.ts` |
-| `packages/react/src/index.ts` | Public React barrel (60 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
+| `packages/react/src/index.ts` | Public React barrel (62 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
 | `DESIGN.md` (this file) | Brand and component canon | `https://github.com/bridger-kr/bridger-design-system/blob/main/DESIGN.md` |
 | `bridger-web` consuming repo | App integration, mirror checks | `https://github.com/bridger-kr/bridger-web/blob/main/README.md` |
 | Figma component library | Brand assets and Component Sets | Figma file `DXAVhKo8uCGJ4HSQYAq9dY` |
@@ -537,7 +541,7 @@ This checklist is the explicit, reproducible record for each release. Every row 
 | Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable |
 | Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Not applicable |
 | Layering | Focus trap | Tab inside an open dialog and confirm focus does not escape | Not applicable |
-| Component contract | 60-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
+| Component contract | 62-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
 | Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Not applicable |
 
 This table is reset to `Not applicable` between releases and filled in per release. A row is `Not applicable` only when the release does not touch that dimension; rows covering touched surfaces must become `Captured` with a linked artifact path or the command that produced the evidence.
