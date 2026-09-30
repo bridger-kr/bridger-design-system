@@ -240,19 +240,17 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **61 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **56 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
 - `ToggleSwitch` is a legacy alias of `Switch` and resolves to the same component.
 - `cx` is a class-name helper re-exported from the package root.
-- Token enums: `CardTone`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `AlertMotion`, `CODE_PANE_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
-- Class-name helpers: `metricAccentColor`, `actionListClassName`, `actionListItemClassName`, `productActionPillClassName`.
+- Token enums: `CardTone`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `AlertMotion`, `CODE_PANE_TONE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
+- Class-name helpers: `metricAccentColor`, `actionListClassName`, `actionListItemClassName`.
 - Companion types only (no runtime export): `BrandLogoHandle`, `BrandLogoLanguage`, `BrandLogoSize`, and the per-component `*Props` / option types in each file.
 
 Naming note: `Panel` is the React component exported from `packages/react/src/components/core/Surface.tsx`; the file name is a vestige and will be renamed to match the export. Consumers should import `Panel`.
-
-Deprecation note: several v1 product-family exports exist only to render decoration that v2 prohibits — a decorative hero backdrop, an interactive motion layer, fake window chrome, and a decorative `ProductShell` tone. They remain exported and counted until the removal PR lands (Section 12); do not use them in new code.
 
 ### 9.1 Family overview
 
@@ -263,8 +261,8 @@ Deprecation note: several v1 product-family exports exist only to render decorat
 | feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
 | data | 10 | `Avatar`, `CodeBlock`, `CodePane`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
 | navigation | 5 | `Breadcrumb`, `CommandPalette`, `Menu`, `Sidebar`, `Stepper` |
-| product | 18 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductActionPill`, `ProductShell` (+ `ProductMotionField`, `ProductSideRail`, decorative hero backdrop), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard`, `WindowChrome` (+ `WindowFrame`) |
-| **Total** | **60** | |
+| product | 13 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductShell` (+ `ProductSideRail`), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard` |
+| **Total** | **55** | |
 
 ### 9.2 Core family
 
@@ -355,19 +353,14 @@ Brand and marketing composites. These are the landing-side primitives that depen
 | `ToolCard` | tool surface with title, description, status | tone, status | Console tool list and onboarding cards. |
 | `ActionList` | numbered, clickable guide list with optional `ActionListIndex` | interactive, density | Guide-first console workflows. |
 | `ActionListIndex` | numbered marker rendered inside `ActionList` | size | Companion to `ActionList`. |
-| `AnnotationHotspot` | positioned dot + label + popover | x/y position | Annotated product proof. |
+| `AnnotationHotspot` | positioned marker + label | x/y position | Annotated product proof. Static marker; no ambient motion. |
 | `ChatBubble` | chat role bubble | role (`user`, `assistant`, `system`) | Compose-on-bubble used in landing proof. |
 | `SearchPill` | search input rendered as a pill | size, tone | Topbar search. |
-| `ProductActionPill` | pill-shaped call to action | size (`sm`, `md`, `lg`), variant (`primary`, `secondary`, `ghost`) | Product page CTAs. |
 | `ProductPageHeader` | page hero with title and supporting copy | tone | Landing sub-page hero; left-aligned, flat. |
-| `ProductShell` | composed shell with side rail, topbar, main | tone (`flat`) | Landing composition host. The decorative tone is deprecated pending removal. |
+| `ProductShell` | flat composition panel with side rail, topbar, main | — | Landing composition host. |
 | `ProductSideRail` | persistent rail of items | items | Used inside `ProductShell`. |
-| Decorative hero backdrop | masked radial wash | tone | **Deprecated.** Decoration-only; removal scheduled (Section 12). |
-| `ProductMotionField` | interactive motion layer | tone | **Deprecated.** Decoration-only; removal scheduled (Section 12). |
 | `ProductTopbar` | landing topbar with optional menu | tone | Hosts `ProductTopbarMenu`. Solid surface, no translucency. |
 | `ProductTopbarMenu` | menu drawer anchored to `ProductTopbar` | tone | Mobile drawer behaviour. |
-| `WindowChrome` | fake window wrapper | trailing slot | **Deprecated.** Fake chrome is prohibited; removal scheduled (Section 12). |
-| `WindowFrame` | window-shaped content frame | tone | **Deprecated.** Fake chrome is prohibited; removal scheduled (Section 12). |
 
 ### 9.8 Shared component requirements
 
@@ -388,7 +381,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | --- | --- | --- |
 | `packages/tokens/css/contract.css` | Canonical CSS custom-property token contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/css/contract.css` |
 | `packages/tokens/src/index.ts` | Frozen TS token objects mirrored from the contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/src/index.ts` |
-| `packages/react/src/index.ts` | Public React barrel (60 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
+| `packages/react/src/index.ts` | Public React barrel (55 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
 | `DESIGN.md` (this file) | Brand and component canon | `https://github.com/bridger-kr/bridger-design-system/blob/main/DESIGN.md` |
 | `bridger-web` consuming repo | App integration, mirror checks | `https://github.com/bridger-kr/bridger-web/blob/main/README.md` |
 | Figma component library | Brand assets and Component Sets | Figma file `DXAVhKo8uCGJ4HSQYAq9dY` |
@@ -461,7 +454,6 @@ Current accepted debt (tracked until exit conditions are met):
 | Item | Trade-off | Why it exists | Surface | Exit condition |
 | --- | --- | --- | --- | --- |
 | Contract values predate v2 | `packages/tokens/css/contract.css` and its app mirrors still carry warm-leaning neutrals, radius values `6/10/14`, motion durations `200/280/600ms`, decorative radial-wash and `*-gradient` tokens, layered decorative elevation tokens, translucency/blur tokens, long-duration loop-motion tokens, eyebrow type tokens, and display tracking tokens that v2 prohibits. | Retargeting the contract is a breaking token change that must land together with the `landing/` and `dashboard/` mirrors and `npm run check:tokens`; a doc-only PR cannot flip them safely. | tokens | A dedicated token PR retargets the contract to chroma-0 neutrals, radius `4/6/8`, motion `120–180ms`, and deletes every prohibited decorative token, then updates the app mirrors and passes `check:tokens`. |
-| Deprecated product exports remain public | The product barrel still exports a decorative hero backdrop component, `ProductMotionField`, `WindowChrome`, `WindowFrame`, and a decorative `ProductShell` tone — all decoration-only under v2. | Removing public exports is a breaking change that needs a major release and consumer migration in `landing/` and `dashboard/`. | product | The removal PR deletes the exports and their `dist/` entries, migrates consumers, and ships under a major version. |
 | `Panel` is exported from `packages/react/src/components/core/Surface.tsx` | The file name (`Surface.tsx`) does not match the exported component (`Panel`), which makes the import path less self-explanatory than other core primitives. | Vestige from an earlier consolidation; renaming requires touching every consumer in `landing/` and `dashboard/` simultaneously to avoid a broken window. | core | Rename the file to `Panel.tsx` and migrate consumers in a single batched change. The barrel and the type aliases keep the public API stable. |
 | `ToggleSwitch` is a public alias of `Switch` | Two names describe the same component, increasing the surface area for documentation and code search. | Existing dashboards and one earlier product import path used `ToggleSwitch`; keeping the alias avoids a breaking change before the major surface migration completes. | forms | Once `ToggleSwitch` callers are migrated, mark the export `@deprecated` for one minor cycle, then remove in a subsequent major. |
 
@@ -537,7 +529,7 @@ This checklist is the explicit, reproducible record for each release. Every row 
 | Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable |
 | Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Not applicable |
 | Layering | Focus trap | Tab inside an open dialog and confirm focus does not escape | Not applicable |
-| Component contract | 60-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
+| Component contract | 55-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
 | Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Not applicable |
 
 This table is reset to `Not applicable` between releases and filled in per release. A row is `Not applicable` only when the release does not touch that dimension; rows covering touched surfaces must become `Captured` with a linked artifact path or the command that produced the evidence.

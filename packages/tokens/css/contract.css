@@ -85,9 +85,6 @@
   --dt-tint-ink-07: color-mix(in srgb, var(--dt-ink) 7%, transparent);
 
   --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
-  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised));
-  --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
-  --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
   --dt-chrome-divider: color-mix(in srgb, var(--dt-ink) 9%, transparent);
 
   --dt-space-1: 4px;
@@ -295,9 +292,6 @@
   --dt-tint-ink-07: color-mix(in srgb, var(--dt-ink) 7%, transparent);
 
   --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
-  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised));
-  --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
-  --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
   --dt-chrome-divider: color-mix(in srgb, var(--dt-ink) 9%, transparent);
 
   --dt-space-1: 4px;

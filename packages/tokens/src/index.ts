@@ -55,9 +55,6 @@ const lightColors = freeze({
   tintInk05: 'color-mix(in srgb, var(--dt-ink) 5%, transparent)',
   tintInk07: 'color-mix(in srgb, var(--dt-ink) 7%, transparent)',
   chromeBar: 'color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken))',
-  chromeDot1: 'color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised))',
-  chromeDot2: 'color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised))',
-  chromeDot3: 'color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised))',
   chromeDivider: 'color-mix(in srgb, var(--dt-ink) 9%, transparent)',
 } as const);
 
@@ -115,9 +112,6 @@ const darkColors = freeze({
   tintInk05: 'color-mix(in srgb, var(--dt-ink) 5%, transparent)',
   tintInk07: 'color-mix(in srgb, var(--dt-ink) 7%, transparent)',
   chromeBar: 'color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken))',
-  chromeDot1: 'color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised))',
-  chromeDot2: 'color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised))',
-  chromeDot3: 'color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised))',
   chromeDivider: 'color-mix(in srgb, var(--dt-ink) 9%, transparent)',
 } as const);
 
@@ -391,9 +385,6 @@ export const cssVarName = freeze({
     tintInk05: '--dt-tint-ink-05',
     tintInk07: '--dt-tint-ink-07',
     chromeBar: '--dt-chrome-bar',
-    chromeDot1: '--dt-chrome-dot-1',
-    chromeDot2: '--dt-chrome-dot-2',
-    chromeDot3: '--dt-chrome-dot-3',
     chromeDivider: '--dt-chrome-divider',
   } as const),
   spacing: freeze({
