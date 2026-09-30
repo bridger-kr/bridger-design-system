@@ -45,7 +45,7 @@ export function Drawer({ open = false, side = 'right', title, children, footer, 
             }}
           >
             <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 18px', borderBottom: '1px solid var(--dt-border)' }}>
-              {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }} />}>{title}</BaseDialog.Title> : null}
+              {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }} />}>{title}</BaseDialog.Title> : null}
               <BaseDialog.Close
                 aria-label="닫기"
                 className="dt-close-control"

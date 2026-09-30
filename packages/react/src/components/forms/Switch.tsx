@@ -59,8 +59,6 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
           width: 38,
           height: 22,
           borderRadius: 9999,
-          background: 'var(--dt-border-strong)',
-          transition: 'background-color var(--dt-motion-fast)',
         }}
       />
       <BaseSwitch.Thumb
@@ -71,8 +69,6 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
           height: 18,
           marginLeft: 3,
           borderRadius: 9999,
-          background: 'var(--dt-surface)',
-          transition: 'transform var(--dt-motion-fast)',
         }}
       />
     </BaseSwitch.Root>

@@ -112,7 +112,7 @@ export function Table<Row extends TableRow = TableRow>({
         overflowX: 'auto',
         borderRadius: 'var(--dt-radius-lg)',
         background: 'var(--dt-surface)',
-        boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+        boxShadow: 'var(--dt-ring)',
         ...style,
       }}
     >
@@ -126,7 +126,7 @@ export function Table<Row extends TableRow = TableRow>({
                   textAlign: column.align || 'left',
                   padding: '11px 18px',
                   fontFamily: 'var(--dt-font-mono)',
-                  fontSize: 11,
+                  fontSize: 'var(--dt-caption-size)',
                   fontWeight: 600,
                   letterSpacing: '0.04em',
                   textTransform: 'uppercase',

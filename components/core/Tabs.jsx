@@ -52,7 +52,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, style }) {
             {tab.icon ? <span aria-hidden="true" style={{ display: 'inline-flex' }}>{tab.icon}</span> : null}
             {tab.label}
             {tab.count != null ? (
-              <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>
+              <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', color: 'var(--dt-muted)' }}>
                 {tab.count}
               </span>
             ) : null}

@@ -57,7 +57,7 @@ export function Alert({
       style={{
         alignItems: 'flex-start',
         background,
-        borderRadius: '20px',
+        borderRadius: 'var(--dt-radius-card)',
         color: 'var(--dt-ink-strong)',
         display: 'flex',
         gap: 12,

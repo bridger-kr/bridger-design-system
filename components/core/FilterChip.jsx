@@ -25,7 +25,7 @@ export function FilterChip({ label, count, active = false, removable = false, on
       {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent)' : 'var(--dt-muted)' }} aria-hidden="true">{icon}</span> : null}
       <span>{label}</span>
       {count != null ? (
-        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: active ? 'var(--dt-accent)' : 'var(--dt-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
+        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-caption-size)', fontWeight: 600, color: active ? 'var(--dt-accent)' : 'var(--dt-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
       ) : null}
       {removable ? (
         <span

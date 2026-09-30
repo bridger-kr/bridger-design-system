@@ -879,7 +879,7 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
   return ReactDOM.createPortal(
     <div onClick={() => ctx.setFocus(null)}
       onWheel={(e) => e.preventDefault()}
-      style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(24,20,16,.6)', backdropFilter: 'blur(14px)',
+      style={{ position: 'fixed', inset: 0, zIndex: 100, background: 'rgba(24,20,16,.6)',
         fontFamily: DC.font, color: '#fff' }}>
 
       {/* top bar: section dropdown (left) · close (right) */}

@@ -140,18 +140,18 @@ export const spacing = freeze({
 } as const);
 
 export const radius = freeze({
-  chip: '6px',
-  control: '10px',
-  card: '14px',
+  chip: '4px',
+  control: '6px',
+  card: '8px',
   pill: '9999px',
   sm: '6px',
   inner: '6px',
-  element: '10px',
-  container: '14px',
-  md: '12px',
-  lg: '14px',
-  xl: '14px',
-  'button': '10px',
+  element: '6px',
+  container: '8px',
+  md: '8px',
+  lg: '8px',
+  xl: '8px',
+  'button': '6px',
   full: '9999px',
 } as const);
 
@@ -311,9 +311,9 @@ const letterSpacing = freeze({
 } as const);
 
 const eyebrow = freeze({
-  size: '11px',
+  size: '12px',
   tracking: '0.18em',
-  weight: 700,
+  weight: 600,
 } as const);
 
 const fontFeatures = freeze({

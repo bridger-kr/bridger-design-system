@@ -19,7 +19,7 @@ export function Avatar({ name = '', src, size = 'md', status, square = true, sty
         <span style={{
           width: px, height: px, borderRadius: radius, display: 'grid', placeItems: 'center',
           background: 'var(--dt-tint-accent)', color: 'var(--dt-accent)',
-          fontSize: px * 0.38, fontWeight: 700, letterSpacing: '-0.02em',
+          fontSize: px * 0.38, fontWeight: 600, letterSpacing: '-0.02em',
         }}>{initials}</span>
       )}
       {statusColor ? (

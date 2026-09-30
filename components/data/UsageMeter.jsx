@@ -13,8 +13,8 @@ export function UsageMeter({ label, value = 0, max = 100, unit = '', hint, style
     <div style={{ display: 'grid', gap: 8, ...style }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
         {label ? <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>{label}</span> : <span />}
-        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12.5, color: 'var(--dt-ink-strong)', fontVariantNumeric: 'tabular-nums' }}>
-          <b style={{ fontWeight: 700 }}>{value.toLocaleString()}</b>
+        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 'var(--dt-mono-size)', color: 'var(--dt-ink-strong)', fontVariantNumeric: 'tabular-nums' }}>
+          <b style={{ fontWeight: 600 }}>{value.toLocaleString()}</b>
           <span style={{ color: 'var(--dt-muted)' }}> / {max.toLocaleString()}{unit}</span>
         </span>
       </div>

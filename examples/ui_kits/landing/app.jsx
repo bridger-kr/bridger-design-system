@@ -43,7 +43,7 @@ function Navbar({ theme, onTheme, locale, onLocale }) {
           {links.map((l) => <a key={l} className="nav-link" href="#">{l}</a>)}
         </nav>
         <div className="nav-actions">
-          <button className="icon-btn" style={{ width: 'auto', padding: '0 12px', fontSize: 12, fontWeight: 700, fontFamily: 'var(--dt-font-mono)' }}
+          <button className="icon-btn" style={{ width: 'auto', padding: '0 12px', fontSize: 12, fontWeight: 600, fontFamily: 'var(--dt-font-mono)' }}
             onClick={onLocale} aria-label="언어 전환">{locale === 'ko' ? 'EN' : '한'}</button>
           <ThemeToggle theme={theme} onToggle={onTheme} />
           <a className="btn-primary" href="#" style={{ padding: '10px 16px' }}>
@@ -59,7 +59,7 @@ function Navbar({ theme, onTheme, locale, onLocale }) {
 /* ── Brand wordmark (mark-only, persimmon period) ── */
 function BrandMark({ size = 22 }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 780, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-ink-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
+    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 600, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-ink-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
       Bridger<span style={{ color: 'var(--dt-accent)' }}>.</span>
     </span>
   );
@@ -71,16 +71,10 @@ const HERO_WORDS_EN = ['into one', 'to Claude', 'over REST', 'through MCP'];
 
 function Hero({ locale }) {
   const words = locale === 'ko' ? HERO_WORDS_KO : HERO_WORDS_EN;
-  const [wi, setWi] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setWi((i) => (i + 1) % words.length), 2600);
-    return () => clearInterval(id);
-  }, [words.length]);
+  const wi = 0;
   return (
     <section className="hero">
       <div className="hero-backdrop">
-        <div className="hero-wash" />
-        <div className="hero-dots" />
         <svg className="hero-lines" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
           <path className="track" d="M-40 250 H560 C700 250 720 170 880 170 H1500" />
           <path className="track" d="M-40 430 H520 C660 430 690 540 860 540 H1500" />

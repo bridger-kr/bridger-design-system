@@ -49,8 +49,8 @@
   border-radius: var(--dt-radius-sm);
   background: var(--dt-surface-sunken);
   color: var(--dt-muted-strong);
-  font-size: 11px;
-  font-weight: 700;
+  font-size: var(--dt-caption-size);
+  font-weight: 600;
 }
 
 .dt-input-control::placeholder {
@@ -64,14 +64,8 @@
   opacity: 0.55;
 }
 
-.dt-select-trigger:hover:not([data-disabled]) {
-  border-color: var(--dt-border-strong) !important;
-  background: var(--dt-surface);
-}
-
-.dt-select-trigger:focus-visible {
-  border-color: var(--dt-accent) !important;
-}
+/* Select borders/hover/focus come from the shared `.dt-field` primitive in
+   @bridger-kr/tokens base.css — no trigger-local overrides needed. */
 
 .dt-select-popup {
   animation: dt-menu var(--dt-motion-fast);
@@ -79,7 +73,7 @@
 
 .dt-select-option[data-highlighted],
 .dt-combobox-option[data-highlighted] {
-  background: var(--dt-surface-sunken) !important;
+  background: var(--dt-surface-sunken);
 }
 
 .dt-close-control {
@@ -90,16 +84,15 @@
 }
 
 .dt-dialog-overlay {
-  animation: dt-fade var(--dt-motion-base);
+  animation: dt-fade var(--dt-motion-fast);
 }
 
 .dt-dialog-popup {
-  animation: dt-pop var(--dt-motion);
+  animation: dt-pop var(--dt-motion-fast);
 }
 
-.dt-status-pulse {
-  animation: dt-status-pulse calc(var(--dt-duration-base) * 8) var(--dt-ease) infinite;
-}
+/* StatusPill dots are static markers (DESIGN.md §4.8: no idle pulses).
+   The .dt-status-pulse class stays as a hook for consumers, without motion. */
 
 .dt-tr {
   transition: background-color var(--dt-motion-fast);
@@ -145,7 +138,7 @@
   color: var(--dt-muted-strong);
   font-family: var(--dt-font-sans);
   font-size: 12px;
-  font-weight: 550;
+  font-weight: 500;
   text-decoration: none;
   cursor: pointer;
   transition:
@@ -165,14 +158,31 @@
   cursor: not-allowed;
 }
 
+/* FilterChip visuals live here (not inline) so state rules win by cascade. */
+.dt-filter-chip {
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-sm);
+  background: var(--dt-surface);
+  color: var(--dt-muted-strong);
+  transition:
+    background-color var(--dt-motion-fast),
+    border-color var(--dt-motion-fast),
+    color var(--dt-motion-fast),
+    transform var(--dt-motion-fast);
+}
+
+.dt-filter-chip-active {
+  border-color: color-mix(in srgb, var(--dt-accent) 40%, transparent);
+  background: var(--dt-tint-accent);
+  color: var(--dt-accent);
+}
+
 .dt-filter-chip:hover {
-  border-color: var(--dt-border-strong) !important;
-  box-shadow: var(--dt-shadow-xs);
-  transform: translateY(-1px);
+  border-color: var(--dt-border-strong);
 }
 
 .dt-filter-chip-active:hover {
-  border-color: var(--dt-accent) !important;
+  border-color: var(--dt-accent);
 }
 
 .dt-filter-chip:active {
@@ -183,7 +193,7 @@
   display: inline-flex;
   align-items: center;
   gap: 2px;
-  border-radius: var(--dt-radius-md);
+  border-radius: var(--dt-radius-sm);
   background: var(--dt-surface-sunken);
   padding: 3px;
 }
@@ -216,7 +226,7 @@
 
 .dt-theme-switch-option[aria-pressed='true'] {
   background: var(--dt-surface);
-  box-shadow: var(--dt-ring), var(--dt-shadow-xs);
+  box-shadow: var(--dt-ring);
   color: var(--dt-ink-strong);
 }
 
@@ -235,8 +245,8 @@
 }
 
 .dt-filter-chip-group .dt-filter-chip {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .dt-filter-chip-remove,
@@ -294,31 +304,44 @@
   color: var(--dt-ink-strong);
 }
 
+/* Dropzone border/background live here so [data-dragging] wins by cascade. */
+.dt-file-upload-dropzone {
+  border: 1.5px dashed var(--dt-border-strong);
+  background: var(--dt-surface-sunken);
+  transition:
+    background-color var(--dt-motion-fast),
+    border-color var(--dt-motion-fast);
+}
+
 .dt-file-upload-dropzone[data-dragging] {
-  border-color: var(--dt-accent) !important;
-  background: var(--dt-tint-accent) !important;
+  border-color: var(--dt-accent);
+  background: var(--dt-tint-accent);
 }
 
 .dt-card-action {
   cursor: pointer;
 }
 
+/* Card tone visuals live here (not inline) so action states win by cascade.
+   Cards are flat bordered planes — no resting or hover shadow (DESIGN.md §4.6). */
 .dt-card {
   border: 1px solid var(--dt-border);
   border-radius: var(--dt-radius-container);
   color: var(--dt-ink);
+  transition:
+    background-color var(--dt-motion-fast),
+    border-color var(--dt-motion-fast),
+    transform var(--dt-motion-fast);
 }
 
 .dt-card-default,
 .dt-card-panel { background: var(--dt-surface); }
 .dt-card-muted { background: var(--dt-surface-sunken); }
-.dt-card-raised { background: var(--dt-surface-raised); box-shadow: var(--dt-card-float); }
+.dt-card-raised { background: var(--dt-surface-raised); border-color: var(--dt-border-strong); }
 
 .dt-card-action:hover:not(:disabled) {
-  border-color: var(--dt-border-strong) !important;
-  background: var(--dt-surface-muted) !important;
-  box-shadow: var(--dt-ring-strong) !important;
-  transform: translateY(-1px);
+  border-color: var(--dt-border-strong);
+  background: var(--dt-surface-muted);
 }
 
 .dt-card-action:active:not(:disabled) {
@@ -360,7 +383,7 @@
   padding: var(--dt-space-1) var(--dt-space-2);
   color: var(--dt-muted);
   font-size: var(--dt-small-size);
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .dt-sidebar-item {
@@ -379,28 +402,76 @@
 }
 
 .dt-sidebar-item:hover { background: var(--dt-surface-muted); color: var(--dt-ink-strong); }
-.dt-sidebar-item-active { background: var(--dt-surface-sunken); color: var(--dt-ink-strong); font-weight: 620; }
+.dt-sidebar-item-active { background: var(--dt-surface-sunken); color: var(--dt-ink-strong); font-weight: 600; }
 .dt-sidebar-item-marker { position: absolute; inset-block: var(--dt-space-2); left: 0; width: 3px; border-radius: var(--dt-radius-full); background: var(--dt-accent); }
 .dt-sidebar-item-icon { display: inline-flex; flex: 0 0 auto; color: var(--dt-muted); }
 .dt-sidebar-item-active .dt-sidebar-item-icon { color: var(--dt-accent-strong); }
 .dt-sidebar-item-label { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.dt-sidebar-item-badge { color: var(--dt-muted); font-family: var(--dt-font-mono); font-size: 11px; font-variant-numeric: tabular-nums; }
+.dt-sidebar-item-badge { color: var(--dt-muted); font-family: var(--dt-font-mono); font-size: var(--dt-caption-size); font-variant-numeric: tabular-nums; }
 .dt-sidebar-footer { border-top: 1px solid var(--dt-border); padding: var(--dt-space-2) var(--dt-space-3); }
 
+/* Tabs: base geometry lives here (not inline) so selected/hover states win by
+   cascade. Underline is the default variant; pill is a flat segmented group. */
+.dt-tabs-list {
+  display: flex;
+  gap: 4px;
+}
+
+.dt-tabs-list-underline {
+  border-bottom: 1px solid var(--dt-border);
+}
+
+.dt-tabs-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border: 0;
+  background: transparent;
+  padding: 10px 12px;
+  color: var(--dt-muted);
+  font-size: var(--dt-small-size);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color var(--dt-motion-fast),
+    border-color var(--dt-motion-fast),
+    background-color var(--dt-motion-fast);
+}
+
+.dt-tabs-tab:hover {
+  color: var(--dt-ink-strong);
+}
+
+.dt-tabs-tab-underline {
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+}
+
 .dt-tabs-tab-underline[aria-selected='true'] {
-  border-bottom-color: var(--dt-accent) !important;
-  color: var(--dt-ink-strong) !important;
+  border-bottom-color: var(--dt-accent);
+  color: var(--dt-ink-strong);
 }
 
 .dt-tabs-tab-pill[aria-selected='true'] {
-  background: var(--dt-surface-raised) !important;
-  box-shadow: var(--dt-ambient-01), var(--dt-shadow-inset-crisp) !important;
-  color: var(--dt-ink-strong) !important;
+  background: var(--dt-surface-raised);
+  box-shadow: var(--dt-ring);
+  color: var(--dt-ink-strong);
+}
+
+/* Form control paint lives here so [data-checked] wins by cascade. */
+.dt-checkbox-box {
+  border: 1.5px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-chip);
+  background: var(--dt-surface);
+  transition:
+    background-color var(--dt-motion-fast),
+    border-color var(--dt-motion-fast);
 }
 
 .dt-checkbox-control[data-checked] .dt-checkbox-box {
-  border-color: var(--dt-accent) !important;
-  background: var(--dt-accent) !important;
+  border-color: var(--dt-accent);
+  background: var(--dt-accent);
 }
 
 .dt-checkbox-control:focus-visible .dt-checkbox-box,
@@ -409,17 +480,34 @@
   box-shadow: var(--dt-shadow-focus);
 }
 
+.dt-radio-control {
+  border: 1.5px solid var(--dt-border-strong);
+  background: var(--dt-surface);
+  transition: border-color var(--dt-motion-fast);
+}
+
 .dt-radio-root[data-checked] .dt-radio-control {
-  border-color: var(--dt-accent) !important;
+  border-color: var(--dt-accent);
+}
+
+.dt-switch-track {
+  background: var(--dt-border-strong);
+  transition: background-color var(--dt-motion-fast);
 }
 
 .dt-switch-thumb {
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--dt-ink-strong) 25%, transparent);
+  background: var(--dt-surface);
+  border: 1px solid var(--dt-border-strong);
   transform: translateX(0);
+  transition: transform var(--dt-motion-fast);
+}
+
+.dt-switch-control[data-checked] .dt-switch-thumb {
+  border-color: var(--dt-accent-strong);
 }
 
 .dt-switch-control[data-checked] .dt-switch-track {
-  background: var(--dt-accent) !important;
+  background: var(--dt-accent);
 }
 
 .dt-switch-control[data-checked] .dt-switch-thumb {
@@ -431,15 +519,23 @@
 }
 
 .dt-menu-item[data-highlighted] {
-  background: var(--dt-surface-sunken) !important;
+  background: var(--dt-surface-sunken);
 }
 
 .dt-menu-item[data-highlighted][data-danger] {
-  background: var(--dt-tint-danger) !important;
+  background: var(--dt-tint-danger);
+}
+
+/* ToolCard ring lives here so hover can strengthen the hairline by cascade. */
+.dt-tool-card {
+  box-shadow: var(--dt-ring);
+  transition:
+    box-shadow var(--dt-motion-fast),
+    background-color var(--dt-motion-fast);
 }
 
 .dt-tool-card:hover {
-  box-shadow: var(--dt-ring), var(--dt-shadow-md) !important;
+  box-shadow: var(--dt-ring-strong);
 }
 
 .dt-tool-card .dt-chip {
@@ -447,7 +543,7 @@
   background: var(--dt-surface-sunken);
   padding: 3px 8px;
   font-family: var(--dt-font-mono);
-  font-size: 11px;
+  font-size: var(--dt-caption-size);
   font-weight: 600;
   letter-spacing: 0.02em;
 }
@@ -461,24 +557,19 @@
 }
 
 .dt-alert-motion-subtle {
-  animation: dt-alert-enter var(--dt-motion-slow) both;
+  animation: dt-alert-enter var(--dt-motion-fast) both;
 }
 
-.dt-alert-motion-pulse {
-  animation: dt-alert-pulse 1.8s var(--dt-ease) infinite;
-}
+/* .dt-alert-motion-pulse is retained as a class hook but carries no motion:
+   repeating pulse loops are prohibited (DESIGN.md §4.8, §11). */
 
 .dt-toast {
-  animation: dt-toast-enter 240ms var(--dt-ease) both;
+  animation: dt-toast-enter var(--dt-motion-fast) both;
 }
 
-.dt-spinner-svg {
-  animation: dt-spin 0.7s linear infinite;
-}
-
-.dt-skeleton {
-  animation: dt-skel 1.4s var(--dt-ease) infinite;
-}
+/* The Spinner loop — the only permitted looping animation — is driven by the
+   Web Animations API inside the component, so this sheet declares no repeating
+   animation. Skeleton is a static placeholder; no shimmer (DESIGN.md §9.4). */
 
 @keyframes dt-alert-enter {
   from {
@@ -511,26 +602,6 @@
   }
 }
 
-@keyframes dt-status-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
-@keyframes dt-alert-pulse {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.08);
-  }
-}
-
 @keyframes dt-toast-enter {
   from {
     opacity: 0;
@@ -538,37 +609,19 @@
   }
 }
 
-@keyframes dt-spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes dt-skel {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .dt-alert-motion-subtle,
-  .dt-alert-motion-pulse,
   .dt-dialog-overlay,
   .dt-dialog-popup,
   .dt-menu-popup,
   .dt-select-popup,
-  .dt-status-pulse,
-  .dt-toast,
-  .dt-spinner-svg,
-  .dt-skeleton {
+  .dt-toast {
     animation: none;
   }
 
-  .dt-card-action,
+  /* Kept as the file's single `!important`: reduced-motion must also win over
+     inline `style` transitions consumers pass through component `style` props. */
+  .dt-card,
   .dt-checkbox-box,
   .dt-chip-interactive,
   .dt-file-upload-dropzone,
@@ -579,8 +632,9 @@
   .dt-switch-thumb,
   .dt-switch-track,
   .dt-table-row-action,
-  .dt-theme-switch-option,
   .dt-tabs-tab,
+  .dt-theme-switch-option,
+  .dt-tool-card,
   .dt-tr {
     transition: none !important;
   }
@@ -594,7 +648,7 @@
   --dt-product-accent-strong: #b83c0d;
   --dt-product-ink: #15110c;
   --dt-product-muted: #786f63;
-  --dt-product-line: transparent;
+  --dt-product-line: color-mix(in srgb, var(--dt-product-ink) 12%, transparent);
   min-height: 100vh;
   color: var(--dt-product-accent);
   font-family: var(--dt-font-sans);
@@ -617,11 +671,9 @@
   pointer-events: none;
 }
 
-.dt-product-cinematic-wash {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, color-mix(in srgb, #ffffff 10%, transparent), transparent 58%);
-}
+/* The cinematic wash (a soft vertical gradient veil) is removed: gradient
+   fills of any kind are prohibited (DESIGN.md §4.9, §11). The element stays
+   in the DOM for the deprecated component, unstyled. */
 
 .dt-product-cinematic-lines {
   position: absolute;
@@ -649,17 +701,8 @@
   stroke-dasharray: 46 360;
 }
 
-.dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
-  animation: dt-product-cinematic-flow 7s linear infinite;
-}
-
-.dt-product-cinematic-flow-b {
-  animation-delay: -2.1s;
-}
-
-.dt-product-cinematic-flow-c {
-  animation-delay: -4.2s;
-}
+/* The dashed flow no longer animates: looping decorative motion is prohibited
+   (DESIGN.md §4.8). .dt-product-cinematic-backdrop-animated stays a class hook. */
 
 .dt-product-topbar {
   position: sticky;
@@ -671,9 +714,9 @@
   min-height: 68px;
   align-items: center;
   justify-content: space-between;
-  background: var(--dt-product-paper);
+  border-bottom: 1px solid var(--dt-product-line, var(--dt-border));
+  background: var(--dt-product-paper, var(--dt-surface));
   padding-inline: clamp(18px, 4vw, 56px);
-  backdrop-filter: blur(18px);
 }
 
 .dt-product-topbar-brand {
@@ -791,7 +834,7 @@
   box-shadow: var(--dt-shadow-lg);
   padding: 10px;
   transform-origin: top right;
-  animation: dt-product-topbar-menu-reveal var(--dt-motion) both;
+  animation: dt-product-topbar-menu-reveal var(--dt-motion-fast) both;
 }
 
 .dt-product-topbar-menu-navigation {
@@ -831,14 +874,23 @@
   font-weight: 500;
   text-decoration: none;
   transition:
-    transform var(--dt-motion),
-    border-color var(--dt-motion),
-    background-color var(--dt-motion),
-    color var(--dt-motion);
+    transform var(--dt-motion-fast),
+    border-color var(--dt-motion-fast),
+    background-color var(--dt-motion-fast),
+    color var(--dt-motion-fast);
 }
 
-.dt-product-action-pill:hover {
-  transform: translateY(-1px);
+/* Hover moves the surface one tonal step — no lift (DESIGN.md §7). */
+.dt-product-action-pill-default:hover {
+  background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
+}
+
+.dt-product-action-pill-outline:hover {
+  background: var(--dt-surface);
+}
+
+.dt-product-action-pill-accent:hover {
+  background: var(--dt-ink);
 }
 
 .dt-product-action-pill:active {
@@ -899,7 +951,7 @@
 
 .dt-product-side-rail a {
   color: var(--dt-product-accent);
-  font-size: 10px;
+  font-size: var(--dt-caption-size);
   font-weight: 500;
   line-height: 1.2;
   text-decoration: none;
@@ -927,8 +979,6 @@
   height: 136%;
   object-fit: contain;
   opacity: 0.32;
-  mix-blend-mode: multiply;
-  animation: dt-product-motion-grid 11s ease-in-out infinite alternate;
 }
 
 .dt-product-motion-orbit {
@@ -977,13 +1027,7 @@
   letter-spacing: 0;
 }
 
-.dt-product-motion-field .dt-product-motion-orbit-a {
-  animation: dt-product-motion-orbit 9s linear infinite;
-}
-
-.dt-product-motion-field .dt-product-motion-orbit-b {
-  animation: dt-product-motion-orbit 12s linear infinite reverse;
-}
+/* Orbit loops are removed (DESIGN.md §4.8); the orbit rings render static. */
 
 .dt-product-page-header {
   border: 1px solid var(--dt-border);
@@ -1008,9 +1052,9 @@
   display: inline-flex;
   width: fit-content;
   align-items: center;
-  color: var(--dt-accent-strong);
-  font-size: 12px;
-  font-weight: 680;
+  color: var(--dt-muted);
+  font-size: var(--dt-caption-size);
+  font-weight: 600;
 }
 
 .dt-product-page-header-text {
@@ -1026,8 +1070,8 @@
 .dt-product-page-header h1 {
   max-width: 64rem;
   color: var(--dt-ink-strong);
-  font-size: 24px;
-  font-weight: 760;
+  font-size: 28px;
+  font-weight: 600;
   line-height: 1.18;
 }
 
@@ -1047,24 +1091,6 @@
 
 .dt-product-page-header-content {
   margin-top: 20px;
-}
-
-@keyframes dt-product-cinematic-flow {
-  to {
-    stroke-dashoffset: -406;
-  }
-}
-
-@keyframes dt-product-motion-orbit {
-  to {
-    rotate: 360deg;
-  }
-}
-
-@keyframes dt-product-motion-grid {
-  to {
-    transform: translate3d(2%, -2%, 0) scale(1.04);
-  }
 }
 
 @keyframes dt-product-topbar-menu-reveal {
@@ -1102,7 +1128,6 @@
   border: 1px solid var(--dt-border-alpha);
   border-radius: var(--dt-radius-container);
   background: var(--dt-surface-raised);
-  box-shadow: var(--dt-ambient-02), var(--dt-shadow-inset-crisp);
   color: var(--dt-ink);
 }
 
@@ -1119,7 +1144,7 @@
   background: var(--dt-chrome-bar);
   padding: 8px 12px;
   color: var(--dt-muted-strong);
-  font-size: 11px;
+  font-size: var(--dt-caption-size);
 }
 
 .dt-window-chrome-dots {
@@ -1160,7 +1185,7 @@
 
 .dt-window-chrome-title strong {
   color: var(--dt-ink-strong);
-  font-weight: 680;
+  font-weight: 600;
 }
 
 .dt-window-chrome-trailing {
@@ -1188,8 +1213,8 @@
   overflow: hidden;
   color: var(--dt-syntax-comment);
   font-family: var(--dt-font-mono);
-  font-size: 11px;
-  font-weight: 650;
+  font-size: var(--dt-caption-size);
+  font-weight: 600;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -1208,8 +1233,8 @@
   color: var(--dt-syntax-comment);
   cursor: pointer;
   font-family: var(--dt-font-mono);
-  font-size: 11px;
-  font-weight: 650;
+  font-size: var(--dt-caption-size);
+  font-weight: 600;
   transition:
     background-color var(--dt-motion-fast),
     color var(--dt-motion-fast);
@@ -1277,7 +1302,6 @@
   border: 1px solid var(--dt-border-alpha);
   border-radius: var(--dt-radius-container);
   background: var(--dt-surface-raised);
-  box-shadow: var(--dt-ambient-01), var(--dt-shadow-inset-crisp);
 }
 
 .dt-search-pill-artifact-header {
@@ -1286,8 +1310,8 @@
   padding: 7px 12px;
   color: var(--dt-muted-strong);
   font-family: var(--dt-font-mono);
-  font-size: 11px;
-  font-weight: 650;
+  font-size: var(--dt-caption-size);
+  font-weight: 600;
 }
 
 .dt-search-pill {
@@ -1298,7 +1322,7 @@
   border: 1px solid var(--dt-border-alpha-strong);
   border-radius: var(--dt-radius-full);
   color: var(--dt-ink-strong);
-  font-weight: 680;
+  font-weight: 600;
   line-height: 1;
   transition:
     border-color var(--dt-motion-fast),
@@ -1346,7 +1370,7 @@
   align-items: center;
   border: 1px solid var(--dt-border-alpha);
   border-radius: var(--dt-radius-inner);
-  font-weight: 680;
+  font-weight: 600;
   line-height: 1;
   white-space: nowrap;
   transition:
@@ -1362,8 +1386,7 @@
 
 .dt-chip-interactive:hover:not(:disabled) {
   border-color: var(--dt-border-strong);
-  box-shadow: var(--dt-shadow-xs);
-  transform: translateY(-1px);
+  background: var(--dt-surface-raised);
 }
 
 .dt-chip-interactive:active:not(:disabled) {
@@ -1378,7 +1401,7 @@
 .dt-chip-sm {
   min-height: 22px;
   padding: 0 8px;
-  font-size: 11px;
+  font-size: var(--dt-caption-size);
 }
 
 .dt-chip-md {
@@ -1432,23 +1455,23 @@
   pointer-events: none;
 }
 
+/* Static ring halo — hotspot dots do not pulse (DESIGN.md §4.8, §6). */
 .dt-annotation-hotspot-dot {
   width: var(--dt-hotspot-size);
   height: var(--dt-hotspot-size);
   border-radius: var(--dt-radius-full);
   background: var(--dt-hotspot-ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--dt-hotspot-ring) 18%, transparent);
-  animation: dt-hotspot-pulse 1.8s var(--dt-ease-decisive) infinite;
 }
 
 .dt-annotation-hotspot-label {
   border: 1px solid color-mix(in srgb, var(--dt-hotspot-ring) 18%, transparent);
   border-radius: var(--dt-radius-inner);
-  background: color-mix(in srgb, var(--dt-ink) 80%, transparent);
+  background: var(--dt-ink);
   padding: 6px 9px;
   color: var(--dt-surface-raised);
-  font-size: 12px;
-  font-weight: 650;
+  font-size: var(--dt-caption-size);
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -1469,21 +1492,13 @@
 .dt-section-band,
 .dt-section-proof {
   background: var(--dt-surface);
-  box-shadow: var(--dt-ambient-01);
 }
 
-.dt-section-accent-wash {
-  background:
-    radial-gradient(circle at 20% 0, var(--dt-tint-accent-10), transparent 34%),
-    var(--dt-surface);
-}
-
+/* Deprecated decorative tones now render as a flat surface: gradient fills and
+   grid washes are prohibited (DESIGN.md §4.9, §9.2). */
+.dt-section-accent-wash,
 .dt-section-grid {
-  background:
-    linear-gradient(var(--dt-tint-ink-03) 1px, transparent 1px),
-    linear-gradient(90deg, var(--dt-tint-ink-03) 1px, transparent 1px),
-    var(--dt-surface);
-  background-size: 32px 32px;
+  background: var(--dt-surface);
 }
 
 .dt-section-inner {
@@ -1502,7 +1517,6 @@
   border: 1px solid var(--dt-border-alpha);
   border-radius: var(--dt-radius-container);
   background: var(--dt-surface-raised);
-  box-shadow: var(--dt-ambient-02), var(--dt-shadow-inset-crisp);
 }
 
 .dt-stat-panel-list {
@@ -1518,32 +1532,26 @@
   border-left: 1px solid var(--dt-border-alpha);
 }
 
-.dt-stat-panel .dt-stat-panel-tile > div:nth-child(2) {
-  color: var(--dt-accent) !important;
-}
+/* Stat values keep --dt-ink-strong; the persimmon value recolor was removed
+   (accent is never a text role — DESIGN.md §4.2). */
 
+/* Pill variant = flat segmented group, not a rounded cushion (§4.5, §9.2). */
 .dt-tabs-list-pill {
   width: fit-content;
   max-width: 100%;
   overflow-x: auto;
-  margin-inline: auto;
   border: 1px solid var(--dt-border-alpha);
-  border-radius: var(--dt-radius-full);
-  background: var(--dt-tint-ink-05);
-  padding: 4px;
-  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--dt-ink) 5%, transparent);
+  border-radius: var(--dt-radius-sm);
+  background: var(--dt-surface-sunken);
+  padding: 3px;
 }
 
 .dt-tabs-tab-pill {
   flex: 0 0 auto;
   min-height: 34px;
-  margin-bottom: 0 !important;
-  border-radius: var(--dt-radius-full);
-  padding: 8px 14px !important;
-  transition:
-    background-color var(--dt-motion-fast),
-    box-shadow var(--dt-motion-fast),
-    color var(--dt-motion-fast);
+  margin-bottom: 0;
+  border-radius: var(--dt-radius-sm);
+  padding: 8px 14px;
 }
 
 .dt-chat-message {
@@ -1567,19 +1575,6 @@
   border-radius: 16px 16px 16px var(--dt-radius-inner);
   background: var(--dt-tint-ink-05);
   color: var(--dt-muted-strong);
-}
-
-@keyframes dt-hotspot-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--dt-hotspot-ring) 18%, transparent);
-  }
-
-  50% {
-    transform: scale(1.12);
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--dt-hotspot-ring) 9%, transparent);
-  }
 }
 
 @media (min-width: 768px) {
@@ -1625,7 +1620,7 @@
   .dt-product-action-pill-compact {
     min-height: 44px;
     padding-inline: 16px;
-    font-size: 11px;
+    font-size: var(--dt-caption-size);
   }
 
   .dt-product-action-pill-hero {
@@ -1637,23 +1632,15 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
-    animation: none;
-  }
-
-  .dt-product-motion-grid,
-  .dt-product-motion-field .dt-product-motion-orbit-a,
-  .dt-product-motion-field .dt-product-motion-orbit-b {
-    animation: none;
-  }
-
   .dt-product-action-pill {
     transition: none;
   }
 
+  /* Matches the [data-armed] selector's specificity so the plain rule wins. */
+  .dt-brand-logo[data-armed='true'] .dt-brand-logo-dot,
   .dt-brand-logo-dot {
-    transform: none !important;
-    transition: none !important;
+    transform: none;
+    transition: none;
   }
 
   .dt-product-topbar-menu-panel {

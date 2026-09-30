@@ -8,10 +8,10 @@ export const CardTone = {
 };
 
 const VARIANT_STYLE = {
-  default: { background: 'var(--dt-surface)', boxShadow: 'var(--dt-card-rest)' },
+  default: { background: 'var(--dt-surface)' },
   muted:   { background: 'var(--dt-surface-sunken)' },
-  raised:  { background: 'var(--dt-surface-raised)', boxShadow: 'var(--dt-card-float)' },
-  panel:   { background: 'var(--dt-surface)', boxShadow: 'var(--dt-shadow-xs)' },
+  raised:  { background: 'var(--dt-surface-raised)', borderColor: 'var(--dt-border-strong)' },
+  panel:   { background: 'var(--dt-surface)' },
 };
 
 function cx(...classes) {
@@ -28,7 +28,8 @@ export function Card({ children, variant, tone, interactive = false, padding = 2
         borderRadius: 'var(--dt-radius-lg)',
         color: 'var(--dt-ink)',
         padding,
-        transition: 'box-shadow var(--dt-motion), background-color var(--dt-motion)',
+        border: '1px solid var(--dt-border)',
+        transition: 'border-color var(--dt-motion-fast), background-color var(--dt-motion-fast)',
         ...v,
         ...style,
       }}
@@ -36,7 +37,7 @@ export function Card({ children, variant, tone, interactive = false, padding = 2
     >
       {children}
       {interactive ? (
-        <style>{'.dt-card-interactive:hover{box-shadow:var(--dt-card-hover)}'}</style>
+        <style>{'.dt-card-interactive:hover{border-color:var(--dt-border-strong)}'}</style>
       ) : null}
     </div>
   );

@@ -27,7 +27,7 @@ export function KeyValue({ items = [], columns = 1, style }) {
               borderRight: columns === 2 && col === 0 ? '1px solid var(--dt-border)' : 'none',
             }}
           >
-            <dt style={{ fontSize: 12.5, color: 'var(--dt-muted)', flex: '0 0 auto' }}>{it.key}</dt>
+            <dt style={{ fontSize: 'var(--dt-mono-size)', color: 'var(--dt-muted)', flex: '0 0 auto' }}>{it.key}</dt>
             <dd style={{
               margin: 0, textAlign: 'right', minWidth: 0,
               fontFamily: it.mono ? 'var(--dt-font-mono)' : 'inherit',

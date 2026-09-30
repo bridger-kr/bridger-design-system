@@ -45,7 +45,7 @@ export function Menu({ trigger, items = [], align = 'left', width = 200, classNa
                     style={{
                       display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
                       padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
-                      background: 'transparent', fontSize: 13.5, fontWeight: 500, fontFamily: 'inherit',
+                      fontSize: 13, fontWeight: 500, fontFamily: 'inherit',
                       color: it.danger ? 'var(--dt-danger)' : 'var(--dt-ink)',
                     }}
                   >

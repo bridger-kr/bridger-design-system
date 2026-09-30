@@ -9,10 +9,10 @@
   body { margin: 0; background: var(--dt-paper); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
 
   /* SectionCard — the real panel framing the registry */
-  .section { background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-ring), var(--dt-shadow-xs); overflow: hidden; }
+  .section { background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-ring); overflow: hidden; }
   .shead { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 20px 24px; }
   .stitle { display: flex; align-items: baseline; gap: 10px; }
-  .stitle b { font-size: 18px; font-weight: 650; letter-spacing: -0.01em; color: var(--dt-ink-strong); }
+  .stitle b { font-size: 18px; font-weight: 600; letter-spacing: -0.01em; color: var(--dt-ink-strong); }
   .stitle .n { font-family: var(--dt-font-mono); font-size: 13px; color: var(--dt-muted); font-variant-numeric: tabular-nums; }
   .btn-primary [data-ico] { display: inline-flex; }
 
@@ -22,7 +22,7 @@
   .rrow { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center; gap: 18px; padding: 14px 24px; border-top: 1px solid var(--dt-divider); transition: background-color var(--dt-motion-fast); }
   .rrow:hover { background: var(--dt-surface-sunken); }
   .rhdr { padding: 9px 24px; border-top: 1px solid var(--dt-divider); background: var(--dt-surface-sunken); }
-  .rhdr span { font-size: 11px; font-weight: 600; color: var(--dt-muted); }
+  .rhdr span { font-size: var(--dt-caption-size); font-weight: 600; color: var(--dt-muted); }
 
   .rname { min-width: 0; }
   .rname code { font-family: var(--dt-font-mono); font-size: 13.5px; font-weight: 600; color: var(--dt-ink-strong); }
