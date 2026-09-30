@@ -1,5 +1,5 @@
-import { Radio as BaseRadio } from '@base-ui-components/react/radio';
-import { RadioGroup as BaseRadioGroup } from '@base-ui-components/react/radio-group';
+import { Radio as BaseRadio } from '@base-ui/react/radio';
+import { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';
 import { useId } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
 

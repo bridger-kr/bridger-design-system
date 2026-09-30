@@ -2,6 +2,7 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 
+import { DS_MESSAGES_KO } from '../../locale/messages';
 import { Alert, Dialog, Drawer, Skeleton, Spinner, Toast, Tooltip } from './index';
 
 afterEach(() => {
@@ -11,8 +12,8 @@ afterEach(() => {
 describe('feedback a11y', () => {
   it('Dialog links its title via aria-labelledby', () => {
     render(
-      <Dialog open title="설정 확인">
-        <p>본문</p>
+      <Dialog open title="Confirm settings">
+        <p>Body</p>
       </Dialog>,
     );
     const dialog = document.body.querySelector('[role="dialog"]');
@@ -21,13 +22,13 @@ describe('feedback a11y', () => {
     expect(labelledby).toBeTruthy();
     // the referenced id must exist in the DOM and contain the title text
     const labelEl = labelledby ? document.body.querySelector(`[id="${labelledby}"]`) : null;
-    expect(labelEl?.textContent).toContain('설정 확인');
+    expect(labelEl?.textContent).toContain('Confirm settings');
   });
 
   it('Dialog falls back to aria-label when no title', () => {
     render(
-      <Dialog open aria-label="무제 대화상자">
-        <p>본문</p>
+      <Dialog open aria-label="Untitled dialog">
+        <p>Body</p>
       </Dialog>,
     );
     const dialog = document.body.querySelector('[role="dialog"]');
@@ -38,8 +39,8 @@ describe('feedback a11y', () => {
 
   it('Drawer always has an accessible name', () => {
     render(
-      <Drawer open title="로그">
-        <p>스트림</p>
+      <Drawer open title="Logs">
+        <p>Stream</p>
       </Drawer>,
     );
     const region =
@@ -54,7 +55,7 @@ describe('feedback a11y', () => {
 
   it('Tooltip exposes a role=tooltip element and links it on focus', async () => {
     render(
-      <Tooltip label="도움말">
+      <Tooltip label="Help">
         <button>hover</button>
       </Tooltip>,
     );
@@ -75,7 +76,7 @@ describe('feedback a11y', () => {
   it('feedback motion classes render through package stylesheet hooks', () => {
     const { container } = render(
       <>
-        <Toast message="저장됨" />
+        <Toast message="Saved" />
         <Spinner />
         <Skeleton />
       </>,
@@ -89,7 +90,7 @@ describe('feedback a11y', () => {
   it('Alert dismiss button has an accessible label and hidden icon', () => {
     const { container } = render(
       <Alert tone="info" onDismiss={() => {}}>
-        메시지
+        Message
       </Alert>,
     );
     const closeBtn = container.querySelector('button[aria-label]');
@@ -100,8 +101,8 @@ describe('feedback a11y', () => {
 
   it('Alert inherits the consumer word-break contract for Korean messages', () => {
     const { container } = render(
-      <Alert tone="danger" title="호출 실패">
-        게이트웨이가 오류 응답을 반환했습니다.
+      <Alert tone="danger" title={DS_MESSAGES_KO.toolCard.state.locked}>
+        {DS_MESSAGES_KO.fileUpload.specHint}
       </Alert>,
     );
 
@@ -111,7 +112,7 @@ describe('feedback a11y', () => {
   });
 
   it('Toast dismiss icon is aria-hidden', () => {
-    const { container } = render(<Toast message="저장됨" onDismiss={() => {}} />);
+    const { container } = render(<Toast message="Saved" onDismiss={() => {}} />);
     const svg = container.querySelector('svg[aria-hidden="true"]');
     expect(svg).not.toBeNull();
   });

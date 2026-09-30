@@ -1,6 +1,7 @@
-import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { useState } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface ComboboxOption {
   value: string;
@@ -31,11 +32,14 @@ export function Combobox({
   options = [],
   value,
   onChange,
-  placeholder = '검색…',
-  emptyText = '결과 없음',
+  placeholder,
+  emptyText,
   id,
   style,
 }: ComboboxProps) {
+  const messages = useDSMessages();
+  const resolvedPlaceholder = placeholder ?? messages.combobox.placeholder;
+  const resolvedEmptyText = emptyText ?? messages.combobox.empty;
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState('');
   const cbId = id || (label ? `cb-${label.replace(/\s+/g, '-')}` : undefined);
@@ -103,7 +107,7 @@ export function Combobox({
         <BaseCombobox.Input
           id={cbId}
           value={open ? query : selected ? selected.label : ''}
-          placeholder={selected && !open ? selected.label : placeholder}
+          placeholder={selected && !open ? selected.label : resolvedPlaceholder}
           onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
@@ -143,7 +147,7 @@ export function Combobox({
             }}
           >
           {filtered.length === 0 ? (
-            <BaseCombobox.Empty style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-muted)' }}>{emptyText}</BaseCombobox.Empty>
+            <BaseCombobox.Empty style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-muted)' }}>{resolvedEmptyText}</BaseCombobox.Empty>
           ) : (
             <BaseCombobox.List>
             {filtered.map((o) => {

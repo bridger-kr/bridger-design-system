@@ -1,5 +1,6 @@
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export type TableAlign = 'left' | 'center' | 'right';
 export type TableRow = Record<string, ReactNode>;
@@ -37,6 +38,8 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
    * Actionable rows must not contain nested interactive controls.
    */
   readonly rowAction?: TableRowAction<Row>;
+  /** Header cell for the row-action column; defaults to the ambient locale. */
+  readonly rowActionHeader?: ReactNode;
   readonly empty?: ReactNode;
   readonly style?: CSSProperties;
 }
@@ -97,11 +100,13 @@ export function Table<Row extends TableRow = TableRow>({
   rows = [],
   rowKey,
   rowAction,
+  rowActionHeader,
   empty,
   className,
   style,
   ...rest
 }: TableProps<Row>) {
+  const messages = useDSMessages();
   if (!rows.length && empty) return empty;
 
   return (
@@ -138,7 +143,7 @@ export function Table<Row extends TableRow = TableRow>({
                 {column.header}
               </th>
             ))}
-            {rowAction ? <th className="dt-table-row-action-header" scope="col">행 작업</th> : null}
+            {rowAction ? <th className="dt-table-row-action-header" scope="col">{rowActionHeader ?? messages.table.rowActions}</th> : null}
           </tr>
         </thead>
         <tbody>

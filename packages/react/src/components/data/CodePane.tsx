@@ -1,6 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { useState } from 'react';
 import { cx } from '../../lib/cx';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export const CODE_PANE_TONE = {
   Plain: 'plain',
@@ -44,12 +45,15 @@ export function CodePane({
   lines = [],
   label,
   copyText,
-  copyLabel = '복사',
-  copiedLabel = '복사됨',
+  copyLabel,
+  copiedLabel,
   copyable = false,
   className,
   ...rest
 }: CodePaneProps) {
+  const messages = useDSMessages();
+  const resolvedCopyLabel = copyLabel ?? messages.code.copy;
+  const resolvedCopiedLabel = copiedLabel ?? messages.code.copied;
   const [copied, setCopied] = useState(false);
   const textToCopy = copyText ?? codePaneCopyText(lines);
 
@@ -76,7 +80,7 @@ export function CodePane({
           {copyable ? (
             <button type="button" className="dt-code-pane-copy" data-copied={copied ? 'true' : 'false'} onClick={copy}>
               <span aria-hidden="true" className="dt-code-pane-copy-icon" />
-              {copied ? copiedLabel : copyLabel}
+              {copied ? resolvedCopiedLabel : resolvedCopyLabel}
             </button>
           ) : null}
         </div>
