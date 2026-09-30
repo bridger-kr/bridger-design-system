@@ -25,7 +25,7 @@ export function Pagination({ page = 1, pageCount = 1, onChange, style, ...rest }
   }
 
   const cell = (active: boolean): CSSProperties => ({
-    minWidth: 32, height: 32, padding: '0 8px', borderRadius: 'var(--dt-radius-sm)', border: 'none', cursor: 'pointer',
+    minWidth: 32, height: 32, padding: '0 8px', borderRadius: 'var(--dt-radius-chip)', border: 'none', cursor: 'pointer',
     fontSize: 13, fontWeight: 600, fontVariantNumeric: 'tabular-nums',
     background: active ? 'var(--dt-accent)' : 'transparent',
     color: active ? 'var(--dt-accent-ink)' : 'var(--dt-muted-strong)',

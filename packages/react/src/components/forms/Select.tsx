@@ -61,7 +61,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
           <BaseSelect.Portal>
             <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
               <BaseSelect.Popup className="dt-select-popup" style={{
-                 zIndex: 'var(--dt-z-index-popover)', minWidth: 'var(--anchor-width)', padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
+                 zIndex: 'var(--dt-z-index-popover)', minWidth: 'var(--anchor-width)', padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-card)',
                  border: '1px solid var(--dt-border-strong)', boxShadow: 'var(--dt-shadow-lg)',
               }}>
                 <BaseSelect.List>
@@ -72,7 +72,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
                       className="dt-select-option"
                       style={{
                         display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '8px 10px',
-                        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-ink)',
+                        borderRadius: 'var(--dt-radius-chip)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-ink)',
                       }}
                     >
                       <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>

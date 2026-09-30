@@ -34,7 +34,7 @@ export function StatusPill({ status = 'idle', children, pulse, style, ...rest }:
         display: 'inline-flex',
         alignItems: 'center',
         gap: 6,
-        borderRadius: 'var(--dt-radius-full)',
+        borderRadius: 'var(--dt-radius-pill)',
         background: tone.bg,
         padding: '4px 10px',
         fontSize: 12,
@@ -51,7 +51,7 @@ export function StatusPill({ status = 'idle', children, pulse, style, ...rest }:
           style={{
             width: 7,
             height: 7,
-            borderRadius: 'var(--dt-radius-full)',
+            borderRadius: 'var(--dt-radius-pill)',
             background: tone.fg,
           }}
         />

@@ -75,7 +75,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
       onKeyDown={handleKeyDown}
       style={{
         width: 520, maxWidth: '100%', background: 'var(--dt-surface)',
-        border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-xl)',
+        border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)',
         boxShadow: 'var(--dt-shadow-xl)', overflow: 'hidden', fontFamily: 'var(--dt-font-sans)', ...style,
       }}
     >
@@ -91,7 +91,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
         />
         <kbd style={{
           fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--dt-muted)',
-          border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '2px 7px',
+          border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-chip)', padding: '2px 7px',
         }}>⌘K</kbd>
       </div>
 
@@ -113,7 +113,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
                   onMouseDown={(e: ReactMouseEvent<HTMLButtonElement>) => { e.preventDefault(); onSelect?.(it); }}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 11, padding: '9px 10px',
-                    borderRadius: 'var(--dt-radius-md)', cursor: 'pointer',
+                    borderRadius: 'var(--dt-radius-control)', cursor: 'pointer',
                     background: isActive ? 'var(--dt-tint-accent)' : 'transparent',
                     border: 'none', outline: 'none',
                   }}
@@ -124,7 +124,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
                     {it.meta ? <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)', fontWeight: 400, marginLeft: 8 }}>{it.meta}</span> : null}
                   </span>
                   {it.shortcut ? (
-                    <kbd style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted-strong)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '1px 6px' }}>{it.shortcut}</kbd>
+                    <kbd style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted-strong)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-chip)', padding: '1px 6px' }}>{it.shortcut}</kbd>
                   ) : null}
                 </button>
               );

@@ -5,7 +5,6 @@ import { describe, expect, expectTypeOf, it } from 'vitest';
 import {
   colors,
   cssVarName,
-  effects,
   layers,
   motion,
   radius,
@@ -144,9 +143,6 @@ function typographyValues(): TokenRecord {
     captionLeading: typography.lineHeights.caption,
     monoSize: typography.fontSizes.mono,
     monoLeading: typography.lineHeights.mono,
-    eyebrowSize: typography.eyebrow.size,
-    eyebrowTracking: typography.eyebrow.tracking,
-    eyebrowWeight: typography.eyebrow.weight,
   };
 }
 
@@ -198,14 +194,12 @@ describe('@bridger-kr/tokens', () => {
     expectGroupMatchesContract(lightDefaultContract, shadows.light, cssVarName.shadows);
   });
 
-  it('keeps layers, motion, and effects aligned with the CSS contract', () => {
+  it('keeps layers and motion aligned with the CSS contract', () => {
     expectGroupMatchesContract(lightDefaultContract, layers, cssVarName.layers);
     expectGroupMatchesContract(lightDefaultContract, motion.durations, cssVarName.motion.durations);
     expectGroupMatchesContract(lightDefaultContract, motion.easing, cssVarName.motion.easing);
     expectGroupMatchesContract(lightDefaultContract, motion.transitions, cssVarName.motion.transitions);
     expectGroupMatchesContract(lightDefaultContract, motion.interaction, cssVarName.motion.interaction);
-    expectGroupMatchesContract(lightDefaultContract, effects.light, cssVarName.effects);
-    expectGroupMatchesContract(darkContract, effects.dark, cssVarName.effects);
   });
 
   it('preserves literal token types', () => {
@@ -220,11 +214,7 @@ describe('@bridger-kr/tokens', () => {
     expectTypeOf(layers.popover).toEqualTypeOf<60>();
     expectTypeOf(colors.dark.paper).toEqualTypeOf<'#11110f'>();
     expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'#ec5e1f'>();
-    expectTypeOf(radius.lg).toEqualTypeOf<'14px'>();
-    expectTypeOf(radius.xl).toEqualTypeOf<'14px'>();
-    expectTypeOf(typography.eyebrow.size).toEqualTypeOf<'11px'>();
-    expectTypeOf(typography.eyebrow.tracking).toEqualTypeOf<'0.18em'>();
-    expectTypeOf(typography.eyebrow.weight).toEqualTypeOf<700>();
+    expectTypeOf(radius.card).toEqualTypeOf<'14px'>();
     expectTypeOf(typography.fontFamilies.sans).toEqualTypeOf<
       "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
     >();
@@ -240,8 +230,6 @@ describe('@bridger-kr/tokens', () => {
     expect(Object.isFrozen(layers)).toBe(true);
     expect(Object.isFrozen(motion)).toBe(true);
     expect(Object.isFrozen(motion.transitions)).toBe(true);
-    expect(Object.isFrozen(effects.light)).toBe(true);
-    expect(Object.isFrozen(effects.dark)).toBe(true);
     expect(Object.isFrozen(typography)).toBe(true);
     expect(Object.isFrozen(typography.fontFamilies)).toBe(true);
   });

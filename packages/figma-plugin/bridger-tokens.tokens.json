@@ -268,33 +268,6 @@
     },
     "pill": {
       "$value": "9999px"
-    },
-    "sm": {
-      "$value": "6px"
-    },
-    "inner": {
-      "$value": "6px"
-    },
-    "element": {
-      "$value": "10px"
-    },
-    "container": {
-      "$value": "14px"
-    },
-    "md": {
-      "$value": "12px"
-    },
-    "lg": {
-      "$value": "14px"
-    },
-    "button": {
-      "$value": "10px"
-    },
-    "xl": {
-      "$value": "14px"
-    },
-    "full": {
-      "$value": "9999px"
     }
   },
   "fontFamily": {
@@ -315,9 +288,6 @@
       "$value": "600"
     },
     "bold": {
-      "$value": "700"
-    },
-    "eyebrow": {
       "$value": "700"
     }
   },
@@ -346,9 +316,6 @@
     },
     "mono": {
       "$value": "13px"
-    },
-    "eyebrow": {
-      "$value": "11px"
     }
   },
   "lineHeight": {
@@ -376,9 +343,6 @@
     },
     "mono": {
       "$value": "1.55"
-    },
-    "eyebrow": {
-      "$value": "1.55"
     }
   },
   "letterSpacing": {
@@ -394,9 +358,6 @@
     },
     "h3": {
       "$value": "0%"
-    },
-    "eyebrow": {
-      "$value": "18%"
     }
   },
   "typography": {
@@ -471,15 +432,6 @@
         "fontSize": "{fontSize.mono}",
         "lineHeight": "{lineHeight.mono}",
         "letterSpacing": "{letterSpacing.base}"
-      }
-    },
-    "eyebrow": {
-      "$value": {
-        "fontFamily": "{fontFamily.sans}",
-        "fontWeight": "{fontWeight.eyebrow}",
-        "fontSize": "{fontSize.eyebrow}",
-        "lineHeight": "{lineHeight.eyebrow}",
-        "letterSpacing": "{letterSpacing.eyebrow}"
       }
     }
   },

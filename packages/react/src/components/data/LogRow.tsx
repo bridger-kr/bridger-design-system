@@ -30,7 +30,7 @@ export interface LogRowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'child
 export function LogRow({ entries = [], style, ...rest }: LogRowProps) {
   return (
     <div {...rest} style={{
-      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden',
+      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
       background: 'var(--dt-surface)', fontVariantNumeric: 'tabular-nums', ...style,
     }}>
       {entries.map((entry, index) => {

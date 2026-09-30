@@ -99,7 +99,7 @@ export function Slider({
             position: 'absolute',
             width: 16,
             height: 16,
-            borderRadius: 'var(--dt-radius-sm)',
+            borderRadius: 'var(--dt-radius-chip)',
             background: 'var(--dt-surface)',
             boxShadow: '0 0 0 1.5px var(--dt-accent)',
             border: '3px solid var(--dt-surface)',

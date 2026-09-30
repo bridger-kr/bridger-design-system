@@ -150,8 +150,6 @@ function main() {
   }
   const radiusMap = {
     chip: 'chip', control: 'control', card: 'card', pill: 'pill',
-    sm: 'sm', inner: 'inner', element: 'element', container: 'container',
-    md: 'md', lg: 'lg', button: 'button', xl: 'xl', full: 'full',
   };
   for (const k in radiusMap) {
     const v = sp[`dt-radius-${k}`];
@@ -174,32 +172,27 @@ function main() {
     h3: px(ty['dt-h3-size']), body: px(ty['dt-body-size']),
     label: px(ty['dt-label-size']), small: px(ty['dt-small-size']),
     caption: px(ty['dt-caption-size']), mono: px(ty['dt-mono-size']),
-    eyebrow: px(ty['dt-eyebrow-size']),
   };
   for (const k in sizes) out.fontSize[k] = { $value: sizes[k] };
-
-  out.fontWeight.eyebrow = { $value: ty['dt-eyebrow-weight'] };
 
   const leads = {
     h1: ty['dt-h1-leading'], h2: ty['dt-h2-leading'], h3: ty['dt-h3-leading'],
     body: ty['dt-body-leading'], label: ty['dt-label-leading'],
     small: ty['dt-small-leading'], caption: ty['dt-caption-leading'],
     mono: ty['dt-mono-leading'],
-    eyebrow: ty['dt-small-leading'],
   };
   for (const k in leads) out.lineHeight[k] = { $value: leads[k] };
 
   const tracks = {
     h1: ty['dt-h1-tracking'], h2: ty['dt-h2-tracking'], h3: ty['dt-h3-tracking'],
-    eyebrow: ty['dt-eyebrow-tracking'],
   };
   const pctTrack = (em) => `${round(parseFloat(em) * 100)}%`;
   for (const k in tracks) if (tracks[k]) out.letterSpacing[k] = { $value: pctTrack(tracks[k]) };
 
   // composite typography
-  const weightRef = { h1: 'bold', h2: 'bold', h3: 'semibold', body: 'regular', label: 'regular', small: 'regular', caption: 'regular', mono: 'regular', eyebrow: 'eyebrow' };
-  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', label: 'sans', small: 'sans', caption: 'sans', mono: 'mono', eyebrow: 'sans' };
-  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono', 'eyebrow']) {
+  const weightRef = { h1: 'bold', h2: 'bold', h3: 'semibold', body: 'regular', label: 'regular', small: 'regular', caption: 'regular', mono: 'regular' };
+  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', label: 'sans', small: 'sans', caption: 'sans', mono: 'mono' };
+  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono']) {
     out.typography[k] = {
       $value: {
         fontFamily: `{fontFamily.${famRef[k]}}`,

@@ -57,7 +57,7 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
   return (
     <div {...rest} style={{
       background: 'var(--dt-code-bg)', border: '1px solid var(--dt-code-border)',
-      borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden', ...style,
+      borderRadius: 'var(--dt-radius-card)', overflow: 'hidden', ...style,
     }}>
       {(label || copyable) ? (
         <div style={{

@@ -34,7 +34,7 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
             aria-label={title ? undefined : ariaLabel}
             style={{
               width: '100%', maxWidth: width, background: 'var(--dt-surface)', pointerEvents: 'auto',
-              borderRadius: 'var(--dt-radius-lg)', boxShadow: 'var(--dt-shadow-xl)',
+              borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-xl)',
               overflow: 'hidden',
             }}
           >

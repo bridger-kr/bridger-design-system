@@ -41,7 +41,7 @@ export function ToolCard({
       className="dt-tool-card"
       {...rest}
       style={{
-        borderRadius: 'var(--dt-radius-md)',
+        borderRadius: 'var(--dt-radius-card)',
         background: 'var(--dt-surface)',
         boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
         padding: '16px 18px',
