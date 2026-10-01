@@ -262,9 +262,9 @@ Deprecation note: several v1 product-family exports exist only to render decorat
 | forms | 9 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
 | feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
 | data | 10 | `Avatar`, `CodeBlock`, `CodePane`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
-| navigation | 5 | `Breadcrumb`, `CommandPalette`, `Menu`, `Sidebar`, `Stepper` |
+| navigation | 6 | `Breadcrumb`, `CommandPalette`, `ConsolePageHeader`, `Menu`, `Sidebar`, `Stepper` |
 | product | 18 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductActionPill`, `ProductShell` (+ `ProductMotionField`, `ProductSideRail`, decorative hero backdrop), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard`, `WindowChrome` (+ `WindowFrame`) |
-| **Total** | **60** | |
+| **Total** | **61** | |
 
 ### 9.2 Core family
 
@@ -339,7 +339,8 @@ Persistent structures. Sidebar and command palette must expose correct landmarks
 | Component | Anatomy | Variant axes | Notes |
 | --- | --- | --- | --- |
 | `Breadcrumb` | linked trail of items, current page | separator | `aria-current="page"` on the current item. |
-| `Sidebar` | brand + sections + footer | width | Console navigation rail; landmark role `navigation`. |
+| `Sidebar` | brand + sections + footer | width | Console navigation rail; landmark role `navigation`; active row is sunken (no accent marker). |
+| `ConsolePageHeader` | title + description + actions | — | Flat route header for console pages; single h1, no eyebrow. |
 | `Menu` | trigger + popover list | align (`left`, `right`), width | Roving focus inside the menu, escape closes. |
 | `CommandPalette` | search input + grouped results + footer hint | open, query, groups | `⌘K` invocation; keyboard-first navigation. |
 | `Stepper` | ordered steps + current indicator | orientation (`horizontal`, `vertical`) | Onboarding progress. |
@@ -388,7 +389,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | --- | --- | --- |
 | `packages/tokens/css/contract.css` | Canonical CSS custom-property token contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/css/contract.css` |
 | `packages/tokens/src/index.ts` | Frozen TS token objects mirrored from the contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/src/index.ts` |
-| `packages/react/src/index.ts` | Public React barrel (60 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
+| `packages/react/src/index.ts` | Public React barrel (61 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
 | `DESIGN.md` (this file) | Brand and component canon | `https://github.com/bridger-kr/bridger-design-system/blob/main/DESIGN.md` |
 | `bridger-web` consuming repo | App integration, mirror checks | `https://github.com/bridger-kr/bridger-web/blob/main/README.md` |
 | Figma component library | Brand assets and Component Sets | Figma file `DXAVhKo8uCGJ4HSQYAq9dY` |
