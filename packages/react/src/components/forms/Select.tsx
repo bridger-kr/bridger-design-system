@@ -24,7 +24,7 @@ export interface SelectProps
 }
 
 /** Flat native-backed select with a persimmon focus ring. */
-export function Select({ label, hint, options = [], value, defaultValue, onChange, placeholder, disabled, id, style }: SelectProps) {
+export function Select({ label, hint, options = [], value, defaultValue, onChange, placeholder, disabled, id, style, 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledby, 'aria-describedby': ariaDescribedby, 'aria-invalid': ariaInvalid, required }: SelectProps) {
   const selId = id || (label ? `sel-${label.replace(/\s+/g, '-')}` : undefined);
   const normalizedOptions = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
   const selectedOption = normalizedOptions.find((option) => option.value === value);
@@ -50,6 +50,11 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
           <BaseSelect.Trigger
             id={selId}
             className="dt-field dt-select-trigger"
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledby}
+            aria-describedby={ariaDescribedby}
+            aria-invalid={ariaInvalid}
+            aria-required={required || undefined}
             style={{
               appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,
               fontFamily: 'inherit', color: 'var(--dt-ink-strong)', cursor: disabled ? 'not-allowed' : 'pointer',

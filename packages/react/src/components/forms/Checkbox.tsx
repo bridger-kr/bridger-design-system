@@ -16,15 +16,15 @@ export interface CheckboxProps
 }
 
 /** Checkbox — persimmon fill when checked. */
-export function Checkbox({ label, checked, defaultChecked, onChange, disabled, id, style }: CheckboxProps) {
+export function Checkbox({ label, checked, defaultChecked, onChange, disabled, id, style, 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledby, 'aria-describedby': ariaDescribedby }: CheckboxProps) {
   const cbId = id || (label ? `cb-${String(label).replace(/\s+/g, '-')}` : undefined);
+  const labelId = label ? `${cbId ?? 'cb'}-label` : undefined;
   const handleCheckedChange = (nextChecked: boolean) => {
     onChange?.(nextChecked);
   };
 
   return (
     <label
-      htmlFor={cbId}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -42,6 +42,9 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
         defaultChecked={defaultChecked}
         onCheckedChange={handleCheckedChange}
         disabled={disabled}
+        aria-label={ariaLabel}
+        aria-labelledby={ariaLabelledby ?? labelId}
+        aria-describedby={ariaDescribedby}
         className="dt-checkbox-control"
         style={{
           width: 'var(--dt-space-5)',
@@ -81,7 +84,7 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
           </BaseCheckbox.Indicator>
         </span>
       </BaseCheckbox.Root>
-      {label ? <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
+      {label ? <span id={labelId} style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
     </label>
   );
 }
