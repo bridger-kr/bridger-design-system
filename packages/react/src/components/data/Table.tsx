@@ -102,7 +102,7 @@ export function Table<Row extends TableRow = TableRow>({
   style,
   ...rest
 }: TableProps<Row>) {
-  if (!rows.length && empty) return empty;
+  if (!rows.length && empty) return <>{empty}</>;
 
   return (
     <div
