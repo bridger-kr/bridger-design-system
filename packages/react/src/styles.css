@@ -739,7 +739,7 @@
 }
 
 .dt-alert-motion-subtle {
-  animation: dt-alert-enter var(--dt-duration-base) var(--dt-ease) both;
+  animation: dt-alert-enter var(--dt-duration-base) var(--dt-ease) backwards;
 }
 
 .dt-alert-motion-pulse {
@@ -747,7 +747,7 @@
 }
 
 .dt-toast {
-  animation: dt-toast-enter var(--dt-duration-base) var(--dt-ease) both;
+  animation: dt-toast-enter var(--dt-duration-base) var(--dt-ease) backwards;
 }
 
 .dt-spinner-svg {
@@ -1054,7 +1054,7 @@
   box-shadow: var(--dt-shadow-overlay);
   padding: 10px;
   transform-origin: top right;
-  animation: dt-product-topbar-menu-reveal var(--dt-duration-base) var(--dt-ease) both;
+  animation: dt-product-topbar-menu-reveal var(--dt-duration-base) var(--dt-ease) backwards;
 }
 
 .dt-product-topbar-menu-navigation {
@@ -1435,6 +1435,10 @@
   border-radius: var(--dt-radius-card);
   background: var(--dt-code-bg);
   color: var(--dt-code-ink);
+
+  /* Pane chrome (label, copy button) must meet AA on --dt-code-bg; the
+     syntax-comment token is dimmer by design for in-code comments. */
+  --dt-code-pane-muted: color-mix(in srgb, var(--dt-code-ink) 72%, transparent);
 }
 
 .dt-code-pane-header {
@@ -1448,7 +1452,7 @@
 
 .dt-code-pane-label {
   overflow: hidden;
-  color: var(--dt-syntax-comment);
+  color: var(--dt-code-pane-muted);
   font-family: var(--dt-font-mono);
   font-size: 12px;
   font-weight: 600;
@@ -1467,7 +1471,7 @@
   border: 0;
   border-radius: var(--dt-radius-chip);
   background: transparent;
-  color: var(--dt-syntax-comment);
+  color: var(--dt-code-pane-muted);
   cursor: pointer;
   font-family: var(--dt-font-mono);
   font-size: 12px;
