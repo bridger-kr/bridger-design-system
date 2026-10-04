@@ -270,19 +270,19 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
 **Root files** — the repo-level surface consumed by prototypes and the agent skill:
-- `styles.css` — global CSS entrypoint (delegates to the generated `tokens/index.css`).
+- `styles.css` — global CSS entrypoint (delegates to the generated `tokens/index.css` + `components/styles.css`).
 - `tokens/*.css` — **generated** copy of `packages/tokens/css/*.css` (do not edit; regenerate with `pnpm generate`).
-- `components/` — **generated** mirror of `packages/react` (`<family>/<Name>.jsx` + real `.d.ts` + `index.jsx` barrels + `lib/`), plus generated `.prompt.md` and `.card.html`. Do not edit; regenerate with `pnpm generate`.
+- `components/` — **generated** mirror of `packages/react` (`<family>/<Name>.jsx` + real `.d.ts` + `index.jsx` barrels + `lib/` + `styles.css`), plus generated `.prompt.md` and `.card.html`. Do not edit; regenerate with `pnpm generate`.
 - `assets/` — `brand/` (logos, favicon), `agency-logos/` (KMA, MOLIT, BOK, Seoul, data.go.kr), `fonts/` (Pretendard Variable woff2).
 - `readme.md` — this guide. `SKILL.md` — Agent Skill wrapper.
 
 Generated-tree sources (edit these, never the mirror):
-- `packages/react/src/components/<family>/<Name>.tsx` → `components/<family>/<Name>.jsx` + `.d.ts`
-- `packages/react/src/components/<family>/<Name>.prompt.md` → `components/<family>/<Name>.prompt.md`
-- `packages/react/src/lib/*.ts` → `components/lib/*.jsx` + `.d.ts`
+- `packages/react/src/**/*.ts(x)` → `components/` (one leading `components/` segment stripped; e.g. `src/components/core/B.tsx` → `components/core/B.jsx`, `src/lib/x.ts` → `components/lib/x.jsx`, `src/index.ts` → `components/index.jsx`)
+- `packages/react/src/**/*.css` → `components/` (`src/styles.css` → `components/styles.css`, the component + state stylesheet)
+- `packages/react/src/**/*.prompt.md` → `components/`
 - `packages/tokens/css/*.css` → `tokens/*.css`
 - `examples/cards/<family>[-segment].card.html` → `components/<family>/`
-- `scripts/generate-legacy.mjs` regenerates everything; CI fails if the committed mirror drifts from `pnpm generate`.
+- `scripts/generate-legacy.mjs` regenerates everything; CI fails if the committed mirror drifts from `pnpm generate`, and `pnpm verify:mirror` fails if any generated import does not resolve or is not declared in root `dependencies`.
 
 **The 60 components**, grouped:
 - **core** — Button, Badge, StatusPill, Card, Input, Tabs, FilterChip (toggleable catalog filter), Chip (inline status and tag), Panel (flat section plane, exported from `core/Surface.tsx`), Section (landing band and console panel anchor).

@@ -5,10 +5,24 @@
 
    Single-source rule:
      packages/tokens/css/  (every .css)          -> tokens/
-     packages/react/src/components/  (.ts/.tsx)  -> components/  (.jsx + .d.ts)
-     packages/react/src/lib/         (.ts)       -> components/lib/  (.jsx + .d.ts)
-     packages/react/src/components/  (.prompt.md)-> components/  (.prompt.md)
-     examples/cards/                 (.card.html)-> components/<family>/
+     packages/react/src/   (.ts/.tsx)            -> components/  (.jsx + .d.ts)
+     packages/react/src/   (.css)                -> components/  (.css)
+     packages/react/src/   (.prompt.md)          -> components/  (.prompt.md)
+     examples/cards/       (.card.html)          -> components/<family>/
+
+   The src mirror strips one leading 'components/' segment:
+     src/components/<f>/X.tsx  -> components/<f>/X.jsx
+     src/lib/x.ts              -> components/lib/x.jsx
+     src/locale/x.ts           -> components/locale/x.jsx
+     src/index.ts              -> components/index.jsx
+     src/styles.css            -> components/styles.css
+
+   Relative import specifiers are rewritten by resolving them in source space
+   and re-relativizing in mirror space, so any src subtree (lib/, locale/,
+   hooks/, ...) is covered without a hardcoded path list. Extensionless
+   specifiers get '.jsx' in the .jsx mirror so it resolves in a plain
+   ES-module context; .d.ts mirrors keep TypeScript-style extensionless
+   specifiers.
 
    Everything under components/ and tokens/ is generated output. Never edit it
    by hand — change the source and re-run `pnpm generate`. CI fails the build
@@ -40,6 +54,7 @@ const GENERATED_DOC = (src) =>
 
 const written = new Set();
 const rel = (p) => relative(ROOT, p).split('\\').join('/');
+const posix = (p) => p.split('\\').join('/');
 
 function write(outPath, text) {
   mkdirSync(dirname(outPath), { recursive: true });
@@ -56,25 +71,48 @@ function listFiles(dir, exts) {
     .map((p) => join(dir, p));
 }
 
-/* Rewrite relative import specifiers for the mirrored tree.
-   - '../../lib/x' (src/components/<family>/ -> src/lib/) becomes '../lib/x'
-     because components/<family>/ -> components/lib/.
-   - Extensionless relative specifiers get '.jsx' so the mirror resolves in
-     a plain ES-module context. */
-function rewriteImports(code) {
-  return code.replace(/(from\s+['"])(\.{1,2}\/[^'"]+)(['"])/g, (match, pre, spec, post) => {
-    let next = spec.startsWith('../../lib/') ? spec.replace('../../lib/', '../lib/') : spec;
-    if (!/\.[a-z0-9]+$/i.test(next)) next += '.jsx';
-    return pre + next + post;
-  });
+/* Mirror path for a file that lives under SRC_REACT:
+   src/components/<f>/X -> components/<f>/X; any other src subtree keeps its
+   relative path under components/. */
+function mirrorPathForSrc(absPath) {
+  let r = posix(relative(SRC_REACT, absPath));
+  if (r.startsWith('components/')) r = r.slice('components/'.length);
+  return join(OUT_COMPONENTS, r);
 }
 
-/* Only the lib path fix for .d.ts (extensionless is fine for TS resolution). */
-function rewriteDtsImports(code) {
-  return code.replace(/(from\s+['"])(\.{1,2}\/[^'"]+)(['"])/g, (match, pre, spec, post) => {
-    const next = spec.startsWith('../../lib/') ? spec.replace('../../lib/', '../lib/') : spec;
-    return pre + next + post;
-  });
+/* Rewrite one relative specifier from source space into mirror space.
+   Resolves the specifier against the source file's directory (probing
+   extensions and directory index files like a bundler), maps the hit to its
+   mirror path, then re-relativizes from the emitted file's directory.
+   - jsxExt=true: the mirrored .ts/.tsx target keeps a '.jsx' suffix so a plain
+     ES-module resolver can follow it.
+   - jsxExt=false (.d.ts): the target keeps the TypeScript convention of an
+     extensionless specifier. */
+function mirrorSpecifier(srcFileAbs, spec, outFileAbs, { jsxExt }) {
+  const base = resolve(dirname(srcFileAbs), spec);
+  const isFile = (p) => existsSync(p) && statSync(p).isFile();
+  const candidates = /\.[a-z0-9]+$/i.test(base)
+    ? [base]
+    : [
+        base,
+        ...['.tsx', '.ts', '.jsx', '.js'].map((ext) => base + ext),
+        ...['index.tsx', 'index.ts', 'index.jsx', 'index.js'].map((name) => join(base, name)),
+      ];
+  const hit = candidates.find(isFile);
+  if (!hit) return spec; // outside src/ — left for check-mirror.mjs to flag
+  let target = mirrorPathForSrc(hit);
+  if (jsxExt && /\.(tsx?|jsx?)$/.test(target)) target = target.replace(/\.[^.]+$/, '.jsx');
+  if (!jsxExt) target = target.replace(/\.(tsx?|jsx?)$/, '');
+  let out = posix(relative(dirname(outFileAbs), target));
+  if (!out.startsWith('.')) out = './' + out;
+  return out;
+}
+
+function rewriteImports(code, srcFileAbs, outFileAbs, { jsxExt }) {
+  return code.replace(
+    /(from\s+['"]|import\s*['"])(\.{1,2}\/[^'"]+)(['"])/g,
+    (match, pre, spec, post) => pre + mirrorSpecifier(srcFileAbs, spec, outFileAbs, { jsxExt }) + post,
+  );
 }
 
 // --- 1. tokens/ <- packages/tokens/css/ -------------------------------------
@@ -85,22 +123,17 @@ for (const src of listFiles(SRC_TOKENS, ['.css'])) {
   countTokens += 1;
 }
 
-// --- 2. components/**/*.jsx <- transpile packages/react/src ------------------
-// Mirrors src/components/** -> components/** and src/lib/** -> components/lib/**.
+// --- 2. components/**/*.jsx <- transpile every src .ts/.tsx ------------------
+// Mirrors all of packages/react/src (components/, lib/, locale/, index.ts, and
+// any subtree added later) so generated imports can never point at a subtree
+// the mirror does not cover.
 let countJsx = 0;
-const transpileTargets = [
-  ...listFiles(join(SRC_REACT, 'components'), ['.ts', '.tsx']).map((src) => ({
-    src,
-    out: join(OUT_COMPONENTS, relative(join(SRC_REACT, 'components'), src)),
-  })),
-  ...listFiles(join(SRC_REACT, 'lib'), ['.ts']).map((src) => ({
-    src,
-    out: join(OUT_COMPONENTS, 'lib', basename(src)),
-  })),
-].filter(({ src }) => !src.endsWith('.d.ts') && !src.includes('.test.'));
+const srcCodeFiles = listFiles(SRC_REACT, ['.ts', '.tsx']).filter(
+  (src) => !src.endsWith('.d.ts') && !src.includes('.test.'),
+);
 
-for (const { src, out } of transpileTargets) {
-  const outPath = out.replace(/\.tsx?$/, '.jsx');
+for (const src of srcCodeFiles) {
+  const outPath = mirrorPathForSrc(src).replace(/\.tsx?$/, '.jsx');
   const { outputText } = ts.transpileModule(readFileSync(src, 'utf8'), {
     fileName: basename(src),
     compilerOptions: {
@@ -109,17 +142,27 @@ for (const { src, out } of transpileTargets) {
       module: ts.ModuleKind.ESNext,
     },
   });
-  write(outPath, GENERATED_JS(rel(src)) + rewriteImports(outputText));
+  write(outPath, GENERATED_JS(rel(src)) + rewriteImports(outputText, src, outPath, { jsxExt: true }));
   countJsx += 1;
 }
 
-// --- 3. components/**/*.d.ts <- real declaration emit -------------------------
-const rootNames = [
-  ...listFiles(join(SRC_REACT, 'components'), ['.ts', '.tsx']),
-  ...listFiles(join(SRC_REACT, 'lib'), ['.ts']),
-]
-  .filter((f) => !f.includes('.test.') && !f.endsWith('.d.ts'))
-  .concat([join(SRC_REACT, 'index.ts')]);
+// --- 3. components/**/*.css + .prompt.md <- src copies -----------------------
+let countCss = 0;
+for (const src of listFiles(SRC_REACT, ['.css'])) {
+  const out = mirrorPathForSrc(src);
+  write(out, GENERATED_CSS(rel(src)) + readFileSync(src, 'utf8'));
+  countCss += 1;
+}
+
+let countPrompts = 0;
+for (const src of listFiles(SRC_REACT, ['.prompt.md'])) {
+  const out = mirrorPathForSrc(src);
+  write(out, GENERATED_DOC(rel(src)) + readFileSync(src, 'utf8'));
+  countPrompts += 1;
+}
+
+// --- 4. components/**/*.d.ts <- real declaration emit -------------------------
+const rootNames = srcCodeFiles.slice();
 
 const emitted = {};
 const program = ts.createProgram(rootNames, {
@@ -149,23 +192,14 @@ if (result.emitSkipped || diagnostics.length > 0) {
 
 let countDts = 0;
 for (const [fileName, text] of Object.entries(emitted)) {
-  const srcRel = relative('__gen__', fileName); // mirrors src/ layout: components/<f>/X.d.ts, lib/x.d.ts
-  if (srcRel === 'index.d.ts') continue; // root barrel has no mirror home
+  const srcRel = relative('__gen__', fileName); // mirrors src/ layout
   if (srcRel.includes('.test.')) continue;
-  const mirrorRel = srcRel.startsWith('components/') ? srcRel.slice('components/'.length) : srcRel;
-  const out = join(OUT_COMPONENTS, mirrorRel);
   const srcRelTs = srcRel.replace(/\.d\.ts$/, '');
-  const srcFile = ['.tsx', '.ts'].map((ext) => join(SRC_REACT, srcRelTs + ext)).find(existsSync);
-  write(out, GENERATED_JS(srcFile ? rel(srcFile) : 'packages/react/src/' + srcRel) + rewriteDtsImports(text));
+  const srcFile = join(SRC_REACT, srcRelTs + '.tsx');
+  const src = existsSync(srcFile) ? srcFile : join(SRC_REACT, srcRelTs + '.ts');
+  const out = mirrorPathForSrc(join(SRC_REACT, srcRelTs + '.d.ts'));
+  write(out, GENERATED_JS(rel(src)) + rewriteImports(text, src, out, { jsxExt: false }));
   countDts += 1;
-}
-
-// --- 4. components/**/*.prompt.md <- colocated sources in packages/react ----
-let countPrompts = 0;
-for (const src of listFiles(join(SRC_REACT, 'components'), ['.prompt.md'])) {
-  const out = join(OUT_COMPONENTS, relative(join(SRC_REACT, 'components'), src));
-  write(out, GENERATED_DOC(rel(src)) + readFileSync(src, 'utf8'));
-  countPrompts += 1;
 }
 
 // --- 5. components/<family>/*.card.html <- examples/cards/ --------------------
@@ -200,5 +234,5 @@ prune(OUT_TOKENS);
 
 console.log(
   `generate-legacy: ${countTokens} token css, ${countJsx} jsx, ${countDts} d.ts, ` +
-    `${countPrompts} prompt.md, ${countCards} card.html (${removed} stale removed)`,
+    `${countCss} css, ${countPrompts} prompt.md, ${countCards} card.html (${removed} stale removed)`,
 );

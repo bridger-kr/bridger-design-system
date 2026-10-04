@@ -39,6 +39,13 @@ jobs:
             exit 1
           fi
 
+      # The mirror must resolve as a standalone consumer surface: every
+      # relative specifier resolves on disk, every bare specifier is declared
+      # in root dependencies, and esbuild bundles it with declared-only
+      # externals (workspace hoisting cannot mask a missing dep).
+      - name: Verify generated mirror resolves
+        run: pnpm verify:mirror
+
       - name: Build
         run: pnpm build
 

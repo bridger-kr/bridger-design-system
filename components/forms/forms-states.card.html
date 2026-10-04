@@ -1,0 +1,104 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: examples/cards/forms-states.card.html. Regenerate: pnpm generate. -->
+<!-- @dsCard group="Forms" viewport="700x560" name="Control states" subtitle="Tabs · Checkbox · Radio · Switch · Menu — selected/checked/highlighted via the component stylesheet (data-checked, aria-selected, data-highlighted)" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 30px; align-items: start; }
+  .col { display: grid; gap: 14px; align-content: start; }
+  .lab { font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); }
+  .note { font-size: 12px; color: var(--dt-muted); line-height: 1.5; }
+  /* This page replicates the exact DOM the generated components render
+     (class names, inline styles, and base-ui state attributes) so every
+     visible state here comes from components/styles.css state rules —
+     [aria-selected], [data-checked], [data-highlighted], :focus-visible —
+     not from page-local styles. */
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="col">
+    <span class="lab">Tabs — underline</span>
+    <div class="dt-tabs-list dt-tabs-list-underline" role="tablist" style="display:flex;gap:4px;border-bottom:1px solid var(--dt-border)">
+      <button class="dt-tabs-tab dt-tabs-tab-underline" role="tab" aria-selected="false" tabindex="-1" style="position:relative;display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;cursor:pointer;padding:10px 12px;margin-bottom:-1px;font-size:13px;font-weight:600;color:var(--dt-muted);border-bottom:2px solid transparent;transition:color var(--dt-motion-fast)">개요<span style="font-family:var(--dt-font-mono);font-size:11px;color:var(--dt-muted)">4</span></button>
+      <button class="dt-tabs-tab dt-tabs-tab-underline" role="tab" aria-selected="true" tabindex="0" style="position:relative;display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;cursor:pointer;padding:10px 12px;margin-bottom:-1px;font-size:13px;font-weight:600;color:var(--dt-muted);border-bottom:2px solid transparent;transition:color var(--dt-motion-fast)">엔드포인트<span style="font-family:var(--dt-font-mono);font-size:11px;color:var(--dt-muted)">12</span></button>
+      <button class="dt-tabs-tab dt-tabs-tab-underline" role="tab" aria-selected="false" tabindex="-1" style="position:relative;display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;cursor:pointer;padding:10px 12px;margin-bottom:-1px;font-size:13px;font-weight:600;color:var(--dt-muted);border-bottom:2px solid transparent;transition:color var(--dt-motion-fast)">로그</button>
+    </div>
+
+    <span class="lab">Tabs — pill</span>
+    <div class="dt-tabs-list dt-tabs-list-pill" role="tablist" style="display:flex;gap:4px;border-bottom:0">
+      <button class="dt-tabs-tab dt-tabs-tab-pill" role="tab" aria-selected="false" tabindex="-1" style="display:inline-flex;align-items:center;background:transparent;border:none;cursor:pointer;padding:8px 14px;font-size:13px;font-weight:600;color:var(--dt-muted);border-radius:var(--dt-radius-md)">일간</button>
+      <button class="dt-tabs-tab dt-tabs-tab-pill" role="tab" aria-selected="true" tabindex="0" style="display:inline-flex;align-items:center;background:transparent;border:none;cursor:pointer;padding:8px 14px;font-size:13px;font-weight:600;color:var(--dt-muted);border-radius:var(--dt-radius-md)">주간</button>
+      <button class="dt-tabs-tab dt-tabs-tab-pill" role="tab" aria-selected="false" tabindex="-1" style="display:inline-flex;align-items:center;background:transparent;border:none;cursor:pointer;padding:8px 14px;font-size:13px;font-weight:600;color:var(--dt-muted);border-radius:var(--dt-radius-md)">월간</button>
+    </div>
+
+    <span class="lab">Menu — highlighted / danger</span>
+    <div class="dt-menu-popup" role="menu" style="display:grid;gap:2px;max-width:240px;padding:6px;background:var(--dt-surface);border:1px solid var(--dt-border);border-radius:var(--dt-radius-md);box-shadow:var(--dt-ring),var(--dt-shadow-md)">
+      <button class="dt-menu-item" role="menuitem" style="display:flex;align-items:center;gap:9px;width:100%;box-sizing:border-box;background:transparent;border:0;border-radius:var(--dt-radius-sm);padding:8px 10px;font-size:13px;font-weight:500;color:var(--dt-ink);text-align:left;cursor:pointer">이름 바꾸기</button>
+      <button class="dt-menu-item" role="menuitem" data-highlighted style="display:flex;align-items:center;gap:9px;width:100%;box-sizing:border-box;background:transparent;border:0;border-radius:var(--dt-radius-sm);padding:8px 10px;font-size:13px;font-weight:500;color:var(--dt-ink);text-align:left;cursor:pointer">복제</button>
+      <button class="dt-menu-item" role="menuitem" data-highlighted data-danger style="display:flex;align-items:center;gap:9px;width:100%;box-sizing:border-box;background:transparent;border:0;border-radius:var(--dt-radius-sm);padding:8px 10px;font-size:13px;font-weight:500;color:var(--dt-danger);text-align:left;cursor:pointer">삭제</button>
+    </div>
+  </section>
+
+  <section class="col">
+    <span class="lab">Checkbox — unchecked / checked</span>
+    <div style="display:flex;gap:18px;align-items:center">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <button type="button" class="dt-checkbox-control" role="checkbox" aria-checked="false" data-unchecked style="width:var(--dt-space-5);height:var(--dt-space-5);flex:0 0 auto;display:grid;place-items:center;border:0;background:transparent;padding:0;cursor:pointer">
+          <span class="dt-checkbox-box" style="width:18px;height:18px;border-radius:5px;display:grid;place-items:center;background:var(--dt-surface);border:1.5px solid var(--dt-border-strong);transition:background-color var(--dt-motion-fast),border-color var(--dt-motion-fast)"></span>
+        </button>
+        <span style="font-size:13px;color:var(--dt-ink)">알림</span>
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <button type="button" class="dt-checkbox-control" role="checkbox" aria-checked="true" data-checked style="width:var(--dt-space-5);height:var(--dt-space-5);flex:0 0 auto;display:grid;place-items:center;border:0;background:transparent;padding:0;cursor:pointer">
+          <span class="dt-checkbox-box" style="width:18px;height:18px;border-radius:5px;display:grid;place-items:center;background:var(--dt-surface);border:1.5px solid var(--dt-border-strong);transition:background-color var(--dt-motion-fast),border-color var(--dt-motion-fast)">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l4.5 4.5L19 7" stroke="var(--dt-accent-ink)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+        </button>
+        <span style="font-size:13px;color:var(--dt-ink)">리포트</span>
+      </label>
+    </div>
+    <span class="note">checked = accent 채움은 components/styles.css의 [data-checked] 규칙이 제공</span>
+
+    <span class="lab">Radio — unchecked / checked</span>
+    <div class="dt-radio-group" role="radiogroup" style="display:flex;gap:18px;align-items:center">
+      <label class="dt-radio-option" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <button type="button" class="dt-radio-root" role="radio" aria-checked="false" data-unchecked style="width:var(--dt-space-5);height:var(--dt-space-5);flex:0 0 auto;display:grid;place-items:center;border:0;background:transparent;padding:0;cursor:pointer">
+          <span class="dt-radio-control" style="width:18px;height:18px;flex:0 0 auto;border-radius:9999px;display:grid;place-items:center;background:var(--dt-surface);border:1.5px solid var(--dt-border-strong);transition:border-color var(--dt-motion-fast)"></span>
+        </button>
+        <span style="font-size:13px;color:var(--dt-ink)">draft</span>
+      </label>
+      <label class="dt-radio-option" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <button type="button" class="dt-radio-root" role="radio" aria-checked="true" data-checked style="width:var(--dt-space-5);height:var(--dt-space-5);flex:0 0 auto;display:grid;place-items:center;border:0;background:transparent;padding:0;cursor:pointer">
+          <span class="dt-radio-control" style="width:18px;height:18px;flex:0 0 auto;border-radius:9999px;display:grid;place-items:center;background:var(--dt-surface);border:1.5px solid var(--dt-border-strong);transition:border-color var(--dt-motion-fast)">
+            <span class="dt-radio-indicator" style="width:9px;height:9px;border-radius:9999px;background:var(--dt-accent);display:block"></span>
+          </span>
+        </button>
+        <span style="font-size:13px;color:var(--dt-ink)">live</span>
+      </label>
+    </div>
+
+    <span class="lab">Switch — off / on</span>
+    <div style="display:flex;gap:18px;align-items:center">
+      <button type="button" class="dt-switch-control" role="switch" aria-checked="false" data-unchecked style="position:relative;width:var(--dt-space-5);height:var(--dt-space-5);flex:0 0 auto;border-radius:9999px;border:none;padding:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center">
+        <span aria-hidden="true" class="dt-switch-track" style="position:absolute;left:1px;width:38px;height:22px;border-radius:9999px;background:var(--dt-border-strong);transition:background-color var(--dt-motion-fast)"></span>
+        <span class="dt-switch-thumb" style="position:relative;width:18px;height:18px;margin-left:3px;border-radius:9999px;background:var(--dt-surface);box-shadow:0 1px 2px color-mix(in srgb,var(--dt-ink-strong) 25%,transparent);transition:transform var(--dt-motion-fast)"></span>
+      </button>
+      <button type="button" class="dt-switch-control" role="switch" aria-checked="true" data-checked style="position:relative;width:var(--dt-space-5);height:var(--dt-space-5);flex:0 0 auto;border-radius:9999px;border:none;padding:0;background:transparent;cursor:pointer;display:inline-flex;align-items:center">
+        <span aria-hidden="true" class="dt-switch-track" style="position:absolute;left:1px;width:38px;height:22px;border-radius:9999px;background:var(--dt-border-strong);transition:background-color var(--dt-motion-fast)"></span>
+        <span class="dt-switch-thumb" style="position:relative;width:18px;height:18px;margin-left:3px;border-radius:9999px;background:var(--dt-surface);transition:transform var(--dt-motion-fast)"></span>
+      </button>
+      <span class="note">on = accent track + thumb 이동</span>
+    </div>
+
+    <span class="lab">Focus-visible</span>
+    <span class="note">탭 키로 checkbox/radio/switch에 포커스하면 components/styles.css의 :focus-visible 규칙이 --dt-shadow-focus 링을 표시한다.</span>
+  </section>
+
+</div>
+</body>
+</html>

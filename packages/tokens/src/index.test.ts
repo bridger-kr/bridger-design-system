@@ -36,6 +36,15 @@ const canonicalCssFiles = [
   'spacing.css',
   'typography.css',
 ];
+const rootStylesEntrypoint = readFileSync(new URL('../../../styles.css', import.meta.url), 'utf8');
+const componentStylesMirror = readFileSync(
+  new URL('../../../components/styles.css', import.meta.url),
+  'utf8',
+);
+const componentStylesSource = readFileSync(
+  new URL('../../react/src/styles.css', import.meta.url),
+  'utf8',
+);
 
 function findMatchingBrace(css: string, openIndex: number): number {
   let depth = 0;
@@ -189,6 +198,16 @@ describe('@bridger-kr/tokens', () => {
     for (const [name, value] of darkContract) {
       expect(value, `${name} restates the light value verbatim`).not.toBe(lightDefaultContract.get(name));
     }
+  });
+
+  it('keeps the generated component stylesheet mirror byte-identical and wired into the root entrypoint', () => {
+    // components/styles.css mirrors packages/react/src/styles.css — it carries
+    // the selected/checked/focus state rules (.dt-* [data-checked] etc.) that
+    // the token files alone do not provide.
+    expect(componentStylesMirror).toContain('GENERATED FILE — DO NOT EDIT');
+    expect(componentStylesMirror.replace(/^\/\*[\s\S]*?\*\/\s*/, '')).toBe(componentStylesSource);
+    expect(rootStylesEntrypoint).toContain("@import url('tokens/index.css')");
+    expect(rootStylesEntrypoint).toContain("@import url('components/styles.css')");
   });
 
   it('uses accessible persimmon identity and neutral primary-action roles', () => {

@@ -2,9 +2,14 @@
    Bridger Design System — global CSS entrypoint
    Consumers link this single file.
 
-   tokens/ is a generated mirror of packages/tokens/css/ — the
-   canonical manifest lives in packages/tokens/css/index.css
-   (regenerate with `pnpm generate`; see scripts/generate-legacy.mjs).
+   Both imports are GENERATED mirrors — do not edit them:
+     tokens/index.css      <- packages/tokens/css/     (canonical manifest:
+                                                       packages/tokens/css/index.css)
+     components/styles.css <- packages/react/src/styles.css
+                                                       (component + state rules:
+                                                       selected/checked/focus)
+   Regenerate with `pnpm generate` (see scripts/generate-legacy.mjs).
 ============================================================ */
 
 @import url('tokens/index.css');
+@import url('components/styles.css');
