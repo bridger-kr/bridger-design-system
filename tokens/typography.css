@@ -1,4 +1,10 @@
-@import url('../packages/tokens/css/contract.css');
+/* ============================================================
+   GENERATED FILE — DO NOT EDIT.
+   Source: packages/tokens/css/typography.css
+   Regenerate: pnpm generate
+   ============================================================ */
+
+@import url('./contract.css');
 
 .font-tabular {
   font-feature-settings: var(--dt-tabular);

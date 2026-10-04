@@ -77,9 +77,9 @@ Tokens Studio 하단 **Export** → **Export to Figma (Variables)**.
 
 ## 3. 컴포넌트별 스펙 (코드 1:1 매핑)
 
-아래 수치는 실제 소스(`tokens/base.css`, `components/`)에서 그대로 뽑은 값이다.
+아래 수치는 실제 소스(`packages/tokens/css/base.css`, `packages/react/src/components/`)에서 그대로 뽑은 값이다.
 
-### Button (`components/core/Button.jsx` + `.btn-*`)
+### Button (`packages/react/src/components/core/Button.tsx` + `.btn-*`)
 Component Set 속성 2개: **Variant**(primary/secondary/ghost) × **Size**(sm/md/lg)
 
 | Variant | 배경 | 글자색 | hover |
@@ -98,7 +98,7 @@ Component Set 속성 2개: **Variant**(primary/secondary/ghost) × **Size**(sm/m
 - disabled: opacity 0.55 (별도 boolean variant로 추가 권장)
 - icon/iconRight 슬롯: 좌우 24px 인스턴스 스왑 슬롯으로
 
-### Badge (`components/core/Badge.jsx` + `.badge-*`)
+### Badge (`packages/react/src/components/core/Badge.tsx` + `.badge-*`)
 Variant: neutral / accent / info / success / warning / danger, boolean `dot`
 
 - padding 3 8, font-size 12, weight 600, radius `radius/sm` (3px), gap 6
@@ -106,7 +106,7 @@ Variant: neutral / accent / info / success / warning / danger, boolean `dot`
 - neutral만 예외: bg `surface/surface-sunken`, text `ink/muted-strong`, border `border/border-strong`
 - dot: 6×6 원, fill currentColor(=글자색과 동일 variable)
 
-### StatusPill (`components/core/StatusPill.jsx`)
+### StatusPill (`packages/react/src/components/core/StatusPill.tsx`)
 Variant: connected/success, reconnecting/warning, disconnected/danger, info, idle + boolean `pulse`
 
 - radius `radius/full`, padding 4 10, font-size 12, weight 600, gap 6
@@ -158,7 +158,7 @@ Figma Variables가 못 담는 것들. 프로토타입/Effect로 처리:
 ## 부록: Light/Dark 어느 쪽이 기본인가?
 
 소스가 충돌한다:
-- `readme.md` / `tokens/colors.css` → **Light가 기본** (`#ec5e1f`), Dark는 parity
+- `readme.md` / `packages/tokens/css/colors.css` → **Light가 기본** (`#ec5e1f`), Dark는 parity
 - `SKILL.md` → "Dark가 기본" (`#ec5e1f`)
 
 readme가 명시적으로 *"We build on the **codebase contract**, not the Figma exploration"*

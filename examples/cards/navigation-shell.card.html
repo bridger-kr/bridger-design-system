@@ -1,0 +1,136 @@
+<!-- @dsCard group="Navigation" viewport="820x560" name="Shell · command · steps" subtitle="Sidebar · CommandPalette · Stepper — the console's wayfinding" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 24px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  .row { display: grid; grid-template-columns: 232px 1fr; gap: 24px; align-items: start; }
+  .col { display: grid; gap: 22px; }
+  .lbl { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+  .lbl::before { content: ""; width: 5px; height: 5px; background: var(--dt-accent); }
+
+  /* Sidebar */
+  .side { width: 232px; height: 420px; display: flex; flex-direction: column; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); overflow: hidden; }
+  .side .brand { padding: 16px 18px; border-bottom: 1px solid var(--dt-border); font-weight: 800; font-size: 18px; letter-spacing: -0.03em; color: var(--dt-ink-strong); }
+  .side .brand .d { color: var(--dt-accent); }
+  .side .body { flex: 1; padding: 12px 10px; display: grid; gap: 16px; align-content: start; }
+  .sec-h { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--dt-muted); padding: 4px 10px 6px; }
+  .nav-i { position: relative; display: flex; align-items: center; gap: 11px; padding: 8px 10px 8px 12px; border-radius: var(--dt-radius-md); text-decoration: none; font-size: 13.5px; font-weight: 500; color: var(--dt-muted-strong); }
+  .nav-i .ic { display: inline-flex; color: var(--dt-muted); flex: 0 0 auto; }
+  .nav-i .t { flex: 1; }
+  .nav-i .b { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .nav-i.on { background: var(--dt-tint-accent); color: var(--dt-accent); font-weight: 600; }
+  .nav-i.on .ic, .nav-i.on .b { color: var(--dt-accent); }
+  .nav-i.on::before { content: ""; position: absolute; left: 0; top: 7px; bottom: 7px; width: 3px; border-radius: 2px; background: var(--dt-accent); }
+
+  /* CommandPalette */
+  .cmd { background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-xl); box-shadow: var(--dt-shadow-xl); overflow: hidden; }
+  .cmd .search { display: flex; align-items: center; gap: 11px; padding: 14px 16px; border-bottom: 1px solid var(--dt-border); }
+  .cmd .search input { flex: 1; border: none; outline: none; background: transparent; font-size: 15px; font-family: inherit; color: var(--dt-ink-strong); }
+  .cmd .search .ic { color: var(--dt-muted); display: inline-flex; }
+  kbd { font-family: var(--dt-font-mono); font-size: 11px; font-weight: 600; color: var(--dt-muted); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-sm); padding: 2px 7px; }
+  .cmd .res { padding: 6px; }
+  .cmd .ch { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--dt-muted); padding: 8px 10px 5px; }
+  .ci { display: flex; align-items: center; gap: 11px; padding: 9px 10px; border-radius: var(--dt-radius-md); }
+  .ci .ic { display: inline-flex; color: var(--dt-muted); flex: 0 0 auto; }
+  .ci .t { flex: 1; font-size: 13.5px; font-weight: 500; color: var(--dt-ink-strong); }
+  .ci .t .m { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); margin-left: 8px; }
+  .ci.on { background: var(--dt-tint-accent); }
+  .ci.on .t, .ci.on .ic { color: var(--dt-accent); }
+  .ci.on .t { font-weight: 600; }
+  .cmd .foot { border-top: 1px solid var(--dt-border); padding: 8px 14px; font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+
+  /* Stepper */
+  .stp { display: flex; align-items: flex-start; }
+  .step { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+  .marker { display: flex; align-items: center; gap: 10px; width: 100%; }
+  .mk { flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center; border-radius: var(--dt-radius-sm); font-family: var(--dt-font-mono); font-size: 12px; font-weight: 700; }
+  .mk.done { background: var(--dt-accent); color: #fff; }
+  .mk.cur { background: var(--dt-tint-accent); color: var(--dt-accent); box-shadow: inset 0 0 0 1.5px var(--dt-accent); }
+  .mk.up { background: var(--dt-surface-sunken); color: var(--dt-muted); box-shadow: inset 0 0 0 1px var(--dt-border-strong); }
+  .conn { height: 2px; flex: 1; }
+  .conn.done { background: var(--dt-accent); }
+  .conn.up { background: var(--dt-border-strong); }
+  .stxt { padding: 10px 14px 0 0; }
+  .stxt .st { font-size: 13.5px; font-weight: 500; color: var(--dt-muted); }
+  .stxt.on .st { font-weight: 650; color: var(--dt-ink-strong); }
+  .stxt .sd { font-size: 12px; color: var(--dt-muted); margin-top: 3px; line-height: 1.45; }
+</style>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
+</head>
+<body>
+<div class="row">
+  <div>
+    <div class="lbl">Sidebar / NavRail</div>
+    <nav class="side">
+      <div class="brand">Bridger<span class="d">.</span></div>
+      <div class="body">
+        <div>
+          <div class="sec-h">운영</div>
+          <a class="nav-i on"><span class="ic" data-ico="layout-dashboard"></span><span class="t">대시보드</span></a>
+          <a class="nav-i"><span class="ic" data-ico="boxes"></span><span class="t">API 카탈로그</span><span class="b">230</span></a>
+          <a class="nav-i"><span class="ic" data-ico="wrench"></span><span class="t">내 도구</span><span class="b">42</span></a>
+          <a class="nav-i"><span class="ic" data-ico="file-clock"></span><span class="t">실행 로그</span></a>
+        </div>
+        <div>
+          <div class="sec-h">설정</div>
+          <a class="nav-i"><span class="ic" data-ico="key-round"></span><span class="t">API 키</span></a>
+          <a class="nav-i"><span class="ic" data-ico="gauge"></span><span class="t">사용량</span></a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="col">
+    <div>
+      <div class="lbl">CommandPalette · ⌘K</div>
+      <div class="cmd">
+        <div class="search"><span class="ic" data-ico="search" data-sz="18"></span><input value="weather" readonly><kbd>⌘K</kbd></div>
+        <div class="res">
+          <div class="ch">도구</div>
+          <div class="ci on"><span class="ic" data-ico="wrench"></span><span class="t">weather_getVilageFcst<span class="m">/v1/weather</span></span><kbd>↵</kbd></div>
+          <div class="ci"><span class="ic" data-ico="wrench"></span><span class="t">weather_getUltraSrtNcst<span class="m">/v1/weather/ultra</span></span></div>
+          <div class="ch">액션</div>
+          <div class="ci"><span class="ic" data-ico="plus"></span><span class="t">새 API 등록</span><kbd>⌘N</kbd></div>
+        </div>
+        <div class="foot">↑↓ 이동 · ↵ 실행 · esc 닫기</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="lbl">Stepper · 온보딩 단계</div>
+      <div class="stp">
+        <div class="step">
+          <div class="marker"><span class="mk done" data-ico="check"></span><span class="conn done"></span></div>
+          <div class="stxt"><div class="st">API 선택</div><div class="sd">공공데이터 카탈로그</div></div>
+        </div>
+        <div class="step">
+          <div class="marker"><span class="mk done" data-ico="check"></span><span class="conn done"></span></div>
+          <div class="stxt"><div class="st">키 등록</div><div class="sd">service_key 연결</div></div>
+        </div>
+        <div class="step">
+          <div class="marker"><span class="mk cur">3</span><span class="conn up"></span></div>
+          <div class="stxt on"><div class="st">도구 노출</div><div class="sd">MCP·REST 변환</div></div>
+        </div>
+        <div class="step">
+          <div class="marker"><span class="mk up">4</span></div>
+          <div class="stxt"><div class="st">테스트</div><div class="sd">응답 검증</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const map = { 'layout-dashboard':'LayoutDashboard', boxes:'Boxes', wrench:'Wrench', 'file-clock':'FileClock', 'key-round':'KeyRound', gauge:'Gauge', search:'Search', plus:'Plus', check:'Check' };
+  document.querySelectorAll('[data-ico]').forEach((el) => {
+    const g = window.lucide[map[el.dataset.ico]]; if (!g) return;
+    const sz = el.dataset.sz ? +el.dataset.sz : (el.classList.contains('mk') ? 14 : 16);
+    const n = window.lucide.createElement(g);
+    n.setAttribute('width', sz); n.setAttribute('height', sz); n.setAttribute('stroke-width', 2);
+    el.appendChild(n);
+  });
+</script>
+</body>
+</html>

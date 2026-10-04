@@ -1,15 +1,17 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Dialog.tsx
+// Regenerate: pnpm generate
 
+import type { ReactNode } from 'react';
 export interface DialogProps {
-  open: boolean;
-  onClose?: () => void;
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  children?: React.ReactNode;
-  /** Footer actions (right-aligned), usually Buttons. */
-  footer?: React.ReactNode;
-  width?: number;
+    open: boolean;
+    onClose?: () => void;
+    title?: ReactNode;
+    description?: ReactNode;
+    children?: ReactNode;
+    footer?: ReactNode;
+    'aria-label'?: string;
+    width?: number;
 }
-
 /** Modal dialog with overlay, Esc/backdrop close, and a footer action bar. */
-export function Dialog(props: DialogProps): React.JSX.Element | null;
+export declare function Dialog({ open, onClose, title, description, children, footer, 'aria-label': ariaLabel, width }: DialogProps): import("react").JSX.Element;

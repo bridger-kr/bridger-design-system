@@ -1,13 +1,21 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Toast.tsx
+// Regenerate: pnpm generate
 
+import type { CSSProperties, ReactNode } from 'react';
+declare const DOT: {
+    info: string;
+    success: string;
+    warning: string;
+    danger: string;
+};
 export interface ToastProps {
-  tone?: 'info' | 'success' | 'warning' | 'danger';
-  title?: React.ReactNode;
-  message?: React.ReactNode;
-  action?: React.ReactNode;
-  onDismiss?: () => void;
-  style?: React.CSSProperties;
+    tone?: keyof typeof DOT;
+    title?: ReactNode;
+    message?: ReactNode;
+    action?: ReactNode;
+    onDismiss?: () => void;
+    style?: CSSProperties;
 }
-
-/** Floating toast card with a status dot. Place in a fixed corner stack. */
-export function Toast(props: ToastProps): React.JSX.Element;
+export declare function Toast({ tone, title, message, action, onDismiss, style }: ToastProps): import("react").JSX.Element;
+export {};

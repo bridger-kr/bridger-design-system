@@ -2,7 +2,7 @@
 
 > 어려운 공공 API를 하나로 이어주는 서비스 — *Bridger connects scattered Korean public-data APIs into one.*
 
-Bridger (브릿저, operated under the **datari** infrastructure brand) is a managed
+Bridger (브릿저) is a managed
 gateway that connects Korean public-data OpenAPI services to Claude, ChatGPT,
 MCP clients, and server-side REST callers through **one** managed endpoint. It
 handles the hard parts of public data — service-key registration, response
@@ -69,6 +69,7 @@ npm). See [`packages/figma-plugin/store-assets/PUBLISH.md`](packages/figma-plugi
 
 ```sh
 pnpm install
+pnpm generate     # regenerate the root mirror (components/ + tokens/) from packages/
 pnpm build        # build all packages
 pnpm typecheck
 pnpm test
@@ -87,11 +88,11 @@ Two surfaces share one token contract:
 
 | Surface | What it is | Tone |
 | --- | --- | --- |
-| **Console / Portal** (`portal.datari.kr`) | The core product. Dashboard, government-API catalog, tool list, execution logs, API keys, usage. A dense, scannable operations console. | Quiet, tabular, work-focused |
-| **Landing** (`datari.kr`) | Korean-first marketing site (English under `/en`). Cinematic hero, tool categories, examples, connector guides. | Confident, technical, still restrained |
+| **Console / Portal** (`portal.bridger.kr`) | The core product. Dashboard, government-API catalog, tool list, execution logs, API keys, usage. A dense, scannable operations console. | Quiet, tabular, work-focused |
+| **Landing** (`bridger.kr`) | Korean-first marketing site (English under `/en`). Cinematic hero, tool categories, examples, connector guides. | Confident, technical, still restrained |
 
-Operational identifiers stay unchanged in copy: `datari.kr`, `api.datari.kr`,
-`mcp.datari.kr/mcp`, `portal.datari.kr`. User-facing brand name is **Bridger**
+Operational identifiers stay unchanged in copy: `bridger.kr`, `api.bridger.kr`,
+`mcp.bridger.kr/mcp`, `portal.bridger.kr`. User-facing brand name is **Bridger**
 or **브릿저**.
 
 ---
@@ -149,7 +150,7 @@ chatter. Buttons are bare verbs: `재시도`, `로그 열기`, `키 등록`, `�
 **Casing.** Korean has no case. For Latin, short technical tokens stay UPPERCASE
 (`MCP`, `REST`, `GET`) and live inside mono chips/badges — never as a decorative
 kicker above a heading. Technical identifiers keep their exact casing
-(`datari.kr`, `data.go.kr`, `service_key`). Numbers use tabular figures.
+(`bridger.kr`, `data.go.kr`, `service_key`). Numbers use tabular figures.
 
 **Mixed script.** Korean labels routinely embed English technical terms inline:
 "MCP 도입 전 API 운영 계층", "OpenAPI 스펙", "서비스키 테스트". This is correct and native — do not translate the technical terms.
@@ -268,12 +269,20 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - **`react/`** (`@bridger-kr/react`) — 61 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
 - **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
-**Root sources** (still consumed by the Figma plugin + examples):
-- `styles.css` — global CSS entrypoint (`@import` list of the token files).
-- `tokens/*.css` — the source-of-truth token CSS. The Figma plugin's `gen-tokens.mjs` reads these.
-- `components/*.jsx` — the original component sources (the published `.tsx` live in `packages/react`).
+**Root files** — the repo-level surface consumed by prototypes and the agent skill:
+- `styles.css` — global CSS entrypoint (delegates to the generated `tokens/index.css`).
+- `tokens/*.css` — **generated** copy of `packages/tokens/css/*.css` (do not edit; regenerate with `pnpm generate`).
+- `components/` — **generated** mirror of `packages/react` (`<family>/<Name>.jsx` + real `.d.ts` + `index.jsx` barrels + `lib/`), plus generated `.prompt.md` and `.card.html`. Do not edit; regenerate with `pnpm generate`.
 - `assets/` — `brand/` (logos, favicon), `agency-logos/` (KMA, MOLIT, BOK, Seoul, data.go.kr), `fonts/` (Pretendard Variable woff2).
 - `readme.md` — this guide. `SKILL.md` — Agent Skill wrapper.
+
+Generated-tree sources (edit these, never the mirror):
+- `packages/react/src/components/<family>/<Name>.tsx` → `components/<family>/<Name>.jsx` + `.d.ts`
+- `packages/react/src/components/<family>/<Name>.prompt.md` → `components/<family>/<Name>.prompt.md`
+- `packages/react/src/lib/*.ts` → `components/lib/*.jsx` + `.d.ts`
+- `packages/tokens/css/*.css` → `tokens/*.css`
+- `examples/cards/<family>[-segment].card.html` → `components/<family>/`
+- `scripts/generate-legacy.mjs` regenerates everything; CI fails if the committed mirror drifts from `pnpm generate`.
 
 **The 60 components**, grouped:
 - **core** — Button, Badge, StatusPill, Card, Input, Tabs, FilterChip (toggleable catalog filter), Chip (inline status and tag), Panel (flat section plane, exported from `core/Surface.tsx`), Section (landing band and console panel anchor).

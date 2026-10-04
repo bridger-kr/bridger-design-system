@@ -6,8 +6,9 @@ that imports the public package barrel; older specimens remain static references
 
 | Path | What it is |
 | --- | --- |
-| `ui_kits/console/` | Full-page recreation of the Bridger portal console (`portal.datari.kr`). Open `index.html` in a browser. |
-| `ui_kits/landing/` | Marketing-site recreation (`datari.kr`). `app.jsx` / `app2.jsx` / `app3.jsx` are iteration variants. |
+| `ui_kits/console/` | Full-page recreation of the Bridger portal console (`portal.bridger.kr`). Open `index.html` in a browser. |
+| `ui_kits/landing/` | Marketing-site recreation (`bridger.kr`). `app.jsx` / `app2.jsx` / `app3.jsx` are iteration variants. |
+| `cards/` | Authored sources for the `components/<family>/*.card.html` specimen pages in the root mirror. Edit here, then run `pnpm generate` — never edit the generated copies. |
 | `ui_kits/primitives/` | Vite-mounted first-use primitive example using the public `@bridger-kr/react` and `@bridger-kr/tokens` exports. It includes light/dark, keyboard focus, hover/press, disabled, and 40/44/48px Button states. |
 | `foundations/` | 13 specimen cards (color, type, spacing, brand) — design-system documentation visuals. |
 | `design-canvas.jsx` | A Figma-like pan/zoom design canvas used to compose specimens. |

@@ -1,32 +1,28 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Tooltip.tsx
+// Regenerate: pnpm generate
 
-/**
- * Tooltip — a small dark label on hover/focus. Wraps a single child trigger.
- * Position: top (default) / bottom / left / right.
- */
+import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
+import { useId, useState } from 'react';
 export function Tooltip({ label, position = 'top', children }) {
-  const [show, setShow] = React.useState(false);
-  const pos = {
-    top:    { bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(-7px)' },
-    bottom: { top: '100%', left: '50%', transform: 'translateX(-50%) translateY(7px)' },
-    left:   { right: '100%', top: '50%', transform: 'translateY(-50%) translateX(-7px)' },
-    right:  { left: '100%', top: '50%', transform: 'translateY(-50%) translateX(7px)' },
-  }[position];
-  return (
-    <span style={{ position: 'relative', display: 'inline-flex' }}
-      onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}
-      onFocus={() => setShow(true)} onBlur={() => setShow(false)}>
-      {children}
-      {show ? (
-        <span role="tooltip" style={{
-          position: 'absolute', zIndex: 60, whiteSpace: 'nowrap', pointerEvents: 'none',
-          padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
-          color: 'var(--dt-bg)', background: 'var(--dt-text-strong)',
-          borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-overlay)',
-          animation: 'dt-tip 120ms var(--dt-ease)', ...pos,
-        }}>{label}</span>
-      ) : null}
-      <style>{`@keyframes dt-tip{from{opacity:0}}`}</style>
-    </span>
-  );
+    const tooltipId = useId();
+    const [open, setOpen] = useState(false);
+    return (<BaseTooltip.Provider>
+      <BaseTooltip.Root open={open} onOpenChange={setOpen}>
+        <BaseTooltip.Trigger render={<span className="dt-tooltip-trigger" style={{ display: 'inline-flex' }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}/>}>
+          {children}
+        </BaseTooltip.Trigger>
+        <BaseTooltip.Portal>
+          <BaseTooltip.Positioner side={position} sideOffset={7} className="dt-tooltip-positioner" style={{ zIndex: 'var(--dt-z-index-popover)' }}>
+            <BaseTooltip.Popup id={tooltipId} role="tooltip" className="dt-tooltip-popup" style={{
+            whiteSpace: 'nowrap', pointerEvents: 'none', padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
+            color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)', borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-md)',
+            transition: 'opacity var(--dt-motion-fast), visibility var(--dt-motion-fast)',
+        }}>
+              {label}
+            </BaseTooltip.Popup>
+          </BaseTooltip.Positioner>
+        </BaseTooltip.Portal>
+      </BaseTooltip.Root>
+    </BaseTooltip.Provider>);
 }

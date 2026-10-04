@@ -1,20 +1,25 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/core/Tabs.tsx
+// Regenerate: pnpm generate
 
+import type { CSSProperties, ReactNode } from 'react';
 export interface TabItem {
-  id: string;
-  label: string;
-  icon?: React.ReactNode;
-  count?: number | string;
+    id: string;
+    label: string;
+    icon?: ReactNode;
+    count?: number | string;
 }
-
 export interface TabsProps {
-  tabs: TabItem[];
-  /** Controlled active tab id. */
-  value?: string;
-  defaultValue?: string;
-  onChange?: (id: string) => void;
-  style?: React.CSSProperties;
+    tabs?: TabItem[];
+    variant?: 'underline' | 'pill';
+    /** Controlled active tab id. */
+    value?: string;
+    defaultValue?: string;
+    onChange?: (id: string) => void;
+    style?: CSSProperties;
 }
-
-/** Underline tab bar; the active tab is marked with a persimmon underline. */
-export function Tabs(props: TabsProps): React.JSX.Element;
+/**
+ * Underline-style tab bar for switching console views. Controlled via
+ * `value` + `onChange`, or uncontrolled with `defaultValue`.
+ */
+export declare function Tabs({ tabs, variant, value, defaultValue, onChange, style }: TabsProps): import("react").JSX.Element;

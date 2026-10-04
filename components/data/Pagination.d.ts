@@ -1,11 +1,13 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/data/Pagination.tsx
+// Regenerate: pnpm generate
 
-export interface PaginationProps {
-  page?: number;
-  pageCount?: number;
-  onChange?: (page: number) => void;
-  style?: React.CSSProperties;
+import type { CSSProperties, HTMLAttributes } from 'react';
+export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onChange' | 'style'> {
+    page?: number;
+    pageCount?: number;
+    onChange?: (page: number) => void;
+    style?: CSSProperties;
 }
-
-/** Page navigation — prev/next + compact numbers with ellipsis. */
-export function Pagination(props: PaginationProps): React.JSX.Element;
+/** Pagination — prev/next plus compact page numbers with an ellipsis. */
+export declare function Pagination({ page, pageCount, onChange, style, ...rest }: PaginationProps): import("react").JSX.Element;

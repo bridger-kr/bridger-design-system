@@ -54,6 +54,13 @@ Component and token rules (pointers, not restatements):
   consumers via `packages/tokens/src/index.ts`. App code consumes the package,
   not the raw CSS files.
 
+<!-- rule:ds:mirror:generated owner:bridger-kr since:2026-10 source:scripts/generate-legacy.mjs -->
+- Root `components/` and `tokens/` are generated mirrors of `packages/`
+  (built by `pnpm generate` / `scripts/generate-legacy.mjs`). Never edit them
+  by hand — change the canonical source and regenerate. CI fails on drift.
+  `.prompt.md` sources are colocated beside each `.tsx` in `packages/react`;
+  `.card.html` specimen sources live in `examples/cards/`.
+
 <!-- rule:ds:react:60-components owner:bridger-kr since:2026-07 source:DESIGN.md#9-component-manifest-and-package-boundary -->
 - `@bridger-kr/react` ships 61 typed components across `core`, `forms`,
   `feedback`, `data`, `navigation`, and `product` families. The barrel at

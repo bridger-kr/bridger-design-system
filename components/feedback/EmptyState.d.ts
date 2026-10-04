@@ -1,12 +1,14 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/EmptyState.tsx
+// Regenerate: pnpm generate
 
+import type { CSSProperties, ReactNode } from 'react';
 export interface EmptyStateProps {
-  icon?: React.ReactNode;
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  action?: React.ReactNode;
-  style?: React.CSSProperties;
+    icon?: ReactNode;
+    title?: ReactNode;
+    description?: ReactNode;
+    action?: ReactNode;
+    style?: CSSProperties;
 }
-
 /** Empty state for lists/tables — quiet icon, title, guidance, action. */
-export function EmptyState(props: EmptyStateProps): React.JSX.Element;
+export declare function EmptyState({ icon, title, description, action, style }: EmptyStateProps): import("react").JSX.Element;

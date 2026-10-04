@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/core/Tabs.prompt.md. Regenerate: pnpm generate. -->
 Underline tab bar for switching between console views. Active tab gets a persimmon underline.
 
 ```jsx

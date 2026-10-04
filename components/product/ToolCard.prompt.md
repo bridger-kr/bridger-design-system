@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/product/ToolCard.prompt.md. Regenerate: pnpm generate. -->
 The unit of the MCP catalog and tool list: category + HTTP-method chips, tool name, clamped description, mono path, and a usability status dot.
 
 ```jsx

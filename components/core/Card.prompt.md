@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/core/Card.prompt.md. Regenerate: pnpm generate. -->
 Surface container for repeated items, modals, and framed tools. Not a decorative wrapper.
 
 ```jsx

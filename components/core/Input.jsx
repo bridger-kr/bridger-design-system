@@ -1,59 +1,25 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/core/Input.tsx
+// Regenerate: pnpm generate
 
+import { cx } from '../lib/cx.jsx';
 /**
  * Compact labeled input, paired with a label or table context. Supports a
  * mono variant for API paths / keys / IDs.
  */
-export function Input({
-  label,
-  hint,
-  mono = false,
-  id,
-  type = 'text',
-  prefix = null,
-  invalid = false,
-  style,
-  ...rest
-}) {
-  const inputId = id || (label ? `in-${label.replace(/\s+/g, '-')}` : undefined);
-  return (
-    <div style={{ display: 'grid', gap: 8 }}>
-      {label ? (
-        <label
-          htmlFor={inputId}
-          style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}
-        >
+export function Input({ label, hint, mono = false, id, type = 'text', prefix = null, invalid = false, disabled = false, className, style, ...rest }) {
+    const inputId = id || (label ? `in-${label.replace(/\s+/g, '-')}` : undefined);
+    return (<div className="dt-input">
+      {label ? (<label className="dt-input-label" htmlFor={inputId}>
           {label}
-        </label>
-      ) : null}
-      <div
-        className={invalid ? 'dt-field dt-field-invalid' : 'dt-field'}
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 8,
-          padding: '0 12px',
-        }}
-      >
-        {prefix ? <span style={{ color: 'var(--dt-text-muted)', display: 'inline-flex' }}>{prefix}</span> : null}
-        <input
-          id={inputId}
-          type={type}
-          style={{
-            flex: 1,
-            border: 'none',
-            outline: 'none',
-            background: 'transparent',
-            color: 'var(--dt-text-strong)',
-            padding: '11px 0',
+        </label>) : null}
+      <div className={cx('dt-field', invalid && 'dt-field-invalid')}>
+        {prefix ? <span className="dt-input-prefix">{prefix}</span> : null}
+        <input id={inputId} type={type} className={cx('dt-input-control', className)} disabled={disabled} aria-invalid={invalid || undefined} style={{
             fontFamily: mono ? 'var(--dt-font-mono)' : 'var(--dt-font-sans)',
-            fontSize: mono ? 13 : 14,
             ...style,
-          }}
-          {...rest}
-        />
+        }} {...rest}/>
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
-    </div>
-  );
+      {hint ? <span className="dt-input-hint">{hint}</span> : null}
+    </div>);
 }

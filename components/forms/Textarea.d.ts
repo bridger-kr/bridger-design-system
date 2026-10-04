@@ -1,13 +1,15 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/forms/Textarea.tsx
+// Regenerate: pnpm generate
 
-export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'style'> {
-  label?: string;
-  hint?: string;
-  rows?: number;
-  /** Render in JetBrains Mono (for JSON / payloads). */
-  mono?: boolean;
-  style?: React.CSSProperties;
+import type { CSSProperties, TextareaHTMLAttributes } from 'react';
+export interface TextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'style'> {
+    label?: string;
+    hint?: string;
+    rows?: number;
+    /** Render in JetBrains Mono (for JSON / payloads). */
+    mono?: boolean;
+    style?: CSSProperties;
 }
-
 /** Multi-line text field with a persimmon focus ring. */
-export function Textarea(props: TextareaProps): React.JSX.Element;
+export declare function Textarea({ label, hint, rows, mono, id, style, ...rest }: TextareaProps): import("react").JSX.Element;

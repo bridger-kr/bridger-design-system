@@ -1,11 +1,12 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Spinner.tsx
+// Regenerate: pnpm generate
 
+import type { CSSProperties } from 'react';
 export interface SpinnerProps {
-  size?: number;
-  stroke?: number;
-  color?: string;
-  style?: React.CSSProperties;
+    size?: number;
+    stroke?: number;
+    color?: string;
+    style?: CSSProperties;
 }
-
-/** Indeterminate spinner — persimmon arc on a faint track. */
-export function Spinner(props: SpinnerProps): React.JSX.Element;
+export declare function Spinner({ size, stroke, color, style }: SpinnerProps): import("react").JSX.Element;

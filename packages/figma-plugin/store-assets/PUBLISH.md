@@ -19,7 +19,7 @@ Figma 플러그인은 **데스크톱 앱에서 사람이 직접** 퍼블리시�
 ```
 Bridger Design System Sync
 
-브릿저(datari) 디자인 시스템 — 공공 API 게이트웨이 콘솔용 — 을 코드 한 벌에서
+브릿저 디자인 시스템 — 공공 API 게이트웨이 콘솔용 — 을 코드 한 벌에서
 Figma로 가져옵니다. GitHub 공개 레포에서 토큰과 컴포넌트 스펙을 직접 읽어
 Figma Variables(Light/Dark), Text/Effect 스타일, 그리고 40개 Component Set을
 버튼 하나로 생성합니다.

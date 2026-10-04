@@ -49,7 +49,7 @@ complete state coverage, restrained type rhythm, zero decorative chrome.
 - **`styles.css`** — single global CSS entrypoint for prototypes: tokens + Pretendard webfont + shared `.btn-*`/`.card`/`.badge` vocabulary.
 - **`packages/tokens/css/contract.css`** — canonical `--dt-*` token source. Edit here, never in a mirror file.
 - **`packages/react/`** — `@bridger-kr/react`, the typed component boundary (Button, Card, Input, Tabs, BrandLogo, SectionCard, ToolCard, …). New reusable UI lands here before apps compose it.
-- **`tokens/`, `components/`** — legacy drifted mirrors scheduled for removal (tracked as DS repo issue 24 / EDD-235). Do not copy from them.
+- **`tokens/`, `components/`** — generated mirrors of `packages/` (built by `pnpm generate`). Never edit them; `.prompt.md` sources are colocated in `packages/react`, `.card.html` sources in `examples/cards/`.
 - **`examples/`** — `ui_kits/` (console + landing recreations) and `foundations/` (color/type/spacing specimen cards) for reference.
 - **`assets/`** — brand logos + favicon, Korean agency logos (KMA, MOLIT, BOK, Seoul, data.go.kr), Pretendard webfont.
 

@@ -27,6 +27,15 @@ const figmaGenerator = readFileSync(
 const rootTokenEntrypoints = ['colors.css', 'spacing.css', 'typography.css'].map((fileName) =>
   readFileSync(new URL(`../../../tokens/${fileName}`, import.meta.url), 'utf8'),
 );
+const canonicalCssFiles = [
+  'base.css',
+  'colors.css',
+  'contract.css',
+  'fonts.css',
+  'index.css',
+  'spacing.css',
+  'typography.css',
+];
 
 function findMatchingBrace(css: string, openIndex: number): number {
   let depth = 0;
@@ -153,7 +162,19 @@ describe('@bridger-kr/tokens', () => {
   it('keeps root compatibility entrypoints and the Figma generator on the canonical contract', () => {
     expect(figmaGenerator).toContain("packages', 'tokens', 'css', 'contract.css'");
     for (const entrypoint of rootTokenEntrypoints) {
-      expect(entrypoint).toContain("../packages/tokens/css/contract.css");
+      expect(entrypoint).toContain("./contract.css");
+    }
+  });
+
+  it('keeps the generated root token mirror byte-identical to the canonical sources', () => {
+    // Root tokens/ is generated output of packages/tokens/css/ (pnpm generate).
+    // Strip the GENERATED banner and compare byte-for-byte so a manual edit to
+    // either side fails here as well as in CI.
+    for (const fileName of canonicalCssFiles) {
+      const mirror = readFileSync(new URL(`../../../tokens/${fileName}`, import.meta.url), 'utf8');
+      const source = readFileSync(new URL(`../css/${fileName}`, import.meta.url), 'utf8');
+      expect(mirror).toContain('GENERATED FILE — DO NOT EDIT');
+      expect(mirror.replace(/^\/\*[\s\S]*?\*\/\s*/, '')).toBe(source);
     }
   });
 

@@ -1,5 +1,5 @@
 {
-  "$comment": "Declarative build recipe for the Bridger Figma plugin (code.js renderer). Each component has variants; each variant has a node tree. Colors reference Variables as {color/group/name}; spacing/radius are literal px to keep the renderer simple. Values lifted 1:1 from components/*.jsx + tokens/base.css.",
+  "$comment": "Declarative build recipe for the Bridger Figma plugin (code.js renderer). Each component has variants; each variant has a node tree. Colors reference Variables as {color/group/name}; spacing/radius are literal px to keep the renderer simple. Values lifted 1:1 from packages/react/src/components and packages/tokens/css/base.css (canonical sources; components/ and tokens/ are generated mirrors).",
   "components": [
     {
       "name": "Button",

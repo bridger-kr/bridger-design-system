@@ -1,10 +1,11 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Tooltip.tsx
+// Regenerate: pnpm generate
 
+import type { ReactNode } from 'react';
 export interface TooltipProps {
-  label: React.ReactNode;
-  position?: 'top' | 'bottom' | 'left' | 'right';
-  children: React.ReactNode;
+    label: ReactNode;
+    position?: 'top' | 'bottom' | 'left' | 'right';
+    children: ReactNode;
 }
-
-/** Hover/focus tooltip — dark label, wraps a single trigger. */
-export function Tooltip(props: TooltipProps): React.JSX.Element;
+export declare function Tooltip({ label, position, children }: TooltipProps): import("react").JSX.Element;

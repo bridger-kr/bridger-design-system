@@ -1,0 +1,52 @@
+<!-- @dsCard group="Data" viewport="700x420" name="Data display" subtitle="StatTile · Table · Avatar · Pagination" -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-paper); padding: 26px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  .stack { display: grid; gap: 18px; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-ring), var(--dt-shadow-xs); overflow: hidden; }
+  .st { padding: 16px 18px; border-right: 1px solid var(--dt-divider); }
+  .st:last-child { border-right: 0; }
+  .stl { font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--dt-muted); }
+  .stv { margin-top: 7px; font-size: 24px; font-weight: 700; letter-spacing: -.02em; color: var(--dt-ink-strong); font-variant-numeric: tabular-nums; }
+  .sth { margin-top: 5px; font-size: 12px; color: var(--dt-muted); }
+  .up { color: var(--dt-success); font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-ring), var(--dt-shadow-xs); overflow: hidden; }
+  thead tr { background: var(--dt-surface-muted); }
+  th { text-align: left; padding: 10px 16px; font-family: var(--dt-font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--dt-muted); font-weight: 600; border-bottom: 1px solid var(--dt-divider); }
+  td { padding: 11px 16px; font-size: 13px; border-bottom: 1px solid var(--dt-divider); }
+  tbody tr:last-child td { border-bottom: 0; }
+  .av { width: 26px; height: 26px; border-radius: 8px; background: var(--dt-tint-accent); color: var(--dt-accent); display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .who { display: flex; align-items: center; gap: 9px; }
+  .mono { font-family: var(--dt-font-mono); color: var(--dt-muted); }
+  .pg { display: inline-flex; align-items: center; gap: 2px; }
+  .pg b, .pg a { min-width: 32px; height: 32px; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--dt-radius-sm); font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); font-variant-numeric: tabular-nums; cursor: pointer; }
+  .pg b.on { background: var(--dt-accent); color: var(--dt-accent-ink); }
+</style>
+</head>
+<body>
+<div class="stack">
+  <div class="stats">
+    <div class="st"><div class="stl">오늘 호출</div><div class="stv">34,210</div><div class="sth"><span class="up">+8.4%</span> 전일 대비</div></div>
+    <div class="st"><div class="stl">노출 도구</div><div class="stv">248</div><div class="sth">선택 86 · 구성 162</div></div>
+    <div class="st"><div class="stl">평균 지연</div><div class="stv">142ms</div><div class="sth">정상 범위</div></div>
+  </div>
+  <table>
+    <thead><tr><th>담당</th><th>도구</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td><span class="who"><span class="av">JK</span>정경호</span></td><td class="mono">weather_getVilageFcst</td><td>승인됨</td></tr>
+      <tr><td><span class="who"><span class="av">SH</span>손성민</span></td><td class="mono">finance_getExchangeRate</td><td>검토 중</td></tr>
+      <tr><td><span class="who"><span class="av">YJ</span>유재석</span></td><td class="mono">transport_getBusArrival</td><td>승인됨</td></tr>
+    </tbody>
+  </table>
+  <div style="display:flex;justify-content:flex-end">
+    <nav class="pg">
+      <a>‹</a><b class="on">1</b><b>2</b><b>3</b><span style="color:var(--dt-muted);padding:0 4px">…</span><b>9</b><a>›</a>
+    </nav>
+  </div>
+</div>
+</body>
+</html>

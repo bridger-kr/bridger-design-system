@@ -1,46 +1,35 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/navigation/Menu.tsx
+// Regenerate: pnpm generate
 
-/**
- * Dropdown menu — a trigger that opens a floating raised list. Items support
- * icons, danger tone, and dividers ({ divider: true }). Click-away closes.
- */
-export function Menu({ trigger, items = [], align = 'left', width = 200 }) {
-  const [open, setOpen] = React.useState(false);
-  const ref = React.useRef(null);
-  React.useEffect(() => {
-    if (!open) return undefined;
-    const onDoc = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false); };
-    window.addEventListener('mousedown', onDoc);
-    return () => window.removeEventListener('mousedown', onDoc);
-  }, [open]);
-  return (
-    <span ref={ref} style={{ position: 'relative', display: 'inline-flex' }}>
-      <span onClick={() => setOpen((v) => !v)} style={{ display: 'inline-flex', cursor: 'pointer' }}>{trigger}</span>
-      {open ? (
-        <div role="menu" style={{
-          position: 'absolute', top: '100%', [align]: 0, marginTop: 6, zIndex: 80, width,
-          padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-control)',
-          boxShadow: 'var(--dt-shadow-overlay)', animation: 'dt-menu 130ms var(--dt-ease)',
+import { Menu as BaseMenu } from '@base-ui-components/react/menu';
+import { cx } from '../lib/cx.jsx';
+export function Menu({ trigger, items = [], align = 'left', width = 200, className, style, ...rest }) {
+    return (<BaseMenu.Root modal={false}>
+      <span {...rest} className={cx('dt-menu-root', className)} style={{ position: 'relative', display: 'inline-flex', ...style }}>
+        <BaseMenu.Trigger className="dt-menu-trigger" style={{ display: 'inline-flex', cursor: 'pointer', border: 'none', background: 'transparent', padding: 0, fontSize: 'inherit', fontFamily: 'inherit' }}>
+          {trigger}
+        </BaseMenu.Trigger>
+        <BaseMenu.Portal>
+          <BaseMenu.Positioner sideOffset={6} align={align === 'left' ? 'start' : 'end'}>
+            <BaseMenu.Popup className="dt-menu-popup" style={{
+            zIndex: 'var(--dt-z-index-popover)', width, padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
+            boxShadow: 'var(--dt-shadow-lg)',
         }}>
-          {items.map((it, i) => it.divider
-            ? <div key={`d${i}`} style={{ height: 1, background: 'var(--dt-border)', margin: '5px 0' }} />
-            : (
-              <button key={i} role="menuitem" onClick={() => { it.onClick?.(); setOpen(false); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
-                  padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
-                  background: 'transparent', fontSize: 13.5, fontWeight: 500, fontFamily: 'inherit',
-                  color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text)',
-                }}
-                onMouseEnter={(e) => { e.currentTarget.style.background = it.danger ? 'var(--dt-tint-danger)' : 'var(--dt-surface-sunken)'; }}
-                onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}>
-                {it.icon ? <span style={{ display: 'inline-flex', color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text-subtle)' }}>{it.icon}</span> : null}
-                {it.label}
-              </button>
-            ))}
-          <style>{`@keyframes dt-menu{from{opacity:0;transform:translateY(-4px)}}`}</style>
-        </div>
-      ) : null}
-    </span>
-  );
+              {items.map((it, i) => it.divider
+            ? <BaseMenu.Separator key={`d${i}`} className="dt-menu-separator" style={{ height: 1, background: 'var(--dt-border)', margin: '5px 0' }}/>
+            : (<BaseMenu.Item key={i} className="dt-menu-item" onClick={it.onClick} data-danger={it.danger ? '' : undefined} style={{
+                    display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
+                    padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
+                    background: 'transparent', fontSize: 13.5, fontWeight: 500, fontFamily: 'inherit',
+                    color: it.danger ? 'var(--dt-danger)' : 'var(--dt-ink)',
+                }}>
+                    {it.icon ? <span className="dt-menu-item-icon" style={{ display: 'inline-flex', color: it.danger ? 'var(--dt-danger)' : 'var(--dt-muted-strong)' }}>{it.icon}</span> : null}
+                    {it.label}
+                  </BaseMenu.Item>))}
+            </BaseMenu.Popup>
+          </BaseMenu.Positioner>
+        </BaseMenu.Portal>
+      </span>
+    </BaseMenu.Root>);
 }

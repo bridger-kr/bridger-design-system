@@ -1,7 +1,8 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/core/Input.prompt.md. Regenerate: pnpm generate. -->
 Compact labeled text input, paired with a label or table context. `mono` for API paths / keys / IDs.
 
 ```jsx
-<Input label="베이스 URL" mono defaultValue="https://api.datari.kr" prefix={<Database size={14} />} />
+<Input label="베이스 URL" mono defaultValue="https://api.bridger.kr" prefix={<Database size={14} />} />
 <Input label="검색" placeholder="공공 API 검색…" />
 ```
 

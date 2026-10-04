@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/core/StatusPill.prompt.md. Regenerate: pnpm generate. -->
 Status pill: a semantic colored dot plus a short label in a bordered chip. The console's standard live-state indicator (gateway, stream, jobs).
 
 ```jsx

@@ -1,10 +1,15 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/navigation/Breadcrumb.tsx
+// Regenerate: pnpm generate
 
-export interface BreadcrumbItem { label: React.ReactNode; href?: string; }
-export interface BreadcrumbProps {
-  items: BreadcrumbItem[];
-  style?: React.CSSProperties;
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+export interface BreadcrumbItem {
+    label: ReactNode;
+    href?: string;
 }
-
+export interface BreadcrumbProps extends Omit<HTMLAttributes<HTMLElement>, 'children'> {
+    items?: BreadcrumbItem[];
+    style?: CSSProperties;
+}
 /** Breadcrumb trail — last item is the current page. */
-export function Breadcrumb(props: BreadcrumbProps): React.JSX.Element;
+export declare function Breadcrumb({ items, style, ...rest }: BreadcrumbProps): import("react").JSX.Element;
