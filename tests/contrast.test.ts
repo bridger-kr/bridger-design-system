@@ -12,6 +12,10 @@ import { describe, expect, it } from 'vitest';
 
 const contractPath = new URL('../packages/tokens/css/contract.css', import.meta.url);
 const contractCss = readFileSync(contractPath, 'utf8');
+const baseCss = readFileSync(
+  new URL('../packages/tokens/css/base.css', import.meta.url),
+  'utf8',
+);
 
 // ---------- contract parsing ------------------------------------------------
 
@@ -41,6 +45,23 @@ if (!lightBlock || !darkBlock) throw new Error('contract.css theme blocks not fo
 
 const lightVars = extractVars(lightBlock.body);
 const darkVars = extractVars(darkBlock.body);
+
+/**
+ * Declarations of a top-level class rule in base.css — used to test the
+ * colors a component actually renders, not just token pairs, so a bounded
+ * token-level exception cannot hide a failing consumer.
+ */
+function classDecls(selector: string): Map<string, string> {
+  const rule = topLevelBlocks(baseCss).find((b) =>
+    b.selector.split(',').some((s) => s.trim() === selector),
+  );
+  if (!rule) throw new Error(`${selector} rule not found in base.css`);
+  const decls = new Map<string, string>();
+  const re = /([\w-]+)\s*:\s*([^;]+);/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(rule.body)) !== null) decls.set(m[1], m[2].trim());
+  return decls;
+}
 
 // ---------- color resolution -------------------------------------------------
 
@@ -237,6 +258,43 @@ describe('EDD-230 token contrast (WCAG AA)', () => {
             expect(
               ratio,
               `${textRole} on ${tintRole} over ${surface}: ${ratio.toFixed(2)}:1`,
+            ).toBeGreaterThanOrEqual(4.5);
+          }
+        }
+      });
+
+      it('rendered .badge rules reach 4.5:1 — small caption text, no large-text exception', () => {
+        // .badge renders 12px/600 caption text: WCAG's 3:1 large-text threshold
+        // does not apply, so these evaluate the real color+background the rule
+        // declares. Regression: default .badge used text-subtle on surface-sunken
+        // (4.35:1 light) while the token-level 3:1 exception for subtle-on-wash
+        // masked it.
+        for (const selector of [
+          '.badge',
+          '.badge-accent',
+          '.badge-info',
+          '.badge-success',
+          '.badge-warning',
+          '.badge-danger',
+        ]) {
+          const decls = classDecls(selector);
+          const fgRaw = decls.get('color');
+          const bgRaw = decls.get('background');
+          if (!fgRaw || !bgRaw)
+            throw new Error(`${selector}: color/background declaration missing`);
+          const fg = resolveColor(fgRaw, vars);
+          const badgeBg = resolveColor(bgRaw, vars);
+          if (!fg || !badgeBg)
+            throw new Error(`${selector}: ${fgRaw} / ${bgRaw} did not resolve`);
+          // An opaque fill stands alone; a tint fill composites over every
+          // surface a badge can sit on.
+          const underlays = badgeBg[3] < 1 ? [...SURFACES] : [null];
+          for (const surface of underlays) {
+            const bg = surface === null ? badgeBg : composite(badgeBg, token(surface, vars));
+            const ratio = contrast(fg, bg);
+            expect(
+              ratio,
+              `${selector} ${fgRaw} on ${bgRaw}${surface ? ` over ${surface}` : ''}: ${ratio.toFixed(2)}:1`,
             ).toBeGreaterThanOrEqual(4.5);
           }
         }
