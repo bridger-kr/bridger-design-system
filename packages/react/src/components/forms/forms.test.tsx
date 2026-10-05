@@ -46,7 +46,8 @@ describe('forms exports', () => {
     if (trigger) fireEvent.click(trigger);
 
     const popup = document.querySelector('[role="listbox"]')?.parentElement;
-    expect(popup?.style.zIndex).toBe('var(--dt-z-index-popover)');
+    expect(popup?.className).toContain('dt-select-popup');
+    expect(popup?.style.zIndex).toBe('');
     expect(popup?.querySelector('style')).toBeNull();
   });
 
@@ -60,7 +61,8 @@ describe('forms exports', () => {
     if (input) fireEvent.focus(input);
 
     const popup = document.querySelector('[role="listbox"]')?.parentElement;
-    expect(popup?.style.zIndex).toBe('var(--dt-z-index-popover)');
+    expect(popup?.className).toContain('dt-combobox-popup');
+    expect(popup?.style.zIndex).toBe('');
     expect(popup?.querySelector('style')).toBeNull();
   });
 
