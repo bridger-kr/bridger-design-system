@@ -41,42 +41,43 @@
 :root,
 :root[data-theme='light'] {
   color-scheme: light;
+  --dt-bg: #ffffff;
+  --dt-surface: oklch(0.9875 0 0);
+  --dt-surface-raised: #ffffff;
+  --dt-surface-sunken: oklch(0.97 0 0);
+  --dt-surface-muted: oklch(0.975 0 0);
 
-  --dt-paper: #f7f7f5;
-  --dt-surface: #ffffff;
-  --dt-surface-raised: #fbfbf9;
-  --dt-surface-sunken: #efefec;
-  --dt-surface-muted: #f3f3f0;
+  --dt-text: oklch(0.205 0 0);
+  --dt-text-strong: oklch(0.145 0 0);
+  --dt-text-subtle: oklch(0.556 0 0);
+  --dt-text-muted: oklch(0.54 0 0);
+  --dt-text-placeholder: oklch(0.708 0 0);
 
-  --dt-ink: #20201d;
-  --dt-ink-strong: #0d0d0c;
-  --dt-muted: #6f6f68;
-  --dt-muted-strong: #4a4943;
-
-  --dt-border: #e5e5e0;
-  --dt-border-strong: #d5d5ce;
+  --dt-border: oklch(0.145 0 0 / 0.10);
+  --dt-border-strong: oklch(0.145 0 0 / 0.18);
   --dt-divider: color-mix(in srgb, var(--dt-border) 50%, transparent);
-  --dt-border-alpha: color-mix(in srgb, var(--dt-ink) 8%, transparent);
-  --dt-border-alpha-strong: color-mix(in srgb, var(--dt-ink) 14%, transparent);
+  --dt-border-alpha: color-mix(in srgb, var(--dt-text) 8%, transparent);
+  --dt-border-alpha-strong: color-mix(in srgb, var(--dt-text) 14%, transparent);
 
+  /* --dt-accent is a fill role only: it never reaches AA as text.
+     Use --dt-accent-text when persimmon renders as a glyph. */
   --dt-accent: #ec5e1f;
-  --dt-accent-strong: #b83c0d;
-  --dt-accent-bright: #ec5e1f;
+  --dt-accent-text: #b83c0d;
+  --dt-accent-strong: #93390c;
+  --dt-accent-bright: #ff6f2e;
   --dt-accent-ink: #1a1206;
 
-  --dt-cobalt: #256b5a;
-  --dt-lime: #dce95b;
+  /* Single blue hue (oklch ~264) in both themes; --dt-info aliases it. */
+  --dt-cobalt: #1d4ed8;
   --dt-accent-soft: color-mix(in srgb, var(--dt-accent) 14%, transparent);
 
-  --dt-success: #168044;
-  --dt-warning: #a85b08;
-  --dt-danger: #c62828;
+  --dt-success: #0d7233;
+  --dt-warning: #785800;
+  --dt-danger: #b91c1c;
   --dt-info: var(--dt-cobalt);
-  --dt-status-cobalt: #2f6bff;
+  --dt-status-cobalt: var(--dt-info);
   --dt-status-success: var(--dt-success);
-  --dt-status-warning: #a85b08;
-  --dt-status-danger: #dc3a34;
-  --dt-alert-ink: #ecfff2;
+  --dt-status-warning: var(--dt-warning);
   --dt-code-bg: #14161d;
   --dt-code-ink: #e8e6df;
   --dt-code-border: #262a35;
@@ -96,17 +97,16 @@
   --dt-tint-success: color-mix(in srgb, var(--dt-success) 12%, transparent);
   --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 14%, transparent);
   --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 12%, transparent);
-  --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 5%, transparent);
-  --dt-tint-ink-03: color-mix(in srgb, var(--dt-ink) 3%, transparent);
-  --dt-tint-ink-05: color-mix(in srgb, var(--dt-ink) 5%, transparent);
-  --dt-tint-ink-07: color-mix(in srgb, var(--dt-ink) 7%, transparent);
+  --dt-tint-text: color-mix(in srgb, var(--dt-text) 5%, transparent);
+  --dt-tint-text-03: color-mix(in srgb, var(--dt-text) 3%, transparent);
+  --dt-tint-text-05: color-mix(in srgb, var(--dt-text) 5%, transparent);
+  --dt-tint-text-07: color-mix(in srgb, var(--dt-text) 7%, transparent);
 
   --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
-  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-muted) 38%, var(--dt-surface-raised));
+  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-text-muted) 38%, var(--dt-surface-raised));
   --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
   --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
-  --dt-chrome-divider: color-mix(in srgb, var(--dt-ink) 9%, transparent);
-
+  --dt-chrome-divider: color-mix(in srgb, var(--dt-text) 9%, transparent);
   --dt-space-1: 4px;
   --dt-space-2: 8px;
   --dt-space-3: 16px;
@@ -179,38 +179,40 @@
   --dt-mono-size: 13px;
   --dt-mono-leading: 18px;
 }
-
 :root[data-theme='dark'],
 .dark {
   color-scheme: dark;
-
   /* Dark overrides only the tokens whose values actually change:
      colors plus the overlay shadow. Everything else is inherited. */
 
-  --dt-paper: #11110f;
-  --dt-surface: #181815;
-  --dt-surface-raised: #20201d;
-  --dt-surface-sunken: #0c0c0b;
-  --dt-surface-muted: #1d1d1a;
+  --dt-bg: oklch(0.145 0 0);
+  --dt-surface: oklch(0.17 0 0);
+  --dt-surface-raised: oklch(0.24 0 0);
+  --dt-surface-sunken: oklch(0.205 0 0);
+  --dt-surface-muted: oklch(0.19 0 0);
 
-  --dt-ink: #ecece7;
-  --dt-ink-strong: #ffffff;
-  --dt-muted: #a2a29a;
-  --dt-muted-strong: #cacac3;
+  --dt-text: oklch(0.97 0 0);
+  --dt-text-strong: oklch(1 0 0);
+  --dt-text-subtle: oklch(0.708 0 0);
+  --dt-text-muted: oklch(0.72 0 0);
+  --dt-text-placeholder: oklch(0.556 0 0);
 
-  --dt-border: #2b2b27;
-  --dt-border-strong: #3a3a34;
+  --dt-border: oklch(1 0 0 / 0.08);
+  --dt-border-strong: oklch(1 0 0 / 0.16);
   --dt-divider: color-mix(in srgb, var(--dt-border) 55%, transparent);
 
-  --dt-accent-strong: #ec5e1f;
+  /* --dt-accent is a fill role only; --dt-accent-text renders persimmon as text. */
+  --dt-accent: #f07a45;
+  --dt-accent-text: #f99566;
+  --dt-accent-strong: #ffab85;
+  --dt-accent-bright: #ff9a6a;
 
+  /* Same blue hue (oklch ~265) as the light theme --dt-cobalt. */
   --dt-cobalt: #7aa2ff;
-  --dt-lime: #d8f24a;
 
-  --dt-success: #34d399;
+  --dt-success: #4ade80;
   --dt-warning: #fbbf24;
   --dt-danger: #f87171;
-  --dt-status-warning: #ec5e1f;
 
   --dt-code-bg: #0a0b0f;
   --dt-code-ink: #f4f3ee;
@@ -221,7 +223,7 @@
   --dt-tint-success: color-mix(in srgb, var(--dt-success) 16%, transparent);
   --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 16%, transparent);
   --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 16%, transparent);
-  --dt-tint-muted: color-mix(in srgb, var(--dt-ink) 6%, transparent);
+  --dt-tint-text: color-mix(in srgb, var(--dt-text) 6%, transparent);
 
   --dt-shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55),
                        0 0 0 1px rgba(255, 255, 255, 0.03);

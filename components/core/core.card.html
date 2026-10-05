@@ -6,12 +6,12 @@
 <link rel="stylesheet" href="../../styles.css">
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
 <style>
-  body { margin: 0; background: var(--dt-paper); padding: 30px; font-family: var(--dt-font-sans); color: var(--dt-ink); display: grid; place-items: center; }
+  body { margin: 0; background: var(--dt-bg); padding: 30px; font-family: var(--dt-font-sans); color: var(--dt-text); display: grid; place-items: center; }
 
   .panel { width: 100%; max-width: 600px; background: var(--dt-surface); border-radius: var(--dt-radius-card); border: 1px solid var(--dt-border-strong); overflow: hidden; }
 
   .phead { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 18px 22px 0; }
-  .ptitle { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--dt-ink-strong); white-space: nowrap; }
+  .ptitle { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--dt-text-strong); white-space: nowrap; }
 
   /* StatusPill — tinted fill + colored text. No ring, no dot. */
   .pill { display: inline-flex; align-items: center; gap: 6px; padding: 6px 11px; border-radius: var(--dt-radius-pill); font-size: 12px; font-weight: 600; white-space: nowrap; }
@@ -21,24 +21,24 @@
 
   /* Tabs */
   .tabs { display: flex; gap: 2px; padding: 0 22px; margin-top: 16px; border-bottom: 1px solid var(--dt-divider); }
-  .tab { display: inline-flex; align-items: center; gap: 7px; padding: 11px 14px; margin-bottom: -1px; font-size: 13px; font-weight: 600; color: var(--dt-muted); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
-  .tab .count { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted); }
-  .tab.active { color: var(--dt-ink-strong); border-bottom-color: var(--dt-accent); }
-  .tab.active .count { color: var(--dt-accent); }
+  .tab { display: inline-flex; align-items: center; gap: 7px; padding: 11px 14px; margin-bottom: -1px; font-size: 13px; font-weight: 600; color: var(--dt-text-muted); border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+  .tab .count { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-muted); }
+  .tab.active { color: var(--dt-text-strong); border-bottom-color: var(--dt-accent-text); }
+  .tab.active .count { color: var(--dt-accent-text); }
 
   .pbody { padding: 20px 22px; display: grid; gap: 18px; }
 
   /* Input — filled field. Depth from fill; focus lifts to white + accent ring. */
   .field { display: grid; gap: 8px; }
-  .field > span { font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); }
+  .field > span { font-size: 13px; font-weight: 600; color: var(--dt-text-subtle); }
   .input { display: flex; align-items: center; gap: 9px; height: 44px; border-radius: var(--dt-radius-control); background: var(--dt-surface-sunken); padding: 0 13px; transition: background-color var(--dt-duration-fast) var(--dt-ease), box-shadow var(--dt-duration-fast) var(--dt-ease); }
   .input:focus-within { background: var(--dt-surface); box-shadow: 0 0 0 3px var(--dt-accent); }
-  .input input { flex: 1; border: none; outline: none; background: transparent; font-family: var(--dt-font-mono); font-size: 13px; color: var(--dt-ink-strong); }
-  .input [data-ico] { color: var(--dt-muted); display: inline-flex; }
+  .input input { flex: 1; border: none; outline: none; background: transparent; font-family: var(--dt-font-mono); font-size: 13px; color: var(--dt-text-strong); }
+  .input [data-ico] { color: var(--dt-text-muted); display: inline-flex; }
 
   /* Inline classification badges, in context */
   .tagline { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-  .tagline > em { font-style: normal; font-size: 13px; color: var(--dt-muted); margin-right: 2px; }
+  .tagline > em { font-style: normal; font-size: 13px; color: var(--dt-text-muted); margin-right: 2px; }
   .badge [data-ico] { display: inline-flex; }
 
   .pfoot { display: flex; align-items: center; gap: 10px; padding: 16px 22px; border-top: 1px solid var(--dt-divider); }

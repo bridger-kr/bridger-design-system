@@ -15,7 +15,7 @@ function Icon({ name, size = 16, strokeWidth = 1.9, style }) {
 
 function BrandMark({ size = 20 }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 780, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-ink-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
+    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 780, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-text-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
       Bridger<span style={{ color: 'var(--dt-accent)' }}>.</span>
     </span>
   );
@@ -175,7 +175,7 @@ function Dashboard({ locale }) {
                 <tr key={j.id}>
                   <td><div className="cell-name">{j.name}</div><div className="cell-id">{j.id}</div></td>
                   <td><span className="cell-status"><span className="dot" style={{ background: statusColor[j.status] }} />{j.status}</span></td>
-                  <td style={{ textAlign: 'right', color: 'var(--dt-muted)', fontSize: 12 }}>{j.t}</td>
+                  <td style={{ textAlign: 'right', color: 'var(--dt-text-muted)', fontSize: 12 }}>{j.t}</td>
                 </tr>
               ))}
             </tbody>
@@ -191,7 +191,7 @@ function SemanticSearch({ locale }) {
     <div className="search-panel">
       <div className="panel-title" style={{ marginBottom: 14 }}>{locale === 'ko' ? '필요한 공공 API를 질문으로 찾기' : 'Find a public API by asking'}</div>
       <div className="search-bar">
-        <Icon name="Search" size={16} style={{ color: 'var(--dt-muted)' }} />
+        <Icon name="Search" size={16} style={{ color: 'var(--dt-text-muted)' }} />
         <input defaultValue={locale === 'ko' ? '주말 서울 날씨 예보 데이터' : 'weekend Seoul weather forecast'} />
         <button className="cbtn" style={{ padding: '7px 14px' }}><Icon name="Sparkles" size={14} />{locale === 'ko' ? '검색' : 'Search'}</button>
       </div>

@@ -27,12 +27,12 @@ export function KeyValue({ items = [], columns = 1, style }) {
               borderRight: columns === 2 && col === 0 ? '1px solid var(--dt-border)' : 'none',
             }}
           >
-            <dt style={{ fontSize: 12.5, color: 'var(--dt-muted)', flex: '0 0 auto' }}>{it.key}</dt>
+            <dt style={{ fontSize: 12.5, color: 'var(--dt-text-muted)', flex: '0 0 auto' }}>{it.key}</dt>
             <dd style={{
               margin: 0, textAlign: 'right', minWidth: 0,
               fontFamily: it.mono ? 'var(--dt-font-mono)' : 'inherit',
               fontSize: it.mono ? 12.5 : 13, fontWeight: 600,
-              color: it.accent ? 'var(--dt-accent)' : 'var(--dt-ink-strong)',
+              color: it.accent ? 'var(--dt-accent-text)' : 'var(--dt-text-strong)',
               fontVariantNumeric: 'tabular-nums',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>{it.value}</dd>

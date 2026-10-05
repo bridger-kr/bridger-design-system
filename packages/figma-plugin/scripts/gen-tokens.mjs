@@ -54,10 +54,44 @@ function hexToRgbArr(hex) {
   return [parseInt(n.slice(0, 2), 16), parseInt(n.slice(2, 4), 16), parseInt(n.slice(4, 6), 16)];
 }
 
-// Resolve a value that may be a hex, a var(), or color-mix over transparent.
+// oklch(L C H [/ A]) -> [r,g,b,a] in sRGB (0-255 / 0-1), Bjorn Ottosson matrices
+function oklchToSrgb(val) {
+  const m = val.match(/^oklch\(\s*([\d.]+)%?\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*([\d.]+%?))?\s*\)$/);
+  if (!m) return null;
+  const L = parseFloat(m[1]), C = parseFloat(m[2]), H = (parseFloat(m[3]) * Math.PI) / 180;
+  let A = m[4] == null ? 1 : parseFloat(m[4]);
+  if (m[4] && m[4].endsWith('%')) A /= 100;
+  const a = C * Math.cos(H), b = C * Math.sin(H);
+  const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+  const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+  const s_ = L - 0.0894841775 * a - 1.291485548 * b;
+  const l = l_ ** 3, mm = m_ ** 3, s = s_ ** 3;
+  const lin = [
+    4.0767416621 * l - 3.3077115913 * mm + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * mm - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * mm + 1.707614701 * s,
+  ];
+  const enc = (c) => {
+    c = Math.max(0, Math.min(1, c));
+    return Math.round((c <= 0.0031308 ? 12.92 * c : 1.055 * c ** (1 / 2.4) - 0.055) * 255);
+  };
+  return [enc(lin[0]), enc(lin[1]), enc(lin[2]), A];
+}
+
+function rgbToHex([r, g, b]) {
+  const h = (n) => n.toString(16).padStart(2, '0');
+  return `#${h(r)}${h(g)}${h(b)}`;
+}
+
+// Resolve a value that may be a hex, oklch(), a var(), or color-mix over transparent.
 function resolveColor(val, theme, vars) {
   val = val.replace(/\/\*.*?\*\//g, '').trim();
   if (val.startsWith('#')) return val;
+  if (val.startsWith('oklch(')) {
+    const rgba = oklchToSrgb(val);
+    if (!rgba) return val;
+    return rgba[3] >= 1 ? rgbToHex(rgba) : `rgba(${rgba[0]},${rgba[1]},${rgba[2]},${round(rgba[3])})`;
+  }
   // var(--x)
   const varRef = val.match(/^var\(--([\w-]+)\)$/);
   if (varRef) return resolveColor(vars[varRef[1]], theme, vars);
@@ -68,6 +102,11 @@ function resolveColor(val, theme, vars) {
     const pct = parseFloat(mix[2]) / 100;
     const baseRef = base.match(/^var\(--([\w-]+)\)$/);
     if (baseRef) base = resolveColor(vars[baseRef[1]], theme, vars);
+    else if (base.startsWith('oklch(') || base.startsWith('#')) base = resolveColor(base, theme, vars);
+    const rgbaMatch = base.match(/^rgba\((\d+),(\d+),(\d+),([\d.]+)\)$/);
+    if (rgbaMatch) {
+      return `rgba(${rgbaMatch[1]},${rgbaMatch[2]},${rgbaMatch[3]},${round(parseFloat(rgbaMatch[4]) * pct)})`;
+    }
     const [r, g, b] = hexToRgbArr(base);
     return `rgba(${r},${g},${b},${round(pct)})`;
   }
@@ -77,12 +116,12 @@ const round = (n) => Math.round(n * 100) / 100;
 
 // Map raw CSS var names -> grouped JSON structure.
 const COLOR_GROUPS = {
-  surface: ['paper', 'surface', 'surface-raised', 'surface-sunken', 'surface-muted'],
-  ink: ['ink', 'ink-strong', 'muted', 'muted-strong'],
+  surface: ['bg', 'surface', 'surface-raised', 'surface-sunken', 'surface-muted'],
+  text: ['text', 'text-strong', 'text-subtle', 'text-muted', 'text-placeholder'],
   border: ['border', 'border-strong'],
-  accent: ['accent', 'accent-strong', 'accent-bright', 'accent-ink', 'accent-soft'],
-  status: ['cobalt', 'lime', 'success', 'warning', 'danger', 'info'],
-  tint: ['tint-accent', 'tint-cobalt', 'tint-success', 'tint-warning', 'tint-danger', 'tint-muted'],
+  accent: ['accent', 'accent-text', 'accent-strong', 'accent-bright', 'accent-ink', 'accent-soft'],
+  status: ['cobalt', 'success', 'warning', 'danger', 'info'],
+  tint: ['tint-accent', 'tint-cobalt', 'tint-success', 'tint-warning', 'tint-danger', 'tint-text'],
   code: ['code-bg', 'code-ink', 'code-border'],
 };
 

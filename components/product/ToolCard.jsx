@@ -40,7 +40,7 @@ export function ToolCard({
             <span className="dt-chip dt-chip-muted">{cat}</span>
             <span className="dt-chip dt-chip-accent">{method}</span>
           </div>
-          <h4 style={{ marginTop: 11, fontSize: 15, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)', wordBreak: 'break-all' }}>
+          <h4 style={{ marginTop: 11, fontSize: 15, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-text-strong)', wordBreak: 'break-all' }}>
             {name}
           </h4>
         </div>
@@ -50,17 +50,17 @@ export function ToolCard({
         </span>
       </div>
       <p style={{
-        marginTop: 12, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-muted-strong)',
+        marginTop: 12, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-text-subtle)',
         display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
       }}>
         {description}
       </p>
       <div style={{ marginTop: 14, paddingTop: 13, borderTop: '1px solid var(--dt-divider)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-        <code style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <code style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {path}
         </code>
       </div>
-      <style>{'.dt-tool-card:hover{border: 1px solid var(--dt-border), var(--dt-shadow-overlay)}.dt-chip{font-family:var(--dt-font-mono);font-size: 12px;font-weight:600;letter-spacing:.02em;padding:3px 8px;border-radius:var(--dt-radius-sm);background:var(--dt-surface-sunken)}.dt-chip-muted{color:var(--dt-muted-strong)}.dt-chip-accent{color:var(--dt-accent)}'}</style>
+      <style>{'.dt-tool-card:hover{border: 1px solid var(--dt-border), var(--dt-shadow-overlay)}.dt-chip{font-family:var(--dt-font-mono);font-size: 12px;font-weight:600;letter-spacing:.02em;padding:3px 8px;border-radius:var(--dt-radius-sm);background:var(--dt-surface-sunken)}.dt-chip-muted{color:var(--dt-text-subtle)}.dt-chip-accent{color: var(--dt-accent-text)}'}</style>
     </article>
   );
 }

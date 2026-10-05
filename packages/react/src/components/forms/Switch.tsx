@@ -89,7 +89,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
       }}
     >
       {sw}
-      <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span>
+      <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span>
     </label>
   );
 }

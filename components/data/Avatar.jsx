@@ -10,7 +10,7 @@ export function Avatar({ name = '', src, size = 'md', status, square = true, sty
   const px = typeof size === 'number' ? size : (SIZE[size] ?? SIZE.md);
   const initials = name.trim().split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase() || '·';
   const radius = square ? Math.round(px * 0.28) : px;
-  const statusColor = { online: 'var(--dt-success)', busy: 'var(--dt-danger)', away: 'var(--dt-warning)', offline: 'var(--dt-muted)' }[status];
+  const statusColor = { online: 'var(--dt-success)', busy: 'var(--dt-danger)', away: 'var(--dt-warning)', offline: 'var(--dt-text-muted)' }[status];
   return (
     <span style={{ position: 'relative', display: 'inline-flex', flex: '0 0 auto', ...style }}>
       {src ? (
@@ -18,7 +18,7 @@ export function Avatar({ name = '', src, size = 'md', status, square = true, sty
       ) : (
         <span style={{
           width: px, height: px, borderRadius: radius, display: 'grid', placeItems: 'center',
-          background: 'var(--dt-tint-accent)', color: 'var(--dt-accent)',
+          background: 'var(--dt-tint-accent)', color: 'var(--dt-accent-text)',
           fontSize: px * 0.38, fontWeight: 600, letterSpacing: '-0.02em',
         }}>{initials}</span>
       )}

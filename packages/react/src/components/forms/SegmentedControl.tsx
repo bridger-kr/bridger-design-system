@@ -60,7 +60,7 @@ export function SegmentedControl({
               fontWeight: 600,
               fontFamily: 'inherit',
               whiteSpace: 'nowrap',
-              color: on ? 'var(--dt-ink-strong)' : 'var(--dt-muted)',
+              color: on ? 'var(--dt-text-strong)' : 'var(--dt-text-muted)',
               background: on ? 'var(--dt-surface)' : 'transparent',
                             transition: 'color var(--dt-duration-fast) var(--dt-ease), background-color var(--dt-duration-fast) var(--dt-ease)',
             }}

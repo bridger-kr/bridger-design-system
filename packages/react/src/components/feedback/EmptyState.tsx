@@ -19,12 +19,12 @@ export function EmptyState({ icon, title, description, action, style }: EmptySta
       {icon ? (
         <span style={{
           display: 'inline-flex', width: 44, height: 44, alignItems: 'center', justifyContent: 'center',
-          borderRadius: 'var(--dt-radius-control)', background: 'var(--dt-surface)', color: 'var(--dt-muted)',
+          borderRadius: 'var(--dt-radius-control)', background: 'var(--dt-surface)', color: 'var(--dt-text-muted)',
           border: '1px solid var(--dt-border)',
         }}>{icon}</span>
       ) : null}
-      {title ? <div style={{ fontSize: 15, fontWeight: 650, color: 'var(--dt-ink-strong)' }}>{title}</div> : null}
-      {description ? <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--dt-muted)', maxWidth: 320 }}>{description}</div> : null}
+      {title ? <div style={{ fontSize: 15, fontWeight: 650, color: 'var(--dt-text-strong)' }}>{title}</div> : null}
+      {description ? <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--dt-text-muted)', maxWidth: 320 }}>{description}</div> : null}
       {action ? <div style={{ marginTop: 6 }}>{action}</div> : null}
     </div>
   );

@@ -70,7 +70,7 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
               type="button" onClick={copy}
               style={{
                 marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, border: 'none',
-                background: 'transparent', color: copied ? '#34d399' : '#8a91a3', cursor: 'pointer',
+                background: 'transparent', color: copied ? '#4ade80' : '#8a91a3', cursor: 'pointer',
                 fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, padding: 0,
               }}
             >

@@ -48,7 +48,7 @@ function cardStyle(tone: CardTone, padding: number, style?: CSSProperties): CSSP
   return {
     borderRadius: 'var(--dt-radius-card)',
     border: '1px solid var(--dt-border)',
-    color: 'var(--dt-ink)',
+    color: 'var(--dt-text)',
     padding,
     transition: 'border-color var(--dt-duration-base) var(--dt-ease), box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease), transform var(--dt-duration-base) var(--dt-ease)',
     ...VARIANT_STYLE[tone],

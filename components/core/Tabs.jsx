@@ -44,7 +44,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, style }) {
               marginBottom: -1,
               fontSize: 13,
               fontWeight: 600,
-              color: isActive ? 'var(--dt-ink-strong)' : 'var(--dt-muted)',
+              color: isActive ? 'var(--dt-text-strong)' : 'var(--dt-text-muted)',
               borderBottom: `2px solid ${isActive ? 'var(--dt-accent)' : 'transparent'}`,
               transition: 'color var(--dt-duration-fast) var(--dt-ease)',
             }}
@@ -52,7 +52,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, style }) {
             {tab.icon ? <span aria-hidden="true" style={{ display: 'inline-flex' }}>{tab.icon}</span> : null}
             {tab.label}
             {tab.count != null ? (
-              <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>
+              <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>
                 {tab.count}
               </span>
             ) : null}

@@ -6,12 +6,12 @@ const { useState: useS } = React;
 
 const CATEGORIES = [
   { key: 'weather', title: '날씨', en: 'Weather', icon: 'CloudSun', count: 36, tint: 'var(--dt-tint-cobalt)', color: 'var(--dt-cobalt)', tags: ['단기예보', '중기예보', '초단기실황', '생활기상'] },
-  { key: 'realEstate', title: '부동산', en: 'Real estate', icon: 'Building2', count: 27, tint: 'var(--dt-tint-accent)', color: 'var(--dt-accent)', tags: ['실거래가', '전월세', '공시지가', '건축물대장'] },
+  { key: 'realEstate', title: '부동산', en: 'Real estate', icon: 'Building2', count: 27, tint: 'var(--dt-tint-accent)', color: 'var(--dt-accent-text)', tags: ['실거래가', '전월세', '공시지가', '건축물대장'] },
   { key: 'finance', title: '금융', en: 'Finance', icon: 'TrendingUp', count: 19, tint: 'var(--dt-tint-success)', color: 'var(--dt-success)', tags: ['환율', '기준금리', '주가지수', '예금금리'] },
   { key: 'transport', title: '교통', en: 'Transport', icon: 'Bus', count: 21, tint: 'var(--dt-tint-warning)', color: 'var(--dt-warning)', tags: ['버스도착', '지하철', '주차장', '교통량'] },
   { key: 'health', title: '보건·의료', en: 'Health', icon: 'HeartPulse', count: 28, tint: 'var(--dt-tint-danger)', color: 'var(--dt-danger)', tags: ['병원찾기', '의약품', '감염병', '응급실'] },
-  { key: 'civic', title: '행정·공공', en: 'Civic', icon: 'Landmark', count: 20, tint: 'var(--dt-tint-muted)', color: 'var(--dt-muted-strong)', tags: ['민원', '인허가', '통계', '재정'] },
-  { key: 'culture', title: '문화·관광', en: 'Culture', icon: 'Palette', count: 18, tint: 'var(--dt-tint-accent)', color: 'var(--dt-accent)', tags: ['공연', '전시', '관광지', '축제'] },
+  { key: 'civic', title: '행정·공공', en: 'Civic', icon: 'Landmark', count: 20, tint: 'var(--dt-tint-text)', color: 'var(--dt-text-subtle)', tags: ['민원', '인허가', '통계', '재정'] },
+  { key: 'culture', title: '문화·관광', en: 'Culture', icon: 'Palette', count: 18, tint: 'var(--dt-tint-accent)', color: 'var(--dt-accent-text)', tags: ['공연', '전시', '관광지', '축제'] },
   { key: 'food', title: '식품·안전', en: 'Food & safety', icon: 'UtensilsCrossed', count: 14, tint: 'var(--dt-tint-cobalt)', color: 'var(--dt-cobalt)', tags: ['식품안전', '원산지', '영양정보', '회수'] },
 ];
 
@@ -69,7 +69,7 @@ function ChatCard({ client, tone, tint, tool, q, a }) {
     <div className="card chat">
       <div className="chat-head">
         <span className="chat-avatar" style={{ background: tint, color: tone }}>{client[0]}</span>
-        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-ink-strong)' }}>{client}</div>
+        <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-strong)' }}>{client}</div>
         <span className="badge badge-accent" style={{ marginLeft: 'auto' }}>Bridger MCP</span>
       </div>
       <div className="chat-body">
@@ -116,7 +116,7 @@ function Footer({ locale }) {
         <div className="footer-grid">
           <div>
             <Mark size={22} />
-            <p style={{ marginTop: 16, fontSize: 13, lineHeight: 1.6, color: 'var(--dt-muted)', maxWidth: 280 }}>
+            <p style={{ marginTop: 16, fontSize: 13, lineHeight: 1.6, color: 'var(--dt-text-muted)', maxWidth: 280 }}>
               {locale === 'ko' ? '어려운 공공 API를 하나로 이어주는 서비스. MCP와 REST로 연결합니다.' : 'One managed gateway for Korea\u2019s public-data APIs, over MCP and REST.'}
             </p>
           </div>

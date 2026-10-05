@@ -30,11 +30,11 @@ export function Menu({ trigger, items = [], align = 'left', width = 200 }) {
                   display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
                   padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
                   background: 'transparent', fontSize: 13.5, fontWeight: 500, fontFamily: 'inherit',
-                  color: it.danger ? 'var(--dt-danger)' : 'var(--dt-ink)',
+                  color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text)',
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = it.danger ? 'var(--dt-tint-danger)' : 'var(--dt-surface-sunken)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}>
-                {it.icon ? <span style={{ display: 'inline-flex', color: it.danger ? 'var(--dt-danger)' : 'var(--dt-muted-strong)' }}>{it.icon}</span> : null}
+                {it.icon ? <span style={{ display: 'inline-flex', color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text-subtle)' }}>{it.icon}</span> : null}
                 {it.label}
               </button>
             ))}

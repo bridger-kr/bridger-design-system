@@ -168,7 +168,7 @@ function expectNamedNodeValue(componentName, props, nodeName, property, expected
 expectNodeValue('Button', { Variant: 'Primary', Size: 'sm' }, 'h', 40);
 expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'h', 44);
 expectNodeValue('Button', { Variant: 'Primary', Size: 'lg' }, 'h', 48);
-expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'fill', '{color/ink/ink-strong}');
+expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'fill', '{color/text/text-strong}');
 expectNodeValue('Button', { Variant: 'Danger', Size: 'md' }, 'fill', '{color/status/danger}');
 expectNodeValue('Card', { Variant: 'default' }, 'radius', 8);
 expectNodeValue('Card', { Variant: 'raised' }, 'fill', '{color/surface/surface-raised}');

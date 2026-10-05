@@ -8,14 +8,14 @@ export function Table({ columns = [], rows = [], rowKey, onRowClick, empty, styl
   if (!rows.length && empty) return empty;
   return (
     <div style={{ overflowX: 'auto', borderRadius: 'var(--dt-radius-card)', background: 'var(--dt-surface)', border: '1px solid var(--dt-border)', ...style }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-ink)' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-text)' }}>
         <thead>
           <tr style={{ background: 'var(--dt-surface-muted)' }}>
             {columns.map((c) => (
               <th key={c.key} style={{
                 textAlign: c.align || 'left', padding: '11px 18px',
                 fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600,
-                letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--dt-muted)',
+                letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--dt-text-muted)',
                 borderBottom: '1px solid var(--dt-divider)', whiteSpace: 'nowrap',
               }}>{c.header}</th>
             ))}

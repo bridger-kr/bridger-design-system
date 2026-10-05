@@ -81,7 +81,7 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
           </BaseCheckbox.Indicator>
         </span>
       </BaseCheckbox.Root>
-      {label ? <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
+      {label ? <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span> : null}
     </label>
   );
 }

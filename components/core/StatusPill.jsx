@@ -8,7 +8,7 @@ const STATUS = {
   disconnected: { bg: 'var(--dt-tint-danger)',  fg: 'var(--dt-danger)' },
   danger:       { bg: 'var(--dt-tint-danger)',  fg: 'var(--dt-danger)' },
   info:         { bg: 'var(--dt-tint-cobalt)',  fg: 'var(--dt-info)' },
-  idle:         { bg: 'var(--dt-tint-muted)',   fg: 'var(--dt-muted-strong)' },
+  idle:         { bg: 'var(--dt-tint-text)',   fg: 'var(--dt-text-subtle)' },
 };
 
 /**

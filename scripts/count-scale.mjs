@@ -26,7 +26,7 @@ const shadowsD = new Set(dark.match(/--dt-shadow-\w+/g) || []);
 const motion = new Set(light.match(/--dt-(?:duration-\w+|ease)\b/g) || []);
 const clampCount = (light.match(/clamp\(/g) || []).length;
 
-const COLOR = /^--dt-(paper|surface(-\w+)?|ink(-\w+)?|muted(-\w+)?|border(-\w+)?|divider|accent(-\w+)?|cobalt|lime|success|warning|danger|info|status-\w+|code-\w+|tint-\w+|ring|glass-bg|brand-\w+|syntax-\w+|chrome-\w+|hotspot-\w+|alert-ink)$/;
+const COLOR = /^--dt-(bg|surface(-[\w-]+)?|text(-[\w-]+)?|border(-[\w-]+)?|divider|accent(-[\w-]+)?|cobalt|success|warning|danger|info|status-[\w-]+|code-[\w-]+|tint-[\w-]+|brand-[\w-]+|syntax-[\w-]+|chrome-[\w-]+|hotspot-[\w-]+|glass-[\w-]+)$/;
 const darkKeys = vals(/(--dt-[\w-]+):/g, dark);
 const darkOffenders = darkKeys.filter((k) => k !== '--dt-shadow-overlay' && !COLOR.test(k));
 

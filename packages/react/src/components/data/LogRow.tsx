@@ -6,7 +6,7 @@ const LEVEL: Record<LogLevel, { dot: string; text: string; label: string }> = {
   ok:    { dot: 'var(--dt-success)', text: 'var(--dt-success)', label: 'OK' },
   warn:  { dot: 'var(--dt-warning)', text: 'var(--dt-warning)', label: 'WARN' },
   error: { dot: 'var(--dt-danger)',  text: 'var(--dt-danger)',  label: 'ERR' },
-  info:  { dot: 'var(--dt-muted)',   text: 'var(--dt-muted-strong)', label: 'INFO' },
+  info:  { dot: 'var(--dt-text-muted)',   text: 'var(--dt-text-subtle)', label: 'INFO' },
 };
 
 export interface LogEntry {
@@ -45,13 +45,13 @@ export function LogRow({ entries = [], style, ...rest }: LogRowProps) {
               fontFamily: 'var(--dt-font-mono)', fontSize: 12,
             }}
           >
-            <span style={{ color: 'var(--dt-muted)' }}>{entry.time}</span>
+            <span style={{ color: 'var(--dt-text-muted)' }}>{entry.time}</span>
             <span style={{ width: 7, height: 7, borderRadius: 'var(--dt-radius-pill)', background: level.dot, justifySelf: 'center' }} />
             <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              <span style={{ color: 'var(--dt-ink-strong)', fontWeight: 600 }}>{entry.tool}</span>
-              {entry.message ? <span style={{ color: 'var(--dt-muted-strong)' }}>{'  '}{entry.message}</span> : null}
+              <span style={{ color: 'var(--dt-text-strong)', fontWeight: 600 }}>{entry.tool}</span>
+              {entry.message ? <span style={{ color: 'var(--dt-text-subtle)' }}>{'  '}{entry.message}</span> : null}
             </span>
-            <span style={{ color: entry.latency ? 'var(--dt-muted-strong)' : level.text, fontWeight: 600 }}>
+            <span style={{ color: entry.latency ? 'var(--dt-text-subtle)' : level.text, fontWeight: 600 }}>
               {entry.latency || level.label}
             </span>
           </div>

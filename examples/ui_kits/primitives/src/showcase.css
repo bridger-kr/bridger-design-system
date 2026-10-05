@@ -1,6 +1,6 @@
 :root {
-  color: var(--dt-ink);
-  background: var(--dt-paper);
+  color: var(--dt-text);
+  background: var(--dt-bg);
   font-family: var(--dt-font-sans);
 }
 
@@ -31,11 +31,11 @@ body { margin: 0; min-width: 0; }
 .showcase-intro p:not(.showcase-eyebrow),
 .showcase-content > section > p,
 .showcase-result p:not(.showcase-eyebrow),
-.showcase-connect p:not(.showcase-eyebrow) { color: var(--dt-muted-strong); }
+.showcase-connect p:not(.showcase-eyebrow) { color: var(--dt-text-subtle); }
 
 .showcase-eyebrow {
   margin: 0;
-  color: var(--dt-muted);
+  color: var(--dt-text-muted);
   font-size: var(--dt-small-size);
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -45,13 +45,13 @@ body { margin: 0; min-width: 0; }
   overflow: hidden;
   border: 1px solid var(--dt-border);
   border-radius: var(--dt-radius-card);
-  background: var(--dt-paper);
+  background: var(--dt-bg);
 }
 
 .showcase-theme-label {
   border-bottom: 1px solid var(--dt-border);
   padding: var(--dt-space-2) var(--dt-space-3);
-  color: var(--dt-muted);
+  color: var(--dt-text-muted);
   font-family: var(--dt-font-mono);
   font-size: var(--dt-small-size);
 }

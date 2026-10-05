@@ -6,14 +6,14 @@
 <link rel="stylesheet" href="../../styles.css">
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>
 <style>
-  body { margin: 0; background: var(--dt-paper); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  body { margin: 0; background: var(--dt-bg); padding: 28px; font-family: var(--dt-font-sans); color: var(--dt-text); }
 
   /* SectionCard — the real panel framing the registry */
   .section { background: var(--dt-surface); border-radius: var(--dt-radius-card); border: 1px solid var(--dt-border); overflow: hidden; }
   .shead { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 20px 24px; }
   .stitle { display: flex; align-items: baseline; gap: 10px; }
-  .stitle b { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--dt-ink-strong); }
-  .stitle .n { font-family: var(--dt-font-mono); font-size: 13px; color: var(--dt-muted); font-variant-numeric: tabular-nums; }
+  .stitle b { font-size: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--dt-text-strong); }
+  .stitle .n { font-family: var(--dt-font-mono); font-size: 13px; color: var(--dt-text-muted); font-variant-numeric: tabular-nums; }
   .btn-primary [data-ico] { display: inline-flex; }
 
   /* Registry table */
@@ -22,20 +22,20 @@
   .rrow { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: center; gap: 18px; padding: 14px 24px; border-top: 1px solid var(--dt-divider); transition: background-color var(--dt-duration-fast) var(--dt-ease); }
   .rrow:hover { background: var(--dt-surface-sunken); }
   .rhdr { padding: 9px 24px; border-top: 1px solid var(--dt-divider); background: var(--dt-surface-sunken); }
-  .rhdr span { font-size: 12px; font-weight: 600; color: var(--dt-muted); }
+  .rhdr span { font-size: 12px; font-weight: 600; color: var(--dt-text-muted); }
 
   .rname { min-width: 0; }
-  .rname code { font-family: var(--dt-font-mono); font-size: 14px; font-weight: 600; color: var(--dt-ink-strong); }
-  .rname p { margin-top: 3px; font-size: 12px; color: var(--dt-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rname code { font-family: var(--dt-font-mono); font-size: 14px; font-weight: 600; color: var(--dt-text-strong); }
+  .rname p { margin-top: 3px; font-size: 12px; color: var(--dt-text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-  .rpath { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .rpath .m { color: var(--dt-accent); font-weight: 600; }
+  .rpath { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-subtle); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rpath .m { color: var(--dt-accent-text); font-weight: 600; }
 
   .rstate { justify-self: end; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; white-space: nowrap; }
   .rstate [data-ico] { display: inline-flex; }
   .rstate.ok { color: var(--dt-success); }
   .rstate.warn { color: var(--dt-warning); }
-  .rstate.off { color: var(--dt-muted); }
+  .rstate.off { color: var(--dt-text-muted); }
 </style>
 </head>
 <body>

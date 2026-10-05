@@ -35,7 +35,7 @@ describe('feedback component exports', () => {
       alignItems: 'flex-start',
       background: 'var(--dt-tint-warning)',
       borderRadius: 'var(--dt-radius-card)',
-      color: 'var(--dt-ink-strong)',
+      color: 'var(--dt-text-strong)',
       minHeight: 62,
       padding: '13px 15px',
       width: 'min(100%, 380px)',
@@ -54,7 +54,7 @@ describe('feedback component exports', () => {
       const el = Alert({ tone, title: '상태', children: '게이트웨이 상태를 확인했습니다.' });
       expect(el.props.style).toMatchObject({
         background,
-        color: 'var(--dt-ink-strong)',
+        color: 'var(--dt-text-strong)',
       });
     }
   });

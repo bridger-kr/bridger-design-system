@@ -175,12 +175,13 @@ AI-slop or dark-glow dev-SaaS like doppler/starburst). **Dark is a full-parity
 alternate** (`:root[data-theme='dark']` / `.dark`) — the console-native mode. Both
 are designed deliberately.
 
-**Color (v2).** Warm near-white surfaces (`#fbfaf8` paper → `#ffffff` card →
-`#f4f3ef` sunken), warm near-black ink (`#1b1a16`, strong `#0c0b08`), and a single
-**persimmon** action color (`#ec5e1f`, hover `#ec5e1f`, highlight `#ec5e1f`) used
-for *one* main action per screen plus active/focus. Cobalt, lime, success,
-warning, danger are **status-semantic only** — never decoration. No second
-decorative accent, no purple/indigo gradients, no glow.
+**Color (v2).** Achromatic neutral surfaces (`#ffffff` bg → `oklch .9875`
+surface → `oklch .97` sunken), neutral gray text (`oklch .205`, strong
+`oklch .145`, muted `oklch .54` — AA on every surface), and a single
+**persimmon** action color (`#ec5e1f` fill / `#b83c0d` when it renders as text)
+used for *one* main action per screen plus active/focus. Cobalt, success,
+warning (amber), danger are **status-semantic only** — same hue in both themes,
+never decoration. No second decorative accent, no purple/indigo gradients, no glow.
 
 **Type.** Pretendard Variable for all Korean + UI; JetBrains Mono for code, API
 paths, request IDs, timestamps, methods. Letter-spacing stays 0em for body/labels
@@ -210,9 +211,9 @@ bubbly. Compact controls/tags 4px, interactive controls 6px, cards and
 large surfaces 8px, true pills/avatars/dots full. Radius is paired with a **hairline**, not a shadow:
 a bordered plane reads as structure, a rounded box floating on shadow reads as slop.
 
-**Borders.** Hairlines are the primary structural device. `--dt-border #eceae3`
-for dividers/planes; `--dt-border-strong #ddd9cf` for framing a surface against
-the page. Cards are separated from the page by their **border**, not a shadow;
+**Borders.** Hairlines are the primary structural device. `--dt-border`
+(ink 10% alpha) for dividers/planes; `--dt-border-strong` (ink 18% alpha) for
+framing a surface against the page. Cards are separated from the page by their **border**, not a shadow;
 tables and stat rows divide with internal 1px borders.
 
 **Motion.** Calm and fast. Ease `cubic-bezier(0.23,1,0.32,1)`, durations 120–160ms.
