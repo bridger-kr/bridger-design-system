@@ -120,7 +120,7 @@ function IntegrationSection({ locale }) {
       <div className="dt-shell">
         <div className="integration-grid">
           <div>
-            <h2 style={{ fontSize: 'clamp(26px,3.2vw,36px)', letterSpacing: '-0.035em', whiteSpace: 'pre-line' }}>
+            <h2 style={{ fontSize: 'var(--dt-h1-size)', fontWeight: 'var(--dt-h1-weight)', letterSpacing: 'var(--dt-h1-tracking)', lineHeight: 'var(--dt-h1-leading)', whiteSpace: 'pre-line' }}>
               {locale === 'ko' ? 'AI에는 MCP로,\n서버에는 REST로.' : 'MCP for AI,\nREST for servers.'}
             </h2>
             <p style={{ marginTop: 14, color: 'var(--dt-muted-strong)', fontSize: 16, lineHeight: 1.6, maxWidth: 420 }}>

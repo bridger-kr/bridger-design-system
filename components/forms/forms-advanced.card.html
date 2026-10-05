@@ -23,7 +23,7 @@
   .cb-list { background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); box-shadow: var(--dt-shadow-overlay); padding: 4px; }
   .opt { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--dt-radius-control); }
   .opt.on { background: var(--dt-surface-sunken); }
-  .opt .nm { flex: 1; font-size: 13.5px; font-weight: 500; color: var(--dt-ink-strong); }
+  .opt .nm { flex: 1; font-size: 14px; font-weight: 500; color: var(--dt-ink-strong); }
   .opt.sel .nm { font-weight: 600; }
   .opt .m { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted); }
   .opt .chk { color: var(--dt-accent); display: inline-flex; }
@@ -34,13 +34,13 @@
   .sl-val { font-family: var(--dt-font-mono); font-size: 13px; font-weight: 600; color: var(--dt-ink-strong); font-variant-numeric: tabular-nums; }
   .sl-val .u { color: var(--dt-muted); font-weight: 400; }
   .track { position: relative; height: 20px; display: flex; align-items: center; }
-  .track .rail { position: absolute; left: 0; right: 0; height: 4px; border-radius: 2px; background: var(--dt-surface-sunken); box-shadow: inset 0 0 0 1px var(--dt-border-strong); }
-  .track .fill { position: absolute; left: 0; height: 4px; border-radius: 2px; background: var(--dt-accent); }
+  .track .rail { position: absolute; left: 0; right: 0; height: 4px; border-radius: var(--dt-radius-sm); background: var(--dt-surface-sunken); box-shadow: inset 0 0 0 1px var(--dt-border-strong); }
+  .track .fill { position: absolute; left: 0; height: 4px; border-radius: var(--dt-radius-sm); background: var(--dt-accent); }
   .track .thumb { position: absolute; transform: translateX(-50%); width: 16px; height: 16px; border-radius: var(--dt-radius-sm); background: var(--dt-surface); box-shadow: 0 0 0 1.5px var(--dt-accent); border: 3px solid var(--dt-surface); }
 
   /* FileUpload */
   .drop { display: grid; place-items: center; gap: 8px; padding: 26px 20px; text-align: center; border-radius: var(--dt-radius-card); border: 1.5px dashed var(--dt-border-strong); background: var(--dt-surface-sunken); }
-  .drop .t { font-size: 13.5px; color: var(--dt-ink-strong); }
+  .drop .t { font-size: 14px; color: var(--dt-ink-strong); }
   .drop .t b { color: var(--dt-accent); font-weight: 600; }
   .drop .h { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted); }
   .file { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); }

@@ -16,7 +16,7 @@
   .cap b { color: var(--dt-muted-strong); font-weight: 600; }
 
   .alerts { display: grid; grid-template-columns: repeat(2, minmax(0, 380px)); gap: 10px; }
-  .alert { display: flex; align-items: flex-start; gap: 12px; min-height: 62px; width: min(100%, 380px); overflow: clip; padding: 13px 15px; border-radius: 20px; background: var(--dt-status-warning); color: var(--dt-alert-ink); transition: filter var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease); }
+  .alert { display: flex; align-items: flex-start; gap: 12px; min-height: 62px; width: min(100%, 380px); overflow: clip; padding: 13px 15px; border-radius: var(--dt-radius-card); background: var(--dt-status-warning); color: var(--dt-alert-ink); transition: filter var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease); }
   .alert.info { background: var(--dt-status-cobalt); }
   .alert.success { background: var(--dt-status-success); }
   .alert.warning { background: var(--dt-status-warning); }
@@ -34,7 +34,7 @@
   /* EmptyState — sunken fill well, no outline */
   .empty { display: grid; place-items: center; gap: 9px; text-align: center; padding: 26px 20px; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-card); }
   .ei { width: 42px; height: 42px; display: grid; place-items: center; border-radius: var(--dt-radius-pill); background: var(--dt-surface); color: var(--dt-muted); box-shadow: none; }
-  .et { font-size: 15px; font-weight: 600; color: var(--dt-ink-strong); white-space: nowrap; }
+  .et { font-size: 16px; font-weight: 600; color: var(--dt-ink-strong); white-space: nowrap; }
   .ed { font-size: 13px; line-height: 1.5; color: var(--dt-muted); max-width: 230px; }
   .e-act { margin-top: 4px; display: inline-flex; align-items: center; gap: 6px; height: 40px; padding: 0 16px; border-radius: var(--dt-radius-control); background: var(--dt-accent); color: var(--dt-accent-ink); font-size: 13px; font-weight: 600; cursor: pointer; box-shadow: none; transition: background-color var(--dt-duration-fast) var(--dt-ease); }
   .e-act:hover { background: var(--dt-accent-strong); }

@@ -159,7 +159,7 @@ export const BrandLogo = forwardRef(function BrandLogo({ size = 'md', autoplay =
         width: wordmarkSize.width,
         height: wordmarkSize.height,
         fontFamily: 'var(--dt-font-sans)',
-        fontWeight: 780,
+        fontWeight: 600,
         letterSpacing: 0,
         lineHeight: 1,
         color: 'var(--dt-accent)',
