@@ -52,7 +52,7 @@ code, pre, kbd, samp { font-family: var(--dt-font-mono); font-size: var(--dt-mon
   padding: 3px 8px;
   font-size: var(--dt-caption-size); font-weight: 600; letter-spacing: 0;
   border-radius: var(--dt-radius-chip);
-  background: var(--dt-surface-sunken); color: var(--dt-text-subtle);
+  background: var(--dt-surface-sunken); color: var(--dt-text-muted); /* muted: AA on the sunken fill (subtle is 4.35) */
   border: 1px solid var(--dt-border-strong);
   transition: background-color var(--dt-duration-fast) var(--dt-ease);
 }
