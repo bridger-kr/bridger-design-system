@@ -50,9 +50,9 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 
 ### 4.1 Theme
 
-- **Light is the default.** New sessions render the light token set unless the user has explicitly selected and persisted dark mode.
+- **Follows the OS by default.** With no stored preference, `:root` carries `color-scheme: light dark` and themed tokens resolve through `light-dark()` under `prefers-color-scheme` — the correct theme renders before any JavaScript runs, and in JS-free surfaces (docs embeds, e-mail previews, the Figma plugin).
 - **Dark has full parity.** Every component, semantic state, contrast relationship, focus treatment, and surface hierarchy must have a deliberate dark treatment. Dark is not an afterthought or an inversion filter.
-- Theme state must be explicit and persistent. Implementations may use the existing `:root[data-theme='dark']`, `:root[data-theme='light']`, or `.dark` selectors according to the consuming app, but they must resolve to the same token roles.
+- Theme state must be explicit and persistent. An explicit `:root[data-theme='light'|'dark']` — written by `ThemeSwitch` or the consumer's pre-paint script — pins `color-scheme` and wins over the OS. `.dark` is a deprecated alias for the same dark scope, removed in v2.1.
 - Do not create a component that works only in one theme. Verify light and dark for shared components and console surfaces.
 
 ### 4.2 Color roles
@@ -525,7 +525,7 @@ This checklist is the explicit, reproducible record for each release. Every row 
 | Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Captured |
 | Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Captured |
 | Theme | Light (default) | Screenshot in light theme per changed surface | Captured |
-| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']` or `.dark`) | Captured |
+| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']`; the deprecated `.dark` alias also works) | Captured |
 | Interaction state | Rest | Default screenshot for the surface | Captured |
 | Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Captured |
 | Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Captured |

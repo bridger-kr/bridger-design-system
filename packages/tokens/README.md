@@ -30,6 +30,25 @@ import '@bridger-kr/tokens/css/base';
 
 `@bridger-kr/tokens/styles.css` is an alias for the full CSS entrypoint.
 
+## Theming
+
+The contract follows the OS (`prefers-color-scheme`) by default: `:root` carries `color-scheme: light dark` and themed tokens are single `light-dark()` definitions, so no JavaScript is required to honor a dark OS. An explicit user choice pins the theme through `:root[data-theme='light'|'dark']` and wins over the OS. `.dark` is a deprecated alias for the same dark scope.
+
+To prevent a flash of the wrong theme, run a pre-paint script in `<head>` that applies only a *persisted* choice (leave the attribute unset to keep following the OS):
+
+```html
+<script>
+  try {
+    var theme = localStorage.getItem('bridger-theme'); // 'light' | 'dark' | null
+    if (theme === 'light' || theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  } catch {}
+</script>
+```
+
+`@bridger-kr/react`'s `ThemeSwitch` owns this attribute at runtime and clears the storage key when the preference returns to `system`.
+
 ## TypeScript Tokens
 
 ```ts
