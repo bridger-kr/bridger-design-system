@@ -16,12 +16,12 @@ export function Toast({ tone = 'success', title, message, action, onDismiss, sty
     }}>
       <span style={{ width: 8, height: 8, borderRadius: 9999, marginTop: 5, flex: '0 0 auto', background: DOT[tone] ?? DOT.success }} />
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title ? <div style={{ fontSize: 14, fontWeight: 650, color: 'var(--dt-ink-strong)' }}>{title}</div> : null}
-        {message ? <div style={{ marginTop: title ? 2 : 0, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-muted-strong)' }}>{message}</div> : null}
+        {title ? <div style={{ fontSize: 14, fontWeight: 650, color: 'var(--dt-text-strong)' }}>{title}</div> : null}
+        {message ? <div style={{ marginTop: title ? 2 : 0, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-text-subtle)' }}>{message}</div> : null}
       </div>
       {action ? <div style={{ flex: '0 0 auto' }}>{action}</div> : null}
       {onDismiss ? (
-        <button onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--dt-muted)', padding: 2, lineHeight: 0 }}>
+        <button onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--dt-text-muted)', padding: 2, lineHeight: 0 }}>
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
         </button>
       ) : null}

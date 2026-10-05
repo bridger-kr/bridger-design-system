@@ -14,10 +14,10 @@ export const AlertMotion = {
 };
 
 const TONE_BACKGROUND = {
-  info: 'var(--dt-status-cobalt)',
-  success: 'var(--dt-status-success)',
-  warning: 'var(--dt-status-warning)',
-  danger: 'var(--dt-status-danger)',
+  info: 'var(--dt-tint-cobalt)',
+  success: 'var(--dt-tint-success)',
+  warning: 'var(--dt-tint-warning)',
+  danger: 'var(--dt-tint-danger)',
 };
 
 function cx(...parts) {
@@ -35,7 +35,7 @@ export function Alert({ tone = AlertTone.Info, title, children, icon, action, mo
         alignItems: 'flex-start',
         background,
         borderRadius: 20,
-        color: 'var(--dt-alert-ink)',
+        color: 'var(--dt-text-strong)',
         display: 'flex',
         gap: 12,
         minHeight: 62,

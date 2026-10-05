@@ -58,7 +58,7 @@ export function Alert({
         alignItems: 'flex-start',
         background,
         borderRadius: '20px',
-        color: 'var(--dt-ink-strong)',
+        color: 'var(--dt-text-strong)',
         display: 'flex',
         gap: 12,
         minHeight: 62,

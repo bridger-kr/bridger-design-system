@@ -26,7 +26,7 @@ export function Card({ children, variant, tone, interactive = false, padding = 2
       className={cx(interactive && 'dt-card-interactive', className)}
       style={{
         borderRadius: 'var(--dt-radius-lg)',
-        color: 'var(--dt-ink)',
+        color: 'var(--dt-text)',
         padding,
         transition: 'box-shadow var(--dt-motion), background-color var(--dt-motion)',
         ...v,

@@ -35,7 +35,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
   return (
     <div style={{ display: 'grid', gap: 7 }}>
       {label ? (
-        <label htmlFor={selId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
+        <label htmlFor={selId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
           {label}
         </label>
       ) : null}
@@ -52,7 +52,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
             className="dt-field dt-select-trigger"
             style={{
               appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,
-              fontFamily: 'inherit', color: 'var(--dt-ink-strong)', cursor: disabled ? 'not-allowed' : 'pointer',
+              fontFamily: 'inherit', color: 'var(--dt-text-strong)', cursor: disabled ? 'not-allowed' : 'pointer',
               opacity: disabled ? 0.55 : 1, textAlign: 'left', border: '1px solid var(--dt-border)', ...style,
             }}
           >
@@ -72,7 +72,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
                       className="dt-select-option"
                       style={{
                         display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '8px 10px',
-                        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-ink)',
+                        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-text)',
                       }}
                     >
                       <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>
@@ -95,13 +95,13 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
             top: '50%',
             transform: 'translateY(-50%)',
             pointerEvents: 'none',
-            color: 'var(--dt-muted)',
+            color: 'var(--dt-text-muted)',
           }}
         >
           <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
     </div>
   );
 }

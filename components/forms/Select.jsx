@@ -8,7 +8,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
   const selId = id || (label ? `sel-${label.replace(/\s+/g, '-')}` : undefined);
   return (
     <div style={{ display: 'grid', gap: 7 }}>
-      {label ? <label htmlFor={selId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>{label}</label> : null}
+      {label ? <label htmlFor={selId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</label> : null}
       <div style={{ position: 'relative', display: 'flex' }}>
         <select
           id={selId}
@@ -20,7 +20,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
           style={{
             appearance: 'none', WebkitAppearance: 'none', width: '100%',
             padding: '10px 36px 10px 13px', fontSize: 14, fontFamily: 'inherit',
-            color: 'var(--dt-ink-strong)',
+            color: 'var(--dt-text-strong)',
             cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.55 : 1,
             ...style,
           }}
@@ -32,11 +32,11 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
           })}
         </select>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"
-          style={{ position: 'absolute', right: 11, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'var(--dt-muted)' }}>
+          style={{ position: 'absolute', right: 11, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'var(--dt-text-muted)' }}>
           <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
     </div>
   );
 }

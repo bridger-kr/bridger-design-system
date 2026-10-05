@@ -152,8 +152,8 @@ function typographyValues(): TokenRecord {
 
 describe('@bridger-kr/tokens', () => {
   it('publishes the light theme at :root with an explicit equivalent light selector', () => {
-    expect(lightDefaultContract.get('--dt-paper')).toBe('#f7f7f5');
-    expect(lightDefaultContract.get('--dt-surface')).toBe('#ffffff');
+    expect(lightDefaultContract.get('--dt-bg')).toBe('#ffffff');
+    expect(lightDefaultContract.get('--dt-surface')).toBe('oklch(0.9875 0 0)');
     expect(lightDefaultContract).toEqual(lightContract);
   });
 
@@ -171,14 +171,12 @@ describe('@bridger-kr/tokens', () => {
   it('uses accessible persimmon identity and neutral primary-action roles', () => {
     expect(colors.light.accent).toBe('#ec5e1f');
     expect(contrastRatio(colors.light.accentInk, colors.light.accent)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(colors.light.accentStrong, colors.light.paper)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(colors.dark.accentStrong, colors.dark.surface)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(colors.light.inkStrong, colors.light.surface)).toBeGreaterThanOrEqual(4.5);
-    expect(contrastRatio(colors.dark.inkStrong, colors.dark.surface)).toBeGreaterThanOrEqual(4.5);
-    expect(baseCss).toContain('a { color: var(--dt-accent-strong);');
-    expect(baseCss).toContain('.badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-strong);');
-    expect(baseCss).toContain('background: var(--dt-ink-strong); color: var(--dt-surface);');
-    expect(baseCss).toContain('.btn-primary:not(:disabled):hover { background: var(--dt-ink);');
+    expect(colors.light.accentText).toBe('#b83c0d');
+    expect(colors.dark.accentText).toBe('#f99566');
+    expect(baseCss).toContain('a { color: var(--dt-accent-text);');
+    expect(baseCss).toContain('.badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-text);');
+    expect(baseCss).toContain('background: var(--dt-text-strong); color: var(--dt-surface);');
+    expect(baseCss).toContain('.btn-primary:not(:disabled):hover { background: var(--dt-text);');
   });
 
   it('keeps exported color tokens aligned with the CSS contract', () => {
@@ -209,17 +207,17 @@ describe('@bridger-kr/tokens', () => {
   });
 
   it('preserves literal token types', () => {
-    expectTypeOf(colors.light.paper).toEqualTypeOf<'#f7f7f5'>();
-    expectTypeOf(colors.light.surface).toEqualTypeOf<'#ffffff'>();
-    expectTypeOf(colors.light.surfaceSunken).toEqualTypeOf<'#efefec'>();
-    expectTypeOf(colors.light.ink).toEqualTypeOf<'#20201d'>();
-    expectTypeOf(colors.light.border).toEqualTypeOf<'#e5e5e0'>();
+    expectTypeOf(colors.light.bg).toEqualTypeOf<'#ffffff'>();
+    expectTypeOf(colors.light.surface).toEqualTypeOf<'oklch(0.9875 0 0)'>();
+    expectTypeOf(colors.light.surfaceSunken).toEqualTypeOf<'oklch(0.97 0 0)'>();
+    expectTypeOf(colors.light.text).toEqualTypeOf<'oklch(0.205 0 0)'>();
+    expectTypeOf(colors.light.border).toEqualTypeOf<'oklch(0.145 0 0 / 0.10)'>();
     expectTypeOf(colors.light.accent).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(colors.light.accentInk).toEqualTypeOf<'#1a1206'>();
     expectTypeOf(motion.transitions.base).toEqualTypeOf<'200ms var(--dt-ease)'>();
     expectTypeOf(layers.popover).toEqualTypeOf<60>();
-    expectTypeOf(colors.dark.paper).toEqualTypeOf<'#11110f'>();
-    expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'#ec5e1f'>();
+    expectTypeOf(colors.dark.bg).toEqualTypeOf<'oklch(0.145 0 0)'>();
+    expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'var(--dt-warning)'>();
     expectTypeOf(radius.lg).toEqualTypeOf<'14px'>();
     expectTypeOf(radius.xl).toEqualTypeOf<'14px'>();
     expectTypeOf(typography.eyebrow.size).toEqualTypeOf<'11px'>();

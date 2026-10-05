@@ -1,0 +1,26 @@
+<!-- @dsCard group="Colors" viewport="700x150" name="Text" subtitle="Neutral gray ink — five emphasis levels, muted clears AA on every surface" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="../../styles.css">
+<style>
+  body { margin: 0; background: var(--dt-surface); padding: 24px; }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .cell b { display: block; font-size: 22px; font-weight: 600; margin-bottom: 8px; letter-spacing: 0; }
+  .cell span { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-text-muted); }
+  .t1 { color: var(--dt-text-strong); } .t2 { color: var(--dt-text); }
+  .t3 { color: var(--dt-text-subtle); } .t4 { color: var(--dt-text-muted); }
+  .t5 { color: var(--dt-text-placeholder); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="cell"><b class="t1">강조 Aa</b><span>text-strong · oklch .145 ≈ #0a0a0a</span></div>
+    <div class="cell"><b class="t2">본문 Aa</b><span>text · oklch .205 ≈ #171717</span></div>
+    <div class="cell"><b class="t3">보조 Aa</b><span>text-subtle · oklch .556 ≈ #737373</span></div>
+    <div class="cell"><b class="t4">메타 Aa</b><span>text-muted · oklch .54 ≈ #6f6f6f</span></div>
+    <div class="cell"><b class="t5">힌트 Aa</b><span>text-placeholder · oklch .708 ≈ #a1a1a1</span></div>
+  </div>
+</body>
+</html>

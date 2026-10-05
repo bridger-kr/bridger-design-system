@@ -16,22 +16,22 @@ export function FilterChip({ label, count, active = false, removable = false, on
         borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
         fontFamily: 'var(--dt-font-sans)', fontSize: 13, fontWeight: active ? 650 : 500,
         background: active ? 'var(--dt-tint-accent)' : 'var(--dt-surface)',
-        color: active ? 'var(--dt-accent)' : 'var(--dt-muted-strong)',
+        color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-subtle)',
         boxShadow: `inset 0 0 0 1px ${active ? 'color-mix(in srgb, var(--dt-accent) 40%, transparent)' : 'var(--dt-border-strong)'}`,
         transition: 'background-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast)',
         ...style,
       }}
     >
-      {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent)' : 'var(--dt-muted)' }} aria-hidden="true">{icon}</span> : null}
+      {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }} aria-hidden="true">{icon}</span> : null}
       <span>{label}</span>
       {count != null ? (
-        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: active ? 'var(--dt-accent)' : 'var(--dt-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
+        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
       ) : null}
       {removable ? (
         <span
           role="button" aria-label="제거"
           onClick={(e) => { e.stopPropagation(); onRemove?.(); }}
-          style={{ display: 'inline-flex', marginRight: -2, color: active ? 'var(--dt-accent)' : 'var(--dt-muted)' }}
+          style={{ display: 'inline-flex', marginRight: -2, color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }}
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
         </span>

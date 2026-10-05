@@ -17,7 +17,7 @@ export function Pagination({ page = 1, pageCount = 1, onChange, style }) {
     minWidth: 32, height: 32, padding: '0 8px', borderRadius: 'var(--dt-radius-sm)', border: 'none', cursor: 'pointer',
     fontSize: 13, fontWeight: 600, fontVariantNumeric: 'tabular-nums',
     background: active ? 'var(--dt-accent)' : 'transparent',
-    color: active ? 'var(--dt-accent-ink)' : 'var(--dt-muted-strong)',
+    color: active ? 'var(--dt-accent-ink)' : 'var(--dt-text-subtle)',
   });
   const arrow = (dis) => ({ ...cell(false), opacity: dis ? 0.4 : 1, cursor: dis ? 'not-allowed' : 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' });
   return (
@@ -26,7 +26,7 @@ export function Pagination({ page = 1, pageCount = 1, onChange, style }) {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
       </button>
       {pages.map((p, i) => p === '…'
-        ? <span key={`e${i}`} style={{ minWidth: 22, textAlign: 'center', color: 'var(--dt-muted)' }}>…</span>
+        ? <span key={`e${i}`} style={{ minWidth: 22, textAlign: 'center', color: 'var(--dt-text-muted)' }}>…</span>
         : <button key={p} style={cell(p === page)} onClick={() => go(p)} aria-current={p === page ? 'page' : undefined}>{p}</button>)}
       <button style={arrow(page >= pageCount)} onClick={() => go(page + 1)} disabled={page >= pageCount} aria-label="다음">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>

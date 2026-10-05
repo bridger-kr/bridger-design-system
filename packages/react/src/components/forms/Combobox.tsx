@@ -73,7 +73,7 @@ export function Combobox({
     >
     <div style={{ display: 'grid', gap: 7, position: 'relative', ...style }}>
       {label ? (
-        <label htmlFor={cbId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
+        <label htmlFor={cbId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
           {label}
         </label>
       ) : null}
@@ -95,7 +95,7 @@ export function Combobox({
           viewBox="0 0 24 24"
           fill="none"
           aria-hidden="true"
-          style={{ color: 'var(--dt-muted)', flex: '0 0 auto' }}
+          style={{ color: 'var(--dt-text-muted)', flex: '0 0 auto' }}
         >
           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
           <path d="M21 21l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
@@ -117,11 +117,11 @@ export function Combobox({
             background: 'transparent',
             fontSize: 14,
             fontFamily: 'inherit',
-            color: 'var(--dt-ink-strong)',
+            color: 'var(--dt-text-strong)',
           }}
         />
         {selected && !open ? (
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>
             {selected.meta}
           </span>
         ) : null}
@@ -143,7 +143,7 @@ export function Combobox({
             }}
           >
           {filtered.length === 0 ? (
-            <BaseCombobox.Empty style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-muted)' }}>{emptyText}</BaseCombobox.Empty>
+            <BaseCombobox.Empty style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-text-muted)' }}>{emptyText}</BaseCombobox.Empty>
           ) : (
             <BaseCombobox.List>
             {filtered.map((o) => {
@@ -168,7 +168,7 @@ export function Combobox({
                       minWidth: 0,
                       fontSize: 13.5,
                       fontWeight: isSel ? 600 : 500,
-                      color: 'var(--dt-ink-strong)',
+                      color: 'var(--dt-text-strong)',
                       overflow: 'hidden',
                       textOverflow: 'ellipsis',
                       whiteSpace: 'nowrap',
@@ -181,7 +181,7 @@ export function Combobox({
                       style={{
                         fontFamily: 'var(--dt-font-mono)',
                         fontSize: 11,
-                        color: 'var(--dt-muted)',
+                        color: 'var(--dt-text-muted)',
                         flex: '0 0 auto',
                       }}
                     >
@@ -195,7 +195,7 @@ export function Combobox({
                       viewBox="0 0 24 24"
                       fill="none"
                       aria-hidden="true"
-                      style={{ color: 'var(--dt-accent)', flex: '0 0 auto' }}
+                      style={{ color: 'var(--dt-accent-text)', flex: '0 0 auto' }}
                     >
                       <path
                         d="M20 6L9 17l-5-5"
@@ -214,7 +214,7 @@ export function Combobox({
           </BaseCombobox.Popup>
         </BaseCombobox.Positioner>
       </BaseCombobox.Portal>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
     </div>
     </BaseCombobox.Root>
   );

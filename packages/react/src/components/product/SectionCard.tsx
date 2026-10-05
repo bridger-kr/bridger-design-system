@@ -56,19 +56,19 @@ export function SectionCard({
                   fontSize: 12,
                   fontWeight: 650,
                   textTransform: 'uppercase',
-                  color: 'var(--dt-muted)',
+                  color: 'var(--dt-text-muted)',
                 }}
               >
                 {eyebrow}
               </p>
             ) : null}
             {title ? (
-              <h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>
+              <h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-text-strong)' }}>
                 {title}
               </h3>
             ) : null}
             {description ? (
-              <p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.55, color: 'var(--dt-muted-strong)', maxWidth: 560 }}>
+              <p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.55, color: 'var(--dt-text-subtle)', maxWidth: 560 }}>
                 {description}
               </p>
             ) : null}

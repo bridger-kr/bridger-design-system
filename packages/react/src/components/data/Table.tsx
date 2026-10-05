@@ -116,7 +116,7 @@ export function Table<Row extends TableRow = TableRow>({
         ...style,
       }}
     >
-      <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-ink)' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-text)' }}>
         <thead>
           <tr style={{ background: 'var(--dt-surface-muted)' }}>
             {columns.map((column) => (
@@ -130,7 +130,7 @@ export function Table<Row extends TableRow = TableRow>({
                   fontWeight: 600,
                   letterSpacing: '0.04em',
                   textTransform: 'uppercase',
-                  color: 'var(--dt-muted)',
+                  color: 'var(--dt-text-muted)',
                   borderBottom: '1px solid var(--dt-divider)',
                   whiteSpace: 'nowrap',
                 }}

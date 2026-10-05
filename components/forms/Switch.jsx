@@ -34,7 +34,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
   return (
     <label style={{ display: 'inline-flex', alignItems: 'center', gap: 10, cursor: disabled ? 'not-allowed' : 'pointer', ...style }}>
       {sw}
-      <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span>
+      <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span>
     </label>
   );
 }

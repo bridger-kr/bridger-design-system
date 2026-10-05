@@ -5,27 +5,27 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="../../styles.css">
 <style>
-  body { margin: 0; background: var(--dt-paper); padding: 26px 28px; font-family: var(--dt-font-sans); color: var(--dt-ink-strong); }
+  body { margin: 0; background: var(--dt-bg); padding: 26px 28px; font-family: var(--dt-font-sans); color: var(--dt-text-strong); }
   .head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--dt-border-strong); padding-bottom: 12px; }
   .head .nm { font-family: var(--dt-font-mono); font-size: 15px; font-weight: 700; letter-spacing: -0.01em; }
-  .head .ax { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); letter-spacing: .04em; }
+  .head .ax { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-text-muted); letter-spacing: .04em; }
 
   /* disambiguation glyphs — the actual reason you pick a mono for code */
   .glyphs { display: grid; grid-template-columns: repeat(12, 1fr); margin-top: 18px; border: 1px solid var(--dt-border); }
   .cell { border-right: 1px solid var(--dt-border); padding: 12px 0 9px; text-align: center; }
   .cell:last-child { border-right: 0; }
-  .cell .g { font-family: var(--dt-font-mono); font-size: 30px; line-height: 1; font-weight: 500; color: var(--dt-ink-strong); }
-  .cell .t { font-family: var(--dt-font-mono); font-size: 9px; color: var(--dt-muted); margin-top: 8px; letter-spacing: .02em; }
-  .cell.hl .g { color: var(--dt-accent); }
+  .cell .g { font-family: var(--dt-font-mono); font-size: 30px; line-height: 1; font-weight: 500; color: var(--dt-text-strong); }
+  .cell .t { font-family: var(--dt-font-mono); font-size: 9px; color: var(--dt-text-muted); margin-top: 8px; letter-spacing: .02em; }
+  .cell.hl .g { color: var(--dt-accent-text); }
 
   .foot { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 20px; }
-  .blk .lbl { font-family: var(--dt-font-mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); margin-bottom: 9px; }
+  .blk .lbl { font-family: var(--dt-font-mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-text-muted); margin-bottom: 9px; }
   /* tabular figures align in a column — the functional payoff */
-  .figs { font-family: var(--dt-font-mono); font-size: 13px; line-height: 1.7; font-variant-numeric: tabular-nums; color: var(--dt-ink); }
+  .figs { font-family: var(--dt-font-mono); font-size: 13px; line-height: 1.7; font-variant-numeric: tabular-nums; color: var(--dt-text); }
   .figs .row { display: flex; justify-content: space-between; max-width: 190px; }
-  .figs .row span:last-child { color: var(--dt-muted-strong); }
-  .roles { font-family: var(--dt-font-mono); font-size: 12.5px; line-height: 1.9; color: var(--dt-muted-strong); }
-  .roles b { color: var(--dt-ink-strong); font-weight: 600; }
+  .figs .row span:last-child { color: var(--dt-text-subtle); }
+  .roles { font-family: var(--dt-font-mono); font-size: 12.5px; line-height: 1.9; color: var(--dt-text-subtle); }
+  .roles b { color: var(--dt-text-strong); font-weight: 600; }
 </style>
 </head>
 <body>

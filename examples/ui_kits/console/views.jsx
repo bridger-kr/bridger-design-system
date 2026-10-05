@@ -25,17 +25,17 @@ function ToolCard({ t, locale }) {
         <div style={{ minWidth: 0 }}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <span className="chip">{CAT_LABEL[t.cat] ?? t.cat}</span>
-            <span className="chip" style={{ color: 'var(--dt-accent)' }}>{t.method}</span>
+            <span className="chip" style={{ color: 'var(--dt-accent-text)' }}>{t.method}</span>
           </div>
-          <h4 style={{ marginTop: 12, fontSize: 15, fontWeight: 600, color: 'var(--dt-ink-strong)', letterSpacing: '-0.01em', wordBreak: 'break-all' }}>{t.name}</h4>
+          <h4 style={{ marginTop: 12, fontSize: 15, fontWeight: 600, color: 'var(--dt-text-strong)', letterSpacing: '-0.01em', wordBreak: 'break-all' }}>{t.name}</h4>
         </div>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flex: '0 0 auto', fontSize: 12, fontWeight: 600, color: st.c }}>
           <span className="dot" style={{ background: st.c }} />{locale === 'ko' ? st.ko : st.en}
         </span>
       </div>
-      <p style={{ marginTop: 12, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-muted-strong)' }}>{t.desc}</p>
+      <p style={{ marginTop: 12, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-text-subtle)' }}>{t.desc}</p>
       <div style={{ marginTop: 14, paddingTop: 13, borderTop: '1px solid color-mix(in srgb, var(--dt-border) 80%, transparent)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12 }}>
-        <code style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.path}</code>
+        <code style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.path}</code>
         <button className="cbtn-ghost" style={{ padding: '6px 10px', fontSize: 12, flex: '0 0 auto' }}><CIcon name="Code2" size={13} />{locale === 'ko' ? 'API' : 'API'}</button>
       </div>
     </article>
@@ -56,7 +56,7 @@ function Catalog({ locale }) {
         <button className="cbtn"><CIcon name="PlusCircle" size={15} />{locale === 'ko' ? 'API 등록' : 'Register'}</button>
       </div>
       <div className="search-bar" style={{ background: 'var(--dt-surface)' }}>
-        <CIcon name="Search" size={16} style={{ color: 'var(--dt-muted)' }} />
+        <CIcon name="Search" size={16} style={{ color: 'var(--dt-text-muted)' }} />
         <input placeholder={locale === 'ko' ? '도구 이름 또는 설명 검색…' : 'Search tools…'} />
       </div>
       <div className="filter-bar">
@@ -67,7 +67,7 @@ function Catalog({ locale }) {
             </button>
           ))}
         </div>
-        <span style={{ marginLeft: 'auto', fontSize: 12, color: 'var(--dt-muted)', fontFamily: 'var(--dt-font-mono)' }}>{shown.length} / {TOOLS.length}</span>
+        <span style={{ marginLeft: 'auto', fontSize: 12, color: 'var(--dt-text-muted)', fontFamily: 'var(--dt-font-mono)' }}>{shown.length} / {TOOLS.length}</span>
       </div>
       <div className="cat-results">
         {shown.map((t) => <ToolCard key={t.name} t={t} locale={locale} />)}
@@ -109,11 +109,11 @@ function Logs({ locale }) {
             <tbody>
               {rows.map((r, i) => (
                 <tr key={i}>
-                  <td style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-muted)' }}>{r.t}</td>
-                  <td style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-ink)' }}>{r.tool}</td>
+                  <td style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-text-muted)' }}>{r.t}</td>
+                  <td style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-text)' }}>{r.tool}</td>
                   <td><span className="chip">{r.client}</span></td>
                   <td><span className="cell-status" style={{ color: codeColor(r.code) }}><span className="dot" style={{ background: codeColor(r.code) }} />{r.code}</span></td>
-                  <td style={{ textAlign: 'right', fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: r.ms > 1000 ? 'var(--dt-danger)' : 'var(--dt-muted-strong)' }}>{r.ms}ms</td>
+                  <td style={{ textAlign: 'right', fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: r.ms > 1000 ? 'var(--dt-danger)' : 'var(--dt-text-subtle)' }}>{r.ms}ms</td>
                 </tr>
               ))}
             </tbody>
@@ -130,7 +130,7 @@ function Placeholder({ title, locale }) {
       <div className="page-head"><div><h1>{title}</h1><p>{locale === 'ko' ? '이 화면은 데모 범위에 포함되지 않았습니다.' : 'This screen is outside the demo scope.'}</p></div></div>
       <div className="panel panel-pad" style={{ display: 'grid', placeItems: 'center', minHeight: 220, gap: 10, textAlign: 'center' }}>
         <span className="nav-item-ico" style={{ width: 44, height: 44 }}><CIcon name="LayoutDashboard" size={20} /></span>
-        <p style={{ color: 'var(--dt-muted)', fontSize: 13, maxWidth: 320 }}>{locale === 'ko' ? '대시보드 · 정부 API · 실행 로그 화면이 구현되어 있습니다. 사이드바에서 전환해 보세요.' : 'Dashboard, Government APIs, and Logs are implemented. Switch from the sidebar.'}</p>
+        <p style={{ color: 'var(--dt-text-muted)', fontSize: 13, maxWidth: 320 }}>{locale === 'ko' ? '대시보드 · 정부 API · 실행 로그 화면이 구현되어 있습니다. 사이드바에서 전환해 보세요.' : 'Dashboard, Government APIs, and Logs are implemented. Switch from the sidebar.'}</p>
       </div>
     </>
   );

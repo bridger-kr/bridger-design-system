@@ -123,7 +123,7 @@ function IntegrationSection({ locale }) {
             <h2 style={{ fontSize: 'clamp(26px,3.2vw,36px)', letterSpacing: '-0.035em', whiteSpace: 'pre-line' }}>
               {locale === 'ko' ? 'AI에는 MCP로,\n서버에는 REST로.' : 'MCP for AI,\nREST for servers.'}
             </h2>
-            <p style={{ marginTop: 14, color: 'var(--dt-muted-strong)', fontSize: 16, lineHeight: 1.6, maxWidth: 420 }}>
+            <p style={{ marginTop: 14, color: 'var(--dt-text-subtle)', fontSize: 16, lineHeight: 1.6, maxWidth: 420 }}>
               {locale === 'ko'
                 ? '하나의 게이트웨이가 두 인터페이스를 동시에 제공합니다. 서비스키 주입, 응답 정규화, 감사 로그는 공통입니다.'
                 : 'One gateway serves both interfaces at once. Key injection, response normalization, and audit logs are shared.'}
@@ -132,8 +132,8 @@ function IntegrationSection({ locale }) {
               {(locale === 'ko'
                 ? ['서비스키는 게이트웨이에서만 보관', '승인된 도구만 클라이언트에 노출', '모든 호출은 실행 로그로 추적']
                 : ['Keys live only in the gateway', 'Only approved tools reach clients', 'Every call is traced in logs']).map((t) => (
-                <li key={t} style={{ display: 'flex', gap: 10, alignItems: 'center', fontSize: 14, color: 'var(--dt-ink)' }}>
-                  <span style={{ color: 'var(--dt-accent)', display: 'inline-flex' }}><Icon name="Check" size={16} strokeWidth={2.6} /></span>{t}
+                <li key={t} style={{ display: 'flex', gap: 10, alignItems: 'center', fontSize: 14, color: 'var(--dt-text)' }}>
+                  <span style={{ color: 'var(--dt-accent-text)', display: 'inline-flex' }}><Icon name="Check" size={16} strokeWidth={2.6} /></span>{t}
                 </li>
               ))}
             </ul>

@@ -57,27 +57,30 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 
 ### 4.2 Color roles
 
-The palette is chroma-0 neutral and semantic. Neutrals carry zero chroma — red, green, and blue channels are equal — in both themes. No warm or cool tint is permitted in paper, surface, ink, muted, or border roles. Use the token variables, not copied literals.
+The palette is chroma-0 neutral and semantic. Neutrals carry zero chroma — red, green, and blue channels are equal — in both themes. No warm or cool tint is permitted in background, surface, text, or border roles. Use the token variables, not copied literals.
 
 | Role | Canonical token contract | Rule |
 | --- | --- | --- |
-| Paper | `--dt-paper` | Page canvas. Neutral gray, chroma 0. |
+| Background | `--dt-bg` | Page canvas. Neutral gray, chroma 0. |
 | Surface | `--dt-surface` | Default component plane. |
 | Raised surface | `--dt-surface-raised` | Surface above the default plane, including selected controls and layers. |
 | Sunken surface | `--dt-surface-sunken` | Code wells, recessed regions, and quiet data backgrounds. |
 | Muted surface | `--dt-surface-muted` | Secondary grouping without a new accent. |
-| Ink | `--dt-ink` | Default readable text. |
-| Strong ink | `--dt-ink-strong` | Headings, primary values, and high-emphasis text. |
-| Muted text | `--dt-muted`, `--dt-muted-strong` | Helper text and secondary labels. Maintain WCAG AA contrast. |
-| Border | `--dt-border`, `--dt-border-strong` | 1px hairlines — light `rgba(0,0,0,.08)`, dark `rgba(255,255,255,.08)`. Layers separate by borders, not shadows. |
-| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Only on the brand mark, focus ring, selection markers, primary action, and status emphasis. Never in body copy, headings, or eyebrows. |
-| Brand action strength | `--dt-accent-strong`, `--dt-accent-bright`, `--dt-accent-ink` | Theme-specific contrast and interaction roles. |
-| Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only. Never use them as decoration. |
-| Supporting status | `--dt-cobalt`, `--dt-lime`, and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
+| Text | `--dt-text` | Default readable text. |
+| Strong text | `--dt-text-strong` | Headings, primary values, and high-emphasis text. |
+| Subtle text | `--dt-text-subtle` | Secondary labels. Maintains WCAG AA on bg/surface/raised; on muted or sunken washes use `--dt-text-muted`. |
+| Muted text | `--dt-text-muted` | Helper and meta text. Text-only role — never a background fill (the retired `--dt-muted` name invited that misuse). Holds 4.5:1 on every surface token. |
+| Placeholder text | `--dt-text-placeholder` | Input hints and other de-emphasized, non-essential copy. |
+| Border | `--dt-border`, `--dt-border-strong` | 1px hairlines — light `rgba(10,10,10,.10/.18)`, dark `rgba(255,255,255,.08/.16)`. Layers separate by borders, not shadows. |
+| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Fill-only role: the brand mark, focus ring, selection markers, primary action fills, and status emphasis. Never renders as a glyph — `#ec5e1f` fails WCAG AA as text. |
+| Accent text | `--dt-accent-text`, `--dt-accent-strong` | Persimmon when it must appear as text (links, accent labels, tint-on-tint chips). Theme-specific AA values. |
+| Accent interaction | `--dt-accent-bright`, `--dt-accent-ink` | Highlight fills and the ink color printed on persimmon fills. |
+| Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only, each one hue shared across themes (warning is amber — never the brand hue). Never use them as decoration. |
+| Supporting status | `--dt-cobalt` and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
 | Code | `--dt-code-bg`, `--dt-code-ink`, `--dt-code-border`, `--dt-syntax-*` | Dark, high-contrast technical surfaces in both themes. |
 | Tints | `--dt-tint-*` | Low-opacity fills for badges, chips, and semantic state. Do not use tint as a substitute for readable text. |
 
-Persimmon is the only decorative brand accent. It may fill the single primary action on a surface; persimmon never appears in body text, headings, eyebrows, or decorative punctuation. Cobalt, lime, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
+Persimmon is the only decorative brand accent. It may fill the single primary action on a surface; persimmon never appears in body text, headings, eyebrows, or decorative punctuation — when it must render as a glyph (a link, an accent label), use `--dt-accent-text`, never the fill role. Cobalt, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
 
 ### 4.3 Typography
 
