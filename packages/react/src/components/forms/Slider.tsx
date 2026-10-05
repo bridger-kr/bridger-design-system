@@ -37,8 +37,10 @@ export function Slider({
   hint,
   id,
   style,
+  'aria-label': ariaLabel,
 }: SliderProps) {
   const sId = id || (label ? `sl-${label.replace(/\s+/g, '-')}` : undefined);
+  const inputLabel = ariaLabel ?? label ?? '값';
   const [internal, setInternal] = useState(defaultValue ?? min);
   const v = value ?? internal;
   const pct = ((v - min) / (max - min)) * 100;
@@ -60,9 +62,9 @@ export function Slider({
     >
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
           {label ? (
-            <label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
+            <span id={sId ? `${sId}-label` : undefined} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
               {label}
-            </label>
+            </span>
           ) : (
             <span />
           )}
@@ -80,7 +82,8 @@ export function Slider({
           </span>
         </div>
       <BaseSlider.Control
-        style={{ position: 'relative', height: 20, display: 'flex', alignItems: 'center', cursor: 'pointer', outline: 'none' }}
+        className="dt-slider-control"
+        style={{ position: 'relative', height: 20, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
       >
         <BaseSlider.Track
           style={{
@@ -95,6 +98,8 @@ export function Slider({
         />
         <BaseSlider.Indicator style={{ position: 'absolute', left: 0, width: `${pct}%`, height: 4, borderRadius: 2, background: 'var(--dt-accent)' }} />
         <BaseSlider.Thumb
+          className="dt-slider-thumb"
+          getAriaLabel={() => inputLabel}
           style={{
             position: 'absolute',
             width: 16,

@@ -1,14 +1,42 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { axe } from 'vitest-axe';
+import { toHaveNoViolations } from 'vitest-axe/matchers';
 
-import { Alert, Dialog, Drawer, Skeleton, Spinner, Toast, Tooltip } from './index';
+import { Alert, Dialog, Drawer, EmptyState, Skeleton, Spinner, Toast, Tooltip } from './index';
+
+async function expectNoViolations(html: Element | string) {
+  const results = await axe(html, {
+    runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
+    rules: { 'color-contrast': { enabled: false } },
+  });
+  const matcher = toHaveNoViolations(results);
+  expect(matcher.pass, matcher.message()).toBe(true);
+}
 
 afterEach(() => {
   cleanup();
 });
 
 describe('feedback a11y', () => {
+  it('has no axe violations across feedback components', async () => {
+    render(
+      <>
+        <Alert tone="info" onDismiss={() => {}}>안내</Alert>
+        <Dialog open title="설정 확인"><p>본문</p></Dialog>
+        <Drawer open title="로그"><p>스트림</p></Drawer>
+        <EmptyState title="결과 없음" description="필터를 조정해 보세요" />
+        <Skeleton />
+        <Spinner />
+        <Toast message="저장됨" onDismiss={() => {}} />
+        <Tooltip label="도움말"><button type="button">보기</button></Tooltip>
+      </>,
+    );
+
+    // Dialog/Drawer/Toast portal into document.body — scan the whole tree.
+    await expectNoViolations(document.body);
+  });
   it('Dialog links its title via aria-labelledby', () => {
     render(
       <Dialog open title="설정 확인">
@@ -114,5 +142,23 @@ describe('feedback a11y', () => {
     const { container } = render(<Toast message="저장됨" onDismiss={() => {}} />);
     const svg = container.querySelector('svg[aria-hidden="true"]');
     expect(svg).not.toBeNull();
+  });
+
+  it('Spinner announces through role=status with a configurable label', () => {
+    const { container } = render(<Spinner label="불러오는 중" />);
+    const status = container.querySelector('[role="status"]');
+    expect(status?.getAttribute('aria-label')).toBe('불러오는 중');
+  });
+
+  it('Spinner drops the status role when aria-hidden (busy parents announce instead)', () => {
+    const { container } = render(
+      <button type="button" aria-busy="true">
+        <Spinner aria-hidden="true" />
+      </button>,
+    );
+    const spinner = container.querySelector('.dt-spinner-svg')?.parentElement;
+    expect(spinner?.getAttribute('aria-hidden')).toBe('true');
+    expect(spinner?.getAttribute('role')).toBeNull();
+    expect(spinner?.getAttribute('aria-label')).toBeNull();
   });
 });

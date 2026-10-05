@@ -35,6 +35,7 @@ export function Tabs({ tabs = [], variant = 'underline', value, defaultValue, on
       onValueChange={handleValueChange}
     >
       <BaseTabs.List
+        activateOnFocus
         className={cx('dt-tabs-list', variant === 'pill' ? 'dt-tabs-list-pill' : 'dt-tabs-list-underline')}
         style={{
           display: 'flex',

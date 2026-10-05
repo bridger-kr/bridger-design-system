@@ -1,6 +1,8 @@
 // @vitest-environment jsdom
 import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, waitFor } from '@testing-library/react';
+import { axe } from 'vitest-axe';
+import { toHaveNoViolations } from 'vitest-axe/matchers';
 
 import { CommandPalette, Menu } from './index';
 
@@ -11,21 +13,48 @@ const groups = [
   },
 ];
 
+const inputOf = (container: HTMLElement) =>
+  container.querySelector('input[role="combobox"]') as HTMLElement;
+
 describe('CommandPalette a11y', () => {
-  it('renders a listbox of options', () => {
+  it('has no axe violations', async () => {
     const { container } = render(<CommandPalette open groups={groups} />);
-    expect(container.querySelector('[role="listbox"]')).not.toBeNull();
+    const results = await axe(container, {
+      runOnly: { type: 'tag', values: ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'] },
+      rules: { 'color-contrast': { enabled: false } },
+    });
+    const matcher = toHaveNoViolations(results);
+    expect(matcher.pass, matcher.message()).toBe(true);
+  });
+
+  it('uses the combobox + listbox popup pattern', () => {
+    const { container } = render(<CommandPalette open groups={groups} />);
+    const input = inputOf(container);
+    const listbox = container.querySelector('[role="listbox"]') as HTMLElement;
+
+    expect(input).not.toBeNull();
+    expect(listbox).not.toBeNull();
+    // the combobox input is not nested inside the listbox
+    expect(listbox.contains(input)).toBe(false);
+    expect(input.getAttribute('aria-expanded')).toBe('true');
+    expect(input.getAttribute('aria-autocomplete')).toBe('list');
+    expect(input.getAttribute('aria-controls')).toBe(listbox.getAttribute('id'));
+    expect(input.getAttribute('aria-label')).toBeTruthy();
+    expect(listbox.getAttribute('aria-label')).toBeTruthy();
     expect(container.querySelectorAll('[role="option"]').length).toBe(2);
   });
 
-  it('marks the active option with aria-selected and moves with ArrowDown', () => {
+  it('points aria-activedescendant at the highlighted option and moves with arrows', () => {
     const { container } = render(<CommandPalette open groups={groups} />);
-    const listbox = container.querySelector('[role="listbox"]') as HTMLElement;
-    const optionsBefore = container.querySelectorAll('[role="option"]');
-    expect(optionsBefore[0].getAttribute('aria-selected')).toBe('true');
-    fireEvent.keyDown(listbox, { key: 'ArrowDown' });
-    const optionsAfter = container.querySelectorAll('[role="option"]');
-    expect(optionsAfter[1].getAttribute('aria-selected')).toBe('true');
+    const input = inputOf(container);
+    const options = () => container.querySelectorAll('[role="option"]');
+
+    expect(input.getAttribute('aria-activedescendant')).toBe(options()[0].getAttribute('id'));
+    fireEvent.keyDown(input, { key: 'ArrowDown' });
+    expect(options()[1].getAttribute('aria-selected')).toBe('true');
+    expect(input.getAttribute('aria-activedescendant')).toBe(options()[1].getAttribute('id'));
+    fireEvent.keyDown(input, { key: 'ArrowUp' });
+    expect(options()[0].getAttribute('aria-selected')).toBe('true');
   });
 
   it('selects the active item on Enter', () => {
@@ -33,16 +62,25 @@ describe('CommandPalette a11y', () => {
     const { container } = render(
       <CommandPalette open groups={groups} onSelect={onSelect} />,
     );
-    const listbox = container.querySelector('[role="listbox"]') as HTMLElement;
-    fireEvent.keyDown(listbox, { key: 'Enter' });
+    fireEvent.keyDown(inputOf(container), { key: 'Enter' });
     expect(onSelect).toHaveBeenCalledWith(groups[0].items[0]);
   });
 
-  it('closes on Escape', () => {
-    const { container } = render(<CommandPalette open groups={groups} />);
-    const listbox = container.querySelector('[role="listbox"]') as HTMLElement;
-    fireEvent.keyDown(listbox, { key: 'Escape' });
+  it('closes on Escape and reports through onOpenChange', () => {
+    const onOpenChange = vi.fn();
+    const { container } = render(
+      <CommandPalette open groups={groups} onOpenChange={onOpenChange} />,
+    );
+    fireEvent.keyDown(inputOf(container), { key: 'Escape' });
+    expect(onOpenChange).toHaveBeenCalledWith(false);
     expect(container.querySelector('[role="listbox"]')).toBeNull();
+  });
+
+  it('follows the open prop when consumers control visibility', () => {
+    const { container, rerender } = render(<CommandPalette open={false} groups={groups} />);
+    expect(container.querySelector('[role="listbox"]')).toBeNull();
+    rerender(<CommandPalette open groups={groups} />);
+    expect(container.querySelector('[role="listbox"]')).not.toBeNull();
   });
 });
 

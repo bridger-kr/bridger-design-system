@@ -1,5 +1,5 @@
 import type { ChangeEvent, CSSProperties, HTMLAttributes, KeyboardEvent, MouseEvent as ReactMouseEvent, ReactNode } from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useId } from 'react';
 import { cx } from '../../lib/cx';
 
 export interface CommandItem {
@@ -17,63 +17,96 @@ export interface CommandGroup {
 
 export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onSelect'> {
   open?: boolean;
+  /** Called when the palette asks to close (Escape). Pair with `open` for controlled usage. */
+  onOpenChange?: (open: boolean) => void;
   query?: string;
   onQueryChange?: (q: string) => void;
   groups?: CommandGroup[];
+  /** Accessible name for the search input (rendered as a combobox). */
+  inputLabel?: string;
+  /** Accessible name for the results listbox. */
+  listboxLabel?: string;
   footerHint?: string;
   onSelect?: (item: CommandItem) => void;
   style?: CSSProperties;
 }
 
-export function CommandPalette({ open = true, query = '', onQueryChange, groups = [], footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기', onSelect, style, className, ...rest }: CommandPaletteProps) {
-  const [activeIndex, setActiveIndex] = useState([0, 0]);
+export function CommandPalette({
+  open = true,
+  onOpenChange,
+  query = '',
+  onQueryChange,
+  groups = [],
+  inputLabel = '도구 · 액션 검색',
+  listboxLabel = '검색 결과',
+  footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기',
+  onSelect,
+  style,
+  className,
+  ...rest
+}: CommandPaletteProps) {
+  const uid = useId();
+  const listboxId = `${uid}-listbox`;
+  const optionId = (gi: number, ii: number) => `${uid}-option-${gi}-${ii}`;
+  const groupLabelId = (gi: number) => `${uid}-group-${gi}`;
+
+  const flatItems = groups.flatMap((g, gi) => g.items.map((item, ii) => ({ item, gi, ii })));
+  const [activeFlat, setActiveFlat] = useState(0);
   const [isOpen, setIsOpen] = useState(open);
 
   useEffect(() => {
     setIsOpen(open);
   }, [open]);
 
+  useEffect(() => {
+    setActiveFlat(0);
+  }, [query, groups]);
+
+  const active = flatItems.length ? flatItems[Math.min(activeFlat, flatItems.length - 1)] : undefined;
+  const activeDescendant = active ? optionId(active.gi, active.ii) : undefined;
+
+  useEffect(() => {
+    const el = activeDescendant ? document.getElementById(activeDescendant) : null;
+    el?.scrollIntoView?.({ block: 'nearest' });
+  }, [activeDescendant]);
+
   if (!isOpen) return null;
 
-  const handleKeyDown = (_e: KeyboardEvent) => {
-    if (_e.key === 'ArrowDown') {
-      _e.preventDefault();
-      setActiveIndex((prev) => {
-        const [groupIdx, itemIdx] = prev;
-        const group = groups[groupIdx];
-        if (!group) return prev;
-        if (itemIdx < group.items.length - 1) return [groupIdx, itemIdx + 1];
-        const nextGroupIdx = (groupIdx + 1) % groups.length;
-        const nextGroup = groups[nextGroupIdx];
-        if (nextGroup && nextGroup.items.length > 0) return [nextGroupIdx, 0];
-        return prev;
-      });
-    } else if (_e.key === 'ArrowUp') {
-      _e.preventDefault();
-      setActiveIndex((prev) => {
-        const [groupIdx, itemIdx] = prev;
-        if (itemIdx > 0) return [groupIdx, itemIdx - 1];
-        const prevGroupIdx = (groupIdx - 1 + groups.length) % groups.length;
-        const prevGroup = groups[prevGroupIdx];
-        if (prevGroup && prevGroup.items.length > 0) return [prevGroupIdx, prevGroup.items.length - 1];
-        return prev;
-      });
-    } else if (_e.key === 'Enter') {
-      _e.preventDefault();
-      const [gi, ii] = activeIndex;
-      const group = groups[gi];
-      if (group && group.items[ii]) onSelect?.(group.items[ii]);
-    } else if (_e.key === 'Escape') {
-      _e.preventDefault();
-      setIsOpen(false);
+  const moveActive = (delta: number) => {
+    if (!flatItems.length) return;
+    setActiveFlat((prev) => (prev + delta + flatItems.length) % flatItems.length);
+  };
+
+  const close = () => {
+    setIsOpen(false);
+    onOpenChange?.(false);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      moveActive(1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      moveActive(-1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      setActiveFlat(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      setActiveFlat(flatItems.length - 1);
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (active) onSelect?.(active.item);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      close();
     }
   };
 
   return (
     <div
       {...rest}
-      role="listbox"
-      onKeyDown={handleKeyDown}
       className={cx('dt-command-palette', className)}
       style={style}
     >
@@ -84,28 +117,45 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
         </svg>
         <input
           autoFocus value={query} onChange={(e: ChangeEvent<HTMLInputElement>) => onQueryChange?.(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder="도구 · 액션 검색…"
+          role="combobox"
+          aria-expanded="true"
+          aria-autocomplete="list"
+          aria-controls={listboxId}
+          aria-activedescendant={activeDescendant}
+          aria-label={inputLabel}
           className="dt-command-input"
         />
         <kbd className="dt-command-kbd">⌘K</kbd>
       </div>
 
       {/* results */}
-      <div className="dt-command-results">
+      <div
+        id={listboxId}
+        role="listbox"
+        aria-label={listboxLabel}
+        className="dt-command-results"
+      >
         {groups.map((g, gi) => (
-          <div key={gi} className="dt-command-group">
+          <div
+            key={gi}
+            role="group"
+            aria-labelledby={g.heading ? groupLabelId(gi) : undefined}
+            className="dt-command-group"
+          >
             {g.heading ? (
-              <div className="dt-command-group-heading">{g.heading}</div>
+              <div id={groupLabelId(gi)} className="dt-command-group-heading">{g.heading}</div>
             ) : null}
             {g.items.map((it, ii) => {
-              const isActive = activeIndex[0] === gi && activeIndex[1] === ii;
+              const isActive = active?.gi === gi && active?.ii === ii;
               return (
-                <button
+                <div
                   key={ii}
-                  type="button"
+                  id={optionId(gi, ii)}
                   role="option"
                   aria-selected={isActive}
-                  onMouseDown={(e: ReactMouseEvent<HTMLButtonElement>) => { e.preventDefault(); onSelect?.(it); }}
+                  onMouseDown={(e: ReactMouseEvent<HTMLDivElement>) => { e.preventDefault(); onSelect?.(it); }}
                   className="dt-command-option"
                 >
                   {it.icon ? <span className="dt-command-option-icon" aria-hidden="true">{it.icon}</span> : null}
@@ -116,7 +166,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
                   {it.shortcut ? (
                     <kbd className="dt-command-shortcut">{it.shortcut}</kbd>
                   ) : null}
-                </button>
+                </div>
               );
             })}
           </div>

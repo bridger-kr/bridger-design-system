@@ -29,6 +29,8 @@ export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chi
   copyText?: string;
   copyLabel?: ReactNode;
   copiedLabel?: ReactNode;
+  /** Copy button label after a failed copy; also announced via live region. */
+  copyFailedLabel?: ReactNode;
   copyable?: boolean;
 }
 
@@ -46,27 +48,34 @@ export function CodePane({
   copyText,
   copyLabel = '복사',
   copiedLabel = '복사됨',
+  copyFailedLabel = '복사하지 못했어요',
   copyable = false,
   className,
   ...rest
 }: CodePaneProps) {
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
   const textToCopy = copyText ?? codePaneCopyText(lines);
 
   const copy = () => {
+    const reset = () => {
+      if (typeof window !== 'undefined') {
+        window.setTimeout(() => setCopyState('idle'), 1400);
+      }
+    };
+
     if (typeof navigator !== 'undefined' && navigator.clipboard) {
       void navigator.clipboard.writeText(textToCopy).then(
-        () => setCopied(true),
-        () => setCopied(true),
+        () => setCopyState('copied'),
+        () => setCopyState('failed'),
       );
     } else {
-      setCopied(true);
+      setCopyState('failed');
     }
 
-    if (typeof window !== 'undefined') {
-      window.setTimeout(() => setCopied(false), 1400);
-    }
+    reset();
   };
+
+  const stateLabel = copyState === 'copied' ? copiedLabel : copyState === 'failed' ? copyFailedLabel : null;
 
   return (
     <div className={cx('dt-code-pane', className)} {...rest}>
@@ -74,11 +83,12 @@ export function CodePane({
         <div className="dt-code-pane-header">
           {label ? <span className="dt-code-pane-label">{label}</span> : <span />}
           {copyable ? (
-            <button type="button" className="dt-code-pane-copy" data-copied={copied ? 'true' : 'false'} onClick={copy}>
+            <button type="button" className="dt-code-pane-copy" data-copied={copyState === 'copied' ? 'true' : 'false'} data-copy-failed={copyState === 'failed' ? 'true' : 'false'} onClick={copy}>
               <span aria-hidden="true" className="dt-code-pane-copy-icon" />
-              {copied ? copiedLabel : copyLabel}
+              {stateLabel ?? copyLabel}
             </button>
           ) : null}
+          <span className="dt-visually-hidden" role="status">{stateLabel ?? ''}</span>
         </div>
       ) : null}
       <pre className="dt-code-pane-pre">
