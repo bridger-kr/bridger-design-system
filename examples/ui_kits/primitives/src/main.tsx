@@ -8,8 +8,8 @@ import {
   Input,
   Sidebar,
 } from '@bridger-kr/react';
-import '@bridger-kr/react/styles.css';
 import '@bridger-kr/tokens/css';
+import '@bridger-kr/react/styles.css';
 import './showcase.css';
 
 const SIDEBAR_SECTIONS = [

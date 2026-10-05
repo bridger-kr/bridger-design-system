@@ -120,7 +120,10 @@ function resolveColor(raw: string, vars: Map<string, string>, depth = 0): Rgba |
 }
 
 function token(name: string, vars: Map<string, string>): Rgba {
-  const raw = vars.get(`--dt-${name}`);
+  // Theme blocks restate only values that differ; a key missing from the
+  // theme block falls back to the light-block expression and resolves
+  // against this theme's map (mirrors CSS custom-property inheritance).
+  const raw = vars.get(`--dt-${name}`) ?? lightVars.get(`--dt-${name}`);
   if (raw == null) throw new Error(`--dt-${name} missing from contract.css`);
   const color = resolveColor(raw, vars);
   if (!color) throw new Error(`--dt-${name} (${raw}) did not resolve to a color`);

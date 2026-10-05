@@ -33,13 +33,13 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
   };
 
   return (
-    <div style={{ display: 'grid', gap: 7 }}>
+    <div className="dt-select">
       {label ? (
-        <label htmlFor={selId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
+        <label htmlFor={selId} className="dt-input-label">
           {label}
         </label>
       ) : null}
-      <div style={{ position: 'relative', display: 'flex' }}>
+      <div className="dt-select-box">
         <BaseSelect.Root<string>
           id={selId}
           value={value}
@@ -50,30 +50,19 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
           <BaseSelect.Trigger
             id={selId}
             className="dt-field dt-select-trigger"
-            style={{
-              appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,
-              fontFamily: 'inherit', color: 'var(--dt-text-strong)', cursor: disabled ? 'not-allowed' : 'pointer',
-              opacity: disabled ? 0.55 : 1, textAlign: 'left', border: '1px solid var(--dt-border)', ...style,
-            }}
+            style={style}
           >
             <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
           </BaseSelect.Trigger>
           <BaseSelect.Portal>
             <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
-              <BaseSelect.Popup className="dt-select-popup" style={{
-                 zIndex: 'var(--dt-z-index-popover)', minWidth: 'var(--anchor-width)', padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
-                 border: '1px solid var(--dt-border-strong)', boxShadow: 'var(--dt-shadow-overlay)',
-              }}>
+              <BaseSelect.Popup className="dt-select-popup">
                 <BaseSelect.List>
                   {normalizedOptions.map((opt) => (
                     <BaseSelect.Item
                       key={opt.value}
                       value={opt.value}
                       className="dt-select-option"
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '8px 10px',
-                        borderRadius: 'var(--dt-radius-control)', cursor: 'pointer', fontSize: 14, fontWeight: 500, color: 'var(--dt-text)',
-                      }}
                     >
                       <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>
                     </BaseSelect.Item>
@@ -89,19 +78,12 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
           viewBox="0 0 24 24"
           fill="none"
           aria-hidden="true"
-          style={{
-            position: 'absolute',
-            right: 11,
-            top: '50%',
-            transform: 'translateY(-50%)',
-            pointerEvents: 'none',
-            color: 'var(--dt-text-muted)',
-          }}
+          className="dt-select-chevron"
         >
           <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
+      {hint ? <span className="dt-input-hint">{hint}</span> : null}
     </div>
   );
 }
