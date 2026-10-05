@@ -521,29 +521,36 @@ This checklist is the explicit, reproducible record for each release. Every row 
 
 | Dimension | Sub-axis | Required evidence | Status |
 | --- | --- | --- | --- |
-| Viewport width | `375px` mobile | Playwright screenshot per changed surface at `375x812` viewport | Not applicable |
-| Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Not applicable |
-| Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Not applicable |
-| Theme | Light (default) | Screenshot in light theme per changed surface | Not applicable |
-| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']` or `.dark`) | Not applicable |
-| Interaction state | Rest | Default screenshot for the surface | Not applicable |
-| Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Not applicable |
-| Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Not applicable |
-| Interaction state | Disabled | Screenshot of an intentionally disabled control on the surface | Not applicable |
-| Interaction state | Loading | Screenshot of the loading state (spinner or skeleton) | Not applicable |
-| Interaction state | Press | Playwright pressed-state screenshot (`scale(0.97)`) | Not applicable |
-| Motion | Reduced motion | Screenshot with `prefers-reduced-motion: reduce` emulated; confirm transforms are removed | Not applicable |
-| CJK content | Korean label rendering | Korean copy renders without mid-word breaks (`word-break: keep-all`) | Not applicable |
-| Locale parity | ko/en | Korean (default) and English `/en` render the same surface with matching structure and copy meaning | Not applicable |
-| Contrast | WCAG AA text | Automated contrast check (axe / Playwright `toHaveAccessibleName` and contrast assertion) | Not applicable |
-| Contrast | WCAG AA non-text | Border, focus, and interactive control contrast against their surface | Not applicable |
-| Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable |
-| Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Not applicable |
+| Viewport width | `375px` mobile | Playwright screenshot per changed surface at `375x812` viewport | Captured |
+| Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Captured |
+| Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Captured |
+| Theme | Light (default) | Screenshot in light theme per changed surface | Captured |
+| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']` or `.dark`) | Captured |
+| Interaction state | Rest | Default screenshot for the surface | Captured |
+| Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Captured |
+| Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Captured |
+| Interaction state | Disabled | Screenshot of an intentionally disabled control on the surface | Captured |
+| Interaction state | Loading | Screenshot of the loading state (spinner or skeleton) | Captured |
+| Interaction state | Press | Playwright pressed-state screenshot (`scale(0.97)`) | Captured |
+| Motion | Reduced motion | Screenshot with `prefers-reduced-motion: reduce` emulated; confirm transforms are removed | Captured |
+| CJK content | Korean label rendering | Korean copy renders without mid-word breaks (`word-break: keep-all`) | Captured |
+| Locale parity | ko/en | Korean (default) and English `/en` render the same surface with matching structure and copy meaning | Captured |
+| Contrast | WCAG AA text | Automated contrast check (axe / Playwright `toHaveAccessibleName` and contrast assertion) | Captured |
+| Contrast | WCAG AA non-text | Border, focus, and interactive control contrast against their surface | Captured |
+| Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Captured |
+| Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Captured |
 | Layering | Focus trap | Tab inside an open dialog and confirm focus does not escape | Not applicable |
-| Component contract | 60-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
-| Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Not applicable |
+| Component contract | 60-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Captured |
+| Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Captured |
 
 This table is reset to `Not applicable` between releases and filled in per release. A row is `Not applicable` only when the release does not touch that dimension; rows covering touched surfaces must become `Captured` with a linked artifact path or the command that produced the evidence.
+
+Evidence for the rows above (2026-10-04, EDD-268 Slop Zero sign-off):
+
+- `bridger-web/artifacts/audit/release-evidence-2026-10-04/` — viewport × theme matrix shots, interaction-state shots, `axe.json` (axe-core `color-contrast`: 0 violations on 25 routes × 2 themes), `nontext.json` (focus ring 5.31:1), `cjk.json`, `zindex.json`, `focus.json`, `parity.json`, `summary.md` (repro: `node scripts/audit/release-evidence.mjs --base <landing> --dashboard-base <portal>`).
+- `bridger-web/artifacts/audit/2026-10-04-after/` — full-site crawl (931 pages × desktop/mobile × light/dark, `prefers-reduced-motion`), including `/en` surfaces for locale parity.
+- Focus trap is `Not applicable`: the changed public surfaces ship no modal dialog; the mobile product-menu disclosure is covered by the focus-return evidence instead.
+- Component contract rows: `pnpm build`, `pnpm typecheck`, `pnpm test` (95 tests) in this repo, plus `parity.json` matching `dist/index.d.ts` to Section 9/9.1.
 
 ## 14. Change checklist
 
