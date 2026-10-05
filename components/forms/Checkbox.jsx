@@ -31,12 +31,12 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
         <span className="dt-checkbox-box" style={{
             width: 18,
             height: 18,
-            borderRadius: 5,
+            borderRadius: 'var(--dt-radius-control)',
             display: 'grid',
             placeItems: 'center',
             background: 'var(--dt-surface)',
             border: '1.5px solid var(--dt-border-strong)',
-            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
+            transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease)',
         }}>
           <BaseCheckbox.Indicator>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -45,6 +45,6 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
           </BaseCheckbox.Indicator>
         </span>
       </BaseCheckbox.Root>
-      {label ? <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
+      {label ? <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span> : null}
     </label>);
 }

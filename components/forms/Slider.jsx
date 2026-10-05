@@ -20,18 +20,18 @@ export function Slider({ label, min = 0, max = 100, step = 1, value, defaultValu
     };
     return (<BaseSlider.Root id={sId} min={min} max={max} step={step} value={value} defaultValue={defaultValue ?? min} onValueChange={handleValueChange} style={{ display: 'grid', gap: 9, ...style }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-          {label ? (<label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
+          {label ? (<label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
               {label}
             </label>) : (<span />)}
           <span style={{
             fontFamily: 'var(--dt-font-mono)',
             fontSize: 13,
             fontWeight: 600,
-            color: 'var(--dt-ink-strong)',
+            color: 'var(--dt-text-strong)',
             fontVariantNumeric: 'tabular-nums',
         }}>
             {v}
-            {unit ? <span style={{ color: 'var(--dt-muted)', fontWeight: 400 }}>{unit}</span> : null}
+            {unit ? <span style={{ color: 'var(--dt-text-muted)', fontWeight: 400 }}>{unit}</span> : null}
           </span>
         </div>
       <BaseSlider.Control style={{ position: 'relative', height: 20, display: 'flex', alignItems: 'center', cursor: 'pointer', outline: 'none' }}>
@@ -40,7 +40,7 @@ export function Slider({ label, min = 0, max = 100, step = 1, value, defaultValu
             left: 0,
             right: 0,
             height: 4,
-            borderRadius: 2,
+            borderRadius: 'var(--dt-radius-sm)',
             background: 'var(--dt-surface-sunken)',
             boxShadow: 'inset 0 0 0 1px var(--dt-border-strong)',
         }}/>
@@ -55,6 +55,6 @@ export function Slider({ label, min = 0, max = 100, step = 1, value, defaultValu
             border: '3px solid var(--dt-surface)',
         }}/>
       </BaseSlider.Control>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
     </BaseSlider.Root>);
 }

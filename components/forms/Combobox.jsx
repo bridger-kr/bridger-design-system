@@ -31,85 +31,38 @@ export function Combobox({ label, hint, options = [], value, onChange, placehold
             commit(nextValue);
     };
     return (<BaseCombobox.Root open={open} onOpenChange={setOpen} value={selected ?? undefined} items={filtered} itemToStringLabel={(option) => option.label} isItemEqualToValue={(itemValue, selectedValue) => itemValue.value === selectedValue.value} onInputValueChange={handleInputValueChange} onValueChange={handleValueChange}>
-    <div style={{ display: 'grid', gap: 7, position: 'relative', ...style }}>
-      {label ? (<label htmlFor={cbId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
+    <div className="dt-combobox" style={style}>
+      {label ? (<label htmlFor={cbId} className="dt-input-label">
           {label}
         </label>) : null}
-      <div className="dt-field" style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 9,
-            height: 44,
-            padding: '0 12px',
-            boxShadow: open ? 'var(--dt-shadow-focus)' : undefined,
-            background: open ? 'var(--dt-surface)' : 'var(--dt-surface-sunken)',
-        }}>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ color: 'var(--dt-muted)', flex: '0 0 auto' }}>
+      <div className="dt-field dt-combobox-field">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="dt-combobox-field-icon">
           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
           <path d="M21 21l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
         <BaseCombobox.Input id={cbId} value={open ? query : selected ? selected.label : ''} placeholder={selected && !open ? selected.label : placeholder} onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
-        }} onFocus={() => setOpen(true)} style={{
-            flex: 1,
-            minWidth: 0,
-            border: 'none',
-            outline: 'none',
-            background: 'transparent',
-            fontSize: 14,
-            fontFamily: 'inherit',
-            color: 'var(--dt-ink-strong)',
-        }}/>
-        {selected && !open ? (<span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>
+        }} onFocus={() => setOpen(true)} className="dt-input-control"/>
+        {selected && !open ? (<span className="dt-combobox-selected-meta">
             {selected.meta}
           </span>) : null}
       </div>
 
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner sideOffset={6}>
-          <BaseCombobox.Popup className="dt-combobox-popup" style={{
-            zIndex: 'var(--dt-z-index-popover)',
-            background: 'var(--dt-surface)',
-            border: '1px solid var(--dt-border-strong)',
-            borderRadius: 'var(--dt-radius-lg)',
-            boxShadow: 'var(--dt-shadow-md)',
-            maxHeight: 240,
-            overflowY: 'auto',
-            padding: 4,
-        }}>
-          {filtered.length === 0 ? (<BaseCombobox.Empty style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-muted)' }}>{emptyText}</BaseCombobox.Empty>) : (<BaseCombobox.List>
+          <BaseCombobox.Popup className="dt-combobox-popup">
+          {filtered.length === 0 ? (<BaseCombobox.Empty className="dt-combobox-empty">{emptyText}</BaseCombobox.Empty>) : (<BaseCombobox.List>
             {filtered.map((o) => {
                 const isSel = o.value === value;
-                return (<BaseCombobox.Item key={o.value} value={o} className="dt-combobox-option" style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 10,
-                        padding: '9px 10px',
-                        borderRadius: 'var(--dt-radius-md)',
-                        cursor: 'pointer',
-                    }}>
-                  <span style={{
-                        flex: 1,
-                        minWidth: 0,
-                        fontSize: 13.5,
-                        fontWeight: isSel ? 600 : 500,
-                        color: 'var(--dt-ink-strong)',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                    }}>
+                return (<BaseCombobox.Item key={o.value} value={o} className="dt-combobox-option">
+                  <span className="dt-combobox-option-label">
                     {o.label}
                   </span>
-                  {o.meta ? (<span style={{
-                            fontFamily: 'var(--dt-font-mono)',
-                            fontSize: 11,
-                            color: 'var(--dt-muted)',
-                            flex: '0 0 auto',
-                        }}>
+                  {o.meta ? (<span className="dt-combobox-option-meta">
                       {o.meta}
                     </span>) : null}
-                  {isSel ? (<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ color: 'var(--dt-accent)', flex: '0 0 auto' }}>
+                  {isSel ? (<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="dt-combobox-option-check">
                       <path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>) : null}
                 </BaseCombobox.Item>);
@@ -118,7 +71,7 @@ export function Combobox({ label, hint, options = [], value, onChange, placehold
           </BaseCombobox.Popup>
         </BaseCombobox.Positioner>
       </BaseCombobox.Portal>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span className="dt-input-hint">{hint}</span> : null}
     </div>
     </BaseCombobox.Root>);
 }

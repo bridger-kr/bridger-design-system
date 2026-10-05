@@ -10,7 +10,7 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }) {
     return (<dl {...rest} style={{
             margin: 0, display: 'grid',
             gridTemplateColumns: columns === 2 ? '1fr 1fr' : '1fr',
-            border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden',
+            border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
             ...style,
         }}>
       {items.map((item, index) => {
@@ -23,12 +23,12 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }) {
                     borderBottom: isLastRow ? 'none' : '1px solid var(--dt-border)',
                     borderRight: columns === 2 && col === 0 ? '1px solid var(--dt-border)' : 'none',
                 }}>
-            <dt style={{ fontSize: 12.5, color: 'var(--dt-muted)', flex: '0 0 auto' }}>{item.key}</dt>
+            <dt style={{ fontSize: 12.5, color: 'var(--dt-text-muted)', flex: '0 0 auto' }}>{item.key}</dt>
             <dd style={{
                     margin: 0, textAlign: 'right', minWidth: 0,
                     fontFamily: item.mono ? 'var(--dt-font-mono)' : 'inherit',
-                    fontSize: item.mono ? 12.5 : 13, fontWeight: 600,
-                    color: item.accent ? 'var(--dt-accent)' : 'var(--dt-ink-strong)',
+                    fontSize: item.mono ? 12 : 13, fontWeight: 600,
+                    color: item.accent ? 'var(--dt-accent)' : 'var(--dt-text-strong)',
                     fontVariantNumeric: 'tabular-nums',
                     overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
                 }}>{item.value}</dd>

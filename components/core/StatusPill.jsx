@@ -10,7 +10,7 @@ const STATUS = {
     disconnected: { bg: 'var(--dt-tint-danger)', fg: 'var(--dt-danger)' },
     danger: { bg: 'var(--dt-tint-danger)', fg: 'var(--dt-danger)' },
     info: { bg: 'var(--dt-tint-cobalt)', fg: 'var(--dt-info)' },
-    idle: { bg: 'var(--dt-tint-muted)', fg: 'var(--dt-muted-strong)' },
+    idle: { bg: 'var(--dt-tint-text)', fg: 'var(--dt-text-subtle)' },
 };
 /**
  * Compact status pill: a tinted fill carrying a colored label — the console's
@@ -24,7 +24,7 @@ export function StatusPill({ status = 'idle', children, pulse, style, ...rest })
             display: 'inline-flex',
             alignItems: 'center',
             gap: 6,
-            borderRadius: 'var(--dt-radius-full)',
+            borderRadius: 'var(--dt-radius-pill)',
             background: tone.bg,
             padding: '4px 10px',
             fontSize: 12,
@@ -35,7 +35,7 @@ export function StatusPill({ status = 'idle', children, pulse, style, ...rest })
       {shouldPulse ? (<span className="dt-status-pulse" aria-hidden="true" style={{
                 width: 7,
                 height: 7,
-                borderRadius: 'var(--dt-radius-full)',
+                borderRadius: 'var(--dt-radius-pill)',
                 background: tone.fg,
             }}/>) : null}
       {children}

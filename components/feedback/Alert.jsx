@@ -26,8 +26,8 @@ export function Alert({ tone = AlertTone.Info, title, children, icon, action, mo
     return (<div role="status" className={cx('dt-alert', motionClass, className)} style={{
             alignItems: 'flex-start',
             background,
-            borderRadius: '20px',
-            color: 'var(--dt-ink-strong)',
+            borderRadius: 'var(--dt-radius-card)',
+            color: 'var(--dt-text-strong)',
             display: 'flex',
             gap: 12,
             minHeight: 62,

@@ -12,16 +12,16 @@ export const CardTone = {
 const VARIANT_STYLE = {
     default: { background: 'var(--dt-surface)', boxShadow: 'none' },
     muted: { background: 'var(--dt-surface-sunken)', boxShadow: 'none' },
-    raised: { background: 'var(--dt-surface-raised)', boxShadow: 'var(--dt-card-float)' },
+    raised: { background: 'var(--dt-surface-raised)' },
     panel: { background: 'var(--dt-surface)', boxShadow: 'none' },
 };
 function cardStyle(tone, padding, style) {
     return {
-        borderRadius: 'var(--dt-radius-lg)',
+        borderRadius: 'var(--dt-radius-card)',
         border: '1px solid var(--dt-border)',
-        color: 'var(--dt-ink)',
+        color: 'var(--dt-text)',
         padding,
-        transition: 'border-color var(--dt-motion), box-shadow var(--dt-motion), background-color var(--dt-motion), transform var(--dt-motion)',
+        transition: 'border-color var(--dt-duration-base) var(--dt-ease), box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease), transform var(--dt-duration-base) var(--dt-ease)',
         ...VARIANT_STYLE[tone],
         ...style,
     };

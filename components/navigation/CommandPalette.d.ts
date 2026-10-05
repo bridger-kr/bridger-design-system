@@ -23,4 +23,4 @@ export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>
     onSelect?: (item: CommandItem) => void;
     style?: CSSProperties;
 }
-export declare function CommandPalette({ open, query, onQueryChange, groups, footerHint, onSelect, style, ...rest }: CommandPaletteProps): import("react").JSX.Element | null;
+export declare function CommandPalette({ open, query, onQueryChange, groups, footerHint, onSelect, style, className, ...rest }: CommandPaletteProps): import("react").JSX.Element | null;

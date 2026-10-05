@@ -19,7 +19,7 @@ const surfaceToneClass = {
     [SurfaceTone.Sunken]: 'bg-[var(--dt-surface-sunken)]',
 };
 const metricAccentClass = {
-    [MetricAccent.Accent]: 'text-[var(--dt-accent)]',
+    [MetricAccent.Accent]: 'text-[var(--dt-accent-text)]',
     [MetricAccent.Success]: 'text-[var(--dt-success)]',
     [MetricAccent.Info]: 'text-[var(--dt-info)]',
 };

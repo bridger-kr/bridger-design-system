@@ -45,7 +45,7 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
     };
     return (<div {...rest} style={{
             background: 'var(--dt-code-bg)', border: '1px solid var(--dt-code-border)',
-            borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden', ...style,
+            borderRadius: 'var(--dt-radius-card)', overflow: 'hidden', ...style,
         }}>
       {(label || copyable) ? (<div style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px',
@@ -54,7 +54,7 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
           <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: '#8a91a3' }}>{label || language}</span>
           {copyable ? (<button type="button" onClick={copy} style={{
                     marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, border: 'none',
-                    background: 'transparent', color: copied ? '#34d399' : '#8a91a3', cursor: 'pointer',
+                    background: 'transparent', color: copied ? '#4ade80' : '#8a91a3', cursor: 'pointer',
                     fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, padding: 0,
                 }}>
               {copied ? (<><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/></svg>복사됨</>) : (<><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>복사</>)}

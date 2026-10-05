@@ -11,9 +11,9 @@ import { cx } from '../lib/cx.jsx';
 export function SectionCard({ eyebrow, title, description, action, children, contentClassName, style, ...rest }) {
     const hasHeader = Boolean(eyebrow || title || description || action);
     return (<section {...rest} style={{
-            borderRadius: 'var(--dt-radius-lg)',
+            borderRadius: 'var(--dt-radius-card)',
             background: 'var(--dt-surface)',
-            boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+            border: '1px solid var(--dt-border)',
             padding: 'var(--dt-space-4)',
             ...style,
         }}>
@@ -28,16 +28,16 @@ export function SectionCard({ eyebrow, title, description, action, children, con
             {eyebrow ? (<p style={{
                     marginBottom: 6,
                     fontSize: 12,
-                    fontWeight: 650,
+                    fontWeight: 600,
                     textTransform: 'uppercase',
-                    color: 'var(--dt-muted)',
+                    color: 'var(--dt-text-muted)',
                 }}>
                 {eyebrow}
               </p>) : null}
-            {title ? (<h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>
+            {title ? (<h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-text-strong)' }}>
                 {title}
               </h3>) : null}
-            {description ? (<p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.55, color: 'var(--dt-muted-strong)', maxWidth: 560 }}>
+            {description ? (<p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.55, color: 'var(--dt-text-subtle)', maxWidth: 560 }}>
                 {description}
               </p>) : null}
           </div>
