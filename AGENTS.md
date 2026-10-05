@@ -55,7 +55,7 @@ Component and token rules (pointers, not restatements):
   not the raw CSS files.
 
 <!-- rule:ds:react:60-components owner:bridger-kr since:2026-07 source:DESIGN.md#9-component-manifest-and-package-boundary -->
-- `@bridger-kr/react` ships 61 typed components across `core`, `forms`,
+- `@bridger-kr/react` ships 60 typed components across `core`, `forms`,
   `feedback`, `data`, `navigation`, and `product` families. The barrel at
   `packages/react/src/index.ts` is the public API; subpath imports exist for
   tree-shaking only. Renaming, adding, or removing a primitive is a breaking

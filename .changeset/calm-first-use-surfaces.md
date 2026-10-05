@@ -3,4 +3,4 @@
 '@bridger-kr/react': minor
 ---
 
-Refine the shared light and dark neutral palette, use ink-led primary actions, and publish typed button and search-pill variants with clearer first-use surfaces.
+Publish typed `SearchPill` tone/size variants and clearer first-use surfaces (`EmptyState`) for the Bridger product surfaces.

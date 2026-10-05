@@ -243,7 +243,7 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **61 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **60 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
@@ -552,6 +552,15 @@ Evidence for the rows above (2026-10-04, EDD-268 Slop Zero sign-off):
 - Focus trap is `Not applicable`: the changed public surfaces ship no modal dialog; the mobile product-menu disclosure is covered by the focus-return evidence instead.
 - Component contract rows: `pnpm build`, `pnpm typecheck`, `pnpm test` (95 tests) in this repo, plus `parity.json` matching `dist/index.d.ts` to Section 9/9.1.
 
+### 13.5 Version PR gate
+
+A `changesets/action` "Version Packages" PR is itself a release artifact: merging it fixes the version numbers and the CHANGELOG text that npm and the repo carry permanently. Before a Version PR is merged, review it against this checklist:
+
+- **Changelog text matches this canon.** Every entry the Version PR writes must describe the contract as it exists on `main` at merge time — no removed token names, no superseded values, no deleted exports. A changeset written before a later PR rewrote the same tokens must be edited before the Version PR is regenerated, not annotated after the fact.
+- **Version target matches the planned release line.** Changesets computes a major off `0.x` as `1.0.0`. The v2 release line is a one-time adjustment: the Version PR is hand-edited to `2.0.0` (EDD-239) instead of running `changeset pre enter next`, because every breaking M2 card lands together on `main` and there is no `next`-tag consumer. Post-v2 releases return to plain semver.
+- **Public surface claims match the build.** Component counts, family tables, and peer-dependency ranges in `readme.md` and package READMEs match `packages/react/dist/index.d.ts` and each `package.json` — or carry no numbers at all.
+- **Private packages are tracked, not shipped.** `bridger-figma-plugin` is versioned via `privatePackages.version` so its changes keep a CHANGELOG trail, but it is never published to npm or tagged.
+
 ## 14. Change checklist
 
 Before merging a design-system change, confirm every item below. Items that depend on Section 13 are not yet captured for the current release and remain `Pending` until the release evidence checklist is filled in.
@@ -571,3 +580,4 @@ Before merging a design-system change, confirm every item below. Items that depe
 - The component touched is documented in Section 9, and any new primitive lands there before merge.
 - Accepted debt (Section 12) is either unchanged or has a new row that names the exit condition.
 - Package gates (Section 13.1), app gates (Section 13.2), and the release evidence checklist (Section 13.4) are `Captured` or `Not applicable` with a linked artifact. `Pending` items block the release.
+- Pending changesets describe the contract as it exists now; a changeset whose text predates a later canon rewrite is corrected before the next Version PR is generated (Section 13.5).

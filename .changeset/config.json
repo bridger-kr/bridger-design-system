@@ -8,5 +8,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["bridger-figma-plugin"]
+  "privatePackages": { "version": true, "tag": false }
 }
