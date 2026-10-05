@@ -43,6 +43,7 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'st
 
 /**
  * Dark code surface for the light page (Stripe-style). Header + copy + line numbers.
+ * Renders in the mono stack (ASCII); Korean glyphs fall back to Pretendard Variable.
  * @startingPoint section="Data" subtitle="Dark code block with copy" viewport="520x220"
  */
 export function CodeBlock({ code = '', label, language = 'json', showLineNumbers = true, copyable = true, style, ...rest }: CodeBlockProps) {

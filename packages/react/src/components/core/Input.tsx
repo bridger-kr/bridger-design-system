@@ -4,7 +4,7 @@ import { cx } from '../../lib/cx';
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'style'> {
   label?: string;
   hint?: string;
-  /** Render the value in JetBrains Mono — for API paths, keys, IDs. */
+  /** Render the value in the mono stack (ASCII: API paths, keys, IDs). */
   mono?: boolean;
   /** Leading adornment (icon or short text). */
   prefix?: ReactNode;

@@ -150,9 +150,11 @@
   --dt-duration-base: 160ms;
   --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* Type: --dt-font-mono is for code surfaces only. */
+  /* Type: --dt-font-mono is for code surfaces only. 'Pretendard
+     Variable' sits before the generic monospace so Korean glyphs
+     inside code surfaces keep a consistent fallback width. */
   --dt-font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --dt-font-mono: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace;
+  --dt-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace;
   --dt-tabular: 'tnum' 0;
 
   /* Fixed 7-step scale; no size outside it is permitted. */

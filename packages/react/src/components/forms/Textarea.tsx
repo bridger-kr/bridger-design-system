@@ -4,7 +4,7 @@ export interface TextareaProps extends Omit<TextareaHTMLAttributes<HTMLTextAreaE
   label?: string;
   hint?: string;
   rows?: number;
-  /** Render in JetBrains Mono (for JSON / payloads). */
+  /** Render in the mono stack (ASCII: JSON, payloads). */
   mono?: boolean;
   style?: CSSProperties;
 }

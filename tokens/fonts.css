@@ -1,7 +1,8 @@
 /* ============================================================
-   Bridger — Fonts
-   Pretendard Variable is shipped locally (Korean + product UI).
-   Mono UI falls back to the platform monospace stack.
+   Bridger — Fonts (legacy mirror; see packages/tokens/css/fonts.css)
+   Prototype surfaces load the full Pretendard Variable master from
+   the published package assets. The dynamic-subset slices and the
+   JetBrains Mono subset live in packages/tokens.
 ============================================================ */
 
 @font-face {
@@ -9,5 +10,5 @@
   font-weight: 45 920;
   font-style: normal;
   font-display: swap;
-  src: url('../assets/fonts/PretendardVariable.woff2') format('woff2-variations');
+  src: url('../packages/tokens/assets/fonts/PretendardVariable.woff2') format('woff2-variations');
 }

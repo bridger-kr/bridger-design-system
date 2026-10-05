@@ -84,9 +84,9 @@ Persimmon is the only decorative brand accent. It may fill the single primary ac
 
 ### 4.3 Typography
 
-- Use `--dt-font-sans`: `'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif` for Korean and interface text.
-- Use `--dt-font-mono`: `'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace` for code, API paths, request IDs, timestamps, methods, and other technical values. Mono is never applied to Korean or prose copy.
-- Pretendard Variable is the required Bridger UI font. Do not substitute a reference font or ship a reference brand font.
+- Use `--dt-font-sans`: `'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif` for Korean and interface text.
+- Use `--dt-font-mono`: `'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace` for code, API paths, request IDs, timestamps, methods, and other technical values. The stack ends in `'Pretendard Variable'` before the generic `monospace` so Korean glyphs inside a code surface fall back with a consistent width. Mono is ASCII-only by policy: it is never applied to Korean labels, buttons, headings, or prose copy.
+- Pretendard Variable and JetBrains Mono are the required Bridger fonts, self-hosted through `@bridger-kr/tokens` (`css/fonts.css`). Pretendard ships as a unicode-range dynamic subset so pages download only the slices they render; JetBrains Mono ships as an ASCII/box-drawing subset that is only fetched when a page actually renders code. Do not substitute a reference font or ship a reference brand font.
 - All font sizes live inside the 12–36px range. The type scale is fixed steps, not fluid `clamp()` expressions: caption `12px`, small `13px`, label `14px`, body `16px`, H3 `20px`, H2 `28px`, H1 `36px`, and mono `13px`. No size outside this scale is permitted.
 - Font weights are `400`, `500`, and `600` only. Display headings do not exceed `600` under v2.
 - Body and labels use `0` letter spacing. Negative tracking is limited to real H1 and H2 display headings.
