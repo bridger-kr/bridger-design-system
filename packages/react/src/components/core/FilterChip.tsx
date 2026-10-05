@@ -26,16 +26,7 @@ export function FilterChip({ label, count, active = false, removable = false, on
       className={cx('dt-filter-chip', active && 'dt-filter-chip-active')}
       onClick={onToggle}
       aria-pressed={active}
-      style={{
-        display: 'inline-flex', alignItems: 'center', gap: 7, minHeight: 'var(--dt-space-5)', padding: '0 10px',
-        borderRadius: 'var(--dt-radius-chip)', cursor: 'pointer',
-        fontFamily: 'var(--dt-font-sans)', fontSize: 13, fontWeight: active ? 650 : 500,
-        background: active ? 'var(--dt-tint-accent)' : 'var(--dt-surface)',
-        color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-subtle)',
-        border: `1px solid ${active ? 'color-mix(in srgb, var(--dt-accent) 40%, transparent)' : 'var(--dt-border)'}`,
-        transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease)',
-        ...style,
-      }}
+      style={style}
     >
       {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }} aria-hidden="true">{icon}</span> : null}
       <span>{label}</span>

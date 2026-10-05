@@ -36,8 +36,13 @@
 /*
   Font delivery remains app-local in this lane.
   Runtime mirrors in landing/dashboard own their @font-face src paths.
+
+  Cascade layers (v2): every DS rule lives inside a dt.* layer declared
+  in css/index.css — dt.reset, dt.tokens, dt.base, dt.components,
+  dt.utilities. Unlayered consumer CSS always wins over DS rules.
 */
 
+@layer dt.tokens {
 :root,
 :root[data-theme='light'] {
   color-scheme: light;
@@ -228,11 +233,18 @@
   --dt-shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55),
                        0 0 0 1px rgba(255, 255, 255, 0.03);
 }
+}
 
 /*
-  Primitive class-name contract downstream surfaces can mirror locally:
+  Primitive class-name contract downstream surfaces can mirror locally.
+  Every public class is .dt-* prefixed (ADR 0001: "design token"):
   .dt-shell, .dt-section,
-  .badge, .badge-accent, .badge-info, .badge-success, .badge-warning,
-  .card, .card-muted, .card-raised, .glass-card,
-  .btn-primary, .btn-secondary, .btn-ghost.
+  .dt-badge, .dt-badge-accent, .dt-badge-info, .dt-badge-success,
+    .dt-badge-warning, .dt-badge-danger,
+  .dt-card, .dt-card-muted, .dt-card-raised,
+  .dt-button-solid, .dt-button-outline, .dt-button-ghost
+    (+ [data-tone='danger'] on .dt-button-solid).
+  The unprefixed v1 names (.btn-*, .badge-*, .card-*, .tabular,
+  .font-tabular) survive only in css/legacy-classes.css and are
+  removed in 2.1.0. .glass-card, .spec-strip, .mono are gone for good.
 */

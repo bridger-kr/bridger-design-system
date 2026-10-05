@@ -16,13 +16,6 @@ export const CardTone = {
 
 export type CardTone = (typeof CardTone)[keyof typeof CardTone];
 
-const VARIANT_STYLE = {
-  default: { background: 'var(--dt-surface)', boxShadow: 'none' },
-  muted: { background: 'var(--dt-surface-sunken)', boxShadow: 'none' },
-  raised: { background: 'var(--dt-surface-raised)' },
-  panel: { background: 'var(--dt-surface)', boxShadow: 'none' },
-} satisfies Record<CardTone, CSSProperties>;
-
 interface CardVisualProps {
   readonly children?: ReactNode;
   /** default = flat bordered plane; muted = sunken well; raised = elevated; panel = flat console panel. */
@@ -44,14 +37,9 @@ export type CardLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'child
     readonly href: string;
   };
 
-function cardStyle(tone: CardTone, padding: number, style?: CSSProperties): CSSProperties {
+function cardStyle(padding: number, style?: CSSProperties): CSSProperties {
   return {
-    borderRadius: 'var(--dt-radius-card)',
-    border: '1px solid var(--dt-border)',
-    color: 'var(--dt-text)',
     padding,
-    transition: 'border-color var(--dt-duration-base) var(--dt-ease), box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease), transform var(--dt-duration-base) var(--dt-ease)',
-    ...VARIANT_STYLE[tone],
     ...style,
   };
 }
@@ -72,7 +60,7 @@ export function Card({
 }: CardProps) {
   const selectedTone = tone ?? variant ?? CardTone.Default;
   return (
-    <div className={cx('dt-card', `dt-card-${selectedTone}`, className)} style={cardStyle(selectedTone, padding, style)} {...rest}>
+    <div className={cx('dt-card', `dt-card-${selectedTone}`, className)} style={cardStyle(padding, style)} {...rest}>
       {children}
     </div>
   );
@@ -97,15 +85,7 @@ export function CardButton({
       type={type}
       disabled={disabled}
       className={cx('dt-card', `dt-card-${selectedTone}`, 'dt-card-action', className)}
-      style={{
-        appearance: 'none',
-        display: 'block',
-        font: 'inherit',
-        minHeight: 'var(--dt-space-5)',
-        textAlign: 'inherit',
-        width: '100%',
-        ...cardStyle(selectedTone, padding, style),
-      }}
+      style={cardStyle(padding, style)}
     >
       {children}
     </button>
@@ -129,13 +109,7 @@ export function CardLink({
       {...rest}
       href={href}
       className={cx('dt-card', `dt-card-${selectedTone}`, 'dt-card-action', className)}
-      style={{
-        display: 'block',
-        minHeight: 'var(--dt-space-5)',
-        textDecoration: 'none',
-        width: '100%',
-        ...cardStyle(selectedTone, padding, style),
-      }}
+      style={cardStyle(padding, style)}
     >
       {children}
     </a>

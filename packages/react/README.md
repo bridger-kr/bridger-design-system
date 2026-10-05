@@ -2,7 +2,7 @@
 
 React component library for the Bridger Design System.
 
-Exports 60 components across six categories (core, forms, feedback, data, navigation, product) plus the `cx` class-name helper, all consumable from the package root.
+Exports 61 components across six categories (core, forms, feedback, data, navigation, product) plus the `cx` class-name helper, all consumable from the package root.
 
 ## Install
 
@@ -12,12 +12,12 @@ pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 
 ## Peer Dependencies
 
-`@bridger-kr/react` expects React, React DOM 18 or newer, and `@bridger-kr/tokens`:
+`@bridger-kr/react` expects React and React DOM 19, and `@bridger-kr/tokens`:
 
 ```json
 {
-  "react": ">=18",
-  "react-dom": ">=18"
+  "react": "^19",
+  "react-dom": "^19"
 }
 ```
 
@@ -29,11 +29,14 @@ Components are exported from the package root by category:
 import { Button, Card, CardTone, Badge, Input } from '@bridger-kr/react';
 ```
 
-Per-component subpath imports are reserved for tree-shaking-friendly usage:
+Category-level subpath imports are reserved for tree-shaking-friendly usage:
 
 ```tsx
-import { Button } from '@bridger-kr/react/components/core/Button';
+import { Button } from '@bridger-kr/react/components/core';
+import { Checkbox } from '@bridger-kr/react/components/forms';
 ```
+
+Every published entry — root and category — is a client module (`"use client"`), so all exports are safe to import from Next.js App Router server components.
 
 ## CSS Setup
 
@@ -44,13 +47,26 @@ import '@bridger-kr/tokens/css';
 import '@bridger-kr/react/styles.css';
 ```
 
-The React stylesheet currently imports `@bridger-kr/tokens/css` too, so bundlers that preserve package CSS imports can load a single stylesheet:
+`styles.css` declares the same layer order as `@bridger-kr/tokens/css` (`@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`) and places every rule in `dt.components` or `dt.utilities`, so the two files may be imported in either order. All DS rules live inside `dt.*` layers — unlayered app CSS always wins over them with normal specificity, never `!important`.
+
+Element defaults (`body`, headings, `code`) are **not** loaded by the default tokens entrypoint. Opt in explicitly if you want them:
 
 ```ts
-import '@bridger-kr/react/styles.css';
+import '@bridger-kr/tokens/css/base';
 ```
 
-If your bundler does not resolve package `@import` statements in CSS, import both `@bridger-kr/tokens/css` and `@bridger-kr/react/styles.css` in that order.
+The public class vocabulary is `.dt-*` only. The pre-v2 unprefixed classes (`.btn-*`, `.badge`, `.card-*`) are available as deprecated aliases via `@bridger-kr/tokens/css/legacy-classes` until 2.1.0.
+
+### Tailwind v3 consumers
+
+Tailwind's `preflight` is unlayered CSS and therefore wins over every DS layer — buttons lose their background, for example. Either disable it (the DS `dt.reset` layer owns the reset):
+
+```js
+// tailwind.config.js
+module.exports = { corePlugins: { preflight: false } };
+```
+
+or wrap `@tailwind base` in a later `@layer` in your app CSS after verifying the result locally. Unlayered app CSS can then override DS styles without `!important`.
 
 ## Component Categories
 

@@ -55,19 +55,7 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
           cursor: disabled ? 'not-allowed' : 'pointer',
         }}
       >
-        <span
-          className="dt-checkbox-box"
-          style={{
-            width: 18,
-            height: 18,
-            borderRadius: 'var(--dt-radius-control)',
-            display: 'grid',
-            placeItems: 'center',
-            background: 'var(--dt-surface)',
-            border: '1.5px solid var(--dt-border-strong)',
-            transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease)',
-          }}
-        >
+        <span className="dt-checkbox-box">
           <BaseCheckbox.Indicator>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path

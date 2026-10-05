@@ -12,8 +12,8 @@ import { describe, expect, it } from 'vitest';
 
 const contractPath = new URL('../packages/tokens/css/contract.css', import.meta.url);
 const contractCss = readFileSync(contractPath, 'utf8');
-const baseCss = readFileSync(
-  new URL('../packages/tokens/css/base.css', import.meta.url),
+const componentsCss = readFileSync(
+  new URL('../packages/react/src/styles.css', import.meta.url),
   'utf8',
 );
 
@@ -47,15 +47,15 @@ const lightVars = extractVars(lightBlock.body);
 const darkVars = extractVars(darkBlock.body);
 
 /**
- * Declarations of a top-level class rule in base.css — used to test the
- * colors a component actually renders, not just token pairs, so a bounded
- * token-level exception cannot hide a failing consumer.
+ * Declarations of a class rule in @bridger-kr/react styles.css — used to
+ * test the colors a component actually renders, not just token pairs, so a
+ * bounded token-level exception cannot hide a failing consumer.
  */
 function classDecls(selector: string): Map<string, string> {
-  const rule = topLevelBlocks(baseCss).find((b) =>
+  const rule = topLevelBlocks(componentsCss).find((b) =>
     b.selector.split(',').some((s) => s.trim() === selector),
   );
-  if (!rule) throw new Error(`${selector} rule not found in base.css`);
+  if (!rule) throw new Error(`${selector} rule not found in react styles.css`);
   const decls = new Map<string, string>();
   const re = /([\w-]+)\s*:\s*([^;]+);/g;
   let m: RegExpExecArray | null;
@@ -268,19 +268,19 @@ describe('EDD-230 token contrast (WCAG AA)', () => {
         }
       });
 
-      it('rendered .badge rules reach 4.5:1 — small caption text, no large-text exception', () => {
-        // .badge renders 12px/600 caption text: WCAG's 3:1 large-text threshold
-        // does not apply, so these evaluate the real color+background the rule
-        // declares. Regression: default .badge used text-subtle on surface-sunken
-        // (4.35:1 light) while the token-level 3:1 exception for subtle-on-wash
-        // masked it.
+      it('rendered .dt-badge rules reach 4.5:1 — small caption text, no large-text exception', () => {
+        // .dt-badge renders 12px/600 caption text: WCAG's 3:1 large-text
+        // threshold does not apply, so these evaluate the real
+        // color+background the rule declares. Regression: the default badge
+        // used text-subtle on surface-sunken (4.35:1 light) while the
+        // token-level 3:1 exception for subtle-on-wash masked it.
         for (const selector of [
-          '.badge',
-          '.badge-accent',
-          '.badge-info',
-          '.badge-success',
-          '.badge-warning',
-          '.badge-danger',
+          '.dt-badge',
+          '.dt-badge-accent',
+          '.dt-badge-info',
+          '.dt-badge-success',
+          '.dt-badge-warning',
+          '.dt-badge-danger',
         ]) {
           const decls = classDecls(selector);
           const fgRaw = decls.get('color');
@@ -306,7 +306,7 @@ describe('EDD-230 token contrast (WCAG AA)', () => {
       });
 
       it('primary action and code surfaces reach 4.5:1', () => {
-        // .btn-primary { background: text-strong; color: surface }
+        // .dt-button-solid { background: text-strong; color: surface }
         expect(contrast(token('surface', vars), token('text-strong', vars))).toBeGreaterThanOrEqual(4.5);
         // code panel
         expect(contrast(token('code-ink', vars), token('code-bg', vars))).toBeGreaterThanOrEqual(4.5);

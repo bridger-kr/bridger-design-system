@@ -19,10 +19,10 @@ export const BUTTON_SIZE = {
 export type ButtonSize = (typeof BUTTON_SIZE)[keyof typeof BUTTON_SIZE];
 
 const VARIANT_CLASS = {
-  primary: 'btn-primary',
-  secondary: 'btn-secondary',
-  ghost: 'btn-ghost',
-  danger: 'btn-danger',
+  primary: 'dt-button-solid',
+  secondary: 'dt-button-outline',
+  ghost: 'dt-button-ghost',
+  danger: 'dt-button-solid',
 } satisfies Record<ButtonVariant, string>;
 
 export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
@@ -64,6 +64,7 @@ export function Button({
     <button
       type={type}
       className={cx('dt-button', `dt-button-${size}`, cls, className)}
+      data-tone={variant === BUTTON_VARIANT.Danger ? 'danger' : undefined}
       disabled={disabled}
       onClick={onClick}
       style={style}

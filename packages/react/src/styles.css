@@ -1,3 +1,127 @@
+/* ============================================================
+   Bridger — component + utility CSS  (v2)
+
+   Every DS rule lives inside a dt.* cascade layer. Layer order is
+   declared identically in @bridger-kr/tokens/css/index.css and here,
+   so this file is self-sufficient when imported without tokens/css:
+
+     dt.reset < dt.tokens < dt.base < dt.components < dt.utilities
+
+   Unlayered consumer CSS always wins over these rules — override with
+   normal specificity, never importance hacks. The only permitted
+   important declarations are the prefers-reduced-motion overrides below.
+============================================================ */
+@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;
+
+@layer dt.components {
+/* ── Layout shell (migrated from @bridger-kr/tokens/css/base) ── */
+.dt-shell { margin-inline: auto; width: 100%; max-width: 1200px; padding-inline: 20px; }
+@media (min-width: 640px) { .dt-shell { padding-inline: 28px; } }
+@media (min-width: 1024px) { .dt-shell { padding-inline: 40px; } }
+
+/* ── Buttons ──
+   Variant classes are self-contained so a bare class keeps the v1
+   standalone look; size metrics come from .dt-button-sm/md/lg, which
+   follow and therefore win on React-rendered buttons. Danger is a
+   tone attribute on the solid variant, not a fifth class. */
+.dt-button-solid {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-control);
+  background: var(--dt-text-strong); color: var(--dt-surface); border: 1px solid var(--dt-text-strong);
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-button-solid:not(:disabled):hover { background: var(--dt-text); border-color: var(--dt-text); transform: translateY(-1px); }
+.dt-button-solid:active { transform: scale(var(--dt-press-scale)); }
+.dt-button-solid[data-tone='danger'] { border-color: var(--dt-danger); background: var(--dt-danger); }
+.dt-button-solid[data-tone='danger']:not(:disabled):hover {
+  background: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-text-strong));
+  border-color: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-text-strong));
+}
+
+.dt-button-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-control);
+  background: var(--dt-surface-sunken); color: var(--dt-text-strong); border: 1px solid var(--dt-border);
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-button-outline:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); transform: translateY(-1px); }
+.dt-button-outline:active { transform: scale(var(--dt-press-scale)); }
+
+.dt-button-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 36px; padding: 0 var(--dt-space-12); font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-control);
+  background: transparent; color: var(--dt-text-subtle); border: 1px solid transparent;
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-button-ghost:not(:disabled):hover { background: var(--dt-tint-text); border-color: var(--dt-border); color: var(--dt-text-strong); }
+.dt-button-ghost:active { transform: scale(var(--dt-press-scale)); }
+
+.dt-button { min-height: var(--dt-space-5); }
+.dt-button-sm {
+  height: var(--dt-space-5); min-height: var(--dt-space-5);
+  padding-inline: calc(var(--dt-space-2) + var(--dt-space-1));
+  font-size: var(--dt-small-size);
+}
+.dt-button-md {
+  height: calc(var(--dt-space-5) + var(--dt-space-1));
+  min-height: calc(var(--dt-space-5) + var(--dt-space-1));
+  padding-inline: var(--dt-space-3);
+  font-size: var(--dt-small-size);
+}
+.dt-button-lg {
+  height: calc(var(--dt-space-5) + var(--dt-space-2));
+  min-height: calc(var(--dt-space-5) + var(--dt-space-2));
+  padding-inline: calc(var(--dt-space-3) + var(--dt-space-1));
+  font-size: var(--dt-body-size);
+}
+.dt-button:disabled { cursor: not-allowed; opacity: 0.55; }
+
+.dt-button-icon { display: inline-flex; }
+
+/* ── Badges (status / classification) — crisp tags, not cushiony pills.
+   Small radius + hairline so they read as instrument labels. ── */
+.dt-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 8px;
+  font-size: var(--dt-caption-size); font-weight: 600; letter-spacing: 0;
+  border-radius: var(--dt-radius-chip);
+  background: var(--dt-surface-sunken); color: var(--dt-text-muted); /* muted: AA on the sunken fill (subtle is 4.35) */
+  border: 1px solid var(--dt-border-strong);
+  transition: background-color var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-text); border-color: color-mix(in srgb, var(--dt-accent) 32%, transparent); }
+.dt-badge-info    { background: var(--dt-tint-cobalt);  color: var(--dt-cobalt); border-color: color-mix(in srgb, var(--dt-cobalt) 32%, transparent); }
+.dt-badge-success { background: var(--dt-tint-success); color: var(--dt-success); border-color: color-mix(in srgb, var(--dt-success) 32%, transparent); }
+.dt-badge-warning { background: var(--dt-tint-warning); color: var(--dt-warning); border-color: color-mix(in srgb, var(--dt-warning) 32%, transparent); }
+.dt-badge-danger  { background: var(--dt-tint-danger);  color: var(--dt-danger); border-color: color-mix(in srgb, var(--dt-danger) 32%, transparent); }
+
+/* ── Fields and inputs (migrated from @bridger-kr/tokens/css/base) ── */
+.dt-field {
+  min-height: 44px;
+  background: var(--dt-surface); border: 1px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-control);
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-field:hover { border-color: color-mix(in srgb, var(--dt-text) 28%, var(--dt-border-strong)); }
+.dt-field:focus, .dt-field:focus-within { background: var(--dt-surface); border-color: var(--dt-accent-text); outline: 3px solid var(--dt-accent); outline-offset: 2px; }
+.dt-field-invalid { border-color: var(--dt-danger); }
+
+.dt-input { display: grid; gap: var(--dt-space-2); }
+.dt-input-label { color: var(--dt-text-subtle); font-size: var(--dt-small-size); font-weight: 600; }
+.dt-input .dt-field { display: flex; align-items: center; gap: var(--dt-space-2); padding-inline: calc(var(--dt-space-2) + var(--dt-space-1)); }
+.dt-input-prefix { display: inline-flex; color: var(--dt-text-muted); }
+.dt-input-control {
+  min-width: 0; flex: 1; border: 0; outline: 0; background: transparent;
+  color: var(--dt-text-strong); padding-block: var(--dt-space-2); font-size: var(--dt-label-size);
+}
+.dt-input-hint { color: var(--dt-text-muted); font-size: var(--dt-caption-size); }
+
 .dt-action-list {
   display: grid;
   gap: 0;
@@ -93,12 +217,12 @@
 }
 
 .dt-select-trigger:hover:not([data-disabled]) {
-  border-color: var(--dt-border-strong) !important;
+  border-color: var(--dt-border-strong);
   background: var(--dt-surface);
 }
 
 .dt-select-trigger:focus-visible {
-  border-color: var(--dt-accent-text) !important;
+  border-color: var(--dt-accent-text);
 }
 
 .dt-select-chevron {
@@ -137,7 +261,7 @@
 
 .dt-select-option[data-highlighted],
 .dt-combobox-option[data-highlighted] {
-  background: var(--dt-surface-sunken) !important;
+  background: var(--dt-surface-sunken);
 }
 
 .dt-combobox {
@@ -444,13 +568,42 @@
   cursor: not-allowed;
 }
 
+/* Base + active visuals live in the sheet so hover/state rules win by
+   plain specificity instead of overriding inline styles. */
+.dt-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: var(--dt-space-5);
+  padding: 0 10px;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-chip);
+  background: var(--dt-surface);
+  color: var(--dt-text-subtle);
+  font-family: var(--dt-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease),
+    transform var(--dt-duration-fast) var(--dt-ease);
+}
+
+.dt-filter-chip-active {
+  border-color: color-mix(in srgb, var(--dt-accent) 40%, transparent);
+  background: var(--dt-tint-accent);
+  color: var(--dt-accent-text);
+  font-weight: 600;
+}
+
 .dt-filter-chip:hover {
-  border-color: var(--dt-border-strong) !important;
+  border-color: var(--dt-border-strong);
   transform: translateY(-1px);
 }
 
 .dt-filter-chip-active:hover {
-  border-color: var(--dt-accent-text) !important;
+  border-color: var(--dt-accent-text);
 }
 
 .dt-filter-chip:active {
@@ -513,8 +666,8 @@
 }
 
 .dt-filter-chip-group .dt-filter-chip {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .dt-filter-chip-remove,
@@ -572,19 +725,35 @@
   color: var(--dt-text-strong);
 }
 
-.dt-file-upload-dropzone[data-dragging] {
-  border-color: var(--dt-accent-text) !important;
-  background: var(--dt-tint-accent) !important;
+.dt-file-upload-dropzone {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  padding: 26px 20px;
+  border: 1.5px dashed var(--dt-border-strong);
+  border-radius: var(--dt-radius-card);
+  background: var(--dt-surface-sunken);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease);
 }
 
-.dt-card-action {
-  cursor: pointer;
+.dt-file-upload-dropzone[data-dragging] {
+  border-color: var(--dt-accent-text);
+  background: var(--dt-tint-accent);
 }
 
 .dt-card {
   border: 1px solid var(--dt-border);
   border-radius: var(--dt-radius-card);
   color: var(--dt-text);
+  transition:
+    border-color var(--dt-duration-base) var(--dt-ease),
+    box-shadow var(--dt-duration-base) var(--dt-ease),
+    background-color var(--dt-duration-base) var(--dt-ease),
+    transform var(--dt-duration-base) var(--dt-ease);
 }
 
 .dt-card-default,
@@ -592,9 +761,21 @@
 .dt-card-muted { background: var(--dt-surface-sunken); }
 .dt-card-raised { background: var(--dt-surface-raised); }
 
+/* Shared reset for card-shaped <button>/<a> elements. */
+.dt-card-action {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: var(--dt-space-5);
+  font: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .dt-card-action:hover:not(:disabled) {
-  border-color: var(--dt-border-strong) !important;
-  background: var(--dt-surface-muted) !important;
+  border-color: var(--dt-border-strong);
+  background: var(--dt-surface-muted);
   transform: translateY(-1px);
 }
 
@@ -664,20 +845,50 @@
 .dt-sidebar-item-badge { color: var(--dt-text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .dt-sidebar-footer { border-top: 1px solid var(--dt-border); padding: var(--dt-space-2) var(--dt-space-3); }
 
-.dt-tabs-tab-underline[aria-selected='true'] {
-  border-bottom-color: var(--dt-accent-text) !important;
-  color: var(--dt-text-strong) !important;
+/* Tab base styles moved out of inline styles so selected-state rules
+   win by plain specificity. */
+.dt-tabs-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  padding: 10px 12px;
+  color: var(--dt-text-muted);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease),
+    color var(--dt-duration-fast) var(--dt-ease);
 }
 
-.dt-tabs-tab-pill[aria-selected='true'] {
-  background: var(--dt-surface-raised) !important;
-  border: 1px solid var(--dt-border) !important;
-  color: var(--dt-text-strong) !important;
+.dt-tabs-tab-underline[aria-selected='true'] {
+  border-bottom-color: var(--dt-accent-text);
+  color: var(--dt-text-strong);
+}
+
+.dt-checkbox-box {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 1.5px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-control);
+  background: var(--dt-surface);
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease);
 }
 
 .dt-checkbox-control[data-checked] .dt-checkbox-box {
-  border-color: var(--dt-accent-text) !important;
-  background: var(--dt-accent) !important;
+  border-color: var(--dt-accent-text);
+  background: var(--dt-accent);
 }
 
 .dt-checkbox-control:focus-visible .dt-checkbox-box,
@@ -687,8 +898,30 @@
   outline-offset: 2px;
 }
 
+.dt-radio-control {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1.5px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-pill);
+  background: var(--dt-surface);
+  transition: border-color var(--dt-duration-fast) var(--dt-ease);
+}
+
 .dt-radio-root[data-checked] .dt-radio-control {
-  border-color: var(--dt-accent-text) !important;
+  border-color: var(--dt-accent-text);
+}
+
+.dt-switch-track {
+  position: absolute;
+  left: 1px;
+  width: 38px;
+  height: 22px;
+  border-radius: var(--dt-radius-pill);
+  background: var(--dt-border-strong);
+  transition: background-color var(--dt-duration-fast) var(--dt-ease);
 }
 
 .dt-switch-thumb {
@@ -697,7 +930,7 @@
 }
 
 .dt-switch-control[data-checked] .dt-switch-track {
-  background: var(--dt-accent) !important;
+  background: var(--dt-accent);
 }
 
 .dt-switch-control[data-checked] .dt-switch-thumb {
@@ -708,16 +941,55 @@
   animation: dt-menu var(--dt-duration-fast) var(--dt-ease);
 }
 
+/* Menu item base styles moved out of inline styles so highlight/danger
+   state rules win by plain specificity. */
+.dt-menu-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  border-radius: var(--dt-radius-control);
+  background: transparent;
+  padding: 8px 10px;
+  color: var(--dt-text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dt-menu-item-icon {
+  display: inline-flex;
+  color: var(--dt-text-subtle);
+}
+
+.dt-menu-item[data-danger],
+.dt-menu-item[data-danger] .dt-menu-item-icon {
+  color: var(--dt-danger);
+}
+
 .dt-menu-item[data-highlighted] {
-  background: var(--dt-surface-sunken) !important;
+  background: var(--dt-surface-sunken);
 }
 
 .dt-menu-item[data-highlighted][data-danger] {
-  background: var(--dt-tint-danger) !important;
+  background: var(--dt-tint-danger);
+}
+
+.dt-tool-card {
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-card);
+  background: var(--dt-surface);
+  padding: 16px 18px;
+  transition:
+    box-shadow var(--dt-duration-base) var(--dt-ease),
+    background-color var(--dt-duration-base) var(--dt-ease);
 }
 
 .dt-tool-card:hover {
-  border-color: var(--dt-border-strong) !important;
+  border-color: var(--dt-border-strong);
 }
 
 .dt-tool-card .dt-chip {
@@ -1780,8 +2052,11 @@
   border-left: 1px solid var(--dt-border-alpha);
 }
 
-.dt-stat-panel .dt-stat-panel-tile > div:nth-child(2) {
-  color: var(--dt-accent-text) !important;
+/* Scoped custom property instead of an important declaration: StatTile's
+   value reads var(--dt-stat-tile-value-color) with --dt-text-strong as the
+   fallback, so the panel context overrides a plain declaration. */
+.dt-stat-panel .dt-stat-panel-tile {
+  --dt-stat-tile-value-color: var(--dt-accent-text);
 }
 
 .dt-tabs-list-pill {
@@ -1799,9 +2074,9 @@
 .dt-tabs-tab-pill {
   flex: 0 0 auto;
   min-height: 34px;
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
   border-radius: var(--dt-radius-pill);
-  padding: 8px 14px !important;
+  padding: 8px 14px;
   transition:
     background-color var(--dt-duration-fast) var(--dt-ease),
     box-shadow var(--dt-duration-fast) var(--dt-ease),
@@ -1925,5 +2200,24 @@
 
   .dt-product-topbar-menu-button span {
     transition: none;
+  }
+}
+}
+
+@layer dt.utilities {
+  /* Tabular numerals — renamed from .tabular/.font-tabular (see
+     @bridger-kr/tokens/css/legacy-classes for the deprecated aliases). */
+  .dt-tabular { font-variant-numeric: tabular-nums; }
+
+  .dt-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
   }
 }

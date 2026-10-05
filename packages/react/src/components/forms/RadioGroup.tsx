@@ -69,20 +69,7 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
                 cursor: disabled ? 'not-allowed' : 'pointer',
               }}
             >
-              <span
-                className="dt-radio-control"
-                style={{
-                  width: 18,
-                  height: 18,
-                  flex: '0 0 auto',
-                  borderRadius: 'var(--dt-radius-pill)',
-                  display: 'grid',
-                  placeItems: 'center',
-                  background: 'var(--dt-surface)',
-                  border: '1.5px solid var(--dt-border-strong)',
-                  transition: 'border-color var(--dt-duration-fast) var(--dt-ease)',
-                }}
-              >
+              <span className="dt-radio-control">
                 <BaseRadio.Indicator>
                   <span className="dt-radio-indicator" style={{ width: 9, height: 9, borderRadius: 9999, background: 'var(--dt-accent)', display: 'block' }} />
                 </BaseRadio.Indicator>

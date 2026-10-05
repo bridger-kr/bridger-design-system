@@ -34,6 +34,7 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 - Use the `BrandLogo` component from `@bridger-kr/react`. Do not recreate the wordmark in page-local SVG, text, or CSS.
 - `BrandLogo` supports `lg`, `md`, `symbol`, and `favicon` variants. Use `lg` and `md` for wordmarks, and `symbol` or `favicon` only where the available slot cannot hold the wordmark.
 - Public product and marketing branding uses Bridger names and approved Bridger domains. Infrastructure or service endpoint identifiers may appear only where the user needs to copy, configure, or inspect an exact technical value. They must never replace the Bridger name in navigation, page titles, metadata, or primary calls to action.
+- The `dt-` prefix on CSS custom properties (`--dt-*`) and component classes (`.dt-*`) means **design token** — see `docs/adr/0001-token-prefix.md` (Accepted 2026-09-28). It is an internal identifier, not a brand abbreviation; new tokens and classes use it unconditionally.
 
 ### 3.2 Language and voice
 
@@ -378,8 +379,15 @@ Brand and marketing composites. These are the landing-side primitives that depen
 - Each component documents its supported variants, semantic purpose, keyboard behavior, focus behavior, loading and disabled behavior, and light and dark rendering.
 - Component variants must preserve the surface rules. A raised or featured variant is an explicit exception with a named role, not a license for resting shadows, translucency, or arbitrary color.
 - Examples and Figma Component Sets must use the same names and state vocabulary as the React package.
-- Subpath imports (`@bridger-kr/react/components/<family>/<Component>`) are reserved for tree-shaking; the package root barrel is the supported public entry.
+- Subpath imports (`@bridger-kr/react/components/<family>`) are reserved for tree-shaking; the package root barrel is the supported public entry.
 - Components that own motion must implement `prefers-reduced-motion: reduce` per Section 7.
+
+### 9.9 CSS layering and import contract
+
+- All shipped DS styles live in explicit cascade layers, in this order: `@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`. Consumer CSS outside a layer always wins over every DS layer, so overrides never need `!important`; the DS `!important` budget is three declarations, reserved for the reduced-motion override.
+- `@bridger-kr/tokens/css` imports fonts, the token contract (`dt.tokens`), and the minimal reset (`dt.reset`) only. Element defaults (`body`, headings, links, `code`, `pre`) are opt-in via `@bridger-kr/tokens/css/base` (`dt.base`). Component and utility classes ship from `@bridger-kr/react/styles.css` in `dt.components` / `dt.utilities`.
+- Only `.dt-*` classes are public. Unprefixed primitive classes were removed from `base.css`; a transition alias sheet lives at `@bridger-kr/tokens/css/legacy-classes` and is deleted in 2.1.0.
+- Tailwind v3 consumers disable `preflight` (`corePlugins: { preflight: false }`) — the DS `dt.reset` layer owns the reset — or wrap `@tailwind base` in a later `@layer` after verifying locally. Unlayered app CSS then overrides DS styles without `!important`.
 
 ## 10. Provenance and reference discipline
 

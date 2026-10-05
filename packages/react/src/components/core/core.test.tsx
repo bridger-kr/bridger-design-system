@@ -77,19 +77,19 @@ describe('core exports', () => {
   });
 
   it('exports enum-like surface contracts used by apps', () => {
-    expect(Card({ tone: CardTone.Raised, children: '상태' }).props.style.background).toBe('var(--dt-surface-raised)');
+    expect(Card({ tone: CardTone.Raised, children: '상태' }).props.className).toContain('dt-card-raised');
     expect(Panel({ tone: SurfaceTone.Raised, children: '패널' }).props.className).toContain('bg-[var(--dt-surface-raised)]');
     expect(metricAccentColor(MetricAccent.Success)).toBe('text-[var(--dt-success)]');
     expect(cx('a', false, 'b')).toBe('a b');
   });
 
-  it('maps every Card tone to its surface token (contract apps depend on)', () => {
-    expect(Card({ tone: CardTone.Default, children: 'x' }).props.style.background).toBe('var(--dt-surface)');
-    expect(Card({ tone: CardTone.Muted, children: 'x' }).props.style.background).toBe('var(--dt-surface-sunken)');
-    expect(Card({ tone: CardTone.Raised, children: 'x' }).props.style.background).toBe('var(--dt-surface-raised)');
-    expect(Card({ tone: CardTone.Panel, children: 'x' }).props.style.background).toBe('var(--dt-surface)');
-    expect(Card({ variant: CardTone.Muted, children: 'x' }).props.style.background).toBe('var(--dt-surface-sunken)');
-    expect(Card({ children: 'x' }).props.style.background).toBe('var(--dt-surface)');
+  it('maps every Card tone to its surface class (contract apps depend on)', () => {
+    expect(Card({ tone: CardTone.Default, children: 'x' }).props.className).toContain('dt-card-default');
+    expect(Card({ tone: CardTone.Muted, children: 'x' }).props.className).toContain('dt-card-muted');
+    expect(Card({ tone: CardTone.Raised, children: 'x' }).props.className).toContain('dt-card-raised');
+    expect(Card({ tone: CardTone.Panel, children: 'x' }).props.className).toContain('dt-card-panel');
+    expect(Card({ variant: CardTone.Muted, children: 'x' }).props.className).toContain('dt-card-muted');
+    expect(Card({ children: 'x' }).props.className).toContain('dt-card-default');
   });
 
   it('keeps Card non-actionable and exposes native action variants', () => {
@@ -98,14 +98,12 @@ describe('core exports', () => {
     const cardLink = CardLink({ href: '/tools', children: '도구 열기' });
 
     expect(defaultCard.type).toBe('div');
+    expect(defaultCard.props.className).toContain('dt-card');
     expect(defaultCard.props.style.padding).toBe(20);
-    expect(defaultCard.props.style.border).toBe('1px solid var(--dt-border)');
-    expect(defaultCard.props.style.boxShadow).toBe('none');
     expect(Card({ padding: 8, children: 'x' }).props.style.padding).toBe(8);
     expect(cardButton.type).toBe('button');
     expect(cardButton.props.type).toBe('button');
     expect(cardButton.props.className).toContain('dt-card-action');
-    expect(cardButton.props.style.minHeight).toBe('var(--dt-space-5)');
     expect(cardLink.type).toBe('a');
     expect(cardLink.props.href).toBe('/tools');
     expect(Children.toArray(cardButton.props.children).some((child) => isValidElement(child) && child.type === 'style')).toBe(false);
@@ -129,21 +127,22 @@ describe('core exports', () => {
   });
 
   it('maps every Badge tone to its status class (status-only, never decorative)', () => {
-    expect(Badge({ children: 'x' }).props.className).toBe('badge');
-    expect(Badge({ tone: 'accent', children: 'x' }).props.className).toBe('badge badge-accent');
-    expect(Badge({ tone: 'info', children: 'x' }).props.className).toBe('badge badge-info');
-    expect(Badge({ tone: 'success', children: 'x' }).props.className).toBe('badge badge-success');
-    expect(Badge({ tone: 'warning', children: 'x' }).props.className).toBe('badge badge-warning');
-    expect(Badge({ tone: 'danger', children: 'x' }).props.className).toBe('badge badge-danger');
+    expect(Badge({ children: 'x' }).props.className).toBe('dt-badge');
+    expect(Badge({ tone: 'accent', children: 'x' }).props.className).toBe('dt-badge dt-badge-accent');
+    expect(Badge({ tone: 'info', children: 'x' }).props.className).toBe('dt-badge dt-badge-info');
+    expect(Badge({ tone: 'success', children: 'x' }).props.className).toBe('dt-badge dt-badge-success');
+    expect(Badge({ tone: 'warning', children: 'x' }).props.className).toBe('dt-badge dt-badge-warning');
+    expect(Badge({ tone: 'danger', children: 'x' }).props.className).toBe('dt-badge dt-badge-danger');
   });
 
   it('Button maps every public variant and size to semantic CSS hooks', () => {
     const danger = Button({ variant: BUTTON_VARIANT.Danger, size: BUTTON_SIZE.Small, children: '삭제' });
     const secondary = Button({ variant: BUTTON_VARIANT.Secondary, size: BUTTON_SIZE.Large, children: '연결' });
 
-    expect(danger.props.className).toContain('btn-danger');
+    expect(danger.props.className).toContain('dt-button-solid');
+    expect(danger.props['data-tone']).toBe('danger');
     expect(danger.props.className).toContain('dt-button-sm');
-    expect(secondary.props.className).toContain('btn-secondary');
+    expect(secondary.props.className).toContain('dt-button-outline');
     expect(secondary.props.className).toContain('dt-button-lg');
   });
 
@@ -153,21 +152,32 @@ describe('core exports', () => {
 
     expect(el.type).toBe('button');
     expect(el.props.type).toBe('button');
-    expect(el.props.className).toContain('btn-primary');
+    expect(el.props.className).toContain('dt-button-solid');
     expect(el.props.className).toContain('dt-button-md');
     expect(el.props.style).toBe(style);
   });
 
   it('defines token-backed Button size floors and disabled state in CSS', () => {
     const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
-    const stylesheet = readFileSync(resolve(packageRoot, '../tokens/css/base.css'), 'utf8');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
 
     expect(stylesheet).toMatch(/\.dt-button\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
     expect(stylesheet).toMatch(/\.dt-button-sm\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
     expect(stylesheet).toMatch(/\.dt-button-md\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-1\)\)/s);
     expect(stylesheet).toMatch(/\.dt-button-lg\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-2\)\)/s);
     expect(stylesheet).toMatch(/\.dt-button:disabled\s*\{[^}]*cursor:\s*not-allowed[^}]*opacity:\s*0\.55/s);
-    expect(stylesheet).toMatch(/\.btn-danger\s*\{[^}]*border:\s*1px solid var\(--dt-danger\)[^}]*background:\s*var\(--dt-danger\)[^}]*color:\s*var\(--dt-surface\)/s);
+    expect(stylesheet).toMatch(/\.dt-button-solid\[data-tone='danger'\]\s*\{[^}]*border-color:\s*var\(--dt-danger\)[^}]*background:\s*var\(--dt-danger\)/s);
+  });
+
+  it('defines Card tones, action targets, and chip floors in CSS', () => {
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+
+    expect(stylesheet).toMatch(/\.dt-card\s*\{[^}]*border:\s*1px solid var\(--dt-border\)/s);
+    expect(stylesheet).toMatch(/\.dt-card-muted\s*\{\s*background:\s*var\(--dt-surface-sunken\)/s);
+    expect(stylesheet).toMatch(/\.dt-card-raised\s*\{\s*background:\s*var\(--dt-surface-raised\)/s);
+    expect(stylesheet).toMatch(/\.dt-card-action\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
+    expect(stylesheet).toMatch(/\.dt-filter-chip\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
   });
 
   it('exports chip, section, and pill tabs as additive contracts', () => {
@@ -227,7 +237,6 @@ describe('core exports', () => {
     const removable = rendered(FilterChip({ label: '날씨', removable: true }));
 
     expect(toggle.props.className).toContain('dt-filter-chip');
-    expect(toggle.props.style.minHeight).toBe('var(--dt-space-5)');
     expect(removable.props.className).toContain('dt-filter-chip-group');
     expect(renderedChildren(removable)[1].props.className).toContain('dt-filter-chip-remove');
   });

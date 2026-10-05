@@ -20,6 +20,8 @@ const contractCss = readFileSync(new URL('../css/contract.css', import.meta.url)
   '',
 );
 const baseCss = readFileSync(new URL('../css/base.css', import.meta.url), 'utf8');
+// The .dt-* class vocabulary moved out of base.css into the React package.
+const componentsCss = readFileSync(new URL('../../react/src/styles.css', import.meta.url), 'utf8');
 const figmaGenerator = readFileSync(
   new URL('../../figma-plugin/scripts/gen-tokens.mjs', import.meta.url),
   'utf8',
@@ -178,9 +180,9 @@ describe('@bridger-kr/tokens', () => {
     // The full AA gate (every text token >=4.5 on every surface, both themes,
     // incl. accent-text) lives in tests/contrast.test.ts — oklch-aware.
     expect(baseCss).toContain('a { color: var(--dt-accent-text);');
-    expect(baseCss).toContain('.badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-text);');
-    expect(baseCss).toContain('background: var(--dt-text-strong); color: var(--dt-surface);');
-    expect(baseCss).toContain('.btn-primary:not(:disabled):hover { background: var(--dt-text);');
+    expect(componentsCss).toContain('.dt-badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-text);');
+    expect(componentsCss).toContain('background: var(--dt-text-strong); color: var(--dt-surface);');
+    expect(componentsCss).toContain('.dt-button-solid:not(:disabled):hover { background: var(--dt-text);');
   });
 
   it('keeps exported color tokens aligned with the CSS contract', () => {

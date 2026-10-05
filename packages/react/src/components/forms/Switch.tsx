@@ -53,15 +53,6 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
       <span
         aria-hidden="true"
         className="dt-switch-track"
-        style={{
-          position: 'absolute',
-          left: 1,
-          width: 38,
-          height: 22,
-          borderRadius: 9999,
-          background: 'var(--dt-border-strong)',
-          transition: 'background-color var(--dt-duration-fast) var(--dt-ease)',
-        }}
       />
       <BaseSwitch.Thumb
         className="dt-switch-thumb"

@@ -40,14 +40,7 @@ export function ToolCard({
     <article
       className="dt-tool-card"
       {...rest}
-      style={{
-        borderRadius: 'var(--dt-radius-card)',
-        background: 'var(--dt-surface)',
-        border: '1px solid var(--dt-border)',
-        padding: '16px 18px',
-        transition: 'box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease)',
-        ...style,
-      }}
+      style={style}
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
         <div style={{ minWidth: 0 }}>
