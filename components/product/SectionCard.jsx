@@ -8,9 +8,9 @@ export function SectionCard({ title, description, action, children, style }) {
   return (
     <section
       style={{
-        borderRadius: 'var(--dt-radius-lg)',
+        borderRadius: 'var(--dt-radius-card)',
         background: 'var(--dt-surface)',
-        boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+        border: '1px solid var(--dt-border)',
         padding: 'var(--dt-space-4)',
         ...style,
       }}
@@ -25,7 +25,7 @@ export function SectionCard({ title, description, action, children, style }) {
         }}
       >
         <div style={{ minWidth: 0 }}>
-          <h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>
+          <h3 style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>
             {title}
           </h3>
           {description ? (

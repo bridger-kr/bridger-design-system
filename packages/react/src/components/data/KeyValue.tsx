@@ -25,7 +25,7 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }: KeyValuePr
     <dl {...rest} style={{
       margin: 0, display: 'grid',
       gridTemplateColumns: columns === 2 ? '1fr 1fr' : '1fr',
-      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden',
+      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
       ...style,
     }}>
       {items.map((item, index) => {
@@ -47,7 +47,7 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }: KeyValuePr
             <dd style={{
               margin: 0, textAlign: 'right', minWidth: 0,
               fontFamily: item.mono ? 'var(--dt-font-mono)' : 'inherit',
-              fontSize: item.mono ? 12.5 : 13, fontWeight: 600,
+              fontSize: item.mono ? 12 : 13, fontWeight: 600,
               color: item.accent ? 'var(--dt-accent)' : 'var(--dt-ink-strong)',
               fontVariantNumeric: 'tabular-nums',
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',

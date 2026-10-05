@@ -85,7 +85,8 @@ export function Combobox({
           gap: 9,
           height: 44,
           padding: '0 12px',
-          boxShadow: open ? 'var(--dt-shadow-focus)' : undefined,
+          outline: open ? '3px solid var(--dt-accent)' : undefined,
+          outlineOffset: 2,
           background: open ? 'var(--dt-surface)' : 'var(--dt-surface-sunken)',
         }}
       >
@@ -121,7 +122,7 @@ export function Combobox({
           }}
         />
         {selected && !open ? (
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 12, color: 'var(--dt-muted)' }}>
             {selected.meta}
           </span>
         ) : null}
@@ -135,8 +136,8 @@ export function Combobox({
               zIndex: 'var(--dt-z-index-popover)',
               background: 'var(--dt-surface)',
               border: '1px solid var(--dt-border-strong)',
-              borderRadius: 'var(--dt-radius-lg)',
-              boxShadow: 'var(--dt-shadow-md)',
+              borderRadius: 'var(--dt-radius-card)',
+              boxShadow: 'var(--dt-shadow-overlay)',
               maxHeight: 240,
               overflowY: 'auto',
               padding: 4,
@@ -158,7 +159,7 @@ export function Combobox({
                     alignItems: 'center',
                     gap: 10,
                     padding: '9px 10px',
-                    borderRadius: 'var(--dt-radius-md)',
+                    borderRadius: 'var(--dt-radius-control)',
                     cursor: 'pointer',
                   }}
                 >
@@ -166,7 +167,7 @@ export function Combobox({
                     style={{
                       flex: 1,
                       minWidth: 0,
-                      fontSize: 13.5,
+                      fontSize: 14,
                       fontWeight: isSel ? 600 : 500,
                       color: 'var(--dt-ink-strong)',
                       overflow: 'hidden',

@@ -41,11 +41,11 @@ export function ToolCard({
       className="dt-tool-card"
       {...rest}
       style={{
-        borderRadius: 'var(--dt-radius-md)',
+        borderRadius: 'var(--dt-radius-card)',
         background: 'var(--dt-surface)',
-        boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+        border: '1px solid var(--dt-border)',
         padding: '16px 18px',
-        transition: 'box-shadow var(--dt-motion), background-color var(--dt-motion)',
+        transition: 'box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease)',
         ...style,
       }}
     >
@@ -60,7 +60,7 @@ export function ToolCard({
           </h4>
         </div>
         <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, flex: '0 0 auto', fontSize: 12, fontWeight: 600, color: STATE_COLOR[state] }}>
-          <span style={{ width: 6, height: 6, borderRadius: '9999px', background: STATE_COLOR[state] }} />
+          <span style={{ width: 6, height: 6, borderRadius: 'var(--dt-radius-pill)', background: STATE_COLOR[state] }} />
           {stateLabel ?? labels[state]}
         </span>
       </div>

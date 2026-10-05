@@ -7,7 +7,7 @@ import React from 'react';
 export function Table({ columns = [], rows = [], rowKey, onRowClick, empty, style }) {
   if (!rows.length && empty) return empty;
   return (
-    <div style={{ overflowX: 'auto', borderRadius: 'var(--dt-radius-lg)', background: 'var(--dt-surface)', boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)', ...style }}>
+    <div style={{ overflowX: 'auto', borderRadius: 'var(--dt-radius-card)', background: 'var(--dt-surface)', border: '1px solid var(--dt-border)', ...style }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-ink)' }}>
         <thead>
           <tr style={{ background: 'var(--dt-surface-muted)' }}>

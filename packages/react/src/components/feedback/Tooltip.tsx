@@ -41,8 +41,8 @@ export function Tooltip({ label, position = 'top', children }: TooltipProps) {
               className="dt-tooltip-popup"
               style={{
                 whiteSpace: 'nowrap', pointerEvents: 'none', padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
-                color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)', borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-md)',
-                transition: 'opacity var(--dt-motion-fast), visibility var(--dt-motion-fast)',
+                color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)', borderRadius: 'var(--dt-radius-chip)', boxShadow: 'var(--dt-shadow-overlay)',
+                transition: 'opacity var(--dt-duration-fast) var(--dt-ease), visibility var(--dt-duration-fast) var(--dt-ease)',
               }}
             >
               {label}

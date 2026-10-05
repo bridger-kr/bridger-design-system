@@ -16,14 +16,14 @@ export function Drawer({ open = false, side = 'right', title, children, footer, 
         role="dialog" aria-modal="true" aria-label={title}
         style={{
           position: 'relative', width, maxWidth: '100%', height: '100%', display: 'flex', flexDirection: 'column',
-          background: 'var(--dt-surface)', boxShadow: 'var(--dt-shadow-xl)',
+          background: 'var(--dt-surface)', boxShadow: 'var(--dt-shadow-overlay)',
           borderLeft: fromRight ? '1px solid var(--dt-border-strong)' : 'none',
           borderRight: fromRight ? 'none' : '1px solid var(--dt-border-strong)',
           fontFamily: 'var(--dt-font-sans)', ...style,
         }}
       >
         <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 18px', borderBottom: '1px solid var(--dt-border)' }}>
-          <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>{title}</h3>
+          <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>{title}</h3>
           <button
             type="button" onClick={onClose} aria-label="닫기"
             style={{ flex: '0 0 auto', width: 30, height: 30, display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-sm)', color: 'var(--dt-muted-strong)', cursor: 'pointer' }}

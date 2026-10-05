@@ -61,7 +61,7 @@ export function FileUpload({
             padding: '12px 14px',
             background: 'var(--dt-surface)',
             border: '1px solid var(--dt-border-strong)',
-            borderRadius: 'var(--dt-radius-lg)',
+            borderRadius: 'var(--dt-radius-card)',
           }}
         >
           <span
@@ -71,7 +71,7 @@ export function FileUpload({
               flex: '0 0 auto',
               display: 'grid',
               placeItems: 'center',
-              borderRadius: 'var(--dt-radius-md)',
+              borderRadius: 'var(--dt-radius-control)',
               background: 'var(--dt-tint-accent)',
               color: 'var(--dt-accent)',
             }}
@@ -115,7 +115,7 @@ export function FileUpload({
               placeItems: 'center',
               border: 'none',
               background: 'var(--dt-surface-sunken)',
-              borderRadius: 'var(--dt-radius-sm)',
+              borderRadius: 'var(--dt-radius-chip)',
               color: 'var(--dt-muted-strong)',
               cursor: 'pointer',
             }}
@@ -147,10 +147,10 @@ export function FileUpload({
             padding: '26px 20px',
             textAlign: 'center',
             cursor: 'pointer',
-            borderRadius: 'var(--dt-radius-lg)',
+            borderRadius: 'var(--dt-radius-card)',
             border: `1.5px dashed ${drag ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
             background: drag ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
+            transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease)',
           }}
         >
           <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-muted)' }}>

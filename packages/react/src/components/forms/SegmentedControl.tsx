@@ -39,7 +39,7 @@ export function SegmentedControl({
         padding: 3,
         gap: 2,
         background: 'var(--dt-surface-sunken)',
-        borderRadius: 'var(--dt-radius-md)',
+        borderRadius: 'var(--dt-radius-control)',
         ...style,
       }}
     >
@@ -52,18 +52,17 @@ export function SegmentedControl({
             type="button"
             onClick={() => select(opt.value)}
             style={{
-              border: 'none',
+              border: on ? '1px solid var(--dt-border)' : '1px solid transparent',
               cursor: 'pointer',
               padding: pad,
-              borderRadius: 'var(--dt-radius-sm)',
+              borderRadius: 'var(--dt-radius-chip)',
               fontSize: size === 'sm' ? 12 : 13,
               fontWeight: 600,
               fontFamily: 'inherit',
               whiteSpace: 'nowrap',
               color: on ? 'var(--dt-ink-strong)' : 'var(--dt-muted)',
               background: on ? 'var(--dt-surface)' : 'transparent',
-              boxShadow: on ? 'var(--dt-ring), var(--dt-shadow-xs)' : 'none',
-              transition: 'color 130ms, background-color 130ms',
+                            transition: 'color var(--dt-duration-fast) var(--dt-ease), background-color var(--dt-duration-fast) var(--dt-ease)',
             }}
           >
             {opt.label}

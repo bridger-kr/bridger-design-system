@@ -75,12 +75,12 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
                   width: 18,
                   height: 18,
                   flex: '0 0 auto',
-                  borderRadius: 9999,
+                  borderRadius: 'var(--dt-radius-pill)',
                   display: 'grid',
                   placeItems: 'center',
                   background: 'var(--dt-surface)',
                   border: '1.5px solid var(--dt-border-strong)',
-                  transition: 'border-color var(--dt-motion-fast)',
+                  transition: 'border-color var(--dt-duration-fast) var(--dt-ease)',
                 }}
               >
                 <BaseRadio.Indicator>

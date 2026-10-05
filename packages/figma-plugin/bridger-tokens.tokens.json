@@ -258,43 +258,25 @@
   "radius": {
     "$type": "borderRadius",
     "chip": {
-      "$value": "6px"
+      "$value": "4px"
     },
     "control": {
-      "$value": "10px"
+      "$value": "6px"
     },
     "card": {
-      "$value": "14px"
+      "$value": "8px"
     },
     "pill": {
       "$value": "9999px"
     },
     "sm": {
-      "$value": "6px"
-    },
-    "inner": {
-      "$value": "6px"
-    },
-    "element": {
-      "$value": "10px"
-    },
-    "container": {
-      "$value": "14px"
+      "$value": "4px"
     },
     "md": {
-      "$value": "12px"
+      "$value": "6px"
     },
     "lg": {
-      "$value": "14px"
-    },
-    "button": {
-      "$value": "10px"
-    },
-    "xl": {
-      "$value": "14px"
-    },
-    "full": {
-      "$value": "9999px"
+      "$value": "8px"
     }
   },
   "fontFamily": {
@@ -311,23 +293,20 @@
     "regular": {
       "$value": "400"
     },
+    "medium": {
+      "$value": "500"
+    },
     "semibold": {
       "$value": "600"
-    },
-    "bold": {
-      "$value": "700"
-    },
-    "eyebrow": {
-      "$value": "700"
     }
   },
   "fontSize": {
     "$type": "fontSizes",
     "h1": {
-      "$value": "45px"
+      "$value": "36px"
     },
     "h2": {
-      "$value": "30px"
+      "$value": "28px"
     },
     "h3": {
       "$value": "20px"
@@ -346,39 +325,33 @@
     },
     "mono": {
       "$value": "13px"
-    },
-    "eyebrow": {
-      "$value": "11px"
     }
   },
   "lineHeight": {
     "$type": "lineHeights",
     "h1": {
-      "$value": "1.12"
+      "$value": "44px"
     },
     "h2": {
-      "$value": "1.2"
+      "$value": "36px"
     },
     "h3": {
-      "$value": "1.3"
+      "$value": "28px"
     },
     "body": {
-      "$value": "1.6"
+      "$value": "24px"
     },
     "label": {
-      "$value": "1.5"
+      "$value": "20px"
     },
     "small": {
-      "$value": "1.55"
+      "$value": "18px"
     },
     "caption": {
-      "$value": "1.5"
+      "$value": "16px"
     },
     "mono": {
-      "$value": "1.55"
-    },
-    "eyebrow": {
-      "$value": "1.55"
+      "$value": "18px"
     }
   },
   "letterSpacing": {
@@ -387,16 +360,10 @@
       "$value": "0%"
     },
     "h1": {
-      "$value": "-2%"
-    },
-    "h2": {
       "$value": "-1.5%"
     },
-    "h3": {
-      "$value": "0%"
-    },
-    "eyebrow": {
-      "$value": "18%"
+    "h2": {
+      "$value": "-1%"
     }
   },
   "typography": {
@@ -404,7 +371,7 @@
     "h1": {
       "$value": {
         "fontFamily": "{fontFamily.sans}",
-        "fontWeight": "{fontWeight.bold}",
+        "fontWeight": "{fontWeight.semibold}",
         "fontSize": "{fontSize.h1}",
         "lineHeight": "{lineHeight.h1}",
         "letterSpacing": "{letterSpacing.h1}"
@@ -413,7 +380,7 @@
     "h2": {
       "$value": {
         "fontFamily": "{fontFamily.sans}",
-        "fontWeight": "{fontWeight.bold}",
+        "fontWeight": "{fontWeight.semibold}",
         "fontSize": "{fontSize.h2}",
         "lineHeight": "{lineHeight.h2}",
         "letterSpacing": "{letterSpacing.h2}"
@@ -425,7 +392,7 @@
         "fontWeight": "{fontWeight.semibold}",
         "fontSize": "{fontSize.h3}",
         "lineHeight": "{lineHeight.h3}",
-        "letterSpacing": "{letterSpacing.h3}"
+        "letterSpacing": "{letterSpacing.base}"
       }
     },
     "body": {
@@ -472,56 +439,17 @@
         "lineHeight": "{lineHeight.mono}",
         "letterSpacing": "{letterSpacing.base}"
       }
-    },
-    "eyebrow": {
-      "$value": {
-        "fontFamily": "{fontFamily.sans}",
-        "fontWeight": "{fontWeight.eyebrow}",
-        "fontSize": "{fontSize.eyebrow}",
-        "lineHeight": "{lineHeight.eyebrow}",
-        "letterSpacing": "{letterSpacing.eyebrow}"
-      }
     }
   },
   "boxShadow": {
     "$type": "boxShadow",
-    "sm": {
+    "overlay": {
       "$value": {
         "x": "0",
-        "y": "1",
-        "blur": "2",
+        "y": "8",
+        "blur": "24",
         "spread": "0",
-        "color": "rgba(24,22,18,0.05)",
-        "type": "dropShadow"
-      }
-    },
-    "md": {
-      "$value": {
-        "x": "0",
-        "y": "2",
-        "blur": "6",
-        "spread": "0",
-        "color": "rgba(24,22,18,0.07)",
-        "type": "dropShadow"
-      }
-    },
-    "lg": {
-      "$value": {
-        "x": "0",
-        "y": "6",
-        "blur": "16",
-        "spread": "0",
-        "color": "rgba(24,22,18,0.10)",
-        "type": "dropShadow"
-      }
-    },
-    "xl": {
-      "$value": {
-        "x": "0",
-        "y": "12",
-        "blur": "30",
-        "spread": "0",
-        "color": "rgba(24,22,18,0.14)",
+        "color": "rgba(24, 22, 18, 0.1)",
         "type": "dropShadow"
       }
     }

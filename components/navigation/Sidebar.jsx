@@ -30,7 +30,7 @@ export function Sidebar({ brand, sections = [], footer, width = 232, style }) {
                 aria-current={it.active ? 'page' : undefined}
                 style={{
                   position: 'relative', display: 'flex', alignItems: 'center', gap: 11,
-                  padding: '8px 10px 8px 12px', borderRadius: 'var(--dt-radius-md)', textDecoration: 'none',
+                  padding: '8px 10px 8px 12px', borderRadius: 'var(--dt-radius-control)', textDecoration: 'none',
                   fontSize: 13.5, fontWeight: it.active ? 600 : 500,
                   color: it.active ? 'var(--dt-accent)' : 'var(--dt-muted-strong)',
                   background: it.active ? 'var(--dt-tint-accent)' : 'transparent',

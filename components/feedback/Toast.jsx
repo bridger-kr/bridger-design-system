@@ -11,12 +11,12 @@ export function Toast({ tone = 'success', title, message, action, onDismiss, sty
     <div role="status" style={{
       display: 'flex', alignItems: 'flex-start', gap: 11, width: 340, maxWidth: '90vw',
       padding: '13px 15px', background: 'var(--dt-surface)',
-      borderRadius: 'var(--dt-radius-md)', boxShadow: 'var(--dt-shadow-lg)',
+      borderRadius: 'var(--dt-radius-control)', boxShadow: 'var(--dt-shadow-overlay)',
       animation: 'dt-toast 240ms var(--dt-ease)', ...style,
     }}>
       <span style={{ width: 8, height: 8, borderRadius: 9999, marginTop: 5, flex: '0 0 auto', background: DOT[tone] ?? DOT.success }} />
       <div style={{ flex: 1, minWidth: 0 }}>
-        {title ? <div style={{ fontSize: 14, fontWeight: 650, color: 'var(--dt-ink-strong)' }}>{title}</div> : null}
+        {title ? <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--dt-ink-strong)' }}>{title}</div> : null}
         {message ? <div style={{ marginTop: title ? 2 : 0, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-muted-strong)' }}>{message}</div> : null}
       </div>
       {action ? <div style={{ flex: '0 0 auto' }}>{action}</div> : null}

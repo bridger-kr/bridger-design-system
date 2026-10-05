@@ -11,8 +11,8 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
   return (
     <div style={{
       width: 520, maxWidth: '100%', background: 'var(--dt-surface)',
-      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-xl)',
-      boxShadow: 'var(--dt-shadow-xl)', overflow: 'hidden', fontFamily: 'var(--dt-font-sans)', ...style,
+      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)',
+      boxShadow: 'var(--dt-shadow-overlay)', overflow: 'hidden', fontFamily: 'var(--dt-font-sans)', ...style,
     }}>
       {/* search */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '14px 16px', borderBottom: '1px solid var(--dt-border)' }}>
@@ -43,7 +43,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
                 onMouseDown={(e) => { e.preventDefault(); onSelect?.(it); }}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 11, padding: '9px 10px',
-                  borderRadius: 'var(--dt-radius-md)', cursor: 'pointer',
+                  borderRadius: 'var(--dt-radius-control)', cursor: 'pointer',
                   background: it.active ? 'var(--dt-tint-accent)' : 'transparent',
                 }}
               >

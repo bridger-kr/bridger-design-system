@@ -31,8 +31,8 @@ export function Menu({ trigger, items = [], align = 'left', width = 200, classNa
         <BaseMenu.Portal>
           <BaseMenu.Positioner sideOffset={6} align={align === 'left' ? 'start' : 'end'}>
             <BaseMenu.Popup className="dt-menu-popup" style={{
-              zIndex: 'var(--dt-z-index-popover)', width, padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
-              boxShadow: 'var(--dt-shadow-lg)',
+              zIndex: 'var(--dt-z-index-popover)', width, padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-card)',
+              boxShadow: 'var(--dt-shadow-overlay)',
             }}>
               {items.map((it, i) => it.divider
                 ? <BaseMenu.Separator key={`d${i}`} className="dt-menu-separator" style={{ height: 1, background: 'var(--dt-border)', margin: '5px 0' }} />
@@ -44,8 +44,8 @@ export function Menu({ trigger, items = [], align = 'left', width = 200, classNa
                     data-danger={it.danger ? '' : undefined}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
-                      padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
-                      background: 'transparent', fontSize: 13.5, fontWeight: 500, fontFamily: 'inherit',
+                      padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-control)', cursor: 'pointer',
+                      background: 'transparent', fontSize: 14, fontWeight: 500, fontFamily: 'inherit',
                       color: it.danger ? 'var(--dt-danger)' : 'var(--dt-ink)',
                     }}
                   >

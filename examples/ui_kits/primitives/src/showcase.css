@@ -36,15 +36,15 @@ body { margin: 0; min-width: 0; }
 .showcase-eyebrow {
   margin: 0;
   color: var(--dt-muted);
-  font-size: var(--dt-eyebrow-size);
-  font-weight: var(--dt-eyebrow-weight);
-  letter-spacing: var(--dt-eyebrow-tracking);
+  font-size: var(--dt-small-size);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 }
 
 .showcase-theme {
   overflow: hidden;
   border: 1px solid var(--dt-border);
-  border-radius: var(--dt-radius-container);
+  border-radius: var(--dt-radius-card);
   background: var(--dt-paper);
 }
 

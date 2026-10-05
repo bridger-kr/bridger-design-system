@@ -22,7 +22,7 @@ export function Tooltip({ label, position = 'top', children }) {
           position: 'absolute', zIndex: 60, whiteSpace: 'nowrap', pointerEvents: 'none',
           padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
           color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)',
-          borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-md)',
+          borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-overlay)',
           animation: 'dt-tip 120ms var(--dt-ease)', ...pos,
         }}>{label}</span>
       ) : null}

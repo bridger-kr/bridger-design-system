@@ -10,7 +10,7 @@ export function SegmentedControl({ options = [], value, defaultValue, onChange, 
   const select = (v) => { if (value === undefined) setInternal(v); onChange?.(v); };
   const pad = size === 'sm' ? '5px 11px' : '7px 14px';
   return (
-    <div style={{ display: 'inline-flex', padding: 3, gap: 2, background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-md)', ...style }}>
+    <div style={{ display: 'inline-flex', padding: 3, gap: 2, background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-control)', ...style }}>
       {options.map((o) => {
         const opt = typeof o === 'string' ? { value: o, label: o } : o;
         const on = opt.value === current;
@@ -22,7 +22,7 @@ export function SegmentedControl({ options = [], value, defaultValue, onChange, 
               fontFamily: 'inherit', whiteSpace: 'nowrap',
               color: on ? 'var(--dt-ink-strong)' : 'var(--dt-muted)',
               background: on ? 'var(--dt-surface)' : 'transparent',
-              boxShadow: on ? 'var(--dt-ring), var(--dt-shadow-xs)' : 'none',
+              boxShadow: on ? '0 0 0 1px var(--dt-border)' : 'none',
               transition: 'color 130ms, background-color 130ms',
             }}>
             {opt.label}

@@ -30,7 +30,7 @@ export interface LogRowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'child
 export function LogRow({ entries = [], style, ...rest }: LogRowProps) {
   return (
     <div {...rest} style={{
-      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden',
+      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
       background: 'var(--dt-surface)', fontVariantNumeric: 'tabular-nums', ...style,
     }}>
       {entries.map((entry, index) => {
@@ -46,7 +46,7 @@ export function LogRow({ entries = [], style, ...rest }: LogRowProps) {
             }}
           >
             <span style={{ color: 'var(--dt-muted)' }}>{entry.time}</span>
-            <span style={{ width: 7, height: 7, borderRadius: 9999, background: level.dot, justifySelf: 'center' }} />
+            <span style={{ width: 7, height: 7, borderRadius: 'var(--dt-radius-pill)', background: level.dot, justifySelf: 'center' }} />
             <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               <span style={{ color: 'var(--dt-ink-strong)', fontWeight: 600 }}>{entry.tool}</span>
               {entry.message ? <span style={{ color: 'var(--dt-muted-strong)' }}>{'  '}{entry.message}</span> : null}

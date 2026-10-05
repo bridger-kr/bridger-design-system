@@ -42,7 +42,7 @@ export function Alert({ tone = AlertTone.Info, title, children, icon, action, mo
         overflow: 'clip',
         padding: '13px 15px',
         position: 'relative',
-        transition: 'filter var(--dt-motion-fast), transform var(--dt-motion-fast)',
+        transition: 'filter var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease)',
         width: 'min(100%, 380px)',
         ...style,
       }}

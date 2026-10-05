@@ -46,7 +46,7 @@ export function Tabs({ tabs = [], value, defaultValue, onChange, style }) {
               fontWeight: 600,
               color: isActive ? 'var(--dt-ink-strong)' : 'var(--dt-muted)',
               borderBottom: `2px solid ${isActive ? 'var(--dt-accent)' : 'transparent'}`,
-              transition: 'color var(--dt-motion-fast)',
+              transition: 'color var(--dt-duration-fast) var(--dt-ease)',
             }}
           >
             {tab.icon ? <span aria-hidden="true" style={{ display: 'inline-flex' }}>{tab.icon}</span> : null}

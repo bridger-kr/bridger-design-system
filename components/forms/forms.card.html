@@ -9,14 +9,14 @@
   .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 30px; align-items: start; }
   .stack { display: grid; gap: 18px; align-content: start; }
   .lab { font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); margin-bottom: 7px; display: block; }
-  .field { background: var(--dt-surface-sunken); border-radius: var(--dt-radius-md); padding: 11px 13px; font-size: 14px; color: var(--dt-ink-strong); display: flex; align-items: center; justify-content: space-between; }
+  .field { background: var(--dt-surface-sunken); border-radius: var(--dt-radius-control); padding: 11px 13px; font-size: 14px; color: var(--dt-ink-strong); display: flex; align-items: center; justify-content: space-between; }
   .field.mono { font-family: var(--dt-font-mono); font-size: 13px; }
   .field svg { color: var(--dt-muted); }
   textarea.field { width: 100%; box-sizing: border-box; resize: none; font-family: var(--dt-font-mono); font-size: 13px; line-height: 1.55; }
   /* segmented */
-  .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-md); }
+  .seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-control); }
   .seg b { padding: 7px 16px; border-radius: var(--dt-radius-sm); font-size: 13px; font-weight: 600; color: var(--dt-muted); cursor: pointer; }
-  .seg b.on { background: var(--dt-surface); color: var(--dt-ink-strong); box-shadow: var(--dt-ring), var(--dt-shadow-xs); }
+  .seg b.on { background: var(--dt-surface); color: var(--dt-ink-strong); border: 1px solid var(--dt-border); }
   /* switch */
   .row { display: flex; align-items: center; gap: 10px; }
   .row > .otext { white-space: nowrap; }

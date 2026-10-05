@@ -75,8 +75,8 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
       onKeyDown={handleKeyDown}
       style={{
         width: 520, maxWidth: '100%', background: 'var(--dt-surface)',
-        border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-xl)',
-        boxShadow: 'var(--dt-shadow-xl)', overflow: 'hidden', fontFamily: 'var(--dt-font-sans)', ...style,
+        border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)',
+        boxShadow: 'var(--dt-shadow-overlay)', overflow: 'hidden', fontFamily: 'var(--dt-font-sans)', ...style,
       }}
     >
       {/* search */}
@@ -90,8 +90,8 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
           style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 15, fontFamily: 'inherit', color: 'var(--dt-ink-strong)' }}
         />
         <kbd style={{
-          fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--dt-muted)',
-          border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '2px 7px',
+          fontFamily: 'var(--dt-font-mono)', fontSize: 12, fontWeight: 600, color: 'var(--dt-muted)',
+          border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-chip)', padding: '2px 7px',
         }}>⌘K</kbd>
       </div>
 
@@ -113,7 +113,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
                   onMouseDown={(e: ReactMouseEvent<HTMLButtonElement>) => { e.preventDefault(); onSelect?.(it); }}
                   style={{
                     display: 'flex', alignItems: 'center', gap: 11, padding: '9px 10px',
-                    borderRadius: 'var(--dt-radius-md)', cursor: 'pointer',
+                    borderRadius: 'var(--dt-radius-control)', cursor: 'pointer',
                     background: isActive ? 'var(--dt-tint-accent)' : 'transparent',
                     border: 'none', outline: 'none',
                   }}

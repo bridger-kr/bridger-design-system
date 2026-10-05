@@ -36,7 +36,7 @@ export function Stepper({ steps = [], current = 0, orientation = 'horizontal', s
             <div style={{ display: 'flex', flexDirection: vertical ? 'column' : 'row', alignItems: 'center', gap: vertical ? 6 : 10, ...(vertical ? {} : { width: '100%' }) }}>
               <span style={{
                 flex: '0 0 auto', width: 26, height: 26, display: 'grid', placeItems: 'center',
-                borderRadius: 'var(--dt-radius-sm)', fontFamily: 'var(--dt-font-mono)', fontSize: 12, fontWeight: 700,
+                borderRadius: 'var(--dt-radius-chip)', fontSize: 12, fontWeight: 700,
                 background: done ? 'var(--dt-accent)' : active ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
                 color: done ? '#fff' : active ? 'var(--dt-accent)' : 'var(--dt-muted)',
                 boxShadow: active ? 'inset 0 0 0 1.5px var(--dt-accent)' : done ? 'none' : 'inset 0 0 0 1px var(--dt-border-strong)',

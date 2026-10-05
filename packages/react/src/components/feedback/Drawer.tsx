@@ -38,14 +38,14 @@ export function Drawer({ open = false, side = 'right', title, children, footer, 
             aria-label={title ? undefined : ariaLabel || 'pane'}
             style={{
               position: 'relative', zIndex: 'var(--dt-z-index-modal)', width, maxWidth: '100%', height: '100%', display: 'flex', flexDirection: 'column',
-              background: 'var(--dt-surface)', boxShadow: 'var(--dt-shadow-xl)',
+              background: 'var(--dt-surface)', boxShadow: 'var(--dt-shadow-overlay)',
               borderLeft: fromRight ? '1px solid var(--dt-border-strong)' : 'none',
               borderRight: fromRight ? 'none' : '1px solid var(--dt-border-strong)',
               fontFamily: 'var(--dt-font-sans)', ...style,
             }}
           >
             <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 18px', borderBottom: '1px solid var(--dt-border)' }}>
-              {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }} />}>{title}</BaseDialog.Title> : null}
+              {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }} />}>{title}</BaseDialog.Title> : null}
               <BaseDialog.Close
                 aria-label="닫기"
                 className="dt-close-control"

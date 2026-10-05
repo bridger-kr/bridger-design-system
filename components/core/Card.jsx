@@ -8,10 +8,10 @@ export const CardTone = {
 };
 
 const VARIANT_STYLE = {
-  default: { background: 'var(--dt-surface)', boxShadow: 'var(--dt-card-rest)' },
+  default: { background: 'var(--dt-surface)', boxShadow: '0 0 0 1px var(--dt-border)' },
   muted:   { background: 'var(--dt-surface-sunken)' },
-  raised:  { background: 'var(--dt-surface-raised)', boxShadow: 'var(--dt-card-float)' },
-  panel:   { background: 'var(--dt-surface)', boxShadow: 'var(--dt-shadow-xs)' },
+  raised:  { background: 'var(--dt-surface-raised)', boxShadow: '0 0 0 1px var(--dt-border)' },
+  panel:   { background: 'var(--dt-surface)', boxShadow: 'none' },
 };
 
 function cx(...classes) {
@@ -25,10 +25,10 @@ export function Card({ children, variant, tone, interactive = false, padding = 2
     <div
       className={cx(interactive && 'dt-card-interactive', className)}
       style={{
-        borderRadius: 'var(--dt-radius-lg)',
+        borderRadius: 'var(--dt-radius-card)',
         color: 'var(--dt-ink)',
         padding,
-        transition: 'box-shadow var(--dt-motion), background-color var(--dt-motion)',
+        transition: 'box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease)',
         ...v,
         ...style,
       }}
@@ -36,7 +36,7 @@ export function Card({ children, variant, tone, interactive = false, padding = 2
     >
       {children}
       {interactive ? (
-        <style>{'.dt-card-interactive:hover{box-shadow:var(--dt-card-hover)}'}</style>
+        <style>{'.dt-card-interactive:hover{box-shadow:0 0 0 1px var(--dt-border-strong)}'}</style>
       ) : null}
     </div>
   );

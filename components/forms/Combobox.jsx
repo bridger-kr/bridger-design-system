@@ -43,7 +43,7 @@ export function Combobox({
         className="dt-field"
         style={{
           display: 'flex', alignItems: 'center', gap: 9, height: 44, padding: '0 12px',
-          boxShadow: open ? 'var(--dt-shadow-focus)' : undefined,
+          boxShadow: open ? '0 0 0 3px var(--dt-accent)' : undefined,
           background: open ? 'var(--dt-surface)' : 'var(--dt-surface-sunken)',
         }}
         onClick={() => setOpen(true)}
@@ -74,7 +74,7 @@ export function Combobox({
           style={{
             position: 'absolute', top: 'calc(100% + 6px)', left: 0, right: 0, zIndex: 20,
             background: 'var(--dt-surface)', border: '1px solid var(--dt-border-strong)',
-            borderRadius: 'var(--dt-radius-lg)', boxShadow: 'var(--dt-shadow-md)',
+            borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-overlay)',
             maxHeight: 240, overflowY: 'auto', padding: 4,
           }}
         >
@@ -91,7 +91,7 @@ export function Combobox({
                 onMouseDown={(e) => { e.preventDefault(); commit(o); }}
                 style={{
                   display: 'flex', alignItems: 'center', gap: 10, padding: '9px 10px',
-                  borderRadius: 'var(--dt-radius-md)', cursor: 'pointer',
+                  borderRadius: 'var(--dt-radius-control)', cursor: 'pointer',
                   background: isActive ? 'var(--dt-surface-sunken)' : 'transparent',
                 }}
               >

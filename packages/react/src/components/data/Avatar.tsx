@@ -25,12 +25,12 @@ export function Avatar({ name = '', src, size = 'md', status, square = true, sty
   return (
     <span {...rest} style={{ position: 'relative', display: 'inline-flex', flex: '0 0 auto', ...style }}>
       {src ? (
-        <img src={src} alt={name} width={px} height={px} style={{ borderRadius: radius, objectFit: 'cover', boxShadow: 'var(--dt-ring)' }} />
+        <img src={src} alt={name} width={px} height={px} style={{ borderRadius: radius, objectFit: 'cover', border: '1px solid var(--dt-border)' }} />
       ) : (
         <span style={{
           width: px, height: px, borderRadius: radius, display: 'grid', placeItems: 'center',
           background: 'var(--dt-tint-accent)', color: 'var(--dt-accent)',
-          fontSize: px * 0.38, fontWeight: 700, letterSpacing: '-0.02em',
+          fontSize: px * 0.38, fontWeight: 600, letterSpacing: '-0.02em',
         }}>{initials}</span>
       )}
       {statusColor ? (

@@ -15,7 +15,7 @@ const LEVEL = {
 export function LogRow({ entries = [], style }) {
   return (
     <div style={{
-      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-lg)', overflow: 'hidden',
+      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
       background: 'var(--dt-surface)', fontVariantNumeric: 'tabular-nums', ...style,
     }}>
       {entries.map((e, i) => {

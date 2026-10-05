@@ -140,61 +140,21 @@ export const spacing = freeze({
 } as const);
 
 export const radius = freeze({
-  chip: '6px',
-  control: '10px',
-  card: '14px',
+  chip: 'var(--dt-radius-sm)',
+  control: 'var(--dt-radius-md)',
+  card: 'var(--dt-radius-lg)',
   pill: '9999px',
-  sm: '6px',
-  inner: '6px',
-  element: '10px',
-  container: '14px',
-  md: '12px',
-  lg: '14px',
-  xl: '14px',
-  'button': '10px',
-  full: '9999px',
+  sm: '4px',
+  md: '6px',
+  lg: '8px',
 } as const);
 
 const lightShadows = freeze({
-  ring: '0 0 0 1px var(--dt-border)',
-  ringStrong: '0 0 0 1px var(--dt-border-strong)',
-  xs: 'none',
-  sm: '0 1px 2px rgba(24, 22, 18, 0.05)',
-  md: '0 2px 6px rgba(24, 22, 18, 0.07)',
-  lg: '0 6px 16px rgba(24, 22, 18, 0.10)',
-  xl: '0 12px 30px rgba(24, 22, 18, 0.14)',
-  focus: '0 0 0 2px var(--dt-surface), 0 0 0 5px var(--dt-accent)',
-  cardRest: 'var(--dt-ring)',
-  cardHover: 'var(--dt-ring-strong), var(--dt-shadow-sm)',
-  cardFloat: 'var(--dt-ring-strong), var(--dt-shadow-md)',
-  subtle: '0 1px 2px rgba(24, 22, 18, 0.07), 0 0 0 1px rgba(24, 22, 18, 0.03)',
-  elevated: '0 8px 24px rgba(24, 22, 18, 0.10), 0 0 0 1px rgba(24, 22, 18, 0.04)',
-  ambient01: '0 1px 3px color-mix(in srgb, var(--dt-ink) 4%, transparent), 0 8px 24px -4px color-mix(in srgb, var(--dt-ink) 8%, transparent)',
-  ambient02: '0 1px 2px color-mix(in srgb, var(--dt-ink) 6%, transparent), 0 16px 30px -16px color-mix(in srgb, var(--dt-ink) 12%, transparent), 0 34px 64px -40px color-mix(in srgb, var(--dt-ink) 18%, transparent)',
-  ambient03: '0 2px 6px color-mix(in srgb, var(--dt-ink) 8%, transparent), 0 24px 46px -20px color-mix(in srgb, var(--dt-ink) 16%, transparent), 0 52px 88px -48px color-mix(in srgb, var(--dt-ink) 22%, transparent)',
-  ambient04: '0 4px 10px color-mix(in srgb, var(--dt-ink) 10%, transparent), 0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent), 0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent)',
-  insetCrisp: 'inset 0 0 0 1px color-mix(in srgb, var(--dt-ink) 6%, transparent)',
+  overlay: '0 8px 24px rgba(24, 22, 18, 0.1), 0 0 0 1px rgba(24, 22, 18, 0.04)',
 } as const);
 
 const darkShadows = freeze({
-  ring: '0 0 0 1px rgba(255, 255, 255, 0.04)',
-  ringStrong: '0 0 0 1px var(--dt-border-strong)',
-  xs: '0 1px 2px rgba(0, 0, 0, 0.4)',
-  sm: '0 1px 2px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4)',
-  md: '0 4px 10px rgba(0, 0, 0, 0.5), 0 12px 24px rgba(0, 0, 0, 0.45)',
-  lg: '0 8px 20px rgba(0, 0, 0, 0.55), 0 24px 48px rgba(0, 0, 0, 0.5)',
-  xl: '0 16px 32px rgba(0, 0, 0, 0.6), 0 40px 72px rgba(0, 0, 0, 0.55)',
-  focus: '0 0 0 2px var(--dt-surface), 0 0 0 5px var(--dt-accent)',
-  cardRest: 'var(--dt-ring)',
-  cardHover: 'var(--dt-ring-strong), var(--dt-shadow-sm)',
-  cardFloat: 'var(--dt-ring-strong), var(--dt-shadow-md)',
-  subtle: '0 1px 2px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.02)',
-  elevated: '0 12px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.03)',
-  ambient01: '0 1px 3px color-mix(in srgb, var(--dt-ink) 4%, transparent), 0 8px 24px -4px color-mix(in srgb, var(--dt-ink) 8%, transparent)',
-  ambient02: '0 1px 2px color-mix(in srgb, var(--dt-ink) 6%, transparent), 0 16px 30px -16px color-mix(in srgb, var(--dt-ink) 12%, transparent), 0 34px 64px -40px color-mix(in srgb, var(--dt-ink) 18%, transparent)',
-  ambient03: '0 2px 6px color-mix(in srgb, var(--dt-ink) 8%, transparent), 0 24px 46px -20px color-mix(in srgb, var(--dt-ink) 16%, transparent), 0 52px 88px -48px color-mix(in srgb, var(--dt-ink) 22%, transparent)',
-  ambient04: '0 4px 10px color-mix(in srgb, var(--dt-ink) 10%, transparent), 0 32px 62px -24px color-mix(in srgb, var(--dt-ink) 20%, transparent), 0 70px 120px -56px color-mix(in srgb, var(--dt-ink) 28%, transparent)',
-  insetCrisp: 'inset 0 0 0 1px color-mix(in srgb, #ffffff 15%, transparent)',
+  overlay: '0 12px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.03)',
 } as const);
 
 export const shadows = freeze({
@@ -213,29 +173,11 @@ export const layers = freeze({
 
 const motionDurations = freeze({
   fast: '120ms',
-  base: '200ms',
-  slow: '280ms',
+  base: '160ms',
 } as const);
 
 const motionEasing = freeze({
-  moonStandard: 'cubic-bezier(0.23, 1, 0.32, 1)',
-  moonEnter: 'cubic-bezier(0.23, 1, 0.32, 1)',
-  moonExit: 'cubic-bezier(0.4, 0, 1, 1)',
   standard: 'cubic-bezier(0.23, 1, 0.32, 1)',
-  enter: 'cubic-bezier(0.55, 0.05, 0.55, 0.2)',
-  decisive: 'cubic-bezier(0.2, 0, 0, 1)',
-} as const);
-
-const motionTransitions = freeze({
-  fast: '120ms var(--dt-ease)',
-  base: '200ms var(--dt-ease)',
-  default: '200ms var(--dt-ease)',
-  slow: '280ms var(--dt-ease)',
-  slower: '600ms var(--dt-ease)',
-  ambient: '16000ms ease-in-out',
-  ambientSlow: '24000ms ease-in-out',
-  flow: '8000ms linear',
-  flowSlow: '32000ms linear',
 } as const);
 
 const motionInteraction = freeze({
@@ -247,37 +189,17 @@ const motionInteraction = freeze({
 export const motion = freeze({
   durations: motionDurations,
   easing: motionEasing,
-  transitions: motionTransitions,
   interaction: motionInteraction,
 } as const);
 
-const lightEffects = freeze({
-  shadowGradient: 'radial-gradient( ellipse at 50% 100%, color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%, color-mix(in srgb, var(--dt-accent) 4%, transparent) 42%, transparent 72% )',
-  gradientMesh: 'radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--dt-accent) 18%, transparent) 0%, transparent 38%), radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%, transparent 34%), radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--dt-accent) 6%, transparent) 0%, transparent 48%)',
-  glassBg: 'color-mix(in srgb, var(--dt-paper) 78%, transparent)',
-  glassBlur: 'saturate(180%) blur(16px)',
-} as const);
-
-const darkEffects = freeze({
-  shadowGradient: 'radial-gradient( ellipse at 50% 100%, color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%, color-mix(in srgb, var(--dt-accent) 4%, transparent) 42%, transparent 72% )',
-  gradientMesh: 'radial-gradient(circle at 18% 12%, color-mix(in srgb, var(--dt-accent) 18%, transparent) 0%, transparent 38%), radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--dt-accent) 10%, transparent) 0%, transparent 34%), radial-gradient(circle at 50% 100%, color-mix(in srgb, var(--dt-accent) 6%, transparent) 0%, transparent 48%)',
-  glassBg: 'color-mix(in srgb, var(--dt-paper) 72%, transparent)',
-  glassBlur: 'saturate(180%) blur(16px)',
-} as const);
-
-export const effects = freeze({
-  light: lightEffects,
-  dark: darkEffects,
-} as const);
-
 const fontFamilies = freeze({
-  sans: "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif",
+  sans: "'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif",
   mono: "'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace",
 } as const);
 
 const fontSizes = freeze({
-  h1: 'clamp(36px, 4.5vw, 54px)',
-  h2: 'clamp(26px, 3vw, 34px)',
+  h1: '36px',
+  h2: '28px',
   h3: '20px',
   body: '16px',
   label: '14px',
@@ -287,53 +209,39 @@ const fontSizes = freeze({
 } as const);
 
 const fontWeights = freeze({
-  h1: 650,
-  h2: 620,
+  h1: 600,
+  h2: 600,
   h3: 600,
   body: 400,
 } as const);
 
 const lineHeights = freeze({
-  h1: '1.12',
-  h2: '1.2',
-  h3: '1.3',
-  body: '1.6',
-  label: '1.5',
-  small: '1.55',
-  caption: '1.5',
-  mono: '1.55',
+  h1: '44px',
+  h2: '36px',
+  h3: '28px',
+  body: '24px',
+  label: '20px',
+  small: '18px',
+  caption: '16px',
+  mono: '18px',
 } as const);
 
 const letterSpacing = freeze({
-  h1: '-0.02em',
-  h2: '-0.015em',
-  h3: '0',
-} as const);
-
-const eyebrow = freeze({
-  size: '11px',
-  tracking: '0.18em',
-  weight: 700,
+  h1: '-0.015em',
+  h2: '-0.01em',
 } as const);
 
 const fontFeatures = freeze({
   tabular: "'tnum' 0",
 } as const);
 
-const displayTracking = freeze({
-  tight: '-0.04em',
-  display: '-0.02em',
-} as const);
-
 export const typography = freeze({
   fontFamilies,
   fontFeatures,
-  displayTracking,
   fontSizes,
   fontWeights,
   lineHeights,
   letterSpacing,
-  eyebrow,
 } as const);
 
 export const cssVarName = freeze({
@@ -414,34 +322,11 @@ export const cssVarName = freeze({
     card: '--dt-radius-card',
     pill: '--dt-radius-pill',
     sm: '--dt-radius-sm',
-    inner: '--dt-radius-inner',
-    element: '--dt-radius-element',
-    container: '--dt-radius-container',
     md: '--dt-radius-md',
     lg: '--dt-radius-lg',
-    xl: '--dt-radius-xl',
-    button: '--dt-radius-button',
-    full: '--dt-radius-full',
   } as const),
   shadows: freeze({
-    ring: '--dt-ring',
-    ringStrong: '--dt-ring-strong',
-    xs: '--dt-shadow-xs',
-    sm: '--dt-shadow-sm',
-    md: '--dt-shadow-md',
-    lg: '--dt-shadow-lg',
-    xl: '--dt-shadow-xl',
-    focus: '--dt-shadow-focus',
-    cardRest: '--dt-card-rest',
-    cardHover: '--dt-card-hover',
-    cardFloat: '--dt-card-float',
-    subtle: '--dt-shadow-subtle',
-    elevated: '--dt-shadow-elevated',
-    ambient01: '--dt-ambient-01',
-    ambient02: '--dt-ambient-02',
-    ambient03: '--dt-ambient-03',
-    ambient04: '--dt-ambient-04',
-    insetCrisp: '--dt-shadow-inset-crisp',
+    overlay: '--dt-shadow-overlay',
   } as const),
   layers: freeze({
     base: '--dt-z-index-base',
@@ -455,26 +340,9 @@ export const cssVarName = freeze({
     durations: freeze({
       fast: '--dt-duration-fast',
       base: '--dt-duration-base',
-      slow: '--dt-duration-slow',
     } as const),
     easing: freeze({
-      moonStandard: '--dt-moon-standard',
-      moonEnter: '--dt-moon-enter',
-      moonExit: '--dt-moon-exit',
       standard: '--dt-ease',
-      enter: '--dt-ease-in',
-      decisive: '--dt-ease-decisive',
-    } as const),
-    transitions: freeze({
-      fast: '--dt-motion-fast',
-      base: '--dt-motion-base',
-      default: '--dt-motion',
-      slow: '--dt-motion-slow',
-      slower: '--dt-motion-slower',
-      ambient: '--dt-motion-ambient',
-      ambientSlow: '--dt-motion-ambient-slow',
-      flow: '--dt-motion-flow',
-      flowSlow: '--dt-motion-flow-slow',
     } as const),
     interaction: freeze({
       pressScale: '--dt-press-scale',
@@ -482,18 +350,10 @@ export const cssVarName = freeze({
       hotspotSize: '--dt-hotspot-size',
     } as const),
   } as const),
-  effects: freeze({
-    shadowGradient: '--dt-shadow-gradient',
-    gradientMesh: '--dt-gradient-mesh',
-    glassBg: '--dt-glass-bg',
-    glassBlur: '--dt-glass-blur',
-  } as const),
   typography: freeze({
     fontSans: '--dt-font-sans',
     fontMono: '--dt-font-mono',
     tabular: '--dt-tabular',
-    displayTrackingTight: '--dt-display-tracking-tight',
-    displayTrackingDisplay: '--dt-display-tracking-display',
     h1Size: '--dt-h1-size',
     h1Leading: '--dt-h1-leading',
     h1Tracking: '--dt-h1-tracking',
@@ -504,7 +364,6 @@ export const cssVarName = freeze({
     h2Weight: '--dt-h2-weight',
     h3Size: '--dt-h3-size',
     h3Leading: '--dt-h3-leading',
-    h3Tracking: '--dt-h3-tracking',
     h3Weight: '--dt-h3-weight',
     bodySize: '--dt-body-size',
     bodyLeading: '--dt-body-leading',
@@ -517,9 +376,6 @@ export const cssVarName = freeze({
     captionLeading: '--dt-caption-leading',
     monoSize: '--dt-mono-size',
     monoLeading: '--dt-mono-leading',
-    eyebrowSize: '--dt-eyebrow-size',
-    eyebrowTracking: '--dt-eyebrow-tracking',
-    eyebrowWeight: '--dt-eyebrow-weight',
   } as const),
 } as const);
 
@@ -530,7 +386,6 @@ export const tokens = freeze({
   shadows,
   layers,
   motion,
-  effects,
   typography,
   cssVarName,
 } as const);
@@ -542,5 +397,4 @@ export type Radius = typeof radius;
 export type Shadows = typeof shadows;
 export type Layers = typeof layers;
 export type Motion = typeof motion;
-export type Effects = typeof effects;
 export type Typography = typeof typography;

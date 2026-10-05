@@ -121,7 +121,9 @@ const px = (s) => `${parseFloat(s)}px`;
 function main() {
   const contractCss = readFileSync(CONTRACT, 'utf8');
 
-  const { light, dark } = splitColorBlocks(contractCss);
+  const { light, dark: darkOverrides } = splitColorBlocks(contractCss);
+  // The dark block only overrides what changes; resolve the full dark palette.
+  const dark = { ...light, ...darkOverrides };
 
   const out = {
     $schema: 'https://schemas.tokens.studio/latest/tokens-schema.json',
@@ -134,7 +136,7 @@ function main() {
     fontFamily: { $type: 'fontFamilies' },
     fontWeight: {
       $type: 'fontWeights',
-      regular: { $value: '400' }, semibold: { $value: '600' }, bold: { $value: '700' },
+      regular: { $value: '400' }, medium: { $value: '500' }, semibold: { $value: '600' },
     },
     fontSize: { $type: 'fontSizes' },
     lineHeight: { $type: 'lineHeights' },
@@ -148,14 +150,17 @@ function main() {
   for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 12, 32]) {
     if (sp[`dt-space-${i}`]) out.spacing[String(i)] = { $value: px(sp[`dt-space-${i}`]) };
   }
+  const resolveRef = (v) => {
+    const ref = v && v.match(/^var\(--([\w-]+)\)$/);
+    return ref ? sp[ref[1]] : v;
+  };
   const radiusMap = {
     chip: 'chip', control: 'control', card: 'card', pill: 'pill',
-    sm: 'sm', inner: 'inner', element: 'element', container: 'container',
-    md: 'md', lg: 'lg', button: 'button', xl: 'xl', full: 'full',
+    sm: 'sm', md: 'md', lg: 'lg',
   };
   for (const k in radiusMap) {
-    const v = sp[`dt-radius-${k}`];
-    if (v) out.radius[k] = { $value: v.includes('9999') ? '9999px' : px(v) };
+    const v = resolveRef(sp[`dt-radius-${k}`]);
+    if (v) out.radius[k] = { $value: px(v) };
   }
 
   // fonts + sizes from the canonical light contract
@@ -174,32 +179,27 @@ function main() {
     h3: px(ty['dt-h3-size']), body: px(ty['dt-body-size']),
     label: px(ty['dt-label-size']), small: px(ty['dt-small-size']),
     caption: px(ty['dt-caption-size']), mono: px(ty['dt-mono-size']),
-    eyebrow: px(ty['dt-eyebrow-size']),
   };
   for (const k in sizes) out.fontSize[k] = { $value: sizes[k] };
-
-  out.fontWeight.eyebrow = { $value: ty['dt-eyebrow-weight'] };
 
   const leads = {
     h1: ty['dt-h1-leading'], h2: ty['dt-h2-leading'], h3: ty['dt-h3-leading'],
     body: ty['dt-body-leading'], label: ty['dt-label-leading'],
     small: ty['dt-small-leading'], caption: ty['dt-caption-leading'],
     mono: ty['dt-mono-leading'],
-    eyebrow: ty['dt-small-leading'],
   };
   for (const k in leads) out.lineHeight[k] = { $value: leads[k] };
 
   const tracks = {
-    h1: ty['dt-h1-tracking'], h2: ty['dt-h2-tracking'], h3: ty['dt-h3-tracking'],
-    eyebrow: ty['dt-eyebrow-tracking'],
+    h1: ty['dt-h1-tracking'], h2: ty['dt-h2-tracking'],
   };
   const pctTrack = (em) => `${round(parseFloat(em) * 100)}%`;
   for (const k in tracks) if (tracks[k]) out.letterSpacing[k] = { $value: pctTrack(tracks[k]) };
 
   // composite typography
-  const weightRef = { h1: 'bold', h2: 'bold', h3: 'semibold', body: 'regular', label: 'regular', small: 'regular', caption: 'regular', mono: 'regular', eyebrow: 'eyebrow' };
-  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', label: 'sans', small: 'sans', caption: 'sans', mono: 'mono', eyebrow: 'sans' };
-  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono', 'eyebrow']) {
+  const weightRef = { h1: 'semibold', h2: 'semibold', h3: 'semibold', body: 'regular', label: 'regular', small: 'regular', caption: 'regular', mono: 'regular' };
+  const famRef = { h1: 'sans', h2: 'sans', h3: 'sans', body: 'sans', label: 'sans', small: 'sans', caption: 'sans', mono: 'mono' };
+  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono']) {
     out.typography[k] = {
       $value: {
         fontFamily: `{fontFamily.${famRef[k]}}`,
@@ -211,19 +211,12 @@ function main() {
     };
   }
 
-  // shadows from spacing.css light block
-  const shadowDefs = {
-    sm: '0 1px 2px rgba(24,22,18,0.05)',
-    md: '0 2px 6px rgba(24,22,18,0.07)',
-    lg: '0 6px 16px rgba(24,22,18,0.10)',
-    xl: '0 12px 30px rgba(24,22,18,0.14)',
+  // single overlay shadow: emit the drop layer of --dt-shadow-overlay
+  const overlayRaw = light['dt-shadow-overlay'] || '0 8px 24px rgba(24,22,18,0.1)';
+  const m = overlayRaw.match(/(-?\d+)(?:px)?\s+(-?\d+)px\s+(-?\d+)px\s+(rgba?\([^)]+\))/);
+  out.boxShadow.overlay = {
+    $value: { x: m[1], y: m[2], blur: m[3], spread: '0', color: m[4], type: 'dropShadow' },
   };
-  for (const k in shadowDefs) {
-    const m = shadowDefs[k].match(/(\d+) (\d+)px (\d+)px (rgba\([^)]+\))/);
-    out.boxShadow[k] = {
-      $value: { x: '0', y: m[2], blur: m[3], spread: '0', color: m[4], type: 'dropShadow' },
-    };
-  }
 
   writeFileSync(OUT, JSON.stringify(out, null, 2) + '\n');
   const colorCount = Object.values(out.color.light).reduce(

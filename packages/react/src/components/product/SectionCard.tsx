@@ -31,9 +31,9 @@ export function SectionCard({
     <section
       {...rest}
       style={{
-        borderRadius: 'var(--dt-radius-lg)',
+        borderRadius: 'var(--dt-radius-card)',
         background: 'var(--dt-surface)',
-        boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+        border: '1px solid var(--dt-border)',
         padding: 'var(--dt-space-4)',
         ...style,
       }}
@@ -54,7 +54,7 @@ export function SectionCard({
                 style={{
                   marginBottom: 6,
                   fontSize: 12,
-                  fontWeight: 650,
+                  fontWeight: 600,
                   textTransform: 'uppercase',
                   color: 'var(--dt-muted)',
                 }}

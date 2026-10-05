@@ -5,7 +5,6 @@ import { describe, expect, expectTypeOf, it } from 'vitest';
 import {
   colors,
   cssVarName,
-  effects,
   layers,
   motion,
   radius,
@@ -119,8 +118,6 @@ function typographyValues(): TokenRecord {
     fontSans: typography.fontFamilies.sans,
     fontMono: typography.fontFamilies.mono,
     tabular: typography.fontFeatures.tabular,
-    displayTrackingTight: typography.displayTracking.tight,
-    displayTrackingDisplay: typography.displayTracking.display,
     h1Size: typography.fontSizes.h1,
     h1Leading: typography.lineHeights.h1,
     h1Tracking: typography.letterSpacing.h1,
@@ -131,7 +128,6 @@ function typographyValues(): TokenRecord {
     h2Weight: typography.fontWeights.h2,
     h3Size: typography.fontSizes.h3,
     h3Leading: typography.lineHeights.h3,
-    h3Tracking: typography.letterSpacing.h3,
     h3Weight: typography.fontWeights.h3,
     bodySize: typography.fontSizes.body,
     bodyLeading: typography.lineHeights.body,
@@ -144,9 +140,6 @@ function typographyValues(): TokenRecord {
     captionLeading: typography.lineHeights.caption,
     monoSize: typography.fontSizes.mono,
     monoLeading: typography.lineHeights.mono,
-    eyebrowSize: typography.eyebrow.size,
-    eyebrowTracking: typography.eyebrow.tracking,
-    eyebrowWeight: typography.eyebrow.weight,
   };
 }
 
@@ -164,8 +157,17 @@ describe('@bridger-kr/tokens', () => {
     }
   });
 
-  it('keeps complete token-name parity between light and dark themes', () => {
-    expect([...darkContract.keys()].sort()).toEqual([...lightDefaultContract.keys()].sort());
+  it('keeps the dark block to color overrides plus the overlay shadow', () => {
+    const colorVarNames: Set<string> = new Set(Object.values(cssVarName.colors));
+    const allowed: Set<string> = new Set([...colorVarNames, cssVarName.shadows.overlay]);
+    for (const name of darkContract.keys()) {
+      expect(allowed.has(name), `${name} is not a color or the overlay shadow`).toBe(true);
+    }
+    // Every dark override must actually differ from (or extend) the light value
+    // it replaces — no verbatim restatements of the shared scale.
+    for (const [name, value] of darkContract) {
+      expect(value, `${name} restates the light value verbatim`).not.toBe(lightDefaultContract.get(name));
+    }
   });
 
   it('uses accessible persimmon identity and neutral primary-action roles', () => {
@@ -182,9 +184,16 @@ describe('@bridger-kr/tokens', () => {
   });
 
   it('keeps exported color tokens aligned with the CSS contract', () => {
-    expectGroupMatchesContract(darkContract, colors.dark, cssVarName.colors);
     expectGroupMatchesContract(lightDefaultContract, colors.light, cssVarName.colors);
     expectGroupMatchesContract(lightContract, colors.light, cssVarName.colors);
+    // Dark exports resolve through inheritance: every dark contract override
+    // must match the dark export for that key.
+    for (const [key, varName] of Object.entries(cssVarName.colors)) {
+      const darkValue = darkContract.get(varName);
+      if (darkValue !== undefined) {
+        expect(normalizeValue(colors.dark[key as keyof typeof colors.dark]), `${varName} drifted from dark contract`).toBe(darkValue);
+      }
+    }
   });
 
   it('keeps exported scale and typography tokens aligned with the CSS contract', () => {
@@ -202,10 +211,7 @@ describe('@bridger-kr/tokens', () => {
     expectGroupMatchesContract(lightDefaultContract, layers, cssVarName.layers);
     expectGroupMatchesContract(lightDefaultContract, motion.durations, cssVarName.motion.durations);
     expectGroupMatchesContract(lightDefaultContract, motion.easing, cssVarName.motion.easing);
-    expectGroupMatchesContract(lightDefaultContract, motion.transitions, cssVarName.motion.transitions);
     expectGroupMatchesContract(lightDefaultContract, motion.interaction, cssVarName.motion.interaction);
-    expectGroupMatchesContract(lightDefaultContract, effects.light, cssVarName.effects);
-    expectGroupMatchesContract(darkContract, effects.dark, cssVarName.effects);
   });
 
   it('preserves literal token types', () => {
@@ -216,17 +222,19 @@ describe('@bridger-kr/tokens', () => {
     expectTypeOf(colors.light.border).toEqualTypeOf<'#e5e5e0'>();
     expectTypeOf(colors.light.accent).toEqualTypeOf<'#ec5e1f'>();
     expectTypeOf(colors.light.accentInk).toEqualTypeOf<'#1a1206'>();
-    expectTypeOf(motion.transitions.base).toEqualTypeOf<'200ms var(--dt-ease)'>();
+    expectTypeOf(motion.durations.base).toEqualTypeOf<'160ms'>();
+    expectTypeOf(motion.easing.standard).toEqualTypeOf<'cubic-bezier(0.23, 1, 0.32, 1)'>();
     expectTypeOf(layers.popover).toEqualTypeOf<60>();
     expectTypeOf(colors.dark.paper).toEqualTypeOf<'#11110f'>();
     expectTypeOf(colors.dark.statusWarning).toEqualTypeOf<'#ec5e1f'>();
-    expectTypeOf(radius.lg).toEqualTypeOf<'14px'>();
-    expectTypeOf(radius.xl).toEqualTypeOf<'14px'>();
-    expectTypeOf(typography.eyebrow.size).toEqualTypeOf<'11px'>();
-    expectTypeOf(typography.eyebrow.tracking).toEqualTypeOf<'0.18em'>();
-    expectTypeOf(typography.eyebrow.weight).toEqualTypeOf<700>();
+    expectTypeOf(radius.lg).toEqualTypeOf<'8px'>();
+    expectTypeOf(radius.card).toEqualTypeOf<'var(--dt-radius-lg)'>();
+    expectTypeOf(radius.pill).toEqualTypeOf<'9999px'>();
+    expectTypeOf(typography.fontSizes.h1).toEqualTypeOf<'36px'>();
+    expectTypeOf(typography.lineHeights.h1).toEqualTypeOf<'44px'>();
+    expectTypeOf(typography.fontWeights.h1).toEqualTypeOf<600>();
     expectTypeOf(typography.fontFamilies.sans).toEqualTypeOf<
-      "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif"
+      "'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif"
     >();
   });
 
@@ -239,9 +247,7 @@ describe('@bridger-kr/tokens', () => {
     expect(Object.isFrozen(shadows.dark)).toBe(true);
     expect(Object.isFrozen(layers)).toBe(true);
     expect(Object.isFrozen(motion)).toBe(true);
-    expect(Object.isFrozen(motion.transitions)).toBe(true);
-    expect(Object.isFrozen(effects.light)).toBe(true);
-    expect(Object.isFrozen(effects.dark)).toBe(true);
+    expect(Object.isFrozen(motion.durations)).toBe(true);
     expect(Object.isFrozen(typography)).toBe(true);
     expect(Object.isFrozen(typography.fontFamilies)).toBe(true);
   });

@@ -32,7 +32,7 @@ export function Badge({ children, tone = 'neutral', dot = false, style, ...rest 
           style={{
             width: 6,
             height: 6,
-            borderRadius: '9999px',
+            borderRadius: 'var(--dt-radius-pill)',
             background: 'currentColor',
             display: 'inline-block',
           }}

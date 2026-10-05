@@ -113,7 +113,7 @@ async function buildTextStyles(tokens) {
   ui('Text Styles 생성 중…', 'dim');
   await figma.loadFontAsync({ family: 'Inter', style: 'Regular' }).catch(() => {});
   const fam = { sans: tokens.fontFamily.sans.$value, mono: tokens.fontFamily.mono.$value };
-  const weightStyle = { '400': 'Regular', '600': 'SemiBold', '700': 'Bold' };
+  const weightStyle = { '400': 'Regular', '500': 'Medium', '600': 'SemiBold' };
   const px = (s) => parseFloat(String(s));
   const existing = {};
   for (const s of await figma.getLocalTextStylesAsync()) existing[s.name] = s;
@@ -138,8 +138,10 @@ async function buildTextStyles(tokens) {
     ts.name = name;
     ts.fontName = { family: usedFamily, style: usedStyle };
     ts.fontSize = px(tokens.fontSize[key].$value);
-    const lh = parseFloat(tokens.lineHeight[key].$value);
-    ts.lineHeight = { unit: 'PERCENT', value: lh * 100 };
+    const lhRaw = String(tokens.lineHeight[key].$value);
+    ts.lineHeight = lhRaw.endsWith('px')
+      ? { unit: 'PIXELS', value: px(lhRaw) }
+      : { unit: 'PERCENT', value: parseFloat(lhRaw) * 100 };
     const lsRaw = tokens.letterSpacing[key] ? tokens.letterSpacing[key].$value
       : tokens.letterSpacing.base.$value;
     ts.letterSpacing = { unit: 'PERCENT', value: parseFloat(lsRaw) };
@@ -228,7 +230,7 @@ async function ensureFonts() {
 }
 
 function pickFont(family, weight) {
-  const wStyle = { 400: 'Regular', 500: 'Regular', 600: 'SemiBold', 650: 'SemiBold', 700: 'Bold', 780: 'Bold' };
+  const wStyle = { 400: 'Regular', 500: 'Medium', 600: 'SemiBold' };
   const style = wStyle[weight] || 'Regular';
   const isMono = family === 'mono';
   const fam = isMono ? 'JetBrains Mono' : 'Pretendard Variable';

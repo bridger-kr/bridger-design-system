@@ -7,19 +7,19 @@
 <style>
   body { margin: 0; background: var(--dt-paper); padding: 26px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
   .stack { display: grid; gap: 18px; }
-  .stats { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-ring), var(--dt-shadow-xs); overflow: hidden; }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); background: var(--dt-surface); border-radius: var(--dt-radius-card); border: 1px solid var(--dt-border); overflow: hidden; }
   .st { padding: 16px 18px; border-right: 1px solid var(--dt-divider); }
   .st:last-child { border-right: 0; }
-  .stl { font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--dt-muted); }
-  .stv { margin-top: 7px; font-size: 24px; font-weight: 700; letter-spacing: -.02em; color: var(--dt-ink-strong); font-variant-numeric: tabular-nums; }
+  .stl { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--dt-muted); }
+  .stv { margin-top: 7px; font-size: 24px; font-weight: 600; letter-spacing: -.02em; color: var(--dt-ink-strong); font-variant-numeric: tabular-nums; }
   .sth { margin-top: 5px; font-size: 12px; color: var(--dt-muted); }
   .up { color: var(--dt-success); font-weight: 600; }
-  table { width: 100%; border-collapse: collapse; background: var(--dt-surface); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-ring), var(--dt-shadow-xs); overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; background: var(--dt-surface); border-radius: var(--dt-radius-card); border: 1px solid var(--dt-border); overflow: hidden; }
   thead tr { background: var(--dt-surface-muted); }
-  th { text-align: left; padding: 10px 16px; font-family: var(--dt-font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--dt-muted); font-weight: 600; border-bottom: 1px solid var(--dt-divider); }
+  th { text-align: left; padding: 10px 16px; font-family: var(--dt-font-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--dt-muted); font-weight: 600; border-bottom: 1px solid var(--dt-divider); }
   td { padding: 11px 16px; font-size: 13px; border-bottom: 1px solid var(--dt-divider); }
   tbody tr:last-child td { border-bottom: 0; }
-  .av { width: 26px; height: 26px; border-radius: 8px; background: var(--dt-tint-accent); color: var(--dt-accent); display: inline-grid; place-items: center; font-size: 11px; font-weight: 700; }
+  .av { width: 26px; height: 26px; border-radius: 8px; background: var(--dt-tint-accent); color: var(--dt-accent); display: inline-grid; place-items: center; font-size: 12px; font-weight: 600; }
   .who { display: flex; align-items: center; gap: 9px; }
   .mono { font-family: var(--dt-font-mono); color: var(--dt-muted); }
   .pg { display: inline-flex; align-items: center; gap: 2px; }

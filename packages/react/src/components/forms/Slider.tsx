@@ -88,7 +88,7 @@ export function Slider({
             left: 0,
             right: 0,
             height: 4,
-            borderRadius: 2,
+            borderRadius: 'var(--dt-radius-sm)',
             background: 'var(--dt-surface-sunken)',
             boxShadow: 'inset 0 0 0 1px var(--dt-border-strong)',
           }}

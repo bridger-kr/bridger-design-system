@@ -8,7 +8,7 @@
   body { margin: 0; background: var(--dt-paper); padding: 26px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
   .sheet { display: grid; gap: 24px; max-width: 700px; }
   .spec { display: grid; gap: 11px; }
-  .lbl { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; }
+  .lbl { font-family: var(--dt-font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; }
   .lbl::before { content: ""; width: 5px; height: 5px; background: var(--dt-accent); }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
   .flbl { font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); }
@@ -16,16 +16,16 @@
 
   /* Combobox */
   .cb { display: grid; gap: 7px; }
-  .cb-field { display: flex; align-items: center; gap: 9px; height: 44px; padding: 0 12px; background: var(--dt-surface-sunken); border: none; border-radius: var(--dt-radius-md); }
+  .cb-field { display: flex; align-items: center; gap: 9px; height: 44px; padding: 0 12px; background: var(--dt-surface-sunken); border: none; border-radius: var(--dt-radius-control); }
   .cb-field input { flex: 1; border: none; outline: none; background: transparent; font-size: 14px; font-family: inherit; color: var(--dt-ink-strong); }
-  .cb-field .meta { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .cb-field .meta { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted); }
   .ic { color: var(--dt-muted); display: inline-flex; flex: 0 0 auto; }
-  .cb-list { background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-md); padding: 4px; }
-  .opt { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--dt-radius-md); }
+  .cb-list { background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); box-shadow: var(--dt-shadow-overlay); padding: 4px; }
+  .opt { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: var(--dt-radius-control); }
   .opt.on { background: var(--dt-surface-sunken); }
   .opt .nm { flex: 1; font-size: 13.5px; font-weight: 500; color: var(--dt-ink-strong); }
   .opt.sel .nm { font-weight: 600; }
-  .opt .m { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
+  .opt .m { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted); }
   .opt .chk { color: var(--dt-accent); display: inline-flex; }
 
   /* Slider */
@@ -39,14 +39,14 @@
   .track .thumb { position: absolute; transform: translateX(-50%); width: 16px; height: 16px; border-radius: var(--dt-radius-sm); background: var(--dt-surface); box-shadow: 0 0 0 1.5px var(--dt-accent); border: 3px solid var(--dt-surface); }
 
   /* FileUpload */
-  .drop { display: grid; place-items: center; gap: 8px; padding: 26px 20px; text-align: center; border-radius: var(--dt-radius-lg); border: 1.5px dashed var(--dt-border-strong); background: var(--dt-surface-sunken); }
+  .drop { display: grid; place-items: center; gap: 8px; padding: 26px 20px; text-align: center; border-radius: var(--dt-radius-card); border: 1.5px dashed var(--dt-border-strong); background: var(--dt-surface-sunken); }
   .drop .t { font-size: 13.5px; color: var(--dt-ink-strong); }
   .drop .t b { color: var(--dt-accent); font-weight: 600; }
-  .drop .h { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); }
-  .file { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); }
-  .file .ico { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--dt-radius-md); background: var(--dt-tint-accent); color: var(--dt-accent); }
+  .drop .h { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted); }
+  .file { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); }
+  .file .ico { width: 34px; height: 34px; flex: 0 0 auto; display: grid; place-items: center; border-radius: var(--dt-radius-control); background: var(--dt-tint-accent); color: var(--dt-accent); }
   .file .nm { font-family: var(--dt-font-mono); font-size: 13px; font-weight: 600; color: var(--dt-ink-strong); }
-  .file .sz { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-muted); margin-top: 2px; }
+  .file .sz { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-muted); margin-top: 2px; }
   .file .x { width: 30px; height: 30px; flex: 0 0 auto; display: grid; place-items: center; border: none; background: var(--dt-surface-sunken); border-radius: var(--dt-radius-sm); color: var(--dt-muted-strong); cursor: pointer; }
 </style>
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.js"></script>

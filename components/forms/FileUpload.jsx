@@ -28,11 +28,11 @@ export function FileUpload({
       {file ? (
         <div style={{
           display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px',
-          background: 'var(--dt-surface)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-lg)',
+          background: 'var(--dt-surface)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)',
         }}>
           <span style={{
             width: 34, height: 34, flex: '0 0 auto', display: 'grid', placeItems: 'center',
-            borderRadius: 'var(--dt-radius-md)', background: 'var(--dt-tint-accent)', color: 'var(--dt-accent)',
+            borderRadius: 'var(--dt-radius-control)', background: 'var(--dt-tint-accent)', color: 'var(--dt-accent)',
           }}>
             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M14 2v6h6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>
           </span>
@@ -57,10 +57,10 @@ export function FileUpload({
           onDrop={(e) => { e.preventDefault(); setDrag(false); handle(e.dataTransfer.files); }}
           style={{
             display: 'grid', placeItems: 'center', gap: 8, padding: '26px 20px', textAlign: 'center', cursor: 'pointer',
-            borderRadius: 'var(--dt-radius-lg)',
+            borderRadius: 'var(--dt-radius-card)',
             border: `1.5px dashed ${drag ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
             background: drag ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
+            transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease)',
           }}
         >
           <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-muted)' }}>

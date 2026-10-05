@@ -24,7 +24,7 @@ export function StatusPill({ status = 'idle', children, pulse = false, style, ..
         display: 'inline-flex',
         alignItems: 'center',
         gap: 6,
-        borderRadius: 'var(--dt-radius-full)',
+        borderRadius: 'var(--dt-radius-pill)',
         background: tone.bg,
         padding: '4px 10px',
         fontSize: 12,

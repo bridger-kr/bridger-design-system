@@ -20,11 +20,11 @@ export function Dialog({ open, onClose, title, description, children, footer, wi
     }}>
       <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} style={{
         width: '100%', maxWidth: width, background: 'var(--dt-surface)',
-        borderRadius: 'var(--dt-radius-lg)', boxShadow: 'var(--dt-shadow-xl)',
+        borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-overlay)',
         animation: 'dt-pop 200ms var(--dt-ease)', overflow: 'hidden',
       }}>
         <div style={{ padding: '22px 24px' }}>
-          {title ? <h3 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>{title}</h3> : null}
+          {title ? <h3 style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>{title}</h3> : null}
           {description ? <p style={{ marginTop: 8, fontSize: 14, lineHeight: 1.55, color: 'var(--dt-muted-strong)' }}>{description}</p> : null}
           {children ? <div style={{ marginTop: title || description ? 16 : 0 }}>{children}</div> : null}
         </div>

@@ -19,8 +19,8 @@ export function Menu({ trigger, items = [], align = 'left', width = 200 }) {
       {open ? (
         <div role="menu" style={{
           position: 'absolute', top: '100%', [align]: 0, marginTop: 6, zIndex: 80, width,
-          padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
-          boxShadow: 'var(--dt-shadow-lg)', animation: 'dt-menu 130ms var(--dt-ease)',
+          padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-control)',
+          boxShadow: 'var(--dt-shadow-overlay)', animation: 'dt-menu 130ms var(--dt-ease)',
         }}>
           {items.map((it, i) => it.divider
             ? <div key={`d${i}`} style={{ height: 1, background: 'var(--dt-border)', margin: '5px 0' }} />

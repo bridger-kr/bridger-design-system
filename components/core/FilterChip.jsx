@@ -18,7 +18,7 @@ export function FilterChip({ label, count, active = false, removable = false, on
         background: active ? 'var(--dt-tint-accent)' : 'var(--dt-surface)',
         color: active ? 'var(--dt-accent)' : 'var(--dt-muted-strong)',
         boxShadow: `inset 0 0 0 1px ${active ? 'color-mix(in srgb, var(--dt-accent) 40%, transparent)' : 'var(--dt-border-strong)'}`,
-        transition: 'background-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast)',
+        transition: 'background-color var(--dt-duration-fast) var(--dt-ease), box-shadow var(--dt-duration-fast) var(--dt-ease)',
         ...style,
       }}
     >
