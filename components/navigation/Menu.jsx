@@ -19,8 +19,8 @@ export function Menu({ trigger, items = [], align = 'left', width = 200 }) {
       {open ? (
         <div role="menu" style={{
           position: 'absolute', top: '100%', [align]: 0, marginTop: 6, zIndex: 80, width,
-          padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
-          boxShadow: 'var(--dt-shadow-lg)', animation: 'dt-menu 130ms var(--dt-ease)',
+          padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-control)',
+          boxShadow: 'var(--dt-shadow-overlay)', animation: 'dt-menu 130ms var(--dt-ease)',
         }}>
           {items.map((it, i) => it.divider
             ? <div key={`d${i}`} style={{ height: 1, background: 'var(--dt-border)', margin: '5px 0' }} />
@@ -30,11 +30,11 @@ export function Menu({ trigger, items = [], align = 'left', width = 200 }) {
                   display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
                   padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
                   background: 'transparent', fontSize: 13.5, fontWeight: 500, fontFamily: 'inherit',
-                  color: it.danger ? 'var(--dt-danger)' : 'var(--dt-ink)',
+                  color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text)',
                 }}
                 onMouseEnter={(e) => { e.currentTarget.style.background = it.danger ? 'var(--dt-tint-danger)' : 'var(--dt-surface-sunken)'; }}
                 onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}>
-                {it.icon ? <span style={{ display: 'inline-flex', color: it.danger ? 'var(--dt-danger)' : 'var(--dt-muted-strong)' }}>{it.icon}</span> : null}
+                {it.icon ? <span style={{ display: 'inline-flex', color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text-subtle)' }}>{it.icon}</span> : null}
                 {it.label}
               </button>
             ))}

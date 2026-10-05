@@ -71,7 +71,7 @@ function renderBrandSymbol({ isFavicon }: { readonly isFavicon: boolean }) {
         <rect width="45" height="45" fill="var(--dt-accent)" />
         <path
           d="M35 18.31V11C29.5756 11 24.8659 12.6995 22.5 15.1925C20.1341 12.6995 15.4244 11 10 11V18.31C15.4244 18.31 20.1341 20.007 22.5 22.5C20.1341 24.993 15.4244 26.69 10 26.69V34C15.4244 34 20.1341 32.3005 22.5 29.8075C24.8659 32.3005 29.5756 34 35 34V26.69C29.5756 26.69 24.8659 24.993 22.5 22.5C24.8659 20.007 29.5756 18.31 35 18.31Z"
-          fill="var(--dt-paper)"
+          fill="var(--dt-bg)"
         />
       </>
     );
@@ -222,7 +222,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
         width: wordmarkSize.width,
         height: wordmarkSize.height,
         fontFamily: 'var(--dt-font-sans)',
-        fontWeight: 780,
+        fontWeight: 600,
         letterSpacing: 0,
         lineHeight: 1,
         color: 'var(--dt-accent)',

@@ -35,9 +35,9 @@ export function Breadcrumb({ items = [], style, ...rest }: BreadcrumbProps) {
           return (
             <li key={i}>
               {last ? (
-                <span aria-current="page" style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-ink-strong)' }}>{it.label}</span>
+                <span aria-current="page" style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-strong)' }}>{it.label}</span>
               ) : (
-                <a href={it.href || '#'} style={{ fontSize: 13, fontWeight: 500, color: 'var(--dt-muted)', textDecoration: 'none' }}>
+                <a href={it.href || '#'} style={{ fontSize: 13, fontWeight: 500, color: 'var(--dt-text-muted)', textDecoration: 'none' }}>
                   {it.label}
                 </a>
               )}

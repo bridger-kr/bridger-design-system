@@ -5,46 +5,46 @@
 <meta charset="utf-8">
 <link rel="stylesheet" href="../../styles.css">
 <style>
-  body { margin: 0; background: var(--dt-paper); padding: 26px; font-family: var(--dt-font-sans); color: var(--dt-ink); }
+  body { margin: 0; background: var(--dt-bg); padding: 26px; font-family: var(--dt-font-sans); color: var(--dt-text); }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; max-width: 720px; }
   .spec { display: grid; gap: 11px; }
-  .lbl { font-family: var(--dt-font-mono); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-muted); display: flex; align-items: center; gap: 9px; }
+  .lbl { font-family: var(--dt-font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-text-muted); display: flex; align-items: center; gap: 9px; }
   .lbl::before { content: ""; width: 5px; height: 5px; background: var(--dt-accent); }
 
   /* CodeBlock */
-  .code { background: var(--dt-code-bg); border: 1px solid var(--dt-code-border); border-radius: var(--dt-radius-lg); overflow: hidden; }
-  .code .bar { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--dt-code-border); font-family: var(--dt-font-mono); font-size: 11px; color: #8a91a3; }
+  .code { background: var(--dt-code-bg); border: 1px solid var(--dt-code-border); border-radius: var(--dt-radius-card); overflow: hidden; }
+  .code .bar { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-bottom: 1px solid var(--dt-code-border); font-family: var(--dt-font-mono); font-size: 12px; color: #8a91a3; }
   .code .cp { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; color: #8a91a3; font-weight: 600; }
   .code .body { padding: 12px 0; }
-  .ln { display: grid; grid-template-columns: 38px 1fr; font-family: var(--dt-font-mono); font-size: 12.5px; line-height: 1.75; }
+  .ln { display: grid; grid-template-columns: 38px 1fr; font-family: var(--dt-font-mono); font-size: 12px; line-height: 1.75; }
   .ln .g { text-align: right; padding-right: 14px; color: #5a6273; }
   .ln code { white-space: pre; }
   .k { color: #7fd1c0; } .s { color: #e0a96d; } .n { color: #8fb3ff; } .p { color: #8a91a3; } .pl { color: #cdd0d8; }
 
   /* KeyValue */
-  .kv { border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); overflow: hidden; }
+  .kv { border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); overflow: hidden; }
   .kvr { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 11px 14px; border-bottom: 1px solid var(--dt-border); }
   .kvr:last-child { border-bottom: none; }
-  .kvr dt { font-size: 12.5px; color: var(--dt-muted); margin: 0; white-space: nowrap; }
-  .kvr dd { margin: 0; font-size: 13px; font-weight: 600; color: var(--dt-ink-strong); text-align: right; }
-  .kvr dd.mono { font-family: var(--dt-font-mono); font-size: 12.5px; }
-  .kvr dd.ac { color: var(--dt-accent); }
+  .kvr dt { font-size: 12px; color: var(--dt-text-muted); margin: 0; white-space: nowrap; }
+  .kvr dd { margin: 0; font-size: 13px; font-weight: 600; color: var(--dt-text-strong); text-align: right; }
+  .kvr dd.mono { font-family: var(--dt-font-mono); font-size: 12px; }
+  .kvr dd.ac { color: var(--dt-accent-text); }
 
   /* LogRow */
-  .log { border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); overflow: hidden; background: var(--dt-surface); font-variant-numeric: tabular-nums; }
+  .log { border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); overflow: hidden; background: var(--dt-surface); font-variant-numeric: tabular-nums; }
   .lr { display: grid; grid-template-columns: auto 14px 1fr auto; align-items: center; gap: 12px; padding: 9px 14px; border-top: 1px solid var(--dt-border); font-family: var(--dt-font-mono); font-size: 12px; }
   .lr:first-child { border-top: none; }
-  .lr .t { color: var(--dt-muted); }
+  .lr .t { color: var(--dt-text-muted); }
   .lr .dot { width: 7px; height: 7px; border-radius: 9999px; justify-self: center; }
-  .lr .tool { color: var(--dt-ink-strong); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .lr .lat { font-weight: 600; color: var(--dt-muted-strong); }
+  .lr .tool { color: var(--dt-text-strong); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lr .lat { font-weight: 600; color: var(--dt-text-subtle); }
 
   /* UsageMeter */
   .um { display: grid; gap: 8px; }
   .um-top { display: flex; align-items: baseline; justify-content: space-between; }
-  .um-top .l { font-size: 13px; font-weight: 600; color: var(--dt-muted-strong); white-space: nowrap; }
-  .um-top .v { font-family: var(--dt-font-mono); font-size: 12.5px; color: var(--dt-ink-strong); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .um-top .v .m { color: var(--dt-muted); }
+  .um-top .l { font-size: 13px; font-weight: 600; color: var(--dt-text-subtle); white-space: nowrap; }
+  .um-top .v { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-strong); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .um-top .v .m { color: var(--dt-text-muted); }
   .bar { position: relative; height: 8px; border-radius: var(--dt-radius-sm); background: var(--dt-surface-sunken); box-shadow: inset 0 0 0 1px var(--dt-border-strong); overflow: hidden; }
   .bar i { position: absolute; inset: 0; border-radius: var(--dt-radius-sm); display: block; }
 </style>
@@ -80,8 +80,8 @@
     <div class="log">
       <div class="lr"><span class="t">14:22:07</span><span class="dot" style="background:var(--dt-success)"></span><span class="tool">weather_getVilageFcst</span><span class="lat">142ms</span></div>
       <div class="lr"><span class="t">14:22:03</span><span class="dot" style="background:var(--dt-success)"></span><span class="tool">bok_statSearch</span><span class="lat">88ms</span></div>
-      <div class="lr"><span class="t">14:21:58</span><span class="dot" style="background:var(--dt-warning)"></span><span class="tool">molit_rtMng <span style="color:var(--dt-muted-strong);font-weight:400">키 만료 임박</span></span><span class="lat" style="color:var(--dt-warning)">WARN</span></div>
-      <div class="lr"><span class="t">14:21:44</span><span class="dot" style="background:var(--dt-danger)"></span><span class="tool">koroad_accident <span style="color:var(--dt-muted-strong);font-weight:400">게이트웨이 지연</span></span><span class="lat" style="color:var(--dt-danger)">ERR</span></div>
+      <div class="lr"><span class="t">14:21:58</span><span class="dot" style="background:var(--dt-warning)"></span><span class="tool">molit_rtMng <span style="color:var(--dt-text-subtle);font-weight:400">키 만료 임박</span></span><span class="lat" style="color:var(--dt-warning)">WARN</span></div>
+      <div class="lr"><span class="t">14:21:44</span><span class="dot" style="background:var(--dt-danger)"></span><span class="tool">koroad_accident <span style="color:var(--dt-text-subtle);font-weight:400">게이트웨이 지연</span></span><span class="lat" style="color:var(--dt-danger)">ERR</span></div>
     </div>
   </div>
 

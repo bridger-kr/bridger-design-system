@@ -59,7 +59,7 @@ function Navbar({ theme, onTheme, locale, onLocale }) {
 /* ── Brand wordmark (mark-only, persimmon period) ── */
 function BrandMark({ size = 22 }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 780, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-ink-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
+    <span style={{ display: 'inline-flex', alignItems: 'baseline', fontFamily: 'var(--dt-font-sans)', fontWeight: 780, fontSize: size, letterSpacing: '-0.025em', color: 'var(--dt-text-strong)', lineHeight: 1, userSelect: 'none' }} aria-label="Bridger">
       Bridger<span style={{ color: 'var(--dt-accent)' }}>.</span>
     </span>
   );
@@ -137,13 +137,13 @@ function HeroDemo({ locale }) {
       </div>
       <div className="demo-body">
         <div className="demo-q">
-          <Icon name="Search" size={15} style={{ color: 'var(--dt-muted)' }} />
+          <Icon name="Search" size={15} style={{ color: 'var(--dt-text-muted)' }} />
           <span>{locale === 'ko' ? '이번 주말 서울 날씨 데이터 있어?' : 'Any weather data for Seoul this weekend?'}</span>
           <span className="caret" />
         </div>
         <div className="demo-ans">
           <div className="demo-ans-head">
-            <Icon name="Sparkles" size={13} style={{ color: 'var(--dt-accent)' }} />
+            <Icon name="Sparkles" size={13} style={{ color: 'var(--dt-accent-text)' }} />
             {locale === 'ko' ? '추천 공공 API · 2건' : 'Recommended APIs · 2'}
           </div>
           <div className="demo-api">

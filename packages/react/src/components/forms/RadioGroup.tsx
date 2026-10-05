@@ -75,12 +75,12 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
                   width: 18,
                   height: 18,
                   flex: '0 0 auto',
-                  borderRadius: 9999,
+                  borderRadius: 'var(--dt-radius-pill)',
                   display: 'grid',
                   placeItems: 'center',
                   background: 'var(--dt-surface)',
                   border: '1.5px solid var(--dt-border-strong)',
-                  transition: 'border-color var(--dt-motion-fast)',
+                  transition: 'border-color var(--dt-duration-fast) var(--dt-ease)',
                 }}
               >
                 <BaseRadio.Indicator>
@@ -89,8 +89,8 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
               </span>
             </BaseRadio.Root>
             <span style={{ display: 'grid', gap: 2 }}>
-              <span style={{ fontSize: 14, color: 'var(--dt-ink)', lineHeight: 1.3 }}>{opt.label}</span>
-              {opt.hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{opt.hint}</span> : null}
+              <span style={{ fontSize: 14, color: 'var(--dt-text)', lineHeight: 1.3 }}>{opt.label}</span>
+              {opt.hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{opt.hint}</span> : null}
             </span>
           </label>
         );

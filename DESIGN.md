@@ -57,27 +57,30 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 
 ### 4.2 Color roles
 
-The palette is chroma-0 neutral and semantic. Neutrals carry zero chroma — red, green, and blue channels are equal — in both themes. No warm or cool tint is permitted in paper, surface, ink, muted, or border roles. Use the token variables, not copied literals.
+The palette is chroma-0 neutral and semantic. Neutrals carry zero chroma — red, green, and blue channels are equal — in both themes. No warm or cool tint is permitted in background, surface, text, or border roles. Use the token variables, not copied literals.
 
 | Role | Canonical token contract | Rule |
 | --- | --- | --- |
-| Paper | `--dt-paper` | Page canvas. Neutral gray, chroma 0. |
+| Background | `--dt-bg` | Page canvas. Neutral gray, chroma 0. |
 | Surface | `--dt-surface` | Default component plane. |
 | Raised surface | `--dt-surface-raised` | Surface above the default plane, including selected controls and layers. |
 | Sunken surface | `--dt-surface-sunken` | Code wells, recessed regions, and quiet data backgrounds. |
 | Muted surface | `--dt-surface-muted` | Secondary grouping without a new accent. |
-| Ink | `--dt-ink` | Default readable text. |
-| Strong ink | `--dt-ink-strong` | Headings, primary values, and high-emphasis text. |
-| Muted text | `--dt-muted`, `--dt-muted-strong` | Helper text and secondary labels. Maintain WCAG AA contrast. |
-| Border | `--dt-border`, `--dt-border-strong` | 1px hairlines — light `rgba(0,0,0,.08)`, dark `rgba(255,255,255,.08)`. Layers separate by borders, not shadows. |
-| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Only on the brand mark, focus ring, selection markers, primary action, and status emphasis. Never in body copy, headings, or eyebrows. |
-| Brand action strength | `--dt-accent-strong`, `--dt-accent-bright`, `--dt-accent-ink` | Theme-specific contrast and interaction roles. |
-| Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only. Never use them as decoration. |
-| Supporting status | `--dt-cobalt`, `--dt-lime`, and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
+| Text | `--dt-text` | Default readable text. |
+| Strong text | `--dt-text-strong` | Headings, primary values, and high-emphasis text. |
+| Subtle text | `--dt-text-subtle` | Secondary labels. Maintains WCAG AA on bg/surface/raised; on muted or sunken washes use `--dt-text-muted`. |
+| Muted text | `--dt-text-muted` | Helper and meta text. Text-only role — never a background fill (the retired `--dt-muted` name invited that misuse). Holds 4.5:1 on every surface token. |
+| Placeholder text | `--dt-text-placeholder` | Input hints and other de-emphasized, non-essential copy. |
+| Border | `--dt-border`, `--dt-border-strong` | 1px hairlines — light `rgba(10,10,10,.10/.18)`, dark `rgba(255,255,255,.08/.16)`. Layers separate by borders, not shadows. |
+| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Fill-only role: the brand mark, focus ring, selection markers, primary action fills, and status emphasis. Never renders as a glyph — `#ec5e1f` fails WCAG AA as text. |
+| Accent text | `--dt-accent-text`, `--dt-accent-strong` | Persimmon when it must appear as text (links, accent labels, tint-on-tint chips). Theme-specific AA values. |
+| Accent interaction | `--dt-accent-bright`, `--dt-accent-ink` | Highlight fills and the ink color printed on persimmon fills. |
+| Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only, each one hue shared across themes (warning is amber — never the brand hue). Never use them as decoration. |
+| Supporting status | `--dt-cobalt` and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
 | Code | `--dt-code-bg`, `--dt-code-ink`, `--dt-code-border`, `--dt-syntax-*` | Dark, high-contrast technical surfaces in both themes. |
 | Tints | `--dt-tint-*` | Low-opacity fills for badges, chips, and semantic state. Do not use tint as a substitute for readable text. |
 
-Persimmon is the only decorative brand accent. It may fill the single primary action on a surface; persimmon never appears in body text, headings, eyebrows, or decorative punctuation. Cobalt, lime, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
+Persimmon is the only decorative brand accent. It may fill the single primary action on a surface; persimmon never appears in body text, headings, eyebrows, or decorative punctuation — when it must render as a glyph (a link, an accent label), use `--dt-accent-text`, never the fill role. Cobalt, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
 
 ### 4.3 Typography
 
@@ -131,11 +134,11 @@ No other radius value is permitted. Legacy scale names (`sm`, `inner`, `element`
 
 ### 4.6 Elevation and borders
 
-- The default card and panel treatment is a flat surface with a 1px hairline border, `--dt-card-rest` or the equivalent `--dt-ring` role. There is no resting shadow.
-- `--dt-ring-strong` frames a selected, focused, or elevated plane when a stronger border is needed.
-- Shadows are reserved for surfaces that actually float above the document: menus, popovers, dialogs, drawers, command palettes, and toasts use the overlay shadow tokens (`--dt-shadow-md`, `--dt-shadow-lg`, `--dt-shadow-xl` by layer). Nothing in normal document flow casts a shadow — not at rest, not on hover, not on press.
+- The default card and panel treatment is a flat surface with a 1px `--dt-border` hairline. There is no resting shadow.
+- `--dt-border-strong` frames a selected or emphasized plane when a stronger border is needed.
+- Shadows are reserved for surfaces that actually float above the document: menus, popovers, dialogs, drawers, command palettes, and toasts share one overlay shadow, `--dt-shadow-overlay`. Nothing in normal document flow casts a shadow — not at rest, not on hover, not on press.
 - Tables, stat rows, and dense data surfaces use internal 1px borders. Cards are separated from the page by borders, not shadows.
-- `--dt-shadow-focus` is the focus ring role and must remain visible in both themes. It is a ring, not an elevation cue.
+- Focus is a 3px `--dt-accent` outline (`outline: 3px solid var(--dt-accent); outline-offset: 2px`) and must remain visible in both themes.
 - Never use card-in-card composition for ordinary content. If a nested region is necessary for code, data, or a form group, use a sunken or bordered region with a clear semantic purpose and no decorative stacking.
 
 ### 4.7 Z-index
@@ -153,8 +156,8 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 ### 4.8 Motion
 
-- All interaction motion uses the shared easing `--dt-ease: cubic-bezier(0.23, 1, 0.32, 1)` and stays inside the 120–180ms band. The steps are fast `120ms`, base `150ms`, and slow `180ms`. No transition or animation may exceed 180ms.
-- Use the `--dt-motion-*` token set rather than inventing transition strings. Durations outside the band — including the legacy 200ms, 280ms, and 600ms steps and every long-duration loop tier — are retired; see Section 12.
+- All interaction motion uses the shared easing `--dt-ease: cubic-bezier(0.23, 1, 0.32, 1)` and stays inside the 120–180ms band. The steps are fast `120ms` and base `160ms`. No transition or animation may exceed 180ms.
+- Use the `--dt-duration-*` tokens rather than inventing transition strings. Durations outside the band — including the legacy 200ms, 280ms, and 600ms steps and every long-duration loop tier — are retired; see Section 12.
 - Motion must clarify a state change. Do not use bounce, spring overshoot, or staggered entrance choreography in components.
 - No repeating or looping animation is permitted. The single exception is a loading indicator (spinner) that runs only while an operation is genuinely in progress and stops under `prefers-reduced-motion`. Idle pulses, breathing dots, drifting fields, tickers, and marquee content are prohibited.
 - Scroll-reveal animation is prohibited. Content must not depend on scroll position to appear.
@@ -209,7 +212,7 @@ Every interactive component must expose and verify these states where applicable
 | Rest | Use the component's tokenized surface, border, typography, and semantic color. No resting shadow. |
 | Hover | Brighten or strengthen the border and move the surface one tonal step when the component supports hover. Do not lift, translate, or add a shadow on hover. Do not rely on hover alone to convey information. |
 | Press | Apply `transform: scale(var(--dt-press-scale))`, where `--dt-press-scale` is `0.97`, for pressable controls within the 120–180ms band. Restore the resting size after release. Do not make layout reflow. |
-| Focus visible | Show a clearly visible 3px accent focus ring using `--dt-shadow-focus` or an equivalent tokenized outline. Never remove the browser focus indicator without replacing it. Focus must work in light and dark themes. |
+| Focus visible | Show a clearly visible 3px accent outline (`--dt-accent` + `outline-offset: 2px`). Never remove the browser focus indicator without replacing it. Focus must work in light and dark themes. |
 | Disabled | Use the disabled semantic treatment, prevent activation, suppress hover and press changes, preserve readable contrast, and expose the state to assistive technology. Use the native `disabled` attribute where the element supports it. |
 | Loading | Preserve the component's dimensions and position. Show a package spinner or skeleton with an accessible busy state, keep a meaningful label when possible, and prevent duplicate submission or activation. |
 | Reduced motion | Honor `prefers-reduced-motion: reduce` by removing nonessential transform and entrance motion and stopping the loading indicator. State changes must remain clear without animation. |

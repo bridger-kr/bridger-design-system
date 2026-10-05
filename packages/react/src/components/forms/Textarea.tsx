@@ -15,7 +15,7 @@ export function Textarea({ label, hint, rows = 4, mono = false, id, style, ...re
   return (
     <div style={{ display: 'grid', gap: 7 }}>
       {label ? (
-        <label htmlFor={taId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
+        <label htmlFor={taId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
           {label}
         </label>
       ) : null}
@@ -30,12 +30,12 @@ export function Textarea({ label, hint, rows = 4, mono = false, id, style, ...re
           fontSize: mono ? 13 : 14,
           fontFamily: mono ? 'var(--dt-font-mono)' : 'inherit',
           lineHeight: 1.55,
-          color: 'var(--dt-ink-strong)',
+          color: 'var(--dt-text-strong)',
           ...style,
         }}
         {...rest}
       />
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
     </div>
   );
 }

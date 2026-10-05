@@ -40,7 +40,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
         width: 'var(--dt-space-5)',
         height: 'var(--dt-space-5)',
         flex: '0 0 auto',
-        borderRadius: 9999,
+        borderRadius: 'var(--dt-radius-pill)',
         border: 'none',
         padding: 0,
         background: 'transparent',
@@ -60,7 +60,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
           height: 22,
           borderRadius: 9999,
           background: 'var(--dt-border-strong)',
-          transition: 'background-color var(--dt-motion-fast)',
+          transition: 'background-color var(--dt-duration-fast) var(--dt-ease)',
         }}
       />
       <BaseSwitch.Thumb
@@ -72,7 +72,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
           marginLeft: 3,
           borderRadius: 9999,
           background: 'var(--dt-surface)',
-          transition: 'transform var(--dt-motion-fast)',
+          transition: 'transform var(--dt-duration-fast) var(--dt-ease)',
         }}
       />
     </BaseSwitch.Root>
@@ -89,7 +89,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
       }}
     >
       {sw}
-      <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span>
+      <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span>
     </label>
   );
 }
