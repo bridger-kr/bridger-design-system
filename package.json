@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "oxlint -c _adherence.oxlintrc.json .",
+    "check:slop": "node scripts/slop-scan.mjs",
     "pack:dry-run": "pnpm -r --filter './packages/tokens' --filter './packages/react' exec npm pack --dry-run",
     "dev:example:primitives": "vite --config examples/ui_kits/primitives/vite.config.ts",
     "build:example:primitives": "vite build --config examples/ui_kits/primitives/vite.config.ts",

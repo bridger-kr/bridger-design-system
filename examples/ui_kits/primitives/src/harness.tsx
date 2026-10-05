@@ -49,12 +49,12 @@ function Harness() {
       </div>
 
       <section id="select-section">
-        <h2 style={{ fontSize: 'var(--dt-h3-size)' }}>Select (trigger click → popup)</h2>
+        <h2 style={{ fontSize: 'var(--dt-h3-size)' }}>Select (trigger click opens popup)</h2>
         <Select label="기관" value={selVal} onChange={setSelVal} options={SELECT_OPTIONS} />
       </section>
 
       <section id="combobox-section">
-        <h2 style={{ fontSize: 'var(--dt-h3-size)' }}>Combobox (focus input → popup)</h2>
+        <h2 style={{ fontSize: 'var(--dt-h3-size)' }}>Combobox (focus input opens popup)</h2>
         <Combobox label="연동할 공공 API" value={cbVal} onChange={setCbVal} options={COMBOBOX_OPTIONS} hint="230+ API 검색" />
       </section>
 

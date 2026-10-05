@@ -105,7 +105,7 @@ async function buildVariables(tokens) {
   numGroup(tokens.spacing, 'spacing');
   numGroup(tokens.radius, 'radius');
 
-  ui(`✓ Variables: ${Object.keys(varMap).length}개`, 'ok');
+  ui(`[완료] Variables ${Object.keys(varMap).length}개`, 'ok');
   return col;
 }
 
@@ -131,7 +131,7 @@ async function buildTextStyles(tokens) {
       usedFamily = 'Inter'; usedStyle = style === 'SemiBold' ? 'Semi Bold' : style;
       try { await figma.loadFontAsync({ family: usedFamily, style: usedStyle }); }
       catch { usedStyle = 'Regular'; await figma.loadFontAsync({ family: 'Inter', style: 'Regular' }); }
-      ui(`  ⚠ ${family} ${style} 없음 → ${usedFamily} ${usedStyle} 대체`, 'dim');
+      ui(`  [경고] ${family} ${style} 없음 — ${usedFamily} ${usedStyle}로 대체`, 'warn');
     }
     const name = `Bridger/${key}`;
     const ts = existing[name] || figma.createTextStyle();
@@ -146,7 +146,7 @@ async function buildTextStyles(tokens) {
       : tokens.letterSpacing.base.$value;
     ts.letterSpacing = { unit: 'PERCENT', value: parseFloat(lsRaw) };
   }
-  ui('✓ Text Styles', 'ok');
+  ui('[완료] Text Styles', 'ok');
 }
 
 const effectStyleMap = {};
@@ -171,7 +171,7 @@ async function buildEffectStyles(tokens) {
     }];
     effectStyleMap[name] = es.id;
   }
-  ui('✓ Effect Styles', 'ok');
+  ui('[완료] Effect Styles', 'ok');
 }
 
 // ---- COMPONENT BUILDER ----------------------------------------------------
@@ -199,6 +199,13 @@ function bindStroke(node, ref, weight) {
   if (!ref) return;
   node.strokeWeight = weight || 1;
   node.strokeAlign = 'INSIDE';
+  bindStrokePaint(node, ref);
+}
+
+// Stroke-paint binding without weight/align overrides — icon strokes keep
+// CENTER alignment and the weight the spec carries.
+function bindStrokePaint(node, ref) {
+  if (!ref) return;
   if (typeof ref === 'string' && ref.startsWith('{') && ref.endsWith('}')) {
     const v = varMap[ref.slice(1, -1)];
     if (v) {
@@ -290,6 +297,24 @@ function buildNode(def) {
     node = figma.createRectangle();
     node.resize(def.w || 1, def.h || 1);
     if (def.fill) bindFill(node, def.fill);
+  } else if (def.type === 'vector') {
+    // Vector glyphs (check, chevron, upload) carry `paths` authored in a 24px
+    // viewBox; resize() scales the geometry to the spec size. Defs without
+    // `paths` stay empty placeholders (designer swaps in the real SVG).
+    node = figma.createVector();
+    node.resize(24, 24);
+    if (def.paths && def.paths.length) {
+      node.vectorPaths = def.paths.map((d) => ({ windingRule: 'NONZERO', data: d }));
+      node.strokeCap = 'ROUND';
+      node.strokeJoin = 'ROUND';
+      const s = def.w || 24;
+      if (s !== 24 || (def.h && def.h !== 24)) node.resize(s, def.h || s);
+    } else if (def.w) {
+      node.resize(def.w, def.h || def.w);
+    }
+    if (def.stroke) bindStrokePaint(node, def.stroke);
+    if (def.strokeWeight) node.strokeWeight = def.strokeWeight;
+    if (def.fill) bindFill(node, def.fill);
   } else {
     node = figma.createFrame();
     const dir = def.dir === 'vertical' ? 'VERTICAL' : (def.dir === 'none' ? 'NONE' : 'HORIZONTAL');
@@ -375,10 +400,10 @@ async function buildComponents(spec) {
     x += set.width + GAP;
     rowH = Math.max(rowH, set.height);
     count += 1;
-    ui(`  ✓ ${comp.name}`, 'ok');
+    ui(`  [완료] ${comp.name}`, 'ok');
   }
   if (page.children.length) figma.viewport.scrollAndZoomIntoView(page.children);
-  ui(`✓ ${count}개 컴포넌트`, 'ok');
+  ui(`[완료] 컴포넌트 ${count}개`, 'ok');
 }
 
 // ---- MAIN -----------------------------------------------------------------

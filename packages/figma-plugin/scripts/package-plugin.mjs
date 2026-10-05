@@ -29,7 +29,7 @@ mkdirSync(DIST, { recursive: true });
 for (const [src, dest] of RUNTIME) {
   const from = resolve(FIGMA, src);
   if (!existsSync(from)) {
-    console.error(`✗ 누락: ${src}`);
+    console.error(`[실패] 누락: ${src}`);
     process.exit(1);
   }
   copyFileSync(from, resolve(DIST, dest));
@@ -41,12 +41,12 @@ writeFileSync(resolve(DIST, 'INSTALL.txt'),
     'Bridger Design System — Figma plugin',
     '',
     '설치(개발 모드):',
-    '1. Figma 데스크톱 앱 → Plugins → Development → Import plugin from manifest…',
+    '1. Figma 데스크톱 앱 > Plugins > Development > Import plugin from manifest…',
     '2. 이 폴더의 manifest.json 선택',
-    '3. 플러그인 실행 → repo/branch 확인 → "동기화 실행"',
+    '3. 플러그인 실행 > repo/branch 확인 > "동기화 실행"',
     '',
     '플러그인은 GitHub raw에서 토큰+스펙을 가져옵니다 (인터넷 필요).',
     'bridger-tokens.tokens.json / components.spec.json 은 오프라인 수동 import용 사본입니다.',
   ].join('\n'));
 
-console.log(`✓ 패키징 완료 → ${DIST} (${RUNTIME.length}개 파일)`);
+console.log(`[완료] 패키징 완료: ${DIST} (${RUNTIME.length}개 파일)`);
