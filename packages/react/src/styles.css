@@ -588,8 +588,10 @@
 }
 
 .dt-card-default,
-.dt-card-panel { background: var(--dt-surface); }
-.dt-card-muted { background: var(--dt-surface-sunken); }
+.dt-card-panel,
+.dt-card-plain { background: var(--dt-surface); }
+.dt-card-muted,
+.dt-card-sunken { background: var(--dt-surface-sunken); }
 .dt-card-raised { background: var(--dt-surface-raised); }
 
 .dt-card-action:hover:not(:disabled) {
@@ -669,7 +671,8 @@
   color: var(--dt-text-strong) !important;
 }
 
-.dt-tabs-tab-pill[aria-selected='true'] {
+.dt-tabs-tab-pill[aria-selected='true'],
+.dt-tabs-tab-segmented[aria-selected='true'] {
   background: var(--dt-surface-raised) !important;
   border: 1px solid var(--dt-border) !important;
   color: var(--dt-text-strong) !important;
@@ -738,31 +741,12 @@
   color: var(--dt-accent-text);
 }
 
-.dt-alert-motion-subtle {
-  animation: dt-alert-enter var(--dt-duration-base) var(--dt-ease) backwards;
-}
-
-.dt-alert-motion-pulse {
-  animation: dt-alert-pulse 1.8s var(--dt-ease) infinite;
-}
-
 .dt-toast {
   animation: dt-toast-enter var(--dt-duration-base) var(--dt-ease) backwards;
 }
 
 .dt-spinner-svg {
   animation: dt-spin 0.7s linear infinite;
-}
-
-@keyframes dt-alert-enter {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes dt-menu {
@@ -795,16 +779,6 @@
   }
 }
 
-@keyframes dt-alert-pulse {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.08);
-  }
-}
-
 @keyframes dt-toast-enter {
   from {
     opacity: 0;
@@ -819,8 +793,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dt-alert-motion-subtle,
-  .dt-alert-motion-pulse,
   .dt-dialog-overlay,
   .dt-dialog-popup,
   .dt-menu-popup,
@@ -1731,7 +1703,8 @@
 }
 
 .dt-section-band,
-.dt-section-proof {
+.dt-section-proof,
+.dt-section-sunken {
   background: var(--dt-surface);
 }
 
@@ -1784,7 +1757,8 @@
   color: var(--dt-accent-text) !important;
 }
 
-.dt-tabs-list-pill {
+.dt-tabs-list-pill,
+.dt-tabs-list-segmented {
   width: fit-content;
   max-width: 100%;
   overflow-x: auto;
@@ -1796,7 +1770,8 @@
   box-shadow: inset 0 1px 2px color-mix(in srgb, var(--dt-text) 5%, transparent);
 }
 
-.dt-tabs-tab-pill {
+.dt-tabs-tab-pill,
+.dt-tabs-tab-segmented {
   flex: 0 0 auto;
   min-height: 34px;
   margin-bottom: 0 !important;

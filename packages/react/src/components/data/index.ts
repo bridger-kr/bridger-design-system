@@ -1,7 +1,7 @@
 export { Avatar } from './Avatar';
 export type { AvatarProps } from './Avatar';
-export { CodeBlock } from './CodeBlock';
-export type { CodeBlockProps } from './CodeBlock';
+export { CODE_SEGMENT_TONE, CodeBlock } from './CodeBlock';
+export type { CodeBlockCopyLabels, CodeBlockProps, CodeLine, CodeSegment, CodeSegmentTone } from './CodeBlock';
 export { CODE_PANE_TONE, CodePane } from './CodePane';
 export type { CodePaneLine, CodePaneProps, CodePaneSegment, CodePaneTone } from './CodePane';
 export { KeyValue } from './KeyValue';

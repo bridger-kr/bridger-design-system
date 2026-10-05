@@ -249,7 +249,7 @@ Aliases, helpers, and constants are listed alongside each family and are not cou
 
 - `ToggleSwitch` is a legacy alias of `Switch` and resolves to the same component.
 - `cx` is a class-name helper re-exported from the package root.
-- Token enums: `CardTone`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `AlertMotion`, `CODE_PANE_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
+- Token enums: `CardTone` (deprecated alias of `CardVariant`), `CARD_VARIANT`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `CODE_PANE_TONE` (deprecated alias of `CODE_SEGMENT_TONE`), `CODE_SEGMENT_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_TONE`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
 - Class-name helpers: `metricAccentColor`, `actionListClassName`, `actionListItemClassName`, `productActionPillClassName`.
 - Companion types only (no runtime export): `BrandLogoHandle`, `BrandLogoLanguage`, `BrandLogoSize`, and the per-component `*Props` / option types in each file.
 
@@ -380,6 +380,33 @@ Brand and marketing composites. These are the landing-side primitives that depen
 - Examples and Figma Component Sets must use the same names and state vocabulary as the React package.
 - Subpath imports (`@bridger-kr/react/components/<family>/<Component>`) are reserved for tree-shaking; the package root barrel is the supported public entry.
 - Components that own motion must implement `prefers-reduced-motion: reduce` per Section 7.
+
+### 9.9 Component API conventions
+
+These rules govern the public prop surface of `@bridger-kr/react`. They are enforced by `packages/react/src/api-conventions.test-d.tsx` and the family runtime tests.
+
+**Variant-prop naming.** One prop name per meaning, fixed across the package:
+
+| Prop | Meaning | Allowed values |
+| --- | --- | --- |
+| `variant` | Visual shape / emphasis | Button `solid \| outline \| ghost`, Card `plain \| sunken`, Tabs `underline \| segmented` |
+| `tone` | Semantic color | `neutral \| accent \| success \| warning \| danger \| info` (component-specific subsets allowed) |
+| `size` | Scale | `sm \| md \| lg` (32/36/40px floors) |
+| `status` | Data state only | `loading \| ok \| error \| na` (e.g. `StatTile`); never a visual alias |
+
+Renamed props keep the old name as a deprecated alias for one minor release (removed in v2.1). Aliases emit a single development-mode `console.warn` per key via `lib/deprecate.ts#warnOnce`; they must never warn in production builds.
+
+**Refs.** Every component that renders a DOM element is a `forwardRef` component with `displayName` set. Form controls forward to the real control element (`<input>`, `<textarea>`, trigger `<button>`); all other components forward to their root element. This is what unblocks `react-hook-form` registration, first-error focus, and Tooltip/Popover anchoring.
+
+**IDs.** Control ids default to `useId()`. Deriving ids from label text is prohibited — repeated labels must never collide. Hints/descriptions derive from the control id (`${id}-hint`) and attach via `aria-describedby`.
+
+**`className` / `style`.** Always apply to the component's root element. Inner elements are customized through `slotProps` prop bags typed by `lib/slot.ts#SlotPropsFor` (e.g. `slotProps.input.className` on `Input`).
+
+**Composition.** `Button` accepts base-ui's `render` prop (`<Button render={<a href="…" />}>`), so consuming apps never restyle raw anchors with button classes. Icon-only buttons must declare `aria-label` at the type level.
+
+**Controlled state.** Stateful components follow `open`/`defaultOpen`/`onOpenChange` or `value`/`defaultValue`/`onValueChange` via `lib/useControllableState.ts`. A `value`/`open` prop makes the component controlled; the default-prefixed prop seeds uncontrolled state.
+
+**Single-purpose exports.** Overlapping components collapse into one canonical API — `CodeBlock` is the only code-display component; `CodePane` is a deprecated wrapper and is removed in v2.1.
 
 ## 10. Provenance and reference discipline
 

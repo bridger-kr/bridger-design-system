@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 import { StatTile } from './StatTile';
@@ -12,12 +13,16 @@ export interface StatPanelProps extends HTMLAttributes<HTMLDivElement> {
   variant?: 'card' | 'list';
 }
 
-export function StatPanel({ items = [], variant = 'card', className, ...rest }: StatPanelProps) {
+export const StatPanel = forwardRef<HTMLDivElement, StatPanelProps>(function StatPanel(
+  { items = [], variant = 'card', className, ...rest },
+  ref,
+) {
   return (
-    <div className={cx('dt-stat-panel', `dt-stat-panel-${variant}`, className)} {...rest}>
+    <div ref={ref} className={cx('dt-stat-panel', `dt-stat-panel-${variant}`, className)} {...rest}>
       {items.map((item, index) => (
         <StatTile key={index} value={item.value} label={item.label} className="dt-stat-panel-tile" />
       ))}
     </div>
   );
-}
+});
+StatPanel.displayName = 'StatPanel';
