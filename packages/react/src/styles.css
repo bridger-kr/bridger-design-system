@@ -74,7 +74,7 @@
   display: flex;
 }
 
-.dt-select-trigger {
+.dt-field.dt-select-trigger {
   width: 100%;
   padding: var(--dt-space-2) var(--dt-space-5) var(--dt-space-2) var(--dt-space-12);
   border: 1px solid var(--dt-border);
@@ -146,12 +146,16 @@
   gap: var(--dt-space-2);
 }
 
-.dt-combobox-field {
+.dt-field.dt-combobox-field {
   display: flex;
   align-items: center;
   gap: var(--dt-space-2);
   padding: 0 var(--dt-space-12);
   background: var(--dt-surface-sunken);
+}
+
+.dt-field.dt-combobox-field:focus-within {
+  background: var(--dt-surface);
 }
 
 .dt-combobox-field .dt-input-control {
