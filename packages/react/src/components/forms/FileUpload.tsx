@@ -1,5 +1,7 @@
+import { File, Upload, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import type { CSSProperties, DragEvent, HTMLAttributes } from 'react';
+import { Icon } from '../../lib/icon';
 
 function fmtSize(bytes?: number) {
   if (bytes == null) return '';
@@ -76,15 +78,7 @@ export function FileUpload({
               color: 'var(--dt-accent-text)',
             }}
           >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinejoin="round"
-              />
-              <path d="M14 2v6h6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-            </svg>
+            <Icon icon={File} />
           </span>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div
@@ -120,9 +114,7 @@ export function FileUpload({
               cursor: 'pointer',
             }}
           >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
+            <Icon icon={X} size="sm" />
           </button>
         </div>
       ) : (
@@ -154,21 +146,7 @@ export function FileUpload({
           }}
         >
           <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M12 16V4m0 0L7 9m5-5l5 5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
+            <Icon icon={Upload} size="lg" />
           </span>
           <span style={{ fontSize: 13.5, color: 'var(--dt-text-strong)' }}>
             <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>파일 선택</span> 또는 끌어다 놓기

@@ -1,6 +1,8 @@
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
+import { X } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { useId } from 'react';
+import { Icon } from '../../lib/icon';
 
 export interface DrawerProps {
   open?: boolean;
@@ -51,7 +53,7 @@ export function Drawer({ open = false, side = 'right', title, children, footer, 
                 className="dt-close-control"
                 style={{ flex: '0 0 auto', display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-sm)', color: 'var(--dt-text-subtle)', cursor: 'pointer' }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+                <Icon icon={X} />
               </BaseDialog.Close>
             </header>
             <div style={{ flex: 1, overflowY: 'auto', padding: 18 }}>{children}</div>

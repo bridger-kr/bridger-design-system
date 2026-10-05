@@ -1,5 +1,7 @@
 import { Select as BaseSelect } from '@base-ui-components/react/select';
+import { ChevronDown } from 'lucide-react';
 import type { CSSProperties, SelectHTMLAttributes } from 'react';
+import { Icon } from '../../lib/icon';
 
 export interface SelectOption {
   value: string;
@@ -72,16 +74,7 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
             </BaseSelect.Positioner>
           </BaseSelect.Portal>
         </BaseSelect.Root>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          className="dt-select-chevron"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <Icon icon={ChevronDown} className="dt-select-chevron" />
       </div>
       {hint ? <span className="dt-input-hint">{hint}</span> : null}
     </div>

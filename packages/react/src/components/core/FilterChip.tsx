@@ -1,5 +1,7 @@
+import { X } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+import { Icon } from '../../lib/icon';
 
 export interface FilterChipProps {
   label: string;
@@ -57,7 +59,7 @@ export function FilterChip({ label, count, active = false, removable = false, on
         onClick={onRemove}
         style={{ color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }}
       >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
+        <Icon icon={X} size="sm" />
       </button>
     </span>
   );

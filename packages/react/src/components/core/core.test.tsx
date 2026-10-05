@@ -5,7 +5,10 @@ import type { CSSProperties, ReactElement, ReactNode } from 'react';
 import { Children, isValidElement } from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { X } from 'lucide-react';
 import { describe, expect, it, vi } from 'vitest';
+
+import { Icon } from '../../lib/icon';
 
 import {
   Badge,
@@ -156,6 +159,41 @@ describe('core exports', () => {
     expect(el.props.className).toContain('btn-primary');
     expect(el.props.className).toContain('dt-button-md');
     expect(el.props.style).toBe(style);
+  });
+
+  it('pins package icons to the icon canon — size scale, 1.75 stroke, currentColor, a11y', () => {
+    const { container } = render(
+      <>
+        <Icon icon={X} />
+        <Icon icon={X} size="sm" />
+        <Icon icon={X} label="닫기" />
+      </>,
+    );
+    const svgs = container.querySelectorAll('svg');
+
+    expect(svgs[0].getAttribute('width')).toBe('16');
+    expect(svgs[0].getAttribute('stroke-width')).toBe('1.75');
+    expect(svgs[0].getAttribute('stroke')).toBe('currentColor');
+    expect(svgs[0].getAttribute('aria-hidden')).toBe('true');
+    expect(svgs[1].getAttribute('width')).toBe('14');
+    expect(svgs[2].getAttribute('role')).toBe('img');
+    expect(svgs[2].getAttribute('aria-label')).toBe('닫기');
+  });
+
+  it('names icon-only Buttons accessibly and hides their icon glyph', () => {
+    render(<Button icon={<X />} aria-label="닫기" />);
+    const action = screen.getByRole('button', { name: '닫기' });
+    const glyph = action.querySelector('svg');
+
+    expect(glyph).not.toBeNull();
+    expect(glyph?.closest('[aria-hidden="true"]')).not.toBeNull();
+
+    // @ts-expect-error icon-only buttons require aria-label
+    void (<Button icon={<X />} />);
+    // @ts-expect-error icon-only buttons require aria-label
+    void (<Button iconRight={<X />} />);
+    // @ts-expect-error icon props cannot render a label-less button
+    void (<Button icon={<X />} iconRight={<X />} />);
   });
 
   it('defines token-backed Button size floors and disabled state in CSS', () => {

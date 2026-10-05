@@ -1,4 +1,6 @@
+import { X } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
+import { Icon } from '../../lib/icon';
 
 const DOT = { info: 'var(--dt-cobalt)', success: 'var(--dt-success)', warning: 'var(--dt-warning)', danger: 'var(--dt-danger)' };
 
@@ -27,7 +29,7 @@ export function Toast({ tone = 'success', title, message, action, onDismiss, sty
       {action ? <div style={{ flex: '0 0 auto' }}>{action}</div> : null}
       {onDismiss ? (
         <button onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--dt-text-muted)', padding: 2, lineHeight: 0 }}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <Icon icon={X} size="sm" />
         </button>
       ) : null}
     </div>

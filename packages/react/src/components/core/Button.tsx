@@ -25,19 +25,31 @@ const VARIANT_CLASS = {
   danger: 'btn-danger',
 } satisfies Record<ButtonVariant, string>;
 
-export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
-  children?: ReactNode;
+type ButtonBase = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> & {
   /** primary = strongest action; secondary = regular; ghost = low emphasis; danger = destructive action. */
   variant?: ButtonVariant;
   size?: ButtonSize;
-  /** Lucide icon element placed before the label. */
-  icon?: ReactNode;
-  /** Lucide icon element placed after the label. */
-  iconRight?: ReactNode;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   style?: CSSProperties;
-}
+};
+
+/**
+ * Labeled button, or an icon-only button. An icon-only button has no visible
+ * text, so `aria-label` is required at the type level (DESIGN.md §6/§8).
+ */
+export type ButtonProps =
+  | (ButtonBase & {
+      children: ReactNode;
+      /** Lucide icon element placed before the label. */
+      icon?: ReactNode;
+      /** Lucide icon element placed after the label. */
+      iconRight?: ReactNode;
+    })
+  | (ButtonBase & { children?: never; 'aria-label': string } & (
+        | { icon: ReactNode; iconRight?: ReactNode }
+        | { icon?: ReactNode; iconRight: ReactNode }
+      ));
 
 /**
  * Bridger button. Primary is the single strongest action per screen;

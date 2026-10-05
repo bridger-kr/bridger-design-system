@@ -243,9 +243,12 @@ tabular numbers.
 
 ## ICONOGRAPHY
 
-- **System:** [**Lucide**](https://lucide.dev) line icons, ~1.85–2px stroke,
-  used at 14–20px. This is the *only* product icon set. Load from CDN
-  (`lucide` or `lucide-react`). Common glyphs in use: `LayoutDashboard`,
+- **System:** [**Lucide**](https://lucide.dev) line icons, fixed 1.75px stroke
+  (`--dt-icon-stroke`), at exactly `--dt-icon-sm`/`md`/`lg` (14/16/20px). This
+  is the *only* product icon set; `@bridger-kr/react` takes `lucide-react` as
+  a peer and uses named imports only. Decorative "AI" icons are banned
+  (`Sparkles`, `Wand*`, `Stars`, `Rocket`, `Zap`, `Flame` — see DESIGN.md §6).
+  Common glyphs in use: `LayoutDashboard`,
   `Wrench`, `Boxes`, `LibraryBig`, `KeyRound`, `Gauge`, `Server`, `FileClock`,
   `Settings`, `Database`, `LockKeyhole`, `ShieldCheck`, `Terminal`, `Store`,
   `ArrowRight`, `CheckCircle2`, `Copy`, `ExternalLink`, `Code2`.

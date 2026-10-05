@@ -1,6 +1,8 @@
 import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
+import { Check, Search } from 'lucide-react';
 import { useState } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
+import { Icon } from '../../lib/icon';
 
 export interface ComboboxOption {
   value: string;
@@ -78,17 +80,7 @@ export function Combobox({
         </label>
       ) : null}
       <div className="dt-field dt-combobox-field">
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          className="dt-combobox-field-icon"
-        >
-          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-          <path d="M21 21l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
+        <Icon icon={Search} className="dt-combobox-field-icon" />
         <BaseCombobox.Input
           id={cbId}
           value={open ? query : selected ? selected.label : ''}
@@ -131,22 +123,7 @@ export function Combobox({
                     </span>
                   ) : null}
                   {isSel ? (
-                    <svg
-                      width="15"
-                      height="15"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      aria-hidden="true"
-                      className="dt-combobox-option-check"
-                    >
-                      <path
-                        d="M20 6L9 17l-5-5"
-                        stroke="currentColor"
-                        strokeWidth="2.2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
+                    <Icon icon={Check} className="dt-combobox-option-check" />
                   ) : null}
                 </BaseCombobox.Item>
               );

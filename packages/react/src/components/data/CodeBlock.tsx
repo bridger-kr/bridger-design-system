@@ -1,5 +1,7 @@
+import { Check, Copy } from 'lucide-react';
 import type { CSSProperties, HTMLAttributes } from 'react';
 import { useState } from 'react';
+import { Icon } from '../../lib/icon';
 
 type TokenKind = 'plain' | 'key' | 'str' | 'num' | 'kw' | 'pun';
 
@@ -75,9 +77,9 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
               }}
             >
               {copied ? (
-                <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>복사됨</>
+                <><Icon icon={Check} size="sm" />복사됨</>
               ) : (
-                <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>복사</>
+                <><Icon icon={Copy} size="sm" />복사</>
               )}
             </button>
           ) : null}

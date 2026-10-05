@@ -181,7 +181,8 @@ describe('Product components', () => {
       );
 
       expect(container.querySelector('.dt-product-shell-cinematic')).toBeTruthy();
-      expect(container.querySelector('.dt-product-cinematic-lines')).toBeTruthy();
+      expect(container.querySelector('.dt-product-cinematic-backdrop')).toBeTruthy();
+      expect(container.querySelector('.dt-product-cinematic-backdrop svg')).toBeNull();
       expect(container.querySelector('.dt-product-motion-field')).toBeTruthy();
       expect(container.querySelector('.dt-product-motion-grid')?.getAttribute('src')).toBe('/grid.svg');
       expect(container.querySelector('.dt-product-motion-orbit')).toBeTruthy();
