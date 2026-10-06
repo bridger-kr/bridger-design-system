@@ -4,7 +4,7 @@
    and deterministically builds:
      1. A Variable Collection "Bridger" with Light/Dark modes
      2. Text Styles (typography) + Effect Styles (boxShadow)
-     3. 40 Component Sets (Variants) from components.spec.json
+     3. 46 Component Sets (Variants) from components.spec.json
 
    The spec is a declarative node tree (see components.spec.json). This file
    is the renderer — it never parses JSX. All color/spacing/radius references

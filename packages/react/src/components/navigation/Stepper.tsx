@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
 
 export interface Step {
@@ -17,10 +18,14 @@ export interface StepperProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chil
  * Multi-step progress — done (check) / current (persimmon) / upcoming (muted).
  * @startingPoint section="Navigation" subtitle="Onboarding step progress" viewport="560x120"
  */
-export function Stepper({ steps = [], current = 0, orientation = 'horizontal', style, ...rest }: StepperProps) {
+export const Stepper = forwardRef<HTMLDivElement, StepperProps>(function Stepper(
+  { steps = [], current = 0, orientation = 'horizontal', style, ...rest },
+  ref,
+) {
   const vertical = orientation === 'vertical';
   return (
     <div
+      ref={ref}
       {...rest}
       style={{
         display: 'flex', flexDirection: vertical ? 'column' : 'row',
@@ -60,4 +65,5 @@ export function Stepper({ steps = [], current = 0, orientation = 'horizontal', s
       })}
     </div>
   );
-}
+});
+Stepper.displayName = 'Stepper';

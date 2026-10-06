@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { forwardRef, useId, useState } from 'react';
 import type { CSSProperties, DragEvent, HTMLAttributes } from 'react';
 
 function fmtSize(bytes?: number) {
@@ -13,7 +13,7 @@ export interface UploadedFile {
   size?: number;
 }
 
-export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'id' | 'style'> {
+export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'id' | 'onChange' | 'style'> {
   label?: string;
   /** Accepted file types, passed to the native input. */
   accept?: string;
@@ -30,26 +30,31 @@ export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'i
  * Dashed hairline dropzone for uploading an OpenAPI spec. Idle / drag / filled.
  * @startingPoint section="Forms" subtitle="Dropzone for an OpenAPI spec" viewport="460x180"
  */
-export function FileUpload({
-  label,
-  accept = '.json,.yaml,.yml',
-  hint = 'OpenAPI 스펙 · JSON 또는 YAML',
-  file,
-  onFiles,
-  onRemove,
-  id,
-  style,
-}: FileUploadProps) {
+export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function FileUpload(
+  {
+    label,
+    accept = '.json,.yaml,.yml',
+    hint = 'OpenAPI 스펙 · JSON 또는 YAML',
+    file,
+    onFiles,
+    onRemove,
+    id,
+    className,
+    style,
+    ...rest
+  },
+  ref,
+) {
   const [drag, setDrag] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const fId = id || 'fu';
+  const autoId = useId();
+  const fId = id ?? autoId;
 
   const handle = (files: FileList | null) => {
     if (files && files.length) onFiles?.(files);
   };
 
   return (
-    <div style={{ display: 'grid', gap: 7, ...style }}>
+    <div className={className} style={{ display: 'grid', gap: 7, ...style }} {...rest}>
       {label ? <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</span> : null}
 
       {file ? (
@@ -163,7 +168,7 @@ export function FileUpload({
           </span>
           <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint}</span>
           <input
-            ref={inputRef}
+            ref={ref}
             id={fId}
             type="file"
             accept={accept}
@@ -174,4 +179,5 @@ export function FileUpload({
       )}
     </div>
   );
-}
+});
+FileUpload.displayName = 'FileUpload';

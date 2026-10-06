@@ -1,4 +1,5 @@
 import { Menu as BaseMenu } from '@base-ui-components/react/menu';
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -18,10 +19,13 @@ export interface MenuProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'childr
   style?: CSSProperties;
 }
 
-export function Menu({ trigger, items = [], align = 'left', width = 200, className, style, ...rest }: MenuProps) {
+export const Menu = forwardRef<HTMLSpanElement, MenuProps>(function Menu(
+  { trigger, items = [], align = 'left', width = 200, className, style, ...rest },
+  ref,
+) {
   return (
     <BaseMenu.Root modal={false}>
-      <span {...rest} className={cx('dt-menu-root', className)} style={{ position: 'relative', display: 'inline-flex', ...style }}>
+      <span ref={ref} {...rest} className={cx('dt-menu-root', className)} style={{ position: 'relative', display: 'inline-flex', ...style }}>
         <BaseMenu.Trigger
           className="dt-menu-trigger"
           style={{ display: 'inline-flex', cursor: 'pointer', border: 'none', background: 'transparent', padding: 0, fontSize: 'inherit', fontFamily: 'inherit' }}
@@ -53,4 +57,5 @@ export function Menu({ trigger, items = [], align = 'left', width = 200, classNa
       </span>
     </BaseMenu.Root>
   );
-}
+});
+Menu.displayName = 'Menu';

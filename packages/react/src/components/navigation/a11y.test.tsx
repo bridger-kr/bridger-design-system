@@ -38,10 +38,23 @@ describe('CommandPalette a11y', () => {
     expect(onSelect).toHaveBeenCalledWith(groups[0].items[0]);
   });
 
-  it('closes on Escape', () => {
-    const { container } = render(<CommandPalette open groups={groups} />);
+  it('closes on Escape when uncontrolled', () => {
+    const { container } = render(<CommandPalette defaultOpen groups={groups} />);
     const listbox = container.querySelector('[role="listbox"]') as HTMLElement;
     fireEvent.keyDown(listbox, { key: 'Escape' });
+    expect(container.querySelector('[role="listbox"]')).toBeNull();
+  });
+
+  it('reports Escape through onOpenChange when controlled', () => {
+    const onOpenChange = vi.fn();
+    const { container, rerender } = render(<CommandPalette open groups={groups} onOpenChange={onOpenChange} />);
+    const listbox = container.querySelector('[role="listbox"]') as HTMLElement;
+
+    fireEvent.keyDown(listbox, { key: 'Escape' });
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(container.querySelector('[role="listbox"]')).not.toBeNull();
+
+    rerender(<CommandPalette open={false} groups={groups} onOpenChange={onOpenChange} />);
     expect(container.querySelector('[role="listbox"]')).toBeNull();
   });
 });

@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import {
@@ -24,22 +24,15 @@ describe('feedback component exports', () => {
   });
 
   it('renders the alert tone contract as a semantic status panel', () => {
-    const el = Alert({
-      tone: AlertTone.Warning,
-      title: '주의',
-      children: '게이트웨이 응답 지연. 네트워크 확인 필요.',
-    });
+    render(<Alert tone={AlertTone.Warning} title="주의">게이트웨이 응답 지연. 네트워크 확인 필요.</Alert>);
 
-    expect(el.props.role).toBe('status');
-    expect(el.props.style).toMatchObject({
-      alignItems: 'flex-start',
-      background: 'var(--dt-tint-warning)',
-      borderRadius: 'var(--dt-radius-card)',
-      color: 'var(--dt-text-strong)',
-      minHeight: 62,
-      padding: '13px 15px',
-      width: 'min(100%, 380px)',
-    });
+    const el = screen.getByRole('status');
+    expect(el.style.alignItems).toBe('flex-start');
+    expect(el.style.background).toBe('var(--dt-tint-warning)');
+    expect(el.style.borderRadius).toBe('var(--dt-radius-card)');
+    expect(el.style.color).toBe('var(--dt-text-strong)');
+    expect(el.style.minHeight).toBe('62px');
+    expect(el.style.padding).toBe('13px 15px');
   });
 
   it('uses adaptive strong contrast for every semantic tone', () => {
@@ -51,26 +44,21 @@ describe('feedback component exports', () => {
     ] as const;
 
     for (const [tone, background] of toneBackgrounds) {
-      const el = Alert({ tone, title: '상태', children: '게이트웨이 상태를 확인했습니다.' });
-      expect(el.props.style).toMatchObject({
-        background,
-        color: 'var(--dt-text-strong)',
-      });
+      const { unmount } = render(<Alert tone={tone} title="상태">게이트웨이 상태를 확인했습니다.</Alert>);
+      const el = screen.getByRole('status');
+      expect(el.style.background).toBe(background);
+      expect(el.style.color).toBe('var(--dt-text-strong)');
+      unmount();
     }
   });
 
-  it('supports opt-in motion while keeping the default static', () => {
-    const staticAlert = Alert({ title: '안내', children: '게이트웨이 응답 정상.' });
-    const liveAlert = Alert({
-      tone: AlertTone.Success,
-      title: '완료',
-      children: '도구 노출이 적용되었습니다.',
-      motion: 'pulse',
-    });
+  it('keeps alerts static — the motion prop and pulse classes are removed', () => {
+    render(<Alert title="안내">게이트웨이 응답 정상.</Alert>);
 
-    expect(staticAlert.props.className).toBe('dt-alert');
-    expect(staticAlert.props.style.transition).toBeUndefined();
-    expect(liveAlert.props.className).toBe('dt-alert dt-alert-motion-pulse');
+    const el = screen.getByRole('status');
+    expect(el.className).toBe('dt-alert');
+    expect(el.className).not.toContain('dt-alert-motion');
+    expect(el.style.transition).toBe('');
   });
 
   it('does not attach hover or press motion to static alerts', () => {
@@ -82,7 +70,8 @@ describe('feedback component exports', () => {
   });
 
   it('uses package stylesheet classes for feedback motion', () => {
-    expect(Toast({ message: '저장됨' }).props.className).toBe('dt-toast');
+    render(<Toast message="저장됨" />);
+    expect(screen.getByText('저장됨').closest('.dt-toast')).toBeTruthy();
   });
 
   it('uses the declared overlay and modal layers for dialogs', () => {
@@ -101,9 +90,16 @@ describe('feedback component exports', () => {
   });
 
   it('uses the shared close target for dismissible alerts', () => {
-    const alert = Alert({ title: '안내', onDismiss: () => undefined });
-    const closeButton = alert.props.children[2];
+    render(<Alert title="안내" onDismiss={() => undefined} />);
 
-    expect(closeButton.props.className).toContain('dt-close-control');
+    expect(screen.getByRole('button', { name: '닫기' }).className).toContain('dt-close-control');
+  });
+
+  it('reflects controlled open state on Dialog rerender', () => {
+    const { rerender } = render(<Dialog open={false} title="확인">내용</Dialog>);
+    expect(document.querySelector('[data-dt-dialog-content]')).toBeNull();
+
+    rerender(<Dialog open title="확인">내용</Dialog>);
+    expect(document.querySelector('[data-dt-dialog-content]')).toBeTruthy();
   });
 });

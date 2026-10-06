@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
 
 export type LogLevel = 'ok' | 'warn' | 'error' | 'info';
@@ -27,9 +28,12 @@ export interface LogRowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'child
  * Dense tabular execution-log stream — hairline rows, status dots, mono columns.
  * @startingPoint section="Data" subtitle="Execution-log stream" viewport="560x200"
  */
-export function LogRow({ entries = [], style, ...rest }: LogRowProps) {
+export const LogRow = forwardRef<HTMLDivElement, LogRowProps>(function LogRow(
+  { entries = [], style, ...rest },
+  ref,
+) {
   return (
-    <div {...rest} style={{
+    <div ref={ref} {...rest} style={{
       border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
       background: 'var(--dt-surface)', fontVariantNumeric: 'tabular-nums', ...style,
     }}>
@@ -59,4 +63,5 @@ export function LogRow({ entries = [], style, ...rest }: LogRowProps) {
       })}
     </div>
   );
-}
+});
+LogRow.displayName = 'LogRow';
