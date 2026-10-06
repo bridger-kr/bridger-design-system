@@ -10,25 +10,26 @@ pnpm add @bridger-kr/tokens
 
 ## CSS
 
-Import the full token contract once in your app entrypoint:
+Import the token contract once in your app entrypoint:
 
 ```ts
 import '@bridger-kr/tokens/css';
 ```
 
-The full entrypoint imports files in this order: fonts, colors, typography, spacing, base.
+The default entrypoint imports, in order: `fonts.css` (`@font-face`, unlayered), `reset.css` (`@layer dt.reset` — a minimal reset), and `contract.css` (`@layer dt.tokens` — the `--dt-*` custom properties). It declares the system-wide layer order `@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`, so every DS rule sits inside a layer and any unlayered consumer CSS wins over it without `!important`.
 
-Per-file imports are available when you only need part of the contract:
+Optional sheets are opt-in subpaths:
 
 ```ts
-import '@bridger-kr/tokens/css/fonts';
-import '@bridger-kr/tokens/css/colors';
-import '@bridger-kr/tokens/css/typography';
-import '@bridger-kr/tokens/css/spacing';
-import '@bridger-kr/tokens/css/base';
+import '@bridger-kr/tokens/css/base';            // element defaults — body, headings, links, code (@layer dt.base)
+import '@bridger-kr/tokens/css/legacy-classes';  // deprecated .btn-*/.badge/.card aliases — removed in 2.1.0
 ```
 
-`@bridger-kr/tokens/styles.css` is an alias for the full CSS entrypoint.
+`base.css` is deliberately excluded from the default entrypoint because element defaults mutate a consumer's global styles. The compatibility subpaths `./css/colors`, `./css/typography`, and `./css/spacing` remain as aliases for the contract.
+
+`@bridger-kr/tokens/styles.css` is an alias for the default CSS entrypoint.
+
+`dt-` means **design token** (see `docs/adr/0001-token-prefix.md`), not a brand abbreviation.
 
 ## Theming
 

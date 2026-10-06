@@ -112,18 +112,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     if (tone === BUTTON_TONE.Neutral) resolvedTone = legacy.tone;
   }
 
-  // Emit the canonical `dt-button-*` class plus the legacy `btn-*` class so the
-  // component is styled identically before and after the DS-45 `.btn-*` →
-  // `.dt-button-*` CSS rename lands (expected rebase friction with that PR).
-  const legacyBtnClass =
-    resolvedVariant === 'ghost'
-      ? 'btn-ghost'
-      : resolvedVariant === 'outline'
-        ? 'btn-secondary'
-        : resolvedTone === BUTTON_TONE.Danger
-          ? 'btn-danger'
-          : 'btn-primary';
-
   return useRender({
     render,
     defaultTagName: 'button',
@@ -131,7 +119,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     props: {
       type,
       disabled,
-      className: cx('dt-button', `dt-button-${size}`, `dt-button-${resolvedVariant}`, legacyBtnClass, className),
+      className: cx('dt-button', `dt-button-${size}`, `dt-button-${resolvedVariant}`, className),
       'data-tone': resolvedTone === BUTTON_TONE.Danger ? 'danger' : undefined,
       onClick,
       style,

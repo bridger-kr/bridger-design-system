@@ -30,6 +30,16 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Smoke-test package imports
+        run: pnpm smoke:packages
+
+      - name: Validate package exports
+        run: |
+          pnpm dlx publint packages/tokens
+          pnpm dlx publint packages/react
+          pnpm dlx @arethetypeswrong/cli --pack packages/tokens --profile node16 --entrypoints .
+          pnpm dlx @arethetypeswrong/cli --pack packages/react --profile node16 --entrypoints . ./components/core ./components/data ./components/feedback ./components/forms ./components/navigation ./components/product
+
       - name: Typecheck
         run: pnpm typecheck
 

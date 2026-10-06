@@ -29,11 +29,6 @@ export type CardTone = (typeof CardTone)[keyof typeof CardTone];
 
 type CardVariantInput = CardVariant | CardTone;
 
-const VARIANT_STYLE = {
-  plain: { background: 'var(--dt-surface)', boxShadow: 'none' },
-  sunken: { background: 'var(--dt-surface-sunken)', boxShadow: 'none' },
-} satisfies Record<CardVariant, CSSProperties>;
-
 const LEGACY_VARIANT_MAP: Record<CardTone, CardVariant> = {
   default: CARD_VARIANT.Plain,
   panel: CARD_VARIANT.Plain,
@@ -57,7 +52,6 @@ function resolveCardVariant(variant: CardVariantInput | undefined, tone: CardTon
   );
   return LEGACY_VARIANT_MAP[raw];
 }
-
 interface CardVisualProps {
   readonly children?: ReactNode;
   /** `plain` = flat bordered plane; `sunken` = recessed well. */
@@ -80,14 +74,12 @@ export type CardLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'child
     readonly href: string;
   };
 
+// `variant` is kept in the signature so the selected variant stays part of
+// every card render path; backgrounds/transitions come from `.dt-card-*` CSS.
 function cardStyle(variant: CardVariant, padding: number, style?: CSSProperties): CSSProperties {
+  void variant;
   return {
-    borderRadius: 'var(--dt-radius-card)',
-    border: '1px solid var(--dt-border)',
-    color: 'var(--dt-text)',
     padding,
-    transition: 'border-color var(--dt-duration-base) var(--dt-ease), box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease), transform var(--dt-duration-base) var(--dt-ease)',
-    ...VARIANT_STYLE[variant],
     ...style,
   };
 }
@@ -128,15 +120,7 @@ export const CardButton = forwardRef<HTMLButtonElement, CardButtonProps>(functio
       type={type}
       disabled={disabled}
       className={cx('dt-card', `dt-card-${selectedVariant}`, 'dt-card-action', className)}
-      style={{
-        appearance: 'none',
-        display: 'block',
-        font: 'inherit',
-        minHeight: 'var(--dt-space-5)',
-        textAlign: 'inherit',
-        width: '100%',
-        ...cardStyle(selectedVariant, padding, style),
-      }}
+      style={cardStyle(selectedVariant, padding, style)}
     >
       {children}
     </button>
@@ -156,13 +140,7 @@ export const CardLink = forwardRef<HTMLAnchorElement, CardLinkProps>(function Ca
       ref={ref}
       href={href}
       className={cx('dt-card', `dt-card-${selectedVariant}`, 'dt-card-action', className)}
-      style={{
-        display: 'block',
-        minHeight: 'var(--dt-space-5)',
-        textDecoration: 'none',
-        width: '100%',
-        ...cardStyle(selectedVariant, padding, style),
-      }}
+      style={cardStyle(selectedVariant, padding, style)}
     >
       {children}
     </a>

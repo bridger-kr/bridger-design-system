@@ -70,13 +70,14 @@ describe('core exports', () => {
       </>,
     );
 
-    expect(screen.getByText('상태').style.background).toBe('var(--dt-surface)');
+    // `raised` collapses to the flat plane in v2; surface tokens live in `.dt-card-*` CSS
+    expect(screen.getByText('상태').className).toContain('dt-card-plain');
     expect(screen.getByText('패널').className).toContain('bg-[var(--dt-surface-raised)]');
     expect(metricAccentColor(MetricAccent.Success)).toBe('text-[var(--dt-success)]');
     expect(cx('a', false, 'b')).toBe('a b');
   });
 
-  it('maps Card variants to surface tokens and keeps legacy names as aliases', () => {
+  it('maps Card variants to surface classes and keeps legacy names as aliases', () => {
     render(
       <>
         <Card variant="plain">기본</Card>
@@ -90,12 +91,10 @@ describe('core exports', () => {
     );
 
     expect(screen.getByText('기본').className).toContain('dt-card-plain');
-    expect(screen.getByText('기본').style.background).toBe('var(--dt-surface)');
     expect(screen.getByText('움푹').className).toContain('dt-card-sunken');
-    expect(screen.getByText('움푹').style.background).toBe('var(--dt-surface-sunken)');
-    expect(screen.getByText('레거시 기본').style.background).toBe('var(--dt-surface)');
-    expect(screen.getByText('레거시 뮤트').style.background).toBe('var(--dt-surface-sunken)');
-    expect(screen.getByText('레거시 패널').style.background).toBe('var(--dt-surface)');
+    expect(screen.getByText('레거시 기본').className).toContain('dt-card-plain');
+    expect(screen.getByText('레거시 뮤트').className).toContain('dt-card-sunken');
+    expect(screen.getByText('레거시 패널').className).toContain('dt-card-plain');
     expect(screen.getByText('레거시 변형').className).toContain('dt-card-sunken');
     expect(screen.getByText('초기값').className).toContain('dt-card-plain');
   });
@@ -115,13 +114,11 @@ describe('core exports', () => {
     const cardLink = screen.getByRole('link', { name: '도구 열기' });
 
     expect(defaultCard.tagName).toBe('DIV');
+    expect(defaultCard.className).toContain('dt-card');
     expect(defaultCard.style.padding).toBe('20px');
-    expect(defaultCard.style.border).toBe('1px solid var(--dt-border)');
-    expect(defaultCard.style.boxShadow).toBe('none');
     expect(screen.getByText('여백').style.padding).toBe('8px');
     expect(cardButton.getAttribute('type')).toBe('button');
     expect(cardButton.className).toContain('dt-card-action');
-    expect(cardButton.style.minHeight).toBe('var(--dt-space-5)');
     expect(cardLink.getAttribute('href')).toBe('/tools');
     expect(cardButton.querySelector('style')).toBeNull();
   });
@@ -155,12 +152,12 @@ describe('core exports', () => {
       </>,
     );
 
-    expect(screen.getByText('중립').className).toContain('badge');
-    expect(screen.getByText('강조').className).toContain('badge badge-accent');
-    expect(screen.getByText('정보').className).toContain('badge badge-info');
-    expect(screen.getByText('성공').className).toContain('badge badge-success');
-    expect(screen.getByText('경고').className).toContain('badge badge-warning');
-    expect(screen.getByText('위험').className).toContain('badge badge-danger');
+    expect(screen.getByText('중립').className).toContain('dt-badge');
+    expect(screen.getByText('강조').className).toContain('dt-badge-accent');
+    expect(screen.getByText('정보').className).toContain('dt-badge-info');
+    expect(screen.getByText('성공').className).toContain('dt-badge-success');
+    expect(screen.getByText('경고').className).toContain('dt-badge-warning');
+    expect(screen.getByText('위험').className).toContain('dt-badge-danger');
   });
 
   it('Button maps every public variant and size to semantic CSS hooks', () => {
@@ -178,10 +175,9 @@ describe('core exports', () => {
     const danger = screen.getByRole('button', { name: '삭제' });
     const secondary = screen.getByRole('button', { name: '연결' });
     expect(danger.className).toContain('dt-button-solid');
-    expect(danger.className).toContain('btn-danger');
+    expect(danger.getAttribute('data-tone')).toBe('danger');
     expect(danger.className).toContain('dt-button-sm');
     expect(secondary.className).toContain('dt-button-outline');
-    expect(secondary.className).toContain('btn-secondary');
     expect(secondary.className).toContain('dt-button-lg');
   });
 
@@ -193,7 +189,6 @@ describe('core exports', () => {
     expect(el.tagName).toBe('BUTTON');
     expect(el.getAttribute('type')).toBe('button');
     expect(el.className).toContain('dt-button-solid');
-    expect(el.className).toContain('btn-primary');
     expect(el.className).toContain('dt-button-md');
     expect(el.style.height).toBe('20px');
   });
@@ -205,7 +200,7 @@ describe('core exports', () => {
     expect(link.tagName).toBe('A');
     expect(link.getAttribute('href')).toBe('/pricing');
     expect(link.className).toContain('dt-button');
-    expect(link.className).toContain('btn-primary');
+    expect(link.className).toContain('dt-button-solid');
   });
 
   it('warns once when a deprecated Button variant alias is used', () => {
@@ -225,14 +220,25 @@ describe('core exports', () => {
 
   it('defines token-backed Button size floors and disabled state in CSS', () => {
     const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
-    const stylesheet = readFileSync(resolve(packageRoot, '../tokens/css/base.css'), 'utf8');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
 
     expect(stylesheet).toMatch(/\.dt-button\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
     expect(stylesheet).toMatch(/\.dt-button-sm\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
     expect(stylesheet).toMatch(/\.dt-button-md\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-1\)\)/s);
     expect(stylesheet).toMatch(/\.dt-button-lg\s*\{[^}]*min-height:\s*calc\(var\(--dt-space-5\) \+ var\(--dt-space-2\)\)/s);
     expect(stylesheet).toMatch(/\.dt-button:disabled\s*\{[^}]*cursor:\s*not-allowed[^}]*opacity:\s*0\.55/s);
-    expect(stylesheet).toMatch(/\.btn-danger\s*\{[^}]*border:\s*1px solid var\(--dt-danger\)[^}]*background:\s*var\(--dt-danger\)[^}]*color:\s*var\(--dt-surface\)/s);
+    expect(stylesheet).toMatch(/\.dt-button-solid\[data-tone='danger'\]\s*\{[^}]*border-color:\s*var\(--dt-danger\)[^}]*background:\s*var\(--dt-danger\)/s);
+  });
+
+  it('defines Card tones, action targets, and chip floors in CSS', () => {
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+
+    expect(stylesheet).toMatch(/\.dt-card\s*\{[^}]*border:\s*1px solid var\(--dt-border\)/s);
+    expect(stylesheet).toMatch(/\.dt-card-muted[^{]*\{\s*background:\s*var\(--dt-surface-sunken\)/s);
+    expect(stylesheet).toMatch(/\.dt-card-raised\s*\{\s*background:\s*var\(--dt-surface-raised\)/s);
+    expect(stylesheet).toMatch(/\.dt-card-action\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
+    expect(stylesheet).toMatch(/\.dt-filter-chip\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
   });
 
   it('exports chip, section, and segmented tabs as additive contracts', () => {
@@ -307,7 +313,6 @@ describe('core exports', () => {
     const removableGroup = screen.getByRole('button', { name: '지역' }).parentElement;
 
     expect(toggle.className).toContain('dt-filter-chip');
-    expect(toggle.style.minHeight).toBe('var(--dt-space-5)');
     expect(removableGroup?.className).toContain('dt-filter-chip-group');
     expect(removableGroup?.querySelector('.dt-filter-chip-remove')).toBeTruthy();
     expect(container.querySelector('style')).toBeNull();

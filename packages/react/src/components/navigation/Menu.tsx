@@ -46,14 +46,8 @@ export const Menu = forwardRef<HTMLSpanElement, MenuProps>(function Menu(
                     className="dt-menu-item"
                     onClick={it.onClick}
                     data-danger={it.danger ? '' : undefined}
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left',
-                      padding: '8px 10px', border: 'none', borderRadius: 'var(--dt-radius-control)', cursor: 'pointer',
-                      background: 'transparent', fontSize: 14, fontWeight: 500, fontFamily: 'inherit',
-                      color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text)',
-                    }}
                   >
-                    {it.icon ? <span className="dt-menu-item-icon" style={{ display: 'inline-flex', color: it.danger ? 'var(--dt-danger)' : 'var(--dt-text-subtle)' }}>{it.icon}</span> : null}
+                    {it.icon ? <span className="dt-menu-item-icon">{it.icon}</span> : null}
                     {it.label}
                   </BaseMenu.Item>
                 ))}

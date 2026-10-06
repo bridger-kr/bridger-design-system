@@ -3,12 +3,12 @@ import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
 const TONE_CLASS = {
-  neutral: 'badge',
-  accent: 'badge badge-accent',
-  info: 'badge badge-info',
-  success: 'badge badge-success',
-  warning: 'badge badge-warning',
-  danger: 'badge badge-danger',
+  neutral: 'dt-badge',
+  accent: 'dt-badge dt-badge-accent',
+  info: 'dt-badge dt-badge-info',
+  success: 'dt-badge dt-badge-success',
+  warning: 'dt-badge dt-badge-warning',
+  danger: 'dt-badge dt-badge-danger',
 };
 
 export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'> {

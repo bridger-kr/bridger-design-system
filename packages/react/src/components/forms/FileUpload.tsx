@@ -145,18 +145,6 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
             setDrag(false);
             handle(e.dataTransfer.files);
           }}
-          style={{
-            display: 'grid',
-            placeItems: 'center',
-            gap: 8,
-            padding: '26px 20px',
-            textAlign: 'center',
-            cursor: 'pointer',
-            borderRadius: 'var(--dt-radius-card)',
-            border: `1.5px dashed ${drag ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-            background: drag ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-            transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease)',
-          }}
         >
           <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
