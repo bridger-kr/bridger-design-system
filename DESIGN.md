@@ -34,7 +34,6 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 - Use the `BrandLogo` component from `@bridger-kr/react`. Do not recreate the wordmark in page-local SVG, text, or CSS.
 - `BrandLogo` supports `lg`, `md`, `symbol`, and `favicon` variants. Use `lg` and `md` for wordmarks, and `symbol` or `favicon` only where the available slot cannot hold the wordmark.
 - Public product and marketing branding uses Bridger names and approved Bridger domains. Infrastructure or service endpoint identifiers may appear only where the user needs to copy, configure, or inspect an exact technical value. They must never replace the Bridger name in navigation, page titles, metadata, or primary calls to action.
-- The `dt-` prefix on CSS custom properties (`--dt-*`) and component classes (`.dt-*`) means **design token** — see `docs/adr/0001-token-prefix.md` (Accepted 2026-09-28). It is an internal identifier, not a brand abbreviation; new tokens and classes use it unconditionally.
 
 ### 3.2 Language and voice
 
@@ -51,43 +50,40 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 
 ### 4.1 Theme
 
-- **Follows the OS by default.** With no stored preference, `:root` carries `color-scheme: light dark` and themed tokens resolve through `light-dark()` under `prefers-color-scheme` — the correct theme renders before any JavaScript runs, and in JS-free surfaces (docs embeds, e-mail previews, the Figma plugin).
+- **Light is the default.** New sessions render the light token set unless the user has explicitly selected and persisted dark mode.
 - **Dark has full parity.** Every component, semantic state, contrast relationship, focus treatment, and surface hierarchy must have a deliberate dark treatment. Dark is not an afterthought or an inversion filter.
-- Theme state must be explicit and persistent. An explicit `:root[data-theme='light'|'dark']` — written by `ThemeSwitch` or the consumer's pre-paint script — pins `color-scheme` and wins over the OS. `.dark` is a deprecated alias for the same dark scope, removed in v2.1.
+- Theme state must be explicit and persistent. Implementations may use the existing `:root[data-theme='dark']`, `:root[data-theme='light']`, or `.dark` selectors according to the consuming app, but they must resolve to the same token roles.
 - Do not create a component that works only in one theme. Verify light and dark for shared components and console surfaces.
 
 ### 4.2 Color roles
 
-The palette is chroma-0 neutral and semantic. Neutrals carry zero chroma — red, green, and blue channels are equal — in both themes. No warm or cool tint is permitted in background, surface, text, or border roles. Use the token variables, not copied literals.
+The palette is chroma-0 neutral and semantic. Neutrals carry zero chroma — red, green, and blue channels are equal — in both themes. No warm or cool tint is permitted in paper, surface, ink, muted, or border roles. Use the token variables, not copied literals.
 
 | Role | Canonical token contract | Rule |
 | --- | --- | --- |
-| Background | `--dt-bg` | Page canvas. Neutral gray, chroma 0. |
+| Paper | `--dt-paper` | Page canvas. Neutral gray, chroma 0. |
 | Surface | `--dt-surface` | Default component plane. |
 | Raised surface | `--dt-surface-raised` | Surface above the default plane, including selected controls and layers. |
 | Sunken surface | `--dt-surface-sunken` | Code wells, recessed regions, and quiet data backgrounds. |
 | Muted surface | `--dt-surface-muted` | Secondary grouping without a new accent. |
-| Text | `--dt-text` | Default readable text. |
-| Strong text | `--dt-text-strong` | Headings, primary values, and high-emphasis text. |
-| Subtle text | `--dt-text-subtle` | Secondary labels. Maintains WCAG AA on bg/surface/raised; on muted or sunken washes use `--dt-text-muted`. |
-| Muted text | `--dt-text-muted` | Helper and meta text. Text-only role — never a background fill (the retired `--dt-muted` name invited that misuse). Holds 4.5:1 on every surface token. |
-| Placeholder text | `--dt-text-placeholder` | Input hints and other de-emphasized, non-essential copy. |
-| Border | `--dt-border`, `--dt-border-strong` | 1px hairlines — light `rgba(10,10,10,.10/.18)`, dark `rgba(255,255,255,.08/.16)`. Layers separate by borders, not shadows. |
-| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Fill-only role: the brand mark, focus ring, selection markers, primary action fills, and status emphasis. Never renders as a glyph — `#ec5e1f` fails WCAG AA as text. |
-| Accent text | `--dt-accent-text`, `--dt-accent-strong` | Persimmon when it must appear as text (links, accent labels, tint-on-tint chips). Theme-specific AA values. |
-| Accent interaction | `--dt-accent-bright`, `--dt-accent-ink` | Highlight fills and the ink color printed on persimmon fills. |
-| Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only, each one hue shared across themes (warning is amber — never the brand hue). Never use them as decoration. |
-| Supporting status | `--dt-cobalt` and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
+| Ink | `--dt-ink` | Default readable text. |
+| Strong ink | `--dt-ink-strong` | Headings, primary values, and high-emphasis text. |
+| Muted text | `--dt-muted`, `--dt-muted-strong` | Helper text and secondary labels. Maintain WCAG AA contrast. |
+| Border | `--dt-border`, `--dt-border-strong` | 1px hairlines — light `rgba(0,0,0,.08)`, dark `rgba(255,255,255,.08)`. Layers separate by borders, not shadows. |
+| Brand accent | `--dt-accent` | Persimmon `#ec5e1f`. Only on the brand mark, focus ring, selection markers, primary action, and status emphasis. Never in body copy, headings, or eyebrows. |
+| Brand action strength | `--dt-accent-strong`, `--dt-accent-bright`, `--dt-accent-ink` | Theme-specific contrast and interaction roles. |
+| Status | `--dt-success`, `--dt-warning`, `--dt-danger`, `--dt-info` | Status semantics only. Never use them as decoration. |
+| Supporting status | `--dt-cobalt`, `--dt-lime`, and `--dt-status-*` | Valid only for the documented status or data meaning. Never turn them into a second brand palette. |
 | Code | `--dt-code-bg`, `--dt-code-ink`, `--dt-code-border`, `--dt-syntax-*` | Dark, high-contrast technical surfaces in both themes. |
 | Tints | `--dt-tint-*` | Low-opacity fills for badges, chips, and semantic state. Do not use tint as a substitute for readable text. |
 
-Persimmon is the only decorative brand accent. It may fill the single primary action on a surface; persimmon never appears in body text, headings, eyebrows, or decorative punctuation — when it must render as a glyph (a link, an accent label), use `--dt-accent-text`, never the fill role. Cobalt, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
+Persimmon is the only decorative brand accent. It may fill the single primary action on a surface; persimmon never appears in body text, headings, eyebrows, or decorative punctuation. Cobalt, lime, success, warning, danger, and info colors communicate status or data meaning only. Do not add a second decorative accent, glow, or color ramp without a new approved token role. Gradient fills are prohibited in every role, including accent fills built from `linear-gradient` or `radial-gradient` of a single hue.
 
 ### 4.3 Typography
 
-- Use `--dt-font-sans`: `'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif` for Korean and interface text.
-- Use `--dt-font-mono`: `'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace` for code, API paths, request IDs, timestamps, methods, and other technical values. The stack ends in `'Pretendard Variable'` before the generic `monospace` so Korean glyphs inside a code surface fall back with a consistent width. Mono is ASCII-only by policy: it is never applied to Korean labels, buttons, headings, or prose copy.
-- Pretendard Variable and JetBrains Mono are the required Bridger fonts, self-hosted through `@bridger-kr/tokens` (`css/fonts.css`). Pretendard ships as a unicode-range dynamic subset so pages download only the slices they render; JetBrains Mono ships as an ASCII/box-drawing subset that is only fetched when a page actually renders code. Do not substitute a reference font or ship a reference brand font.
+- Use `--dt-font-sans`: `'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif` for Korean and interface text.
+- Use `--dt-font-mono`: `'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace` for code, API paths, request IDs, timestamps, methods, and other technical values. Mono is never applied to Korean or prose copy.
+- Pretendard Variable is the required Bridger UI font. Do not substitute a reference font or ship a reference brand font.
 - All font sizes live inside the 12–36px range. The type scale is fixed steps, not fluid `clamp()` expressions: caption `12px`, small `13px`, label `14px`, body `16px`, H3 `20px`, H2 `28px`, H1 `36px`, and mono `13px`. No size outside this scale is permitted.
 - Font weights are `400`, `500`, and `600` only. Display headings do not exceed `600` under v2.
 - Body and labels use `0` letter spacing. Negative tracking is limited to real H1 and H2 display headings.
@@ -135,11 +131,11 @@ No other radius value is permitted. Legacy scale names (`sm`, `inner`, `element`
 
 ### 4.6 Elevation and borders
 
-- The default card and panel treatment is a flat surface with a 1px `--dt-border` hairline. There is no resting shadow.
-- `--dt-border-strong` frames a selected or emphasized plane when a stronger border is needed.
-- Shadows are reserved for surfaces that actually float above the document: menus, popovers, dialogs, drawers, command palettes, and toasts share one overlay shadow, `--dt-shadow-overlay`. Nothing in normal document flow casts a shadow — not at rest, not on hover, not on press.
+- The default card and panel treatment is a flat surface with a 1px hairline border, `--dt-card-rest` or the equivalent `--dt-ring` role. There is no resting shadow.
+- `--dt-ring-strong` frames a selected, focused, or elevated plane when a stronger border is needed.
+- Shadows are reserved for surfaces that actually float above the document: menus, popovers, dialogs, drawers, command palettes, and toasts use the overlay shadow tokens (`--dt-shadow-md`, `--dt-shadow-lg`, `--dt-shadow-xl` by layer). Nothing in normal document flow casts a shadow — not at rest, not on hover, not on press.
 - Tables, stat rows, and dense data surfaces use internal 1px borders. Cards are separated from the page by borders, not shadows.
-- Focus is a 3px `--dt-accent` outline (`outline: 3px solid var(--dt-accent); outline-offset: 2px`) and must remain visible in both themes.
+- `--dt-shadow-focus` is the focus ring role and must remain visible in both themes. It is a ring, not an elevation cue.
 - Never use card-in-card composition for ordinary content. If a nested region is necessary for code, data, or a form group, use a sunken or bordered region with a clear semantic purpose and no decorative stacking.
 
 ### 4.7 Z-index
@@ -157,8 +153,8 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 ### 4.8 Motion
 
-- All interaction motion uses the shared easing `--dt-ease: cubic-bezier(0.23, 1, 0.32, 1)` and stays inside the 120–180ms band. The steps are fast `120ms` and base `160ms`. No transition or animation may exceed 180ms.
-- Use the `--dt-duration-*` tokens rather than inventing transition strings. Durations outside the band — including the legacy 200ms, 280ms, and 600ms steps and every long-duration loop tier — are retired; see Section 12.
+- All interaction motion uses the shared easing `--dt-ease: cubic-bezier(0.23, 1, 0.32, 1)` and stays inside the 120–180ms band. The steps are fast `120ms`, base `150ms`, and slow `180ms`. No transition or animation may exceed 180ms.
+- Use the `--dt-motion-*` token set rather than inventing transition strings. Durations outside the band — including the legacy 200ms, 280ms, and 600ms steps and every long-duration loop tier — are retired; see Section 12.
 - Motion must clarify a state change. Do not use bounce, spring overshoot, or staggered entrance choreography in components.
 - No repeating or looping animation is permitted. The single exception is a loading indicator (spinner) that runs only while an operation is genuinely in progress and stops under `prefers-reduced-motion`. Idle pulses, breathing dots, drifting fields, tickers, and marquee content are prohibited.
 - Scroll-reveal animation is prohibited. Content must not depend on scroll position to appear.
@@ -216,7 +212,7 @@ Every interactive component must expose and verify these states where applicable
 | Rest | Use the component's tokenized surface, border, typography, and semantic color. No resting shadow. |
 | Hover | Brighten or strengthen the border and move the surface one tonal step when the component supports hover. Do not lift, translate, or add a shadow on hover. Do not rely on hover alone to convey information. |
 | Press | Apply `transform: scale(var(--dt-press-scale))`, where `--dt-press-scale` is `0.97`, for pressable controls within the 120–180ms band. Restore the resting size after release. Do not make layout reflow. |
-| Focus visible | Show a clearly visible 3px accent outline (`--dt-accent` + `outline-offset: 2px`). Never remove the browser focus indicator without replacing it. Focus must work in light and dark themes. |
+| Focus visible | Show a clearly visible 3px accent focus ring using `--dt-shadow-focus` or an equivalent tokenized outline. Never remove the browser focus indicator without replacing it. Focus must work in light and dark themes. |
 | Disabled | Use the disabled semantic treatment, prevent activation, suppress hover and press changes, preserve readable contrast, and expose the state to assistive technology. Use the native `disabled` attribute where the element supports it. |
 | Loading | Preserve the component's dimensions and position. Show a package spinner or skeleton with an accessible busy state, keep a meaningful label when possible, and prevent duplicate submission or activation. |
 | Reduced motion | Honor `prefers-reduced-motion: reduce` by removing nonessential transform and entrance motion and stopping the loading indicator. State changes must remain clear without animation. |
@@ -247,31 +243,29 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **67 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **56 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
 - `ToggleSwitch` is a legacy alias of `Switch` and resolves to the same component.
 - `cx` is a class-name helper re-exported from the package root.
-- Token enums: `CardTone` (deprecated alias of `CardVariant`), `CARD_VARIANT`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `CODE_PANE_TONE` (deprecated alias of `CODE_SEGMENT_TONE`), `CODE_SEGMENT_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_TONE`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
-- Class-name helpers: `metricAccentColor`, `actionListClassName`, `actionListItemClassName`, `productActionPillClassName`.
+- Token enums: `CardTone`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `AlertMotion`, `CODE_PANE_TONE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
+- Class-name helpers: `metricAccentColor`, `actionListClassName`, `actionListItemClassName`.
 - Companion types only (no runtime export): `BrandLogoHandle`, `BrandLogoLanguage`, `BrandLogoSize`, and the per-component `*Props` / option types in each file.
 
 Naming note: `Panel` is the React component exported from `packages/react/src/components/core/Surface.tsx`; the file name is a vestige and will be renamed to match the export. Consumers should import `Panel`.
-
-Deprecation note: several v1 product-family exports exist only to render decoration that v2 prohibits — a decorative hero backdrop, an interactive motion layer, fake window chrome, and a decorative `ProductShell` tone. They remain exported and counted until the removal PR lands (Section 12); do not use them in new code.
 
 ### 9.1 Family overview
 
 | Family | Count | Components |
 | --- | --- | --- |
-| core | 15 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Heading`, `Input`, `Kbd`, `Link`, `Panel`, `Section`, `Separator`, `StatusPill`, `Tabs`, `Text` |
-| forms | 10 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
+| core | 10 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Input`, `Panel`, `Section`, `StatusPill`, `Tabs` |
+| forms | 9 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
 | feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
-| data | 11 | `Avatar`, `CodeBlock`, `CodePane`, `CopyButton`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
+| data | 10 | `Avatar`, `CodeBlock`, `CodePane`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
 | navigation | 5 | `Breadcrumb`, `CommandPalette`, `Menu`, `Sidebar`, `Stepper` |
-| product | 18 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductActionPill`, `ProductShell` (+ `ProductMotionField`, `ProductSideRail`, decorative hero backdrop), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard`, `WindowChrome` (+ `WindowFrame`) |
-| **Total** | **67** | |
+| product | 13 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductShell` (+ `ProductSideRail`), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard` |
+| **Total** | **55** | |
 
 ### 9.2 Core family
 
@@ -289,11 +283,6 @@ Resting on the canonical neutral border plane with persimmon focus and selection
 | `Input` | label, field, hint, error | size, validation tone | Visible label; error associates with the field. |
 | `Tabs` | tab list + tab panels | variant (`underline`, `pill`) | Roving tabindex, arrow-key navigation. |
 | `FilterChip` | label, optional count, optional close | active state, removable state | Catalog filter; toggles between rest and selected. |
-| `Text` | scale-locked text node | `size` (`12`, `13`, `14`, `16`), `weight` (`400`, `500`, `600`), `tone` (`default`, `muted`, `accent`, `danger`), `as` (`p`, `span`, `div`) | Enforces the body-range type scale; never renders a heading element. |
-| `Heading` | semantic `h1`–`h4` | `level` (`1`–`4`, required), `size` (`20`, `28`, `36`; defaults to the step paired with `level`), `tone` | Level is semantic, size is visual. Weight stays at the 600 display cap. |
-| `Link` | anchor | `external` (auto-detected from `href` when omitted), `externalLabel`, `render` | External links get `target="_blank" rel="noopener noreferrer"`, an `ExternalLink` glyph, and a visually-hidden new-context cue. `:visited` keeps `--dt-accent-text`. |
-| `Separator` | hairline divider (base-ui) | `orientation` (`horizontal`, `vertical`) | `role="separator"`; uses `--dt-border`. |
-| `Kbd` | key glyph (`<kbd>`) | `size` (`sm`, `md`) | Sans face at caption/small size; key names may be Korean. |
 
 ### 9.3 Forms family
 
@@ -336,9 +325,8 @@ Quiet, tabular, scannable. Use tabular figures and mono styling where required b
 | `Table` | header + body rows | column alignment, empty state, row click | Real `<table>` semantics; header cells identify columns. Numeric columns right-align. |
 | `StatTile` | label + value + optional delta + hint | delta tone (`up`, `down`, `neutral`) | Tabular figures on the value. |
 | `StatPanel` | array of `StatPanelItem` | variant (`card`, `row`) | Multi-stat plane. |
-| `CodeBlock` | dark code surface with line numbers, optional copy | language, line numbers, copyable | Dark code surface in both themes. Copy affordance is `CopyButton`. |
-| `CodePane` | tokenized code pane | tone (`CODE_PANE_TONE`), segments, lines | For composed code specimens with per-segment styling. Copy affordance is `CopyButton`. |
-| `CopyButton` | clipboard copy button with announced result | `iconOnly`, `label`/`copiedLabel`/`failedLabel`, `onCopy` | `idle`/`copied`/`failed` on `data-state`; result announced via `role="status"`. Icon-only use requires `aria-label`. |
+| `CodeBlock` | dark code surface with line numbers, optional copy | language, line numbers, copyable | Dark code surface in both themes. |
+| `CodePane` | tokenized code pane | tone (`CODE_PANE_TONE`), segments, lines | For composed code specimens with per-segment styling. |
 | `KeyValue` | definition list of `KeyValueItem` | columns (`1`, `2`) | Spec metadata and configuration rows. |
 | `LogRow` | stream entry with timestamp, level, message | level (`info`, `success`, `warning`, `danger`) | Monospace timestamps and IDs. |
 | `UsageMeter` | label + value + max + unit + hint | tone (`default`, `warning`, `danger`) | Quota bar; values use tabular figures. |
@@ -368,19 +356,14 @@ Brand and marketing composites. These are the landing-side primitives that depen
 | `ToolCard` | tool surface with title, description, status | tone, status | Console tool list and onboarding cards. |
 | `ActionList` | numbered, clickable guide list with optional `ActionListIndex` | interactive, density | Guide-first console workflows. |
 | `ActionListIndex` | numbered marker rendered inside `ActionList` | size | Companion to `ActionList`. |
-| `AnnotationHotspot` | positioned dot + label + popover | x/y position | Annotated product proof. |
+| `AnnotationHotspot` | positioned marker + label | x/y position | Annotated product proof. Static marker; no ambient motion. |
 | `ChatBubble` | chat role bubble | role (`user`, `assistant`, `system`) | Compose-on-bubble used in landing proof. |
 | `SearchPill` | search input rendered as a pill | size, tone | Topbar search. |
-| `ProductActionPill` | pill-shaped call to action | size (`sm`, `md`, `lg`), variant (`primary`, `secondary`, `ghost`) | Product page CTAs. |
 | `ProductPageHeader` | page hero with title and supporting copy | tone | Landing sub-page hero; left-aligned, flat. |
-| `ProductShell` | composed shell with side rail, topbar, main | tone (`flat`) | Landing composition host. The decorative tone is deprecated pending removal. |
+| `ProductShell` | flat composition panel with side rail, topbar, main | — | Landing composition host. |
 | `ProductSideRail` | persistent rail of items | items | Used inside `ProductShell`. |
-| Decorative hero backdrop | masked radial wash | tone | **Deprecated.** Decoration-only; removal scheduled (Section 12). |
-| `ProductMotionField` | interactive motion layer | tone | **Deprecated.** Decoration-only; removal scheduled (Section 12). |
 | `ProductTopbar` | landing topbar with optional menu | tone | Hosts `ProductTopbarMenu`. Solid surface, no translucency. |
 | `ProductTopbarMenu` | menu drawer anchored to `ProductTopbar` | tone | Mobile drawer behaviour. |
-| `WindowChrome` | fake window wrapper | trailing slot | **Deprecated.** Fake chrome is prohibited; removal scheduled (Section 12). |
-| `WindowFrame` | window-shaped content frame | tone | **Deprecated.** Fake chrome is prohibited; removal scheduled (Section 12). |
 
 ### 9.8 Shared component requirements
 
@@ -388,42 +371,8 @@ Brand and marketing composites. These are the landing-side primitives that depen
 - Each component documents its supported variants, semantic purpose, keyboard behavior, focus behavior, loading and disabled behavior, and light and dark rendering.
 - Component variants must preserve the surface rules. A raised or featured variant is an explicit exception with a named role, not a license for resting shadows, translucency, or arbitrary color.
 - Examples and Figma Component Sets must use the same names and state vocabulary as the React package.
-- Subpath imports (`@bridger-kr/react/components/<family>`) are reserved for tree-shaking; the package root barrel is the supported public entry.
+- Subpath imports (`@bridger-kr/react/components/<family>/<Component>`) are reserved for tree-shaking; the package root barrel is the supported public entry.
 - Components that own motion must implement `prefers-reduced-motion: reduce` per Section 7.
-
-### 9.9 Component API conventions
-
-These rules govern the public prop surface of `@bridger-kr/react`. They are enforced by `packages/react/src/api-conventions.test-d.tsx` and the family runtime tests.
-
-**Variant-prop naming.** One prop name per meaning, fixed across the package:
-
-| Prop | Meaning | Allowed values |
-| --- | --- | --- |
-| `variant` | Visual shape / emphasis | Button `solid \| outline \| ghost`, Card `plain \| sunken`, Tabs `underline \| segmented` |
-| `tone` | Semantic color | `neutral \| accent \| success \| warning \| danger \| info` (component-specific subsets allowed) |
-| `size` | Scale | `sm \| md \| lg` (32/36/40px floors) |
-| `status` | Data state only | `loading \| ok \| error \| na` (e.g. `StatTile`); never a visual alias |
-
-Renamed props keep the old name as a deprecated alias for one minor release (removed in v2.1). Aliases emit a single development-mode `console.warn` per key via `lib/deprecate.ts#warnOnce`; they must never warn in production builds.
-
-**Refs.** Every component that renders a DOM element is a `forwardRef` component with `displayName` set. Form controls forward to the real control element (`<input>`, `<textarea>`, trigger `<button>`); all other components forward to their root element. This is what unblocks `react-hook-form` registration, first-error focus, and Tooltip/Popover anchoring.
-
-**IDs.** Control ids default to `useId()`. Deriving ids from label text is prohibited — repeated labels must never collide. Hints/descriptions derive from the control id (`${id}-hint`) and attach via `aria-describedby`.
-
-**`className` / `style`.** Always apply to the component's root element. Inner elements are customized through `slotProps` prop bags typed by `lib/slot.ts#SlotPropsFor` (e.g. `slotProps.input.className` on `Input`).
-
-**Composition.** `Button` accepts base-ui's `render` prop (`<Button render={<a href="…" />}>`), so consuming apps never restyle raw anchors with button classes. Icon-only buttons must declare `aria-label` at the type level.
-
-**Controlled state.** Stateful components follow `open`/`defaultOpen`/`onOpenChange` or `value`/`defaultValue`/`onValueChange` via `lib/useControllableState.ts`. A `value`/`open` prop makes the component controlled; the default-prefixed prop seeds uncontrolled state.
-
-**Single-purpose exports.** Overlapping components collapse into one canonical API — `CodeBlock` is the only code-display component; `CodePane` is a deprecated wrapper and is removed in v2.1.
-
-### 9.10 CSS layering and import contract
-
-- All shipped DS styles live in explicit cascade layers, in this order: `@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`. Consumer CSS outside a layer always wins over every DS layer, so overrides never need `!important`; the DS `!important` budget is three declarations, reserved for the reduced-motion override.
-- `@bridger-kr/tokens/css` imports fonts, the token contract (`dt.tokens`), and the minimal reset (`dt.reset`) only. Element defaults (`body`, headings, links, `code`, `pre`) are opt-in via `@bridger-kr/tokens/css/base` (`dt.base`). Component and utility classes ship from `@bridger-kr/react/styles.css` in `dt.components` / `dt.utilities`.
-- Only `.dt-*` classes are public. Unprefixed primitive classes were removed from `base.css`; a transition alias sheet lives at `@bridger-kr/tokens/css/legacy-classes` and is deleted in 2.1.0.
-- Tailwind v3 consumers disable `preflight` (`corePlugins: { preflight: false }`) — the DS `dt.reset` layer owns the reset — or wrap `@tailwind base` in a later `@layer` after verifying locally. Unlayered app CSS then overrides DS styles without `!important`.
 
 ## 10. Provenance and reference discipline
 
@@ -435,7 +384,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | --- | --- | --- |
 | `packages/tokens/css/contract.css` | Canonical CSS custom-property token contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/css/contract.css` |
 | `packages/tokens/src/index.ts` | Frozen TS token objects mirrored from the contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/src/index.ts` |
-| `packages/react/src/index.ts` | Public React barrel (60 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
+| `packages/react/src/index.ts` | Public React barrel (55 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
 | `DESIGN.md` (this file) | Brand and component canon | `https://github.com/bridger-kr/bridger-design-system/blob/main/DESIGN.md` |
 | `bridger-web` consuming repo | App integration, mirror checks | `https://github.com/bridger-kr/bridger-web/blob/main/README.md` |
 | Figma component library | Brand assets and Component Sets | Figma file `DXAVhKo8uCGJ4HSQYAq9dY` |
@@ -508,7 +457,6 @@ Current accepted debt (tracked until exit conditions are met):
 | Item | Trade-off | Why it exists | Surface | Exit condition |
 | --- | --- | --- | --- | --- |
 | Contract values predate v2 | `packages/tokens/css/contract.css` and its app mirrors still carry warm-leaning neutrals, radius values `6/10/14`, motion durations `200/280/600ms`, decorative radial-wash and `*-gradient` tokens, layered decorative elevation tokens, translucency/blur tokens, long-duration loop-motion tokens, eyebrow type tokens, and display tracking tokens that v2 prohibits. | Retargeting the contract is a breaking token change that must land together with the `landing/` and `dashboard/` mirrors and `npm run check:tokens`; a doc-only PR cannot flip them safely. | tokens | A dedicated token PR retargets the contract to chroma-0 neutrals, radius `4/6/8`, motion `120–180ms`, and deletes every prohibited decorative token, then updates the app mirrors and passes `check:tokens`. |
-| Deprecated product exports remain public | The product barrel still exports a decorative hero backdrop component, `ProductMotionField`, `WindowChrome`, `WindowFrame`, and a decorative `ProductShell` tone — all decoration-only under v2. | Removing public exports is a breaking change that needs a major release and consumer migration in `landing/` and `dashboard/`. | product | The removal PR deletes the exports and their `dist/` entries, migrates consumers, and ships under a major version. |
 | `Panel` is exported from `packages/react/src/components/core/Surface.tsx` | The file name (`Surface.tsx`) does not match the exported component (`Panel`), which makes the import path less self-explanatory than other core primitives. | Vestige from an earlier consolidation; renaming requires touching every consumer in `landing/` and `dashboard/` simultaneously to avoid a broken window. | core | Rename the file to `Panel.tsx` and migrate consumers in a single batched change. The barrel and the type aliases keep the public API stable. |
 | `ToggleSwitch` is a public alias of `Switch` | Two names describe the same component, increasing the surface area for documentation and code search. | Existing dashboards and one earlier product import path used `ToggleSwitch`; keeping the alias avoids a breaking change before the major surface migration completes. | forms | Once `ToggleSwitch` callers are migrated, mark the export `@deprecated` for one minor cycle, then remove in a subsequent major. |
 
@@ -565,36 +513,29 @@ This checklist is the explicit, reproducible record for each release. Every row 
 
 | Dimension | Sub-axis | Required evidence | Status |
 | --- | --- | --- | --- |
-| Viewport width | `375px` mobile | Playwright screenshot per changed surface at `375x812` viewport | Captured |
-| Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Captured |
-| Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Captured |
-| Theme | Light (default) | Screenshot in light theme per changed surface | Captured |
-| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']`; the deprecated `.dark` alias also works) | Captured |
-| Interaction state | Rest | Default screenshot for the surface | Captured |
-| Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Captured |
-| Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Captured |
-| Interaction state | Disabled | Screenshot of an intentionally disabled control on the surface | Captured |
-| Interaction state | Loading | Screenshot of the loading state (spinner or skeleton) | Captured |
-| Interaction state | Press | Playwright pressed-state screenshot (`scale(0.97)`) | Captured |
-| Motion | Reduced motion | Screenshot with `prefers-reduced-motion: reduce` emulated; confirm transforms are removed | Captured |
-| CJK content | Korean label rendering | Korean copy renders without mid-word breaks (`word-break: keep-all`) | Captured |
-| Locale parity | ko/en | Korean (default) and English `/en` render the same surface with matching structure and copy meaning | Captured |
-| Contrast | WCAG AA text | Automated contrast check (axe / Playwright `toHaveAccessibleName` and contrast assertion) | Captured |
-| Contrast | WCAG AA non-text | Border, focus, and interactive control contrast against their surface | Captured |
-| Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Captured |
-| Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Captured |
+| Viewport width | `375px` mobile | Playwright screenshot per changed surface at `375x812` viewport | Not applicable |
+| Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Not applicable |
+| Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Not applicable |
+| Theme | Light (default) | Screenshot in light theme per changed surface | Not applicable |
+| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']` or `.dark`) | Not applicable |
+| Interaction state | Rest | Default screenshot for the surface | Not applicable |
+| Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Not applicable |
+| Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Not applicable |
+| Interaction state | Disabled | Screenshot of an intentionally disabled control on the surface | Not applicable |
+| Interaction state | Loading | Screenshot of the loading state (spinner or skeleton) | Not applicable |
+| Interaction state | Press | Playwright pressed-state screenshot (`scale(0.97)`) | Not applicable |
+| Motion | Reduced motion | Screenshot with `prefers-reduced-motion: reduce` emulated; confirm transforms are removed | Not applicable |
+| CJK content | Korean label rendering | Korean copy renders without mid-word breaks (`word-break: keep-all`) | Not applicable |
+| Locale parity | ko/en | Korean (default) and English `/en` render the same surface with matching structure and copy meaning | Not applicable |
+| Contrast | WCAG AA text | Automated contrast check (axe / Playwright `toHaveAccessibleName` and contrast assertion) | Not applicable |
+| Contrast | WCAG AA non-text | Border, focus, and interactive control contrast against their surface | Not applicable |
+| Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable |
+| Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Not applicable |
 | Layering | Focus trap | Tab inside an open dialog and confirm focus does not escape | Not applicable |
-| Component contract | 60-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Captured |
-| Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Captured |
+| Component contract | 55-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
+| Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Not applicable |
 
 This table is reset to `Not applicable` between releases and filled in per release. A row is `Not applicable` only when the release does not touch that dimension; rows covering touched surfaces must become `Captured` with a linked artifact path or the command that produced the evidence.
-
-Evidence for the rows above (2026-10-04, EDD-268 Slop Zero sign-off):
-
-- `bridger-web/artifacts/audit/release-evidence-2026-10-04/` — viewport × theme matrix shots, interaction-state shots, `axe.json` (axe-core `color-contrast`: 0 violations on 25 routes × 2 themes), `nontext.json` (focus ring 5.31:1), `cjk.json`, `zindex.json`, `focus.json`, `parity.json`, `summary.md` (repro: `node scripts/audit/release-evidence.mjs --base <landing> --dashboard-base <portal>`).
-- `bridger-web/artifacts/audit/2026-10-04-after/` — full-site crawl (931 pages × desktop/mobile × light/dark, `prefers-reduced-motion`), including `/en` surfaces for locale parity.
-- Focus trap is `Not applicable`: the changed public surfaces ship no modal dialog; the mobile product-menu disclosure is covered by the focus-return evidence instead.
-- Component contract rows: `pnpm build`, `pnpm typecheck`, `pnpm test` (95 tests) in this repo, plus `parity.json` matching `dist/index.d.ts` to Section 9/9.1.
 
 ## 14. Change checklist
 

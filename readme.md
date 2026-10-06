@@ -280,13 +280,13 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - `assets/` — `brand/` (logos, favicon), `agency-logos/` (KMA, MOLIT, BOK, Seoul, data.go.kr), `fonts/` (Pretendard Variable woff2).
 - `readme.md` — this guide. `SKILL.md` — Agent Skill wrapper.
 
-**The 60 components**, grouped:
+**The 55 components**, grouped:
 - **core** — Button, Badge, StatusPill, Card, Input, Tabs, FilterChip (toggleable catalog filter), Chip (inline status and tag), Panel (flat section plane, exported from `core/Surface.tsx`), Section (landing band and console panel anchor).
 - **forms** — Select, Checkbox, RadioGroup, Switch (+ ToggleSwitch alias), Textarea, SegmentedControl, Combobox (searchable select), Slider (numeric range), FileUpload (OpenAPI-spec dropzone).
 - **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, Drawer (side sheet).
 - **data** — Table, StatTile, Avatar, Pagination, CodeBlock (dark code surface), KeyValue (spec metadata list), LogRow (execution-log stream), UsageMeter (quota bar), CodePane (tokenized code specimen), StatPanel (multi-stat plane).
 - **navigation** — Breadcrumb, Menu, Sidebar (console nav rail), CommandPalette (⌘K), Stepper (onboarding progress).
-- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard, ActionList + ActionListIndex (numbered guide list), AnnotationHotspot (annotated product proof), ChatBubble (composed conversation sample), ProductActionPill (CTA pill), ProductShell (composition host) + ProductSideRail + ProductCinematicBackdrop + ProductMotionField, ProductPageHeader (sub-page hero), ProductTopbar + ProductTopbarMenu (landing topbar with mobile drawer), SearchPill (topbar search), WindowChrome + WindowFrame (browser-window mockup wrapper).
+- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard, ActionList + ActionListIndex (numbered guide list), AnnotationHotspot (annotated product proof, static marker), ChatBubble (composed conversation sample), ProductShell (flat composition host) + ProductSideRail, ProductPageHeader (sub-page hero), ProductTopbar + ProductTopbarMenu (landing topbar with mobile drawer), SearchPill (topbar search).
 
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (4–8px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 

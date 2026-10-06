@@ -1128,69 +1128,10 @@
   --dt-product-muted: #786f63;
   --dt-product-line: transparent;
   min-height: 100vh;
-  color: var(--dt-product-accent);
-  font-family: var(--dt-font-sans);
-}
-
-.dt-product-shell-cinematic {
-  background: var(--dt-product-paper);
-}
-
-.dt-product-shell-console {
   background: var(--dt-bg);
   color: var(--dt-text);
+  font-family: var(--dt-font-sans);
 }
-
-.dt-product-cinematic-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.dt-product-cinematic-wash {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, color-mix(in srgb, #ffffff 10%, transparent), transparent 58%);
-}
-
-.dt-product-cinematic-lines {
-  position: absolute;
-  inset: auto 0 16px;
-  display: none;
-  width: 100%;
-  height: min(62vw, 620px);
-  opacity: 0;
-}
-
-.dt-product-cinematic-track,
-.dt-product-cinematic-flow {
-  fill: none;
-  stroke-linecap: round;
-}
-
-.dt-product-cinematic-track {
-  stroke: transparent;
-  stroke-width: 0;
-}
-
-.dt-product-cinematic-flow {
-  stroke: var(--dt-product-accent);
-  stroke-width: 1.8;
-  stroke-dasharray: 46 360;
-}
-
-.dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
-  animation: dt-product-cinematic-flow 7s linear infinite;
-}
-
-.dt-product-cinematic-flow-b {
-  animation-delay: -2.1s;
-}
-
-.dt-product-cinematic-flow-c {
-  animation-delay: -4.2s;
 }
 
 .dt-product-topbar {
@@ -1236,24 +1177,6 @@
   min-width: 0;
   align-items: center;
   gap: 12px;
-}
-
-.dt-product-topbar-actions .dt-product-action-pill {
-  min-height: 44px;
-  padding-inline: 22px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.dt-product-topbar-actions .dt-product-action-pill-icon-only {
-  width: 44px;
-  min-width: 44px;
-  padding-inline: 0;
-}
-
-.dt-product-topbar-actions .dt-product-action-pill-icon:only-child,
-.dt-product-topbar-icon .dt-product-action-pill-icon {
-  margin-inline: auto;
 }
 
 .dt-product-topbar-menu {
@@ -1338,87 +1261,6 @@
   pointer-events: none;
 }
 
-.dt-product-topbar-menu-panel .dt-product-action-pill {
-  max-width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  justify-content: flex-start;
-  border-radius: var(--dt-radius-control);
-  padding-inline: 16px;
-  font-size: 13px;
-}
-
-.dt-product-topbar-menu-panel .dt-product-action-pill-icon-only {
-  width: auto;
-}
-
-.dt-product-action-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-  border-radius: var(--dt-radius-lg);
-  color: var(--dt-product-accent);
-  font-weight: 500;
-  text-decoration: none;
-  transition:
-    transform var(--dt-duration-base) var(--dt-ease),
-    border-color var(--dt-duration-base) var(--dt-ease),
-    background-color var(--dt-duration-base) var(--dt-ease),
-    color var(--dt-duration-base) var(--dt-ease);
-}
-
-.dt-product-action-pill:hover {
-  transform: translateY(-1px);
-}
-
-.dt-product-action-pill:active {
-  transform: scale(var(--dt-press-scale));
-}
-
-.dt-product-action-pill-compact {
-  min-height: 44px;
-  padding-inline: 22px;
-  border-radius: var(--dt-radius-lg);
-  font-size: 12px;
-}
-
-.dt-product-action-pill-hero {
-  min-height: 56px;
-  min-width: 96px;
-  padding-inline: 26px;
-  border-radius: var(--dt-radius-lg);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.dt-product-action-pill-default {
-  background: color-mix(in srgb, #ffffff 54%, var(--dt-product-paper));
-}
-
-.dt-product-action-pill-outline {
-  background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
-}
-
-.dt-product-action-pill-accent {
-  background: var(--dt-text-strong);
-  color: var(--dt-surface);
-}
-
-.dt-product-action-pill-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-}
-
-.dt-product-action-pill-label {
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-}
-
 .dt-product-side-rail {
   position: fixed;
   left: clamp(18px, 4vw, 72px);
@@ -1435,86 +1277,6 @@
   font-weight: 500;
   line-height: 1.2;
   text-decoration: none;
-}
-
-.dt-product-motion-field {
-  position: absolute;
-  right: clamp(64px, 16vw, 260px);
-  top: clamp(310px, 39vw, 470px);
-  z-index: 1;
-  display: grid;
-  width: clamp(180px, 19vw, 280px);
-  aspect-ratio: 1;
-  place-items: center;
-  color: var(--dt-product-accent);
-  isolation: isolate;
-  pointer-events: none;
-}
-
-.dt-product-motion-grid {
-  position: absolute;
-  inset: -18%;
-  z-index: -1;
-  width: 136%;
-  height: 136%;
-  object-fit: contain;
-  opacity: 0.32;
-  mix-blend-mode: multiply;
-  animation: dt-product-motion-grid 11s ease-in-out infinite alternate;
-}
-
-.dt-product-motion-orbit {
-  position: absolute;
-  inset: 12%;
-  border: 1px solid color-mix(in srgb, var(--dt-product-ink) 18%, transparent);
-  border-radius: 40px;
-  transform: rotate(18deg);
-}
-
-.dt-product-motion-orbit-b {
-  inset: 25%;
-  transform: rotate(-24deg);
-}
-
-.dt-product-motion-node {
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border-radius: var(--dt-radius-lg);
-  background: var(--dt-product-accent);
-  transform: translateX(-50%);
-}
-
-.dt-product-motion-axis {
-  position: absolute;
-  width: 68%;
-  height: 1px;
-  background: var(--dt-product-accent);
-  opacity: 0.46;
-}
-
-.dt-product-motion-copy {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 66px;
-  height: 46px;
-  border-radius: var(--dt-radius-lg);
-  background: var(--dt-product-accent);
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0;
-}
-
-.dt-product-motion-field .dt-product-motion-orbit-a {
-  animation: dt-product-motion-orbit 9s linear infinite;
-}
-
-.dt-product-motion-field .dt-product-motion-orbit-b {
-  animation: dt-product-motion-orbit 12s linear infinite reverse;
 }
 
 .dt-product-page-header {
@@ -1581,24 +1343,6 @@
   margin-top: 20px;
 }
 
-@keyframes dt-product-cinematic-flow {
-  to {
-    stroke-dashoffset: -406;
-  }
-}
-
-@keyframes dt-product-motion-orbit {
-  to {
-    rotate: 360deg;
-  }
-}
-
-@keyframes dt-product-motion-grid {
-  to {
-    transform: translate3d(2%, -2%, 0) scale(1.04);
-  }
-}
-
 @keyframes dt-product-topbar-menu-reveal {
   from {
     opacity: 0;
@@ -1627,84 +1371,6 @@
 
 .dt-brand-logo[data-armed='true'] .dt-brand-logo-dot {
   transform: translateY(-1px) scale(1.08);
-}
-
-.dt-window-frame {
-  overflow: hidden;
-  border: 1px solid var(--dt-border-alpha);
-  border-radius: var(--dt-radius-card);
-  background: var(--dt-surface-raised);
-  color: var(--dt-text);
-}
-
-.dt-window-frame-body {
-  min-width: 0;
-}
-
-.dt-window-chrome {
-  display: flex;
-  min-height: 34px;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid var(--dt-chrome-divider);
-  background: var(--dt-chrome-bar);
-  padding: 8px 12px;
-  color: var(--dt-text-subtle);
-  font-size: 12px;
-}
-
-.dt-window-chrome-dots {
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: 6px;
-}
-
-.dt-window-chrome-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: var(--dt-radius-pill);
-  box-shadow: inset 0 0 0 1px var(--dt-border-alpha);
-}
-
-.dt-window-chrome-dot-1 {
-  background: var(--dt-chrome-dot-1);
-}
-
-.dt-window-chrome-dot-2 {
-  background: var(--dt-chrome-dot-2);
-}
-
-.dt-window-chrome-dot-3 {
-  background: var(--dt-chrome-dot-3);
-}
-
-.dt-window-chrome-title {
-  display: inline-flex;
-  min-width: 0;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-  font-family: var(--dt-font-mono);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.dt-window-chrome-title strong {
-  color: var(--dt-text-strong);
-  font-weight: 600;
-}
-
-.dt-window-chrome-trailing {
-  margin-left: auto;
-}
-
-.dt-code-pane,
-.dt-code-block {
-  /* Pane chrome (label, copy button) must meet AA on --dt-code-bg; the
-     syntax-comment token is dimmer by design for in-code comments. The code
-     well is dark in both themes, so chrome uses the code-ink ramp and status
-     values that mirror the dark theme. */
-  --dt-code-pane-muted: color-mix(in srgb, var(--dt-code-ink) 72%, transparent);
 }
 
 .dt-code-pane {
@@ -1973,7 +1639,6 @@
   border-radius: var(--dt-radius-pill);
   background: var(--dt-hotspot-ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--dt-hotspot-ring) 18%, transparent);
-  animation: dt-hotspot-pulse 1.8s var(--dt-ease) infinite;
 }
 
 .dt-annotation-hotspot-label {
@@ -2108,19 +1773,6 @@
   color: var(--dt-text-subtle);
 }
 
-@keyframes dt-hotspot-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--dt-hotspot-ring) 18%, transparent);
-  }
-
-  50% {
-    transform: scale(1.12);
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--dt-hotspot-ring) 9%, transparent);
-  }
-}
-
 @media (min-width: 768px) {
   .dt-product-page-header {
     padding: 24px;
@@ -2134,16 +1786,7 @@
 }
 
 @media (max-width: 900px) {
-  .dt-product-cinematic-lines {
-    height: 680px;
-    opacity: 0.5;
-  }
-
   .dt-product-side-rail {
-    display: none;
-  }
-
-  .dt-product-motion-field {
     display: none;
   }
 }
@@ -2160,36 +1803,9 @@
   .dt-product-topbar-menu {
     display: block;
   }
-
-  .dt-product-action-pill-compact {
-    min-height: 44px;
-    padding-inline: 16px;
-    font-size: 12px;
-  }
-
-  .dt-product-action-pill-hero {
-    min-height: 48px;
-    padding-inline: 18px;
-    font-size: 13px;
-  }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
-    animation: none;
-  }
-
-  .dt-product-motion-grid,
-  .dt-product-motion-field .dt-product-motion-orbit-a,
-  .dt-product-motion-field .dt-product-motion-orbit-b {
-    animation: none;
-  }
-
-  .dt-product-action-pill {
-    transition: none;
-  }
-
   .dt-brand-logo-dot {
     transform: none !important;
     transition: none !important;
