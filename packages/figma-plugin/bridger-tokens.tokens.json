@@ -28,10 +28,10 @@
           "$value": "#0a0a0a"
         },
         "text-subtle": {
-          "$value": "#737373"
+          "$value": "#636363"
         },
         "text-muted": {
-          "$value": "#6f6f6f"
+          "$value": "#696969"
         },
         "text-placeholder": {
           "$value": "#a1a1a1"
