@@ -180,13 +180,13 @@ expectNamedNodeValue('Sidebar', { State: 'default' }, 'active-marker', 'fill', '
 
 // ---- report ---------------------------------------------------------------
 if (warns.length) {
-  console.log('⚠ 경고:');
+  console.log('[경고]');
   warns.forEach((w) => console.log('  - ' + w));
 }
 if (errors.length) {
-  console.error('\n✗ 검증 실패:');
+  console.error('\n[실패] 검증 실패:');
   errors.forEach((e) => console.error('  - ' + e));
   console.error(`\n${errors.length}개 오류.`);
   process.exit(1);
 }
-console.log(`\n✓ 검증 통과 — 토큰 ${TOKEN_PATHS.size}개, 컴포넌트 ${spec ? spec.components.length : 0}개${warns.length ? `, 경고 ${warns.length}개` : ''}`);
+console.log(`\n[완료] 검증 통과 — 토큰 ${TOKEN_PATHS.size}개, 컴포넌트 ${spec ? spec.components.length : 0}개${warns.length ? `, 경고 ${warns.length}개` : ''}`);

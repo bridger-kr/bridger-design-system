@@ -291,7 +291,5 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (4–8px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 
 **`examples/`** — standalone demos (not part of the published library; see [`examples/README.md`](examples/README.md)):
-- `ui_kits/console/` — the Bridger portal console (dashboard, catalog, logs).
-- `ui_kits/landing/` — the marketing site recreation.
-- `foundations/` — 13 specimen cards (color, type, spacing, brand).
-- `design-canvas.jsx` — Figma-like composition canvas.
+- `ui_kits/primitives/` — Vite + React showcase built on `@bridger-kr/react` and `@bridger-kr/tokens`.
+- `foundations/` — 12 specimen cards (color, type, spacing, brand).

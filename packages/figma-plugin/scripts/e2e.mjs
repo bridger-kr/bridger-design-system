@@ -22,7 +22,7 @@ const codeSrc = readFileSync(resolve(FIGMA, 'plugin', 'code.js'), 'utf8');
 
 let idSeq = 0;
 const nid = (p) => `${p}:${++idSeq}`;
-const fail = (m) => { console.error('✗ ' + m); process.exitCode = 1; };
+const fail = (m) => { console.error('[실패] ' + m); process.exitCode = 1; };
 
 // Figma's plugin sandbox is QuickJS — it rejects some modern syntax Node accepts.
 // Object spread crashed v1.0.0 in production, so guard against that class here.
@@ -117,6 +117,15 @@ class TextNode extends BaseNode {
 }
 class EllipseNode extends BaseNode { constructor() { super('ELLIPSE'); this.width = 10; this.height = 10; } }
 class RectangleNode extends BaseNode { constructor() { super('RECTANGLE'); this.width = 10; this.height = 10; } }
+class VectorNode extends BaseNode {
+  constructor() { super('VECTOR'); this.width = 0; this.height = 0; }
+  set vectorPaths(v) {
+    if (!Array.isArray(v) || !v.length) fail('VECTOR.vectorPaths: 빈 배열');
+    v.forEach((p, i) => { if (typeof p.data !== 'string' || !p.data) fail(`VECTOR.vectorPaths[${i}]: data 누락`); });
+    this._vp = v;
+  }
+  get vectorPaths() { return this._vp; }
+}
 class ComponentNode extends BaseNode { constructor() { super('COMPONENT'); this.width = 100; this.height = 40; } }
 class ComponentSetNode extends BaseNode { constructor() { super('COMPONENT_SET'); this.width = 200; this.height = 80; } }
 class PageNode extends BaseNode { constructor() { super('PAGE'); } }
@@ -167,6 +176,7 @@ const figma = {
   createText: () => { const t = new TextNode(); t._charsGuard = true; return t; },
   createEllipse: () => new EllipseNode(),
   createRectangle: () => new RectangleNode(),
+  createVector: () => new VectorNode(),
   createComponent: () => new ComponentNode(),
   createComponentFromNode(node) {
     if (!node || !(node instanceof BaseNode)) fail('createComponentFromNode: SceneNode 아님');
@@ -303,7 +313,7 @@ run().then(() => {
   const walk = (n) => {
     if (n.type === 'TEXT') {
       textCount += 1;
-      if (n.textAutoResize === undefined) fail(`TEXT "${n.characters}" textAutoResize 미설정 → 실제 Figma에서 글자 오버랩`);
+      if (n.textAutoResize === undefined) fail(`TEXT "${n.characters}" textAutoResize 미설정 — 실제 Figma에서 글자 오버랩`);
     }
     (n.children || []).forEach(walk);
   };
@@ -311,15 +321,15 @@ run().then(() => {
   if (textCount < 100) fail(`텍스트 노드 수 비정상 (${textCount})`);
 
   if (process.exitCode) {
-    console.error('\n✗ E2E 실패');
+    console.error('\nE2E 실패');
   } else {
-    console.log('✓ E2E 통과');
+    console.log('[완료] E2E 통과');
     console.log(`  컬렉션 1 · 모드 2 · 색상변수 ${colorVars} · 숫자변수 ${floatVars}`);
     console.log(`  TextStyle ${state.textStyles.length} · EffectStyle ${state.effectStyles.length} · 컴포넌트 ${sets.length} · 텍스트노드 ${textCount}`);
-    console.log(`  폰트 폴백: Pretendard/JetBrains 부재 → Inter 로 정상 폴백 (에러 0)`);
+    console.log(`  폰트 폴백: Pretendard/JetBrains 부재 — Inter 로 정상 폴백 (에러 0)`);
     console.log(`  오토레이아웃: layoutSizing은 appendChild 후 적용 · 모든 텍스트 textAutoResize 설정됨`);
   }
 }).catch((e) => {
   fail('sync 실행 중 예외: ' + e.stack);
-  console.error('\n✗ E2E 실패');
+  console.error('\nE2E 실패');
 });

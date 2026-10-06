@@ -7,19 +7,19 @@
 <style>
   body { margin: 0; background: var(--dt-bg); padding: 26px 28px; font-family: var(--dt-font-sans); color: var(--dt-text-strong); }
   .head { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--dt-border-strong); padding-bottom: 12px; }
-  .head .nm { font-family: var(--dt-font-mono); font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
-  .head .ax { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-muted); letter-spacing: .04em; }
+  .head .nm { font-family: var(--dt-font-mono); font-size: 16px; font-weight: 600; }
+  .head .ax { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-muted); }
 
   /* disambiguation glyphs — the actual reason you pick a mono for code */
   .glyphs { display: grid; grid-template-columns: repeat(12, 1fr); margin-top: 18px; border: 1px solid var(--dt-border); }
   .cell { border-right: 1px solid var(--dt-border); padding: 12px 0 9px; text-align: center; }
   .cell:last-child { border-right: 0; }
   .cell .g { font-family: var(--dt-font-mono); font-size: var(--dt-h2-size); line-height: 1; font-weight: 500; color: var(--dt-text-strong); }
-  .cell .t { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-muted); margin-top: 8px; letter-spacing: .02em; }
+  .cell .t { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-muted); margin-top: 8px; }
   .cell.hl .g { color: var(--dt-accent-text); }
 
   .foot { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 20px; }
-  .blk .lbl { font-family: var(--dt-font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--dt-text-muted); margin-bottom: 9px; }
+  .blk .lbl { font-family: var(--dt-font-mono); font-size: 12px; color: var(--dt-text-muted); margin-bottom: 9px; }
   /* tabular figures align in a column — the functional payoff */
   .figs { font-family: var(--dt-font-mono); font-size: 13px; line-height: 1.7; font-variant-numeric: tabular-nums; color: var(--dt-text); }
   .figs .row { display: flex; justify-content: space-between; max-width: 190px; }
@@ -31,7 +31,7 @@
 <body>
   <div class="head">
     <span class="nm">JetBrains Mono</span>
-    <span class="ax">monospaced · 400–700 · fixed advance width</span>
+    <span class="ax">monospaced · 400–600 · fixed advance width</span>
   </div>
 
   <div class="glyphs">
@@ -46,7 +46,7 @@
     <div class="cell"><div class="g">[ ]</div><div class="t">bracket</div></div>
     <div class="cell"><div class="g">&lt; &gt;</div><div class="t">angle</div></div>
     <div class="cell"><div class="g">;</div><div class="t">semi</div></div>
-    <div class="cell"><div class="g">→</div><div class="t">arrow</div></div>
+    <div class="cell"><div class="g">#</div><div class="t">hash</div></div>
   </div>
 
   <div class="foot">

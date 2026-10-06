@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /* ============================================================
-   gen-tokens.mjs — parse the canonical contract → packages/figma-plugin/bridger-tokens.tokens.json
-   Deterministic. Resolves color-mix(... N%, transparent) → rgba(),
-   and clamp() display sizes → fixed px midpoints (Figma has no clamp).
+   gen-tokens.mjs — parse the canonical contract into packages/figma-plugin/bridger-tokens.tokens.json
+   Deterministic. Resolves color-mix(... N%, transparent) to rgba(),
+   and clamp() display sizes to fixed px midpoints (Figma has no clamp).
    Run: node packages/figma-plugin/scripts/gen-tokens.mjs   (from repo root)
 ============================================================ */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -287,7 +287,7 @@ function main() {
   writeFileSync(OUT, JSON.stringify(out, null, 2) + '\n');
   const colorCount = Object.values(out.color.light).reduce(
     (n, g) => n + (typeof g === 'object' ? Object.keys(g).filter((x) => x !== '$type').length : 0), 0);
-  console.log(`✓ wrote ${OUT}`);
+  console.log(`[완료] wrote ${OUT}`);
   console.log(`  colors(light): ${colorCount}, spacing: ${Object.keys(out.spacing).length - 1}, typography: ${Object.keys(out.typography).length - 1}`);
 }
 

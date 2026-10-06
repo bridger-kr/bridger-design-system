@@ -55,6 +55,9 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      - name: Slop scan (examples + figma-plugin)
+        run: pnpm check:slop
+
       - name: Validate Figma plugin
         run: pnpm --filter bridger-figma-plugin run validate
 

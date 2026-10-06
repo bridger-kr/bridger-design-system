@@ -14,6 +14,7 @@
     "test:watch": "vitest",
     "lint": "oxlint -c _adherence.oxlintrc.json . && node scripts/slop-scan.mjs",
     "slop-scan": "node scripts/slop-scan.mjs",
+    "check:slop": "node scripts/slop-scan.mjs",
     "pack:dry-run": "pnpm -r --filter './packages/tokens' --filter './packages/react' exec npm pack --dry-run",
     "smoke:packages": "node scripts/smoke-import.mjs packages/tokens/dist colors spacing typography && node scripts/smoke-import.mjs packages/react/dist Button Badge Card cx --entries \"index.mjs=Button+Checkbox+StatTile+Dialog+Menu+ToolCard,components/core/index.mjs=Button,components/forms/index.mjs=Checkbox,components/data/index.mjs=StatTile,components/feedback/index.mjs=Dialog,components/navigation/index.mjs=Menu,components/product/index.mjs=ToolCard\"",
     "dev:example:primitives": "vite --config examples/ui_kits/primitives/vite.config.ts",
