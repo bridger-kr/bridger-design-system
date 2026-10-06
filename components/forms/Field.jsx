@@ -15,8 +15,16 @@ export function Field({ label, hint, error, required = false, disabled = false, 
     const hintId = `${controlId}-hint`;
     const errorId = `${controlId}-error`;
     const invalid = error != null && error !== false;
-    const describedBy = [hint ? hintId : null, invalid ? errorId : null]
+    const childDescribedBy = isValidElement(children)
+        ? children.props['aria-describedby']
+        : undefined;
+    const describedBy = [
+        childDescribedBy,
+        hint ? hintId : null,
+        invalid ? errorId : null,
+    ]
         .filter(Boolean)
+        .filter((id, index, ids) => ids.indexOf(id) === index)
         .join(' ') || undefined;
     const controlProps = {
         id: controlId,

@@ -99,7 +99,6 @@
   --dt-code-bg: light-dark(#14161d, #0a0b0f);
   --dt-code-ink: light-dark(#e8e6df, #f4f3ee);
   --dt-code-border: light-dark(#262a35, #23252e);
-  --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
   --dt-syntax-key: color-mix(in srgb, var(--dt-code-ink) 70%, var(--dt-info));
   --dt-syntax-string: color-mix(in srgb, var(--dt-accent) 55%, var(--dt-code-ink));
   --dt-syntax-number: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
@@ -139,9 +138,6 @@
   --dt-tint-text-07: color-mix(in srgb, var(--dt-text) 7%, transparent);
 
   --dt-chrome-bar: color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken));
-  --dt-chrome-dot-1: color-mix(in srgb, var(--dt-text-muted) 38%, var(--dt-surface-raised));
-  --dt-chrome-dot-2: color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised));
-  --dt-chrome-dot-3: color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised));
   --dt-chrome-divider: color-mix(in srgb, var(--dt-text) 9%, transparent);
   --dt-space-1: 4px;
   --dt-space-2: 8px;

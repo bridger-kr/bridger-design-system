@@ -5,15 +5,17 @@
 import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { forwardRef, useId } from 'react';
 import { warnOnce } from '../lib/deprecate.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 /**
  * Numeric range input — hairline track, persimmon fill, tabular value readout.
  * @startingPoint section="Forms" subtitle="Numeric range with tabular readout" viewport="420x90"
  */
 export const Slider = forwardRef(function Slider({ label, min = 0, max = 100, step = 1, value, defaultValue, onValueChange, onChange, unit = '', hint, id, name, disabled, slotProps, className, style, 'aria-label': ariaLabel, ...rest }, ref) {
+    const messages = useDSMessages();
     const autoId = useId();
     const sId = id ?? autoId;
     const hintId = hint ? `${sId}-hint` : undefined;
-    const inputLabel = ariaLabel ?? label ?? '값';
+    const inputLabel = ariaLabel ?? label ?? messages.slider.valueLabel;
     if (onChange !== undefined) {
         warnOnce('slider-onchange', 'Slider: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
     }

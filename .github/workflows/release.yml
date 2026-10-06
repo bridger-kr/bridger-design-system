@@ -35,26 +35,28 @@ jobs:
       - name: Build
         run: pnpm build
 
+      # npm auth is only required when this run actually publishes (i.e. a
+      # Version Packages PR just merged). It must not block version-PR
+      # creation, so a missing or expired token degrades to a warning here and
+      # surfaces as a failure only in the publish step below.
       - name: Configure npm authentication
         run: |
           if [ -z "${NPM_TOKEN}" ]; then
-            echo "::error::NPM_TOKEN is not configured for this repository. Add the repository secret or make the Bridger organization secret available before running the release workflow."
-            exit 1
+            echo "::warning::NPM_TOKEN is not configured for this repository. Version PRs can still be created, but npm publish will fail until the secret is added."
+            exit 0
           fi
           npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
           mkdir -p "$(dirname "$npmrc")"
           printf "//registry.npmjs.org/:_authToken=${NPM_TOKEN}\n" > "$npmrc"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Verify npm authentication
-        run: npm whoami
+          if ! npm whoami >/dev/null 2>&1; then
+            echo "::warning::NPM_TOKEN is set but npm rejected it (whoami failed). Rotate the secret; npm publish will fail until then."
+          fi
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create version PR or publish packages
+        id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm run version
@@ -66,6 +68,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Ensure npm packages are public
+        if: steps.changesets.outputs.published == 'true'
         run: |
           packages=(
             "@bridger-kr/tokens"
