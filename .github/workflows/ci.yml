@@ -27,6 +27,25 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      # components/ and tokens/ are generated mirrors of packages/. Regenerate
+      # and fail if the committed output drifts from the canonical sources.
+      - name: Verify generated mirror is in sync
+        run: |
+          pnpm generate
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::components/ and tokens/ are generated — edit packages/ sources, run 'pnpm generate', and commit the result."
+            git status --porcelain
+            git diff --exit-code
+            exit 1
+          fi
+
+      # The mirror must resolve as a standalone consumer surface: every
+      # relative specifier resolves on disk, every bare specifier is declared
+      # in root dependencies, and esbuild bundles it with declared-only
+      # externals (workspace hoisting cannot mask a missing dep).
+      - name: Verify generated mirror resolves
+        run: pnpm verify:mirror
+
       - name: Build
         run: pnpm build
 

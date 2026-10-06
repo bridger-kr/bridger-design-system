@@ -1,40 +1,58 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/forms/RadioGroup.tsx
+// Regenerate: pnpm generate
 
-/**
- * Radio group. One persimmon-filled selection. Pass options as strings or
- * { value, label, hint }. Controlled (value) or uncontrolled (defaultValue).
- */
-export function RadioGroup({ name, options = [], value, defaultValue, onChange, disabled, style }) {
-  const [internal, setInternal] = React.useState(defaultValue);
-  const current = value !== undefined ? value : internal;
-  const groupName = name || React.useId();
-  const select = (v) => {
-    if (disabled) return;
-    if (value === undefined) setInternal(v);
-    onChange?.(v);
-  };
-  return (
-    <div role="radiogroup" style={{ display: 'grid', gap: 10, ...style }}>
+import { Radio as BaseRadio } from '@base-ui/react/radio';
+import { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';
+import { forwardRef, useId } from 'react';
+import { cx } from '../lib/cx.jsx';
+import { warnOnce } from '../lib/deprecate.jsx';
+/** Radio group with optional per-option hint text. */
+export const RadioGroup = forwardRef(function RadioGroup({ name, options = [], value, defaultValue, onValueChange, onChange, disabled, className, style, ...rest }, ref) {
+    const generatedName = useId();
+    const groupName = name || generatedName;
+    if (onChange !== undefined) {
+        warnOnce('radiogroup-onchange', 'RadioGroup: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
+    }
+    const handleValueChange = (nextValue) => {
+        if (typeof nextValue === 'string') {
+            onValueChange?.(nextValue);
+            onChange?.(nextValue);
+        }
+    };
+    return (<BaseRadioGroup ref={ref} name={groupName} value={value} defaultValue={defaultValue} disabled={disabled} onValueChange={handleValueChange} className={cx('dt-radio-group', className)} style={{ display: 'grid', gap: 10, ...style }} {...rest}>
       {options.map((o) => {
-        const opt = typeof o === 'string' ? { value: o, label: o } : o;
-        const on = opt.value === current;
-        return (
-          <label key={opt.value} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.55 : 1 }}>
-            <input type="radio" name={groupName} checked={on} onChange={() => select(opt.value)} disabled={disabled} style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />
-            <span style={{
-              width: 18, height: 18, marginTop: 1, flex: '0 0 auto', borderRadius: 9999, display: 'grid', placeItems: 'center',
-              background: 'var(--dt-surface)', border: `1.5px solid ${on ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-              transition: 'border-color 130ms',
-            }}>
-              {on ? <span style={{ width: 9, height: 9, borderRadius: 9999, background: 'var(--dt-accent)' }} /> : null}
-            </span>
+            const opt = typeof o === 'string' ? { value: o, label: o } : o;
+            return (<label key={opt.value} className="dt-radio-option" style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0,
+                    cursor: disabled ? 'not-allowed' : 'pointer',
+                    opacity: disabled ? 0.55 : 1,
+                }}>
+            <BaseRadio.Root render={<button type="button"/>} nativeButton={true} value={opt.value} disabled={disabled} className="dt-radio-root" style={{
+                    width: 'var(--dt-space-5)',
+                    height: 'var(--dt-space-5)',
+                    flex: '0 0 auto',
+                    display: 'grid',
+                    placeItems: 'center',
+                    border: 0,
+                    background: 'transparent',
+                    padding: 0,
+                    cursor: disabled ? 'not-allowed' : 'pointer',
+                }}>
+              <span className="dt-radio-control">
+                <BaseRadio.Indicator>
+                  <span className="dt-radio-indicator" style={{ width: 9, height: 9, borderRadius: 9999, background: 'var(--dt-accent)', display: 'block' }}/>
+                </BaseRadio.Indicator>
+              </span>
+            </BaseRadio.Root>
             <span style={{ display: 'grid', gap: 2 }}>
               <span style={{ fontSize: 14, color: 'var(--dt-text)', lineHeight: 1.3 }}>{opt.label}</span>
               {opt.hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{opt.hint}</span> : null}
             </span>
-          </label>
-        );
-      })}
-    </div>
-  );
-}
+          </label>);
+        })}
+    </BaseRadioGroup>);
+});
+RadioGroup.displayName = 'RadioGroup';

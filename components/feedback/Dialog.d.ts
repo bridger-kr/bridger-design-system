@@ -1,15 +1,25 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Dialog.tsx
+// Regenerate: pnpm generate
 
+import type { CSSProperties, ReactNode } from 'react';
 export interface DialogProps {
-  open: boolean;
-  onClose?: () => void;
-  title?: React.ReactNode;
-  description?: React.ReactNode;
-  children?: React.ReactNode;
-  /** Footer actions (right-aligned), usually Buttons. */
-  footer?: React.ReactNode;
-  width?: number;
+    /** Controlled open state. */
+    open?: boolean;
+    /** Uncontrolled initial open state. */
+    defaultOpen?: boolean;
+    /** Called whenever the dialog requests an open-state change (Esc, backdrop, close button). */
+    onOpenChange?: (open: boolean) => void;
+    /** @deprecated Use `onOpenChange`. Called only when the dialog closes. Removed in v2.1. */
+    onClose?: () => void;
+    title?: ReactNode;
+    description?: ReactNode;
+    children?: ReactNode;
+    footer?: ReactNode;
+    'aria-label'?: string;
+    width?: number;
+    className?: string;
+    style?: CSSProperties;
 }
-
 /** Modal dialog with overlay, Esc/backdrop close, and a footer action bar. */
-export function Dialog(props: DialogProps): React.JSX.Element | null;
+export declare const Dialog: import("react").ForwardRefExoticComponent<DialogProps & import("react").RefAttributes<HTMLDivElement>>;

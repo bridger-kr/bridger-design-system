@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/product/BrandLogo.prompt.md. Regenerate: pnpm generate. -->
 The Bridger logo — the stable Figma vector `Bridger.` wordmark with a single persimmon period. Use `lg` at 148.484x43, `md` at 69.062x20, `symbol` only for constrained icon slots, and `favicon` for browser/app icons. The visible wordmark never localizes; Korean/English only change the accessible label.
 
 ```jsx

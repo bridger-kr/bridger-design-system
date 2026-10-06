@@ -1,11 +1,12 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Skeleton.tsx
+// Regenerate: pnpm generate
 
-export interface SkeletonProps {
-  width?: number | string;
-  height?: number | string;
-  radius?: string;
-  style?: React.CSSProperties;
+import type { CSSProperties, HTMLAttributes } from 'react';
+export interface SkeletonProps extends HTMLAttributes<HTMLSpanElement> {
+    width?: number | string;
+    height?: number | string;
+    radius?: string;
+    style?: CSSProperties;
 }
-
-/** Pulsing placeholder block for loading states. */
-export function Skeleton(props: SkeletonProps): React.JSX.Element;
+export declare const Skeleton: import("react").ForwardRefExoticComponent<SkeletonProps & import("react").RefAttributes<HTMLSpanElement>>;

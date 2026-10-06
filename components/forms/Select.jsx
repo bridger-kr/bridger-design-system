@@ -1,42 +1,56 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/forms/Select.tsx
+// Regenerate: pnpm generate
 
-/**
- * Compact select built on a native <select> for accessibility, styled flat
- * with a hairline border and a persimmon focus ring. Pair with a label.
- */
-export function Select({ label, hint, options = [], value, defaultValue, onChange, placeholder, disabled, id, style }) {
-  const selId = id || (label ? `sel-${label.replace(/\s+/g, '-')}` : undefined);
-  return (
-    <div style={{ display: 'grid', gap: 7 }}>
-      {label ? <label htmlFor={selId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</label> : null}
-      <div style={{ position: 'relative', display: 'flex' }}>
-        <select
-          id={selId}
-          className="dt-field"
-          value={value}
-          defaultValue={defaultValue}
-          disabled={disabled}
-          onChange={(e) => onChange?.(e.target.value)}
-          style={{
-            appearance: 'none', WebkitAppearance: 'none', width: '100%',
-            padding: '10px 36px 10px 13px', fontSize: 14, fontFamily: 'inherit',
-            color: 'var(--dt-text-strong)',
-            cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.55 : 1,
-            ...style,
-          }}
-        >
-          {placeholder ? <option value="" disabled>{placeholder}</option> : null}
-          {options.map((o) => {
-            const opt = typeof o === 'string' ? { value: o, label: o } : o;
-            return <option key={opt.value} value={opt.value}>{opt.label}</option>;
-          })}
-        </select>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"
-          style={{ position: 'absolute', right: 11, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: 'var(--dt-text-muted)' }}>
-          <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+import { Select as BaseSelect } from '@base-ui/react/select';
+import { ChevronDown } from 'lucide-react';
+import { forwardRef, useId } from 'react';
+import { cx } from '../lib/cx.jsx';
+import { warnOnce } from '../lib/deprecate.jsx';
+import { Icon } from '../lib/icon.jsx';
+/** Flat select with a persimmon focus ring. */
+export const Select = forwardRef(function Select({ label, hint, options = [], value, defaultValue, onValueChange, onChange, 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledby, 'aria-describedby': ariaDescribedby, 'aria-invalid': ariaInvalid, 'aria-required': ariaRequired, open, defaultOpen, onOpenChange, placeholder, disabled, id, name, required, slotProps, className, style, ...rest }, ref) {
+    const autoId = useId();
+    const selId = id ?? autoId;
+    const hintId = hint ? `${selId}-hint` : undefined;
+    const normalizedOptions = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
+    const selectedOption = normalizedOptions.find((option) => option.value === value);
+    if (onChange !== undefined) {
+        warnOnce('select-onchange', 'Select: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
+    }
+    const handleValueChange = (nextValue) => {
+        if (nextValue !== null) {
+            onValueChange?.(nextValue);
+            onChange?.(nextValue);
+        }
+    };
+    const { className: triggerClassName, ...triggerRest } = slotProps?.trigger ?? {};
+    return (<div className={cx('dt-select', className)} style={style} {...rest}>
+      {label ? (<label htmlFor={selId} className="dt-input-label" {...slotProps?.label}>
+          {label}
+        </label>) : null}
+      <div className="dt-select-box">
+        <BaseSelect.Root value={value} defaultValue={defaultValue} disabled={disabled} name={name} required={required} open={open} defaultOpen={defaultOpen} onOpenChange={(nextOpen) => onOpenChange?.(nextOpen)} onValueChange={handleValueChange}>
+          <BaseSelect.Trigger id={selId} ref={ref} className={cx('dt-field dt-select-trigger', triggerClassName)} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby ?? hintId} aria-invalid={ariaInvalid} aria-required={ariaRequired ?? (required ? true : undefined)} {...triggerRest}>
+            <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
+          </BaseSelect.Trigger>
+          <BaseSelect.Portal>
+            <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
+              <BaseSelect.Popup className="dt-select-popup">
+                <BaseSelect.List>
+                  {normalizedOptions.map((opt) => (<BaseSelect.Item key={opt.value} value={opt.value} className="dt-select-option">
+                      <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>
+                    </BaseSelect.Item>))}
+                </BaseSelect.List>
+              </BaseSelect.Popup>
+            </BaseSelect.Positioner>
+          </BaseSelect.Portal>
+        </BaseSelect.Root>
+        <Icon icon={ChevronDown} className="dt-select-chevron"/>
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
-    </div>
-  );
-}
+      {hint ? (<span id={hintId} className="dt-input-hint" {...slotProps?.hint}>
+          {hint}
+        </span>) : null}
+    </div>);
+});
+Select.displayName = 'Select';

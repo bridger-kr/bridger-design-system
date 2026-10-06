@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/product/SectionCard.prompt.md. Regenerate: pnpm generate. -->
 The dashboard's primary content wrapper: a plain noun-phrase H3 title, optional description, and a right-side action, framing a body. No eyebrow kicker — the title carries the section on its own.
 
 ```jsx

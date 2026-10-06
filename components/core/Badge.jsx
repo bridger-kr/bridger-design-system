@@ -1,35 +1,32 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/core/Badge.tsx
+// Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
+import { cx } from '../lib/cx.jsx';
 const TONE_CLASS = {
-  neutral: 'badge',
-  accent: 'badge badge-accent',
-  info: 'badge badge-info',
-  success: 'badge badge-success',
-  warning: 'badge badge-warning',
-  danger: 'badge badge-danger',
+    neutral: 'dt-badge',
+    accent: 'dt-badge dt-badge-accent',
+    info: 'dt-badge dt-badge-info',
+    success: 'dt-badge dt-badge-success',
+    warning: 'dt-badge dt-badge-warning',
+    danger: 'dt-badge dt-badge-danger',
 };
-
 /**
  * Status / classification badge. Pill-shaped, tinted. Status or
  * classification only — never decorative.
  */
-export function Badge({ children, tone = 'neutral', dot = false, style, ...rest }) {
-  const cls = TONE_CLASS[tone] ?? TONE_CLASS.neutral;
-  return (
-    <span className={cls} style={style} {...rest}>
-      {dot ? (
-        <span
-          aria-hidden="true"
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: '9999px',
-            background: 'currentColor',
-            display: 'inline-block',
-          }}
-        />
-      ) : null}
+export const Badge = forwardRef(function Badge({ children, tone = 'neutral', dot = false, className, style, ...rest }, ref) {
+    const cls = cx(TONE_CLASS[tone] ?? TONE_CLASS.neutral, className);
+    return (<span ref={ref} className={cls} style={style} {...rest}>
+      {dot ? (<span aria-hidden="true" style={{
+                width: 6,
+                height: 6,
+                borderRadius: 'var(--dt-radius-pill)',
+                background: 'currentColor',
+                display: 'inline-block',
+            }}/>) : null}
       {children}
-    </span>
-  );
-}
+    </span>);
+});
+Badge.displayName = 'Badge';

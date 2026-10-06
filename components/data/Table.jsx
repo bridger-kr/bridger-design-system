@@ -1,43 +1,91 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/data/Table.tsx
+// Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
+import { cx } from '../lib/cx.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
+function rowActionState(action, row) {
+    switch (action.kind) {
+        case 'button': {
+            const disabled = action.disabled?.(row) ?? false;
+            const label = action.label(row);
+            return {
+                disabled,
+                control: (<button type="button" className="dt-table-row-action" aria-label={label} disabled={disabled} onClick={() => action.onActivate(row)}>
+            {label}
+          </button>),
+            };
+        }
+        case 'link': {
+            const label = action.label(row);
+            return {
+                disabled: false,
+                control: (<a className="dt-table-row-action" aria-label={label} href={action.href(row)}>
+            {label}
+          </a>),
+            };
+        }
+        default: {
+            const exhaustiveAction = action;
+            return exhaustiveAction;
+        }
+    }
+}
 /**
  * Data table — scannable, dense, hairline-divided. Columns define header,
  * alignment, and an optional cell renderer. Built for comparison, not decoration.
  */
-export function Table({ columns = [], rows = [], rowKey, onRowClick, empty, style }) {
-  if (!rows.length && empty) return empty;
-  return (
-    <div style={{ overflowX: 'auto', borderRadius: 'var(--dt-radius-card)', background: 'var(--dt-surface)', border: '1px solid var(--dt-border)', ...style }}>
+function TableInner({ columns = [], rows = [], rowKey, rowAction, rowActionHeader, empty, className, style, ...rest }, ref) {
+    const messages = useDSMessages();
+    if (!rows.length && empty)
+        return <>{empty}</>;
+    return (<div ref={ref} {...rest} className={cx('dt-table', className)} style={{
+            overflowX: 'auto',
+            borderRadius: 'var(--dt-radius-card)',
+            background: 'var(--dt-surface)',
+            border: '1px solid var(--dt-border)',
+            ...style,
+        }}>
       <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-text)' }}>
         <thead>
           <tr style={{ background: 'var(--dt-surface-muted)' }}>
-            {columns.map((c) => (
-              <th key={c.key} style={{
-                textAlign: c.align || 'left', padding: '11px 18px',
-                fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600,
-                letterSpacing: '0.04em', textTransform: 'uppercase', color: 'var(--dt-text-muted)',
-                borderBottom: '1px solid var(--dt-divider)', whiteSpace: 'nowrap',
-              }}>{c.header}</th>
-            ))}
+            {columns.map((column) => (<th key={column.key} style={{
+                textAlign: column.align || 'left',
+                padding: '11px 18px',
+                fontFamily: 'var(--dt-font-mono)',
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase',
+                color: 'var(--dt-text-muted)',
+                borderBottom: '1px solid var(--dt-divider)',
+                whiteSpace: 'nowrap',
+            }}>
+                {column.header}
+              </th>))}
+            {rowAction ? <th className="dt-table-row-action-header" scope="col">{rowActionHeader ?? messages.table.rowActions}</th> : null}
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, ri) => (
-            <tr key={rowKey ? rowKey(row, ri) : ri}
-              onClick={onRowClick ? () => onRowClick(row) : undefined}
-              className="dt-tr"
-              style={{ cursor: onRowClick ? 'pointer' : 'default' }}>
-              {columns.map((c) => (
-                <td key={c.key} style={{
-                  textAlign: c.align || 'left', padding: '13px 18px', fontSize: 13,
-                  borderBottom: '1px solid var(--dt-divider)', whiteSpace: c.nowrap ? 'nowrap' : 'normal',
-                }}>{c.render ? c.render(row[c.key], row) : row[c.key]}</td>
-              ))}
-            </tr>
-          ))}
+          {rows.map((row, rowIndex) => {
+            const actionState = rowAction ? rowActionState(rowAction, row) : undefined;
+            return (<tr key={rowKey ? rowKey(row, rowIndex) : rowIndex} className={cx('dt-tr', actionState && 'dt-tr-actionable')} data-disabled={actionState?.disabled ? '' : undefined}>
+                {columns.map((column) => (<td key={column.key} style={{
+                        textAlign: column.align || 'left',
+                        padding: '13px 18px',
+                        fontSize: 13,
+                        borderBottom: '1px solid var(--dt-divider)',
+                        whiteSpace: column.nowrap ? 'nowrap' : 'normal',
+                    }}>
+                    {column.render ? column.render(row[column.key], row) : row[column.key]}
+                  </td>))}
+                {actionState ? <td className="dt-table-row-action-cell">{actionState.control}</td> : null}
+              </tr>);
+        })}
         </tbody>
       </table>
-      <style>{`.dt-tr{transition:background-color 130ms}.dt-tr:hover{background:var(--dt-surface-muted)}tbody tr:last-child td{border-bottom:0}`}</style>
-    </div>
-  );
+    </div>);
 }
+export const Table = forwardRef(TableInner);
+Table.displayName = 'Table';

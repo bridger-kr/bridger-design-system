@@ -1,6 +1,11 @@
-@import url('../packages/tokens/css/contract.css');
+/* ============================================================
+   GENERATED FILE — DO NOT EDIT.
+   Source: packages/tokens/css/typography.css
+   Regenerate: pnpm generate
+   ============================================================ */
 
-.font-tabular {
-  font-feature-settings: var(--dt-tabular);
-  font-variant-numeric: tabular-nums;
-}
+@import url('./contract.css');
+
+/* The .font-tabular helper was renamed to .dt-tabular and moved to
+   @bridger-kr/react/styles.css (@layer dt.utilities). The old name is
+   available as a deprecated alias in css/legacy-classes.css until 2.1.0. */

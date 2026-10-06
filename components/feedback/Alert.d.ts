@@ -1,15 +1,24 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/Alert.tsx
+// Regenerate: pnpm generate
 
-export interface AlertProps {
-  tone?: 'info' | 'success' | 'warning' | 'danger';
-  title?: React.ReactNode;
-  children?: React.ReactNode;
-  icon?: React.ReactNode;
-  action?: React.ReactNode;
-  motion?: 'none' | 'subtle' | 'pulse';
-  className?: string;
-  onDismiss?: () => void;
-  style?: React.CSSProperties;
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+export declare const AlertTone: {
+    readonly Info: "info";
+    readonly Success: "success";
+    readonly Warning: "warning";
+    readonly Danger: "danger";
+};
+export type AlertTone = (typeof AlertTone)[keyof typeof AlertTone];
+export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style' | 'title'> {
+    tone?: AlertTone;
+    title?: ReactNode;
+    children?: ReactNode;
+    icon?: ReactNode;
+    action?: ReactNode;
+    onDismiss?: () => void;
+    /** Accessible name for the dismiss button; defaults to the ambient locale. */
+    closeLabel?: string;
+    style?: CSSProperties;
 }
-
-export function Alert(props: AlertProps): React.JSX.Element;
+export declare const Alert: import("react").ForwardRefExoticComponent<AlertProps & import("react").RefAttributes<HTMLDivElement>>;

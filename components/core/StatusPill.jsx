@@ -1,53 +1,60 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/core/StatusPill.tsx
+// Regenerate: pnpm generate
 
-const STATUS = {
-  connected:    { bg: 'var(--dt-tint-success)', fg: 'var(--dt-success)' },
-  success:      { bg: 'var(--dt-tint-success)', fg: 'var(--dt-success)' },
-  reconnecting: { bg: 'var(--dt-tint-warning)', fg: 'var(--dt-warning)' },
-  warning:      { bg: 'var(--dt-tint-warning)', fg: 'var(--dt-warning)' },
-  disconnected: { bg: 'var(--dt-tint-danger)',  fg: 'var(--dt-danger)' },
-  danger:       { bg: 'var(--dt-tint-danger)',  fg: 'var(--dt-danger)' },
-  info:         { bg: 'var(--dt-tint-cobalt)',  fg: 'var(--dt-info)' },
-  idle:         { bg: 'var(--dt-tint-text)',   fg: 'var(--dt-text-subtle)' },
+import { forwardRef } from 'react';
+import { warnOnce } from '../lib/deprecate.jsx';
+const TONE_STYLE = {
+    neutral: { bg: 'var(--dt-tint-text)', fg: 'var(--dt-text-subtle)' },
+    accent: { bg: 'var(--dt-tint-accent)', fg: 'var(--dt-accent-text)' },
+    success: { bg: 'var(--dt-tint-success)', fg: 'var(--dt-success)' },
+    warning: { bg: 'var(--dt-tint-warning)', fg: 'var(--dt-warning)' },
+    danger: { bg: 'var(--dt-tint-danger)', fg: 'var(--dt-danger)' },
+    info: { bg: 'var(--dt-tint-cobalt)', fg: 'var(--dt-info)' },
 };
-
+const LEGACY_STATUS_MAP = {
+    connected: 'success',
+    success: 'success',
+    reconnecting: 'warning',
+    warning: 'warning',
+    disconnected: 'danger',
+    danger: 'danger',
+    info: 'info',
+    idle: 'neutral',
+};
 /**
  * Compact status pill: a tinted fill carrying a colored label — the console's
- * most-used status affordance (gateway / stream state). No outline, no dot;
- * an optional pulse marker appears only for live (`pulse`) states.
+ * most-used status affordance (gateway / stream state). Live states pulse by
+ * default; pass `pulse={false}` when a steady marker is more appropriate.
  */
-export function StatusPill({ status = 'idle', children, pulse = false, style, ...rest }) {
-  const tone = STATUS[status] ?? STATUS.idle;
-  return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 6,
-        borderRadius: 'var(--dt-radius-pill)',
-        background: tone.bg,
-        padding: '4px 10px',
-        fontSize: 12,
-        fontWeight: 600,
-        color: tone.fg,
-        ...style,
-      }}
-      {...rest}
-    >
-      {pulse ? (
-        <span
-          aria-hidden="true"
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: '9999px',
-            background: tone.fg,
-            animation: 'dt-status-pulse 1.6s var(--dt-ease) infinite',
-          }}
-        />
-      ) : null}
-      {children}
-      <style>{'@keyframes dt-status-pulse{0%,100%{opacity:1}50%{opacity:.35}}'}</style>
-    </span>
-  );
-}
+export const StatusPill = forwardRef(function StatusPill({ tone, label, children, status, pulse, style, ...rest }, ref) {
+    let resolvedTone = tone ?? 'neutral';
+    if (status !== undefined) {
+        warnOnce(`status-pill-status-${status}`, `StatusPill: status="${status}" is deprecated — use tone="${LEGACY_STATUS_MAP[status]}". Removed in v2.1.`);
+        if (tone === undefined)
+            resolvedTone = LEGACY_STATUS_MAP[status];
+    }
+    const toneStyle = TONE_STYLE[resolvedTone];
+    const shouldPulse = pulse ?? (status === 'connected' || status === 'reconnecting');
+    return (<span ref={ref} style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
+            borderRadius: 'var(--dt-radius-pill)',
+            background: toneStyle.bg,
+            padding: '4px 10px',
+            fontSize: 12,
+            fontWeight: 600,
+            color: toneStyle.fg,
+            ...style,
+        }} {...rest}>
+      {shouldPulse ? (<span className="dt-status-pulse" aria-hidden="true" style={{
+                width: 7,
+                height: 7,
+                borderRadius: 'var(--dt-radius-pill)',
+                background: toneStyle.fg,
+            }}/>) : null}
+      {label ?? children}
+    </span>);
+});
+StatusPill.displayName = 'StatusPill';

@@ -1,35 +1,52 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/forms/Checkbox.tsx
+// Regenerate: pnpm generate
 
-/**
- * Checkbox with label. Persimmon fill when checked; flat hairline when not.
- * Controlled (checked + onChange) or uncontrolled (defaultChecked).
- */
-export function Checkbox({ label, checked, defaultChecked, onChange, disabled, id, style }) {
-  const cbId = id || (label ? `cb-${String(label).replace(/\s+/g, '-')}` : undefined);
-  const [internal, setInternal] = React.useState(defaultChecked ?? false);
-  const isOn = checked !== undefined ? checked : internal;
-  const toggle = () => {
-    if (disabled) return;
-    if (checked === undefined) setInternal((v) => !v);
-    onChange?.(!isOn);
-  };
-  return (
-    <label htmlFor={cbId} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.55 : 1, ...style }}>
-      <input id={cbId} type="checkbox" checked={isOn} onChange={toggle} disabled={disabled} style={{ position: 'absolute', opacity: 0, width: 0, height: 0 }} />
-      <span style={{
-        width: 18, height: 18, flex: '0 0 auto', borderRadius: 5,
-        display: 'grid', placeItems: 'center',
-        background: isOn ? 'var(--dt-accent)' : 'var(--dt-surface)',
-        border: `1.5px solid ${isOn ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-        transition: 'background-color 130ms, border-color 130ms',
-      }}>
-        {isOn ? (
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M5 12l4.5 4.5L19 7" stroke="var(--dt-accent-ink)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        ) : null}
-      </span>
-      {label ? <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span> : null}
-    </label>
-  );
-}
+import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
+import { Check } from 'lucide-react';
+import { forwardRef, useId } from 'react';
+import { cx } from '../lib/cx.jsx';
+/** Checkbox — persimmon fill when checked. */
+export const Checkbox = forwardRef(function Checkbox({ label, checked, defaultChecked, onChange, disabled, id, className, style, slotProps, ...rest }, ref) {
+    const autoId = useId();
+    const cbId = id ?? autoId;
+    const labelId = label ? `${cbId}-label` : undefined;
+    const handleCheckedChange = (nextChecked) => {
+        onChange?.(nextChecked);
+    };
+    const { className: controlClassName, style: controlStyle, ...controlRest } = slotProps?.control ?? {};
+    const { className: rootClassName, style: rootStyle, ...rootRest } = slotProps?.root ?? {};
+    return (<label htmlFor={cbId} className={cx(className, rootClassName)} style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 0,
+            cursor: disabled ? 'not-allowed' : 'pointer',
+            opacity: disabled ? 0.55 : 1,
+            ...style,
+            ...rootStyle,
+        }} {...rootRest}>
+      <BaseCheckbox.Root render={<button type="button"/>} nativeButton={true} ref={ref} id={cbId} checked={checked} defaultChecked={defaultChecked} onCheckedChange={handleCheckedChange} disabled={disabled} className={cx('dt-checkbox-control', controlClassName)} style={{
+            width: 'var(--dt-space-5)',
+            height: 'var(--dt-space-5)',
+            flex: '0 0 auto',
+            display: 'grid',
+            placeItems: 'center',
+            border: 0,
+            background: 'transparent',
+            padding: 0,
+            cursor: disabled ? 'not-allowed' : 'pointer',
+            ...controlStyle,
+        }} aria-labelledby={labelId} {...rest} {...controlRest}>
+        <span className="dt-checkbox-box">
+          <BaseCheckbox.Indicator>
+            {/* 12px box needs a heavier stroke than the 1.75 icon canon. */}
+            <Check size={12} strokeWidth={2.5} color="var(--dt-accent-ink)" aria-hidden="true"/>
+          </BaseCheckbox.Indicator>
+        </span>
+      </BaseCheckbox.Root>
+      {label ? (<span id={labelId} style={{ fontSize: 14, color: 'var(--dt-text)' }} {...slotProps?.label}>
+          {label}
+        </span>) : null}
+    </label>);
+});
+Checkbox.displayName = 'Checkbox';

@@ -1,69 +1,100 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/navigation/CommandPalette.tsx
+// Regenerate: pnpm generate
 
-/**
- * CommandPalette (⌘K) — a fast switcher over tools and actions. A bordered plane
- * with a search field, grouped results, and mono shortcut hints. Render it as a
- * controlled panel (open + query + groups). Keeps the console flat: the only
- * elevation is the one floating layer. Pair items with Lucide icons.
- */
-export function CommandPalette({ open = true, query = '', onQueryChange, groups = [], footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기', onSelect, style }) {
-  if (!open) return null;
-  return (
-    <div style={{
-      width: 520, maxWidth: '100%', background: 'var(--dt-surface)',
-      border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)',
-      boxShadow: 'var(--dt-shadow-overlay)', overflow: 'hidden', fontFamily: 'var(--dt-font-sans)', ...style,
-    }}>
+import { Search } from 'lucide-react';
+import { forwardRef, useEffect, useId, useState } from 'react';
+import { cx } from '../lib/cx.jsx';
+import { Icon } from '../lib/icon.jsx';
+import { useControllableState } from '../lib/useControllableState.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
+export const CommandPalette = forwardRef(function CommandPalette({ open, defaultOpen, onOpenChange, query = '', onQueryChange, groups = [], inputLabel, listboxLabel, footerHint, placeholder, onSelect, style, className, ...rest }, ref) {
+    const messages = useDSMessages();
+    const resolvedFooterHint = footerHint ?? messages.commandPalette.footerHint;
+    const resolvedPlaceholder = placeholder ?? messages.commandPalette.placeholder;
+    const resolvedInputLabel = inputLabel ?? messages.commandPalette.inputLabel;
+    const resolvedListboxLabel = listboxLabel ?? messages.commandPalette.listboxLabel;
+    const uid = useId();
+    const listboxId = `${uid}-listbox`;
+    const optionId = (gi, ii) => `${uid}-option-${gi}-${ii}`;
+    const groupLabelId = (gi) => `${uid}-group-${gi}`;
+    const flatItems = groups.flatMap((g, gi) => g.items.map((item, ii) => ({ item, gi, ii })));
+    const [activeFlat, setActiveFlat] = useState(0);
+    const [isOpen, setIsOpen] = useControllableState({
+        value: open,
+        defaultValue: defaultOpen ?? true,
+        onChange: onOpenChange,
+    });
+    useEffect(() => {
+        setActiveFlat(0);
+    }, [query, groups]);
+    const active = flatItems.length ? flatItems[Math.min(activeFlat, flatItems.length - 1)] : undefined;
+    const activeDescendant = active ? optionId(active.gi, active.ii) : undefined;
+    useEffect(() => {
+        const el = activeDescendant ? document.getElementById(activeDescendant) : null;
+        el?.scrollIntoView?.({ block: 'nearest' });
+    }, [activeDescendant]);
+    if (!isOpen)
+        return null;
+    const moveActive = (delta) => {
+        if (!flatItems.length)
+            return;
+        setActiveFlat((prev) => (prev + delta + flatItems.length) % flatItems.length);
+    };
+    const handleKeyDown = (e) => {
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            moveActive(1);
+        }
+        else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            moveActive(-1);
+        }
+        else if (e.key === 'Home') {
+            e.preventDefault();
+            setActiveFlat(0);
+        }
+        else if (e.key === 'End') {
+            e.preventDefault();
+            setActiveFlat(flatItems.length - 1);
+        }
+        else if (e.key === 'Enter') {
+            e.preventDefault();
+            if (active)
+                onSelect?.(active.item);
+        }
+        else if (e.key === 'Escape') {
+            e.preventDefault();
+            setIsOpen(false);
+        }
+    };
+    return (<div ref={ref} {...rest} className={cx('dt-command-palette', className)} style={style}>
       {/* search */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '14px 16px', borderBottom: '1px solid var(--dt-border)' }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" style={{ color: 'var(--dt-text-muted)', flex: '0 0 auto' }}>
-          <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" /><path d="M21 21l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        </svg>
-        <input
-          autoFocus value={query} onChange={(e) => onQueryChange?.(e.target.value)}
-          placeholder="도구 · 액션 검색…"
-          style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 15, fontFamily: 'inherit', color: 'var(--dt-text-strong)' }}
-        />
-        <kbd style={{
-          fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: 'var(--dt-text-muted)',
-          border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '2px 7px',
-        }}>⌘K</kbd>
+      <div className="dt-command-search">
+        <Icon icon={Search} className="dt-command-search-icon"/>
+        <input autoFocus value={query} onChange={(e) => onQueryChange?.(e.target.value)} onKeyDown={handleKeyDown} placeholder={resolvedPlaceholder} role="combobox" aria-expanded="true" aria-autocomplete="list" aria-controls={listboxId} aria-activedescendant={activeDescendant} aria-label={resolvedInputLabel} className="dt-command-input"/>
+        <kbd className="dt-command-kbd">⌘K</kbd>
       </div>
 
       {/* results */}
-      <div style={{ maxHeight: 320, overflowY: 'auto', padding: 6 }}>
-        {groups.map((g, gi) => (
-          <div key={gi} style={{ marginBottom: 4 }}>
-            {g.heading ? (
-              <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--dt-text-muted)', padding: '8px 10px 5px' }}>{g.heading}</div>
-            ) : null}
-            {g.items.map((it, ii) => (
-              <div
-                key={ii}
-                onMouseDown={(e) => { e.preventDefault(); onSelect?.(it); }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 11, padding: '9px 10px',
-                  borderRadius: 'var(--dt-radius-control)', cursor: 'pointer',
-                  background: it.active ? 'var(--dt-tint-accent)' : 'transparent',
-                }}
-              >
-                {it.icon ? <span style={{ display: 'inline-flex', flex: '0 0 auto', color: it.active ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }} aria-hidden="true">{it.icon}</span> : null}
-                <span style={{ flex: 1, minWidth: 0, fontSize: 13.5, fontWeight: it.active ? 600 : 500, color: it.active ? 'var(--dt-accent)' : 'var(--dt-text-strong)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                  {it.label}
-                  {it.meta ? <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)', fontWeight: 400, marginLeft: 8 }}>{it.meta}</span> : null}
-                </span>
-                {it.shortcut ? (
-                  <kbd style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-subtle)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-sm)', padding: '1px 6px' }}>{it.shortcut}</kbd>
-                ) : null}
-              </div>
-            ))}
-          </div>
-        ))}
+      <div id={listboxId} role="listbox" aria-label={resolvedListboxLabel} className="dt-command-results">
+        {groups.map((g, gi) => (<div key={gi} role="group" aria-labelledby={g.heading ? groupLabelId(gi) : undefined} className="dt-command-group">
+            {g.heading ? (<div id={groupLabelId(gi)} className="dt-command-group-heading">{g.heading}</div>) : null}
+            {g.items.map((it, ii) => {
+                const isActive = active?.gi === gi && active?.ii === ii;
+                return (<div key={ii} id={optionId(gi, ii)} role="option" aria-selected={isActive} onMouseDown={(e) => { e.preventDefault(); onSelect?.(it); }} className="dt-command-option">
+                  {it.icon ? <span className="dt-command-option-icon" aria-hidden="true">{it.icon}</span> : null}
+                  <span className="dt-command-option-label">
+                    {it.label}
+                    {it.meta ? <span className="dt-command-option-meta">{it.meta}</span> : null}
+                  </span>
+                  {it.shortcut ? (<kbd className="dt-command-shortcut">{it.shortcut}</kbd>) : null}
+                </div>);
+            })}
+          </div>))}
       </div>
 
-      {footerHint ? (
-        <div style={{ borderTop: '1px solid var(--dt-border)', padding: '8px 14px', fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{footerHint}</div>
-      ) : null}
-    </div>
-  );
-}
+      {footerHint ? (<div className="dt-command-footer">{resolvedFooterHint}</div>) : null}
+    </div>);
+});
+CommandPalette.displayName = 'CommandPalette';

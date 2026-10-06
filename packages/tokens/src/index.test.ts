@@ -29,6 +29,24 @@ const figmaGenerator = readFileSync(
 const rootTokenEntrypoints = ['colors.css', 'spacing.css', 'typography.css'].map((fileName) =>
   readFileSync(new URL(`../../../tokens/${fileName}`, import.meta.url), 'utf8'),
 );
+const canonicalCssFiles = [
+  'base.css',
+  'colors.css',
+  'contract.css',
+  'fonts.css',
+  'index.css',
+  'spacing.css',
+  'typography.css',
+];
+const rootStylesEntrypoint = readFileSync(new URL('../../../styles.css', import.meta.url), 'utf8');
+const componentStylesMirror = readFileSync(
+  new URL('../../../components/styles.css', import.meta.url),
+  'utf8',
+);
+const componentStylesSource = readFileSync(
+  new URL('../../react/src/styles.css', import.meta.url),
+  'utf8',
+);
 
 function findMatchingBrace(css: string, openIndex: number): number {
   let depth = 0;
@@ -196,7 +214,19 @@ describe('@bridger-kr/tokens', () => {
   it('keeps root compatibility entrypoints and the Figma generator on the canonical contract', () => {
     expect(figmaGenerator).toContain("packages', 'tokens', 'css', 'contract.css'");
     for (const entrypoint of rootTokenEntrypoints) {
-      expect(entrypoint).toContain("../packages/tokens/css/contract.css");
+      expect(entrypoint).toContain("./contract.css");
+    }
+  });
+
+  it('keeps the generated root token mirror byte-identical to the canonical sources', () => {
+    // Root tokens/ is generated output of packages/tokens/css/ (pnpm generate).
+    // Strip the GENERATED banner and compare byte-for-byte so a manual edit to
+    // either side fails here as well as in CI.
+    for (const fileName of canonicalCssFiles) {
+      const mirror = readFileSync(new URL(`../../../tokens/${fileName}`, import.meta.url), 'utf8');
+      const source = readFileSync(new URL(`../css/${fileName}`, import.meta.url), 'utf8');
+      expect(mirror).toContain('GENERATED FILE — DO NOT EDIT');
+      expect(mirror.replace(/^\/\*[\s\S]*?\*\/\s*/, '')).toBe(source);
     }
   });
 
@@ -226,6 +256,16 @@ describe('@bridger-kr/tokens', () => {
       const arms = splitLightDark(value);
       if (arms) expect(colorVarNames.has(name), `${name} uses light-dark() but is not a color token`).toBe(true);
     }
+  });
+
+  it('keeps the generated component stylesheet mirror byte-identical and wired into the root entrypoint', () => {
+    // components/styles.css mirrors packages/react/src/styles.css — it carries
+    // the selected/checked/focus state rules (.dt-* [data-checked] etc.) that
+    // the token files alone do not provide.
+    expect(componentStylesMirror).toContain('GENERATED FILE — DO NOT EDIT');
+    expect(componentStylesMirror.replace(/^\/\*[\s\S]*?\*\/\s*/, '')).toBe(componentStylesSource);
+    expect(rootStylesEntrypoint).toContain("@import url('tokens/index.css')");
+    expect(rootStylesEntrypoint).toContain("@import url('components/styles.css')");
   });
 
   it('uses accessible persimmon identity and neutral primary-action roles', () => {

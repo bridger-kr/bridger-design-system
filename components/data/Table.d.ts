@@ -1,20 +1,44 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/data/Table.tsx
+// Regenerate: pnpm generate
 
-export interface TableColumn {
-  key: string;
-  header: React.ReactNode;
-  align?: 'left' | 'center' | 'right';
-  nowrap?: boolean;
-  render?: (value: any, row: any) => React.ReactNode;
+import type { CSSProperties, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
+export type TableAlign = 'left' | 'center' | 'right';
+export type TableRow = Record<string, ReactNode>;
+export interface TableColumn<Row extends TableRow = TableRow> {
+    readonly key: Extract<keyof Row, string>;
+    readonly header: ReactNode;
+    readonly align?: TableAlign;
+    readonly nowrap?: boolean;
+    readonly render?: (value: Row[Extract<keyof Row, string>], row: Row) => ReactNode;
 }
-export interface TableProps {
-  columns: TableColumn[];
-  rows: Array<Record<string, any>>;
-  rowKey?: (row: any, index: number) => string | number;
-  onRowClick?: (row: any) => void;
-  empty?: React.ReactNode;
-  style?: React.CSSProperties;
+export interface TableButtonRowAction<Row extends TableRow> {
+    readonly kind: 'button';
+    readonly label: (row: Row) => string;
+    readonly onActivate: (row: Row) => void;
+    readonly disabled?: (row: Row) => boolean;
 }
-
-/** Dense, scannable data table with hairline rows and per-column renderers. */
-export function Table(props: TableProps): React.JSX.Element;
+export interface TableLinkRowAction<Row extends TableRow> {
+    readonly kind: 'link';
+    readonly label: (row: Row) => string;
+    readonly href: (row: Row) => string;
+}
+export type TableRowAction<Row extends TableRow> = TableButtonRowAction<Row> | TableLinkRowAction<Row>;
+export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'> {
+    readonly columns?: readonly TableColumn<Row>[];
+    readonly rows?: readonly Row[];
+    readonly rowKey?: (row: Row, index: number) => string | number;
+    /**
+     * Semantic whole-row action. Replaces `onRowClick`; every action requires an
+     * accessible label and renders as a native button or link in a valid cell.
+     * Actionable rows must not contain nested interactive controls.
+     */
+    readonly rowAction?: TableRowAction<Row>;
+    readonly empty?: ReactNode;
+    /** Header cell for the row-action column; defaults to the ambient locale. */
+    readonly rowActionHeader?: ReactNode;
+    readonly style?: CSSProperties;
+}
+export declare const Table: <Row extends TableRow = TableRow>(props: TableProps<Row> & {
+    ref?: Ref<HTMLDivElement>;
+}) => ReactElement;

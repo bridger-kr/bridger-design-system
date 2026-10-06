@@ -148,14 +148,45 @@ describe('ThemeSwitch', () => {
     );
   };
 
+  // Install an in-memory Storage stand-in on `window` for every test:
+  // Node ≥22's --experimental-webstorage (default-on in Node 26) shadows
+  // jsdom's localStorage and throws on every access without
+  // --localstorage-file, which breaks window.localStorage.* calls.
+  const stubLocalStorage = () => {
+    const original = Object.getOwnPropertyDescriptor(window, 'localStorage');
+    const store = new Map<string, string>();
+    const storage = {
+      getItem: (key: string) => (store.has(key) ? store.get(key)! : null),
+      setItem: (key: string, value: string) => { store.set(key, String(value)); },
+      removeItem: (key: string) => { store.delete(key); },
+      clear: () => { store.clear(); },
+      key: (index: number) => [...store.keys()][index] ?? null,
+      get length() { return store.size; },
+    };
+    Object.defineProperty(window, 'localStorage', {
+      value: storage,
+      configurable: true,
+      writable: true,
+    });
+    return () => {
+      if (original) {
+        Object.defineProperty(window, 'localStorage', original);
+      } else {
+        Reflect.deleteProperty(window, 'localStorage');
+      }
+    };
+  };
+
+  let restoreLocalStorage = () => {};
+
   beforeEach(() => {
-    window.localStorage.clear();
+    restoreLocalStorage = stubLocalStorage();
     document.documentElement.removeAttribute('data-theme');
   });
 
   afterEach(() => {
     vi.unstubAllGlobals();
-    window.localStorage.clear();
+    restoreLocalStorage();
     document.documentElement.removeAttribute('data-theme');
   });
 

@@ -1,26 +1,23 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/feedback/EmptyState.tsx
+// Regenerate: pnpm generate
 
-/**
- * Empty state for lists/tables with no data. Quiet icon, short title,
- * one-line guidance, and an optional primary action.
- */
-export function EmptyState({ icon, title, description, action, style }) {
-  return (
-    <div style={{
-      display: 'grid', placeItems: 'center', gap: 10, textAlign: 'center',
-      padding: '40px 24px', borderRadius: 'var(--dt-radius-card)',
-      background: 'var(--dt-surface-sunken)', ...style,
-    }}>
-      {icon ? (
-        <span style={{
-          display: 'inline-flex', width: 44, height: 44, alignItems: 'center', justifyContent: 'center',
-          borderRadius: 'var(--dt-radius-control)', background: 'var(--dt-surface)', color: 'var(--dt-text-muted)',
-          border: '1px solid var(--dt-border)',
-        }}>{icon}</span>
-      ) : null}
-      {title ? <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--dt-text-strong)' }}>{title}</div> : null}
+import { forwardRef } from 'react';
+/** Empty state for lists/tables — quiet icon, title, guidance, action. */
+export const EmptyState = forwardRef(function EmptyState({ icon, title, description, action, className, style, ...rest }, ref) {
+    return (<div ref={ref} className={className} style={{
+            display: 'grid', placeItems: 'center', gap: 10, textAlign: 'center',
+            padding: '40px 24px', borderRadius: 'var(--dt-radius-card)',
+            background: 'var(--dt-surface-sunken)', ...style,
+        }} {...rest}>
+      {icon ? (<span style={{
+                display: 'inline-flex', width: 44, height: 44, alignItems: 'center', justifyContent: 'center',
+                borderRadius: 'var(--dt-radius-control)', background: 'var(--dt-surface)', color: 'var(--dt-text-muted)',
+                border: '1px solid var(--dt-border)',
+            }}>{icon}</span>) : null}
+      {title ? <div style={{ fontSize: 15, fontWeight: 650, color: 'var(--dt-text-strong)' }}>{title}</div> : null}
       {description ? <div style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--dt-text-muted)', maxWidth: 320 }}>{description}</div> : null}
       {action ? <div style={{ marginTop: 6 }}>{action}</div> : null}
-    </div>
-  );
-}
+    </div>);
+});
+EmptyState.displayName = 'EmptyState';

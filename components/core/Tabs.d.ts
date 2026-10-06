@@ -1,20 +1,31 @@
-import * as React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/core/Tabs.tsx
+// Regenerate: pnpm generate
 
+import type { CSSProperties, ReactNode } from 'react';
 export interface TabItem {
-  id: string;
-  label: string;
-  icon?: React.ReactNode;
-  count?: number | string;
+    id: string;
+    label: string;
+    icon?: ReactNode;
+    count?: number | string;
 }
-
+export type TabsVariant = 'underline' | 'segmented';
 export interface TabsProps {
-  tabs: TabItem[];
-  /** Controlled active tab id. */
-  value?: string;
-  defaultValue?: string;
-  onChange?: (id: string) => void;
-  style?: React.CSSProperties;
+    tabs?: TabItem[];
+    /** `underline` or `segmented`. `pill` is deprecated and maps to `segmented`. */
+    variant?: TabsVariant | 'pill';
+    /** Controlled active tab id. */
+    value?: string;
+    defaultValue?: string;
+    /** Called with the newly selected tab id. */
+    onValueChange?: (id: string) => void;
+    /** @deprecated Use `onValueChange`. Removed in v2.1. */
+    onChange?: (id: string) => void;
+    className?: string;
+    style?: CSSProperties;
 }
-
-/** Underline tab bar; the active tab is marked with a persimmon underline. */
-export function Tabs(props: TabsProps): React.JSX.Element;
+/**
+ * Underline-style tab bar for switching console views. Controlled via
+ * `value` + `onValueChange`, or uncontrolled with `defaultValue`.
+ */
+export declare const Tabs: import("react").ForwardRefExoticComponent<TabsProps & import("react").RefAttributes<HTMLDivElement>>;

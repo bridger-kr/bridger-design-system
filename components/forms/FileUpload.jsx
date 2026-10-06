@@ -1,78 +1,102 @@
-import React from 'react';
+// GENERATED FILE — DO NOT EDIT.
+// Source: packages/react/src/components/forms/FileUpload.tsx
+// Regenerate: pnpm generate
 
+import { File, Upload, X } from 'lucide-react';
+import { forwardRef, useId, useState } from 'react';
+import { Icon } from '../lib/icon.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 function fmtSize(bytes) {
-  if (bytes == null) return '';
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+    if (bytes == null)
+        return '';
+    if (bytes < 1024)
+        return `${bytes} B`;
+    if (bytes < 1024 * 1024)
+        return `${(bytes / 1024).toFixed(0)} KB`;
+    return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
-
 /**
- * Drop area for uploading an OpenAPI spec (or any file). A dashed hairline well —
- * never a soft-shadow card. Idle / drag-over / filled states. Calls onFiles with
- * the FileList. In the filled state, shows name + size with a remove control.
+ * Dashed hairline dropzone for uploading an OpenAPI spec. Idle / drag / filled.
+ * @startingPoint section="Forms" subtitle="Dropzone for an OpenAPI spec" viewport="460x180"
  */
-export function FileUpload({
-  label, accept = '.json,.yaml,.yml', hint = 'OpenAPI 스펙 · JSON 또는 YAML', file, onFiles, onRemove, id, style,
-}) {
-  const [drag, setDrag] = React.useState(false);
-  const inputRef = React.useRef(null);
-  const fId = id || 'fu';
-
-  const handle = (files) => { if (files && files.length) onFiles?.(files); };
-
-  return (
-    <div style={{ display: 'grid', gap: 7, ...style }}>
+export const FileUpload = forwardRef(function FileUpload({ label, accept = '.json,.yaml,.yml', hint, file, onFiles, onRemove, chooseFileLabel, dropHintLabel, uploadedLabel, removeLabel, id, className, style, ...rest }, ref) {
+    const messages = useDSMessages();
+    const [drag, setDrag] = useState(false);
+    const autoId = useId();
+    const fId = id ?? autoId;
+    const handle = (files) => {
+        if (files && files.length)
+            onFiles?.(files);
+    };
+    return (<div className={className} style={{ display: 'grid', gap: 7, ...style }} {...rest}>
       {label ? <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</span> : null}
 
-      {file ? (
-        <div style={{
-          display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px',
-          background: 'var(--dt-surface)', border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)',
-        }}>
+      {file ? (<div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '12px 14px',
+                background: 'var(--dt-surface)',
+                border: '1px solid var(--dt-border-strong)',
+                borderRadius: 'var(--dt-radius-card)',
+            }}>
           <span style={{
-            width: 34, height: 34, flex: '0 0 auto', display: 'grid', placeItems: 'center',
-            borderRadius: 'var(--dt-radius-control)', background: 'var(--dt-tint-accent)', color: 'var(--dt-accent-text)',
-          }}>
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /><path d="M14 2v6h6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" /></svg>
+                width: 34,
+                height: 34,
+                flex: '0 0 auto',
+                display: 'grid',
+                placeItems: 'center',
+                borderRadius: 'var(--dt-radius-control)',
+                background: 'var(--dt-tint-accent)',
+                color: 'var(--dt-accent-text)',
+            }}>
+            <Icon icon={File}/>
           </span>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--dt-text-strong)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file.name}</div>
-            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)', marginTop: 2 }}>{fmtSize(file.size)} · 업로드 완료</div>
+            <div style={{
+                fontFamily: 'var(--dt-font-mono)',
+                fontSize: 13,
+                fontWeight: 600,
+                color: 'var(--dt-text-strong)',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+            }}>
+              {file.name}
+            </div>
+            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)', marginTop: 2 }}>
+              {fmtSize(file.size)} · {uploadedLabel ?? messages.fileUpload.uploaded}
+            </div>
           </div>
-          <button
-            type="button"
-            onClick={onRemove}
-            aria-label="제거"
-            style={{ flex: '0 0 auto', width: 30, height: 30, display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-sm)', color: 'var(--dt-text-subtle)', cursor: 'pointer' }}
-          >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <button type="button" onClick={onRemove} aria-label={removeLabel ?? messages.fileUpload.remove} className="dt-file-upload-remove" style={{
+                flex: '0 0 auto',
+                display: 'grid',
+                placeItems: 'center',
+                border: 'none',
+                background: 'var(--dt-surface-sunken)',
+                borderRadius: 'var(--dt-radius-chip)',
+                color: 'var(--dt-text-subtle)',
+                cursor: 'pointer',
+            }}>
+            <Icon icon={X} size="sm"/>
           </button>
-        </div>
-      ) : (
-        <label
-          htmlFor={fId}
-          onDragOver={(e) => { e.preventDefault(); setDrag(true); }}
-          onDragLeave={() => setDrag(false)}
-          onDrop={(e) => { e.preventDefault(); setDrag(false); handle(e.dataTransfer.files); }}
-          style={{
-            display: 'grid', placeItems: 'center', gap: 8, padding: '26px 20px', textAlign: 'center', cursor: 'pointer',
-            borderRadius: 'var(--dt-radius-card)',
-            border: `1.5px dashed ${drag ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-            background: drag ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-            transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease)',
-          }}
-        >
+        </div>) : (<label htmlFor={fId} className="dt-file-upload-dropzone" data-dragging={drag ? '' : undefined} onDragOver={(e) => {
+                e.preventDefault();
+                setDrag(true);
+            }} onDragLeave={() => setDrag(false)} onDrop={(e) => {
+                e.preventDefault();
+                setDrag(false);
+                handle(e.dataTransfer.files);
+            }}>
           <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+            <Icon icon={Upload} size="lg"/>
           </span>
           <span style={{ fontSize: 13.5, color: 'var(--dt-text-strong)' }}>
-            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>파일 선택</span> 또는 끌어다 놓기
+            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>{chooseFileLabel ?? messages.fileUpload.chooseFile}</span> {dropHintLabel ?? messages.fileUpload.dropHint}
           </span>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint}</span>
-          <input ref={inputRef} id={fId} type="file" accept={accept} onChange={(e) => handle(e.target.files)} style={{ display: 'none' }} />
-        </label>
-      )}
-    </div>
-  );
-}
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint ?? messages.fileUpload.specHint}</span>
+          <input ref={ref} id={fId} type="file" accept={accept} onChange={(e) => handle(e.target.files)} style={{ display: 'none' }}/>
+        </label>)}
+    </div>);
+});
+FileUpload.displayName = 'FileUpload';

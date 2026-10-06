@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/core/Badge.prompt.md. Regenerate: pnpm generate. -->
 Pill badge for status or classification — never decorative. Tinted by semantic tone.
 
 ```jsx

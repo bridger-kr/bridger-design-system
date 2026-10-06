@@ -1,3 +1,4 @@
+<!-- GENERATED FILE — DO NOT EDIT. Source: packages/react/src/components/core/Button.prompt.md. Regenerate: pnpm generate. -->
 Bridger button — primary (single strongest action / persimmon), secondary, or ghost. Use for any clickable command.
 
 ```jsx
