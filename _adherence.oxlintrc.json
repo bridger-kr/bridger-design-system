@@ -22,10 +22,7 @@
               "components/forms/**",
               "components/navigation/**",
               "components/product/**",
-              "design-canvas.jsx",
-              "redesign/**",
-              "ui_kits/console/**",
-              "ui_kits/landing/**"
+              "redesign/**"
             ],
             "message": "Import design-system components from 'index.js', not component internals."
           }

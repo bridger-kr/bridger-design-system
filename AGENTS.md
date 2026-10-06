@@ -41,6 +41,7 @@ Package commands:
   pnpm typecheck    # pnpm -r run typecheck
   pnpm test         # vitest run
   pnpm lint         # oxlint -c _adherence.oxlintrc.json .
+  pnpm check:slop   # DESIGN.md §11 anti-slop gate for examples/ + packages/figma-plugin/
   pnpm pack:dry-run # npm pack --dry-run for tokens + react
   ```
 

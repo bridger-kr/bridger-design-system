@@ -1,6 +1,5 @@
 @import url('./contract.css');
 
-.font-tabular {
-  font-feature-settings: var(--dt-tabular);
-  font-variant-numeric: tabular-nums;
-}
+/* The .font-tabular helper was renamed to .dt-tabular and moved to
+   @bridger-kr/react/styles.css (@layer dt.utilities). The old name is
+   available as a deprecated alias in css/legacy-classes.css until 2.1.0. */

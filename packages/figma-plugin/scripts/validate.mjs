@@ -3,7 +3,7 @@
    validate.mjs — CI gate for the Bridger Figma artifacts.
    Checks:
      1. bridger-tokens.tokens.json is valid + has required groups/modes.
-     2. components.spec.json is valid + has 40 components.
+     2. components.spec.json is valid + has 46 components.
      3. Every "{color/...}" / "{var}" ref in the spec resolves to a token.
      4. Every variant has a complete props map (Figma needs matching keys).
    Exits non-zero on any failure so CI fails loudly.
@@ -99,7 +99,7 @@ function checkNode(node, where) {
 if (spec) {
   if (!Array.isArray(spec.components)) err('spec: components 배열 아님');
   else {
-    if (spec.components.length !== 40) warn(`spec: 컴포넌트 ${spec.components.length}개 (기대 40)`);
+    if (spec.components.length !== 46) warn(`spec: 컴포넌트 ${spec.components.length}개 (기대 46)`);
     const seen = new Set();
     for (const comp of spec.components) {
       if (!comp.name) { err('spec: 이름 없는 컴포넌트'); continue; }
@@ -180,13 +180,13 @@ expectNamedNodeValue('Sidebar', { State: 'default' }, 'active-marker', 'fill', '
 
 // ---- report ---------------------------------------------------------------
 if (warns.length) {
-  console.log('⚠ 경고:');
+  console.log('[경고]');
   warns.forEach((w) => console.log('  - ' + w));
 }
 if (errors.length) {
-  console.error('\n✗ 검증 실패:');
+  console.error('\n[실패] 검증 실패:');
   errors.forEach((e) => console.error('  - ' + e));
   console.error(`\n${errors.length}개 오류.`);
   process.exit(1);
 }
-console.log(`\n✓ 검증 통과 — 토큰 ${TOKEN_PATHS.size}개, 컴포넌트 ${spec ? spec.components.length : 0}개${warns.length ? `, 경고 ${warns.length}개` : ''}`);
+console.log(`\n[완료] 검증 통과 — 토큰 ${TOKEN_PATHS.size}개, 컴포넌트 ${spec ? spec.components.length : 0}개${warns.length ? `, 경고 ${warns.length}개` : ''}`);

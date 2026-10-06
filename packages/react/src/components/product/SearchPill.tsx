@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -25,18 +26,21 @@ export interface SearchPillProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
-export function SearchPill({
-  tone = SEARCH_PILL_TONE.Neutral,
-  size = SEARCH_PILL_SIZE.Medium,
-  leadingIcon,
-  trailingIcon,
-  artifactLabel,
-  children,
-  className,
-  ...rest
-}: SearchPillProps) {
+export const SearchPill = forwardRef<HTMLDivElement, SearchPillProps>(function SearchPill(
+  {
+    tone = SEARCH_PILL_TONE.Neutral,
+    size = SEARCH_PILL_SIZE.Medium,
+    leadingIcon,
+    trailingIcon,
+    artifactLabel,
+    children,
+    className,
+    ...rest
+  },
+  ref,
+) {
   const pill = (
-    <div className={cx('dt-search-pill', `dt-search-pill-${tone}`, `dt-search-pill-${size}`, className)} {...rest}>
+    <div ref={ref} className={cx('dt-search-pill', `dt-search-pill-${tone}`, `dt-search-pill-${size}`, className)} {...rest}>
       {leadingIcon ? <span className="dt-search-pill-icon">{leadingIcon}</span> : null}
       <span className="dt-search-pill-label">{children}</span>
       {trailingIcon ? <span className="dt-search-pill-icon">{trailingIcon}</span> : null}
@@ -53,4 +57,5 @@ export function SearchPill({
       {pill}
     </div>
   );
-}
+});
+SearchPill.displayName = 'SearchPill';

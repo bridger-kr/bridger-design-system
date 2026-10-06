@@ -54,9 +54,6 @@ const lightColors = freeze({
   tintText05: 'color-mix(in srgb, var(--dt-text) 5%, transparent)',
   tintText07: 'color-mix(in srgb, var(--dt-text) 7%, transparent)',
   chromeBar: 'color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken))',
-  chromeDot1: 'color-mix(in srgb, var(--dt-text-muted) 38%, var(--dt-surface-raised))',
-  chromeDot2: 'color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised))',
-  chromeDot3: 'color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised))',
   chromeDivider: 'color-mix(in srgb, var(--dt-text) 9%, transparent)',
 } as const);
 
@@ -113,9 +110,6 @@ const darkColors = freeze({
   tintText05: 'color-mix(in srgb, var(--dt-text) 5%, transparent)',
   tintText07: 'color-mix(in srgb, var(--dt-text) 7%, transparent)',
   chromeBar: 'color-mix(in srgb, var(--dt-surface-raised) 94%, var(--dt-surface-sunken))',
-  chromeDot1: 'color-mix(in srgb, var(--dt-text-muted) 38%, var(--dt-surface-raised))',
-  chromeDot2: 'color-mix(in srgb, var(--dt-warning) 46%, var(--dt-surface-raised))',
-  chromeDot3: 'color-mix(in srgb, var(--dt-success) 46%, var(--dt-surface-raised))',
   chromeDivider: 'color-mix(in srgb, var(--dt-text) 9%, transparent)',
 } as const);
 
@@ -135,6 +129,13 @@ export const spacing = freeze({
   8: '128px',
   12: '12px',
   32: '32px',
+} as const);
+
+export const icons = freeze({
+  sm: '14px',
+  md: '16px',
+  lg: '20px',
+  stroke: 1.75,
 } as const);
 
 export const radius = freeze({
@@ -192,7 +193,7 @@ export const motion = freeze({
 
 const fontFamilies = freeze({
   sans: "'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif",
-  mono: "'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace",
+  mono: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace",
 } as const);
 
 const fontSizes = freeze({
@@ -296,9 +297,6 @@ export const cssVarName = freeze({
     tintText05: '--dt-tint-text-05',
     tintText07: '--dt-tint-text-07',
     chromeBar: '--dt-chrome-bar',
-    chromeDot1: '--dt-chrome-dot-1',
-    chromeDot2: '--dt-chrome-dot-2',
-    chromeDot3: '--dt-chrome-dot-3',
     chromeDivider: '--dt-chrome-divider',
   } as const),
   spacing: freeze({
@@ -312,6 +310,12 @@ export const cssVarName = freeze({
     8: '--dt-space-8',
     12: '--dt-space-12',
     32: '--dt-space-32',
+  } as const),
+  icons: freeze({
+    sm: '--dt-icon-sm',
+    md: '--dt-icon-md',
+    lg: '--dt-icon-lg',
+    stroke: '--dt-icon-stroke',
   } as const),
   radius: freeze({
     chip: '--dt-radius-chip',
@@ -379,6 +383,7 @@ export const cssVarName = freeze({
 export const tokens = freeze({
   colors,
   spacing,
+  icons,
   radius,
   shadows,
   layers,
@@ -390,6 +395,7 @@ export const tokens = freeze({
 export type Tokens = typeof tokens;
 export type Colors = typeof colors;
 export type Spacing = typeof spacing;
+export type Icons = typeof icons;
 export type Radius = typeof radius;
 export type Shadows = typeof shadows;
 export type Layers = typeof layers;

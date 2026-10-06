@@ -19,15 +19,15 @@ Figma 플러그인은 **데스크톱 앱에서 사람이 직접** 퍼블리시�
 ```
 Bridger Design System Sync
 
-브릿저(datari) 디자인 시스템 — 공공 API 게이트웨이 콘솔용 — 을 코드 한 벌에서
+브릿저(Bridger) 디자인 시스템 — 공공 API 게이트웨이 콘솔용 — 을 코드 한 벌에서
 Figma로 가져옵니다. GitHub 공개 레포에서 토큰과 컴포넌트 스펙을 직접 읽어
 Figma Variables(Light/Dark), Text/Effect 스타일, 그리고 40개 Component Set을
 버튼 하나로 생성합니다.
 
 생성물:
 · Variables 컬렉션 1개 (Light/Dark 2모드) — 색·간격·radius
-· Text Styles 6종 (Pretendard / JetBrains Mono)
-· Effect Styles 4종 (그림자)
+· Text Styles 8종 (Pretendard / JetBrains Mono)
+· Effect Styles 1종 (overlay 전용 그림자)
 · Component Set 40개 (Button, Badge, Card, Table, Sidebar, CommandPalette …)
 
 소스가 바뀌면 레포의 CI가 산출물을 재생성하므로, 플러그인을 다시 실행하면

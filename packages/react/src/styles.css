@@ -1,3 +1,127 @@
+/* ============================================================
+   Bridger — component + utility CSS  (v2)
+
+   Every DS rule lives inside a dt.* cascade layer. Layer order is
+   declared identically in @bridger-kr/tokens/css/index.css and here,
+   so this file is self-sufficient when imported without tokens/css:
+
+     dt.reset < dt.tokens < dt.base < dt.components < dt.utilities
+
+   Unlayered consumer CSS always wins over these rules — override with
+   normal specificity, never importance hacks. The only permitted
+   important declarations are the prefers-reduced-motion overrides below.
+============================================================ */
+@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;
+
+@layer dt.components {
+/* ── Layout shell (migrated from @bridger-kr/tokens/css/base) ── */
+.dt-shell { margin-inline: auto; width: 100%; max-width: 1200px; padding-inline: 20px; }
+@media (min-width: 640px) { .dt-shell { padding-inline: 28px; } }
+@media (min-width: 1024px) { .dt-shell { padding-inline: 40px; } }
+
+/* ── Buttons ──
+   Variant classes are self-contained so a bare class keeps the v1
+   standalone look; size metrics come from .dt-button-sm/md/lg, which
+   follow and therefore win on React-rendered buttons. Danger is a
+   tone attribute on the solid variant, not a fifth class. */
+.dt-button-solid {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-control);
+  background: var(--dt-text-strong); color: var(--dt-surface); border: 1px solid var(--dt-text-strong);
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-button-solid:not(:disabled):hover { background: var(--dt-text); border-color: var(--dt-text); transform: translateY(-1px); }
+.dt-button-solid:active { transform: scale(var(--dt-press-scale)); }
+.dt-button-solid[data-tone='danger'] { border-color: var(--dt-danger); background: var(--dt-danger); }
+.dt-button-solid[data-tone='danger']:not(:disabled):hover {
+  background: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-text-strong));
+  border-color: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-text-strong));
+}
+
+.dt-button-outline {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-control);
+  background: var(--dt-surface-sunken); color: var(--dt-text-strong); border: 1px solid var(--dt-border);
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-button-outline:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); transform: translateY(-1px); }
+.dt-button-outline:active { transform: scale(var(--dt-press-scale)); }
+
+.dt-button-ghost {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+  height: 36px; padding: 0 var(--dt-space-12); font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+  border-radius: var(--dt-radius-control);
+  background: transparent; color: var(--dt-text-subtle); border: 1px solid transparent;
+  text-decoration: none; cursor: pointer;
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-button-ghost:not(:disabled):hover { background: var(--dt-tint-text); border-color: var(--dt-border); color: var(--dt-text-strong); }
+.dt-button-ghost:active { transform: scale(var(--dt-press-scale)); }
+
+.dt-button { min-height: var(--dt-space-5); }
+.dt-button-sm {
+  height: var(--dt-space-5); min-height: var(--dt-space-5);
+  padding-inline: calc(var(--dt-space-2) + var(--dt-space-1));
+  font-size: var(--dt-small-size);
+}
+.dt-button-md {
+  height: calc(var(--dt-space-5) + var(--dt-space-1));
+  min-height: calc(var(--dt-space-5) + var(--dt-space-1));
+  padding-inline: var(--dt-space-3);
+  font-size: var(--dt-small-size);
+}
+.dt-button-lg {
+  height: calc(var(--dt-space-5) + var(--dt-space-2));
+  min-height: calc(var(--dt-space-5) + var(--dt-space-2));
+  padding-inline: calc(var(--dt-space-3) + var(--dt-space-1));
+  font-size: var(--dt-body-size);
+}
+.dt-button:disabled { cursor: not-allowed; opacity: 0.55; }
+
+.dt-button-icon { display: inline-flex; }
+
+/* ── Badges (status / classification) — crisp tags, not cushiony pills.
+   Small radius + hairline so they read as instrument labels. ── */
+.dt-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 8px;
+  font-size: var(--dt-caption-size); font-weight: 600; letter-spacing: 0;
+  border-radius: var(--dt-radius-chip);
+  background: var(--dt-surface-sunken); color: var(--dt-text-muted); /* muted: AA on the sunken fill (subtle is 4.35) */
+  border: 1px solid var(--dt-border-strong);
+  transition: background-color var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-text); border-color: color-mix(in srgb, var(--dt-accent) 32%, transparent); }
+.dt-badge-info    { background: var(--dt-tint-cobalt);  color: var(--dt-cobalt); border-color: color-mix(in srgb, var(--dt-cobalt) 32%, transparent); }
+.dt-badge-success { background: var(--dt-tint-success); color: var(--dt-success); border-color: color-mix(in srgb, var(--dt-success) 32%, transparent); }
+.dt-badge-warning { background: var(--dt-tint-warning); color: var(--dt-warning); border-color: color-mix(in srgb, var(--dt-warning) 32%, transparent); }
+.dt-badge-danger  { background: var(--dt-tint-danger);  color: var(--dt-danger); border-color: color-mix(in srgb, var(--dt-danger) 32%, transparent); }
+
+/* ── Fields and inputs (migrated from @bridger-kr/tokens/css/base) ── */
+.dt-field {
+  min-height: 44px;
+  background: var(--dt-surface); border: 1px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-control);
+  transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease);
+}
+.dt-field:hover { border-color: color-mix(in srgb, var(--dt-text) 28%, var(--dt-border-strong)); }
+.dt-field:focus, .dt-field:focus-within { background: var(--dt-surface); border-color: var(--dt-accent-text); outline: 3px solid var(--dt-accent); outline-offset: 2px; }
+.dt-field-invalid { border-color: var(--dt-danger); }
+
+.dt-input { display: grid; gap: var(--dt-space-2); }
+.dt-input-label { color: var(--dt-text-subtle); font-size: var(--dt-small-size); font-weight: 600; }
+.dt-input .dt-field { display: flex; align-items: center; gap: var(--dt-space-2); padding-inline: calc(var(--dt-space-2) + var(--dt-space-1)); }
+.dt-input-prefix { display: inline-flex; color: var(--dt-text-muted); }
+.dt-input-control {
+  min-width: 0; flex: 1; border: 0; outline: 0; background: transparent;
+  color: var(--dt-text-strong); padding-block: var(--dt-space-2); font-size: var(--dt-label-size);
+}
+.dt-input-hint { color: var(--dt-text-muted); font-size: var(--dt-caption-size); }
+
 .dt-action-list {
   display: grid;
   gap: 0;
@@ -93,12 +217,12 @@
 }
 
 .dt-select-trigger:hover:not([data-disabled]) {
-  border-color: var(--dt-border-strong) !important;
+  border-color: var(--dt-border-strong);
   background: var(--dt-surface);
 }
 
 .dt-select-trigger:focus-visible {
-  border-color: var(--dt-accent-text) !important;
+  border-color: var(--dt-accent-text);
 }
 
 .dt-select-chevron {
@@ -137,7 +261,7 @@
 
 .dt-select-option[data-highlighted],
 .dt-combobox-option[data-highlighted] {
-  background: var(--dt-surface-sunken) !important;
+  background: var(--dt-surface-sunken);
 }
 
 .dt-combobox {
@@ -246,6 +370,12 @@
   border-bottom: 1px solid var(--dt-border);
 }
 
+/* The input's own outline is suppressed; the search row carries the ring. */
+.dt-command-search:focus-within {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
+}
+
 .dt-command-search-icon {
   flex: 0 0 auto;
   color: var(--dt-text-muted);
@@ -297,9 +427,7 @@
   align-items: center;
   gap: var(--dt-space-2);
   padding: var(--dt-space-2) var(--dt-space-12);
-  border: 0;
   border-radius: var(--dt-radius-md);
-  outline: 0;
   background: transparent;
   font-family: inherit;
   text-align: left;
@@ -308,6 +436,19 @@
 
 .dt-command-option[aria-selected='true'] {
   background: var(--dt-tint-accent);
+}
+
+/* Fallback ring if an option ever takes DOM focus; primary pattern is
+   aria-activedescendant on the combobox input. */
+.dt-command-option:focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
+}
+
+/* Focus lands on the clipped input nested inside the thumb. */
+.dt-slider-thumb:focus-within {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: 2px;
 }
 
 .dt-command-option-icon {
@@ -444,13 +585,42 @@
   cursor: not-allowed;
 }
 
+/* Base + active visuals live in the sheet so hover/state rules win by
+   plain specificity instead of overriding inline styles. */
+.dt-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: var(--dt-space-5);
+  padding: 0 10px;
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-chip);
+  background: var(--dt-surface);
+  color: var(--dt-text-subtle);
+  font-family: var(--dt-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease),
+    transform var(--dt-duration-fast) var(--dt-ease);
+}
+
+.dt-filter-chip-active {
+  border-color: color-mix(in srgb, var(--dt-accent) 40%, transparent);
+  background: var(--dt-tint-accent);
+  color: var(--dt-accent-text);
+  font-weight: 600;
+}
+
 .dt-filter-chip:hover {
-  border-color: var(--dt-border-strong) !important;
+  border-color: var(--dt-border-strong);
   transform: translateY(-1px);
 }
 
 .dt-filter-chip-active:hover {
-  border-color: var(--dt-accent-text) !important;
+  border-color: var(--dt-accent-text);
 }
 
 .dt-filter-chip:active {
@@ -513,8 +683,8 @@
 }
 
 .dt-filter-chip-group .dt-filter-chip {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .dt-filter-chip-remove,
@@ -572,29 +742,59 @@
   color: var(--dt-text-strong);
 }
 
-.dt-file-upload-dropzone[data-dragging] {
-  border-color: var(--dt-accent-text) !important;
-  background: var(--dt-tint-accent) !important;
+.dt-file-upload-dropzone {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  padding: 26px 20px;
+  border: 1.5px dashed var(--dt-border-strong);
+  border-radius: var(--dt-radius-card);
+  background: var(--dt-surface-sunken);
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease);
 }
 
-.dt-card-action {
-  cursor: pointer;
+.dt-file-upload-dropzone[data-dragging] {
+  border-color: var(--dt-accent-text);
+  background: var(--dt-tint-accent);
 }
 
 .dt-card {
   border: 1px solid var(--dt-border);
   border-radius: var(--dt-radius-card);
   color: var(--dt-text);
+  transition:
+    border-color var(--dt-duration-base) var(--dt-ease),
+    box-shadow var(--dt-duration-base) var(--dt-ease),
+    background-color var(--dt-duration-base) var(--dt-ease),
+    transform var(--dt-duration-base) var(--dt-ease);
 }
 
 .dt-card-default,
-.dt-card-panel { background: var(--dt-surface); }
-.dt-card-muted { background: var(--dt-surface-sunken); }
+.dt-card-panel,
+.dt-card-plain { background: var(--dt-surface); }
+.dt-card-muted,
+.dt-card-sunken { background: var(--dt-surface-sunken); }
 .dt-card-raised { background: var(--dt-surface-raised); }
 
+/* Shared reset for card-shaped <button>/<a> elements. */
+.dt-card-action {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: var(--dt-space-5);
+  font: inherit;
+  text-align: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 .dt-card-action:hover:not(:disabled) {
-  border-color: var(--dt-border-strong) !important;
-  background: var(--dt-surface-muted) !important;
+  border-color: var(--dt-border-strong);
+  background: var(--dt-surface-muted);
   transform: translateY(-1px);
 }
 
@@ -664,20 +864,57 @@
 .dt-sidebar-item-badge { color: var(--dt-text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .dt-sidebar-footer { border-top: 1px solid var(--dt-border); padding: var(--dt-space-2) var(--dt-space-3); }
 
-.dt-tabs-tab-underline[aria-selected='true'] {
-  border-bottom-color: var(--dt-accent-text) !important;
-  color: var(--dt-text-strong) !important;
+/* Tab base styles moved out of inline styles so selected-state rules
+   win by plain specificity. */
+.dt-tabs-tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  padding: 10px 12px;
+  color: var(--dt-text-muted);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease),
+    color var(--dt-duration-fast) var(--dt-ease);
 }
 
-.dt-tabs-tab-pill[aria-selected='true'] {
-  background: var(--dt-surface-raised) !important;
-  border: 1px solid var(--dt-border) !important;
-  color: var(--dt-text-strong) !important;
+.dt-tabs-tab-underline[aria-selected='true'] {
+  border-bottom-color: var(--dt-accent-text);
+  color: var(--dt-text-strong);
+}
+
+.dt-tabs-tab-pill[aria-selected='true'],
+.dt-tabs-tab-segmented[aria-selected='true'] {
+  background: var(--dt-surface-raised);
+  border: 1px solid var(--dt-border);
+  color: var(--dt-text-strong);
+}
+
+.dt-checkbox-box {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 1.5px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-control);
+  background: var(--dt-surface);
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease);
 }
 
 .dt-checkbox-control[data-checked] .dt-checkbox-box {
-  border-color: var(--dt-accent-text) !important;
-  background: var(--dt-accent) !important;
+  border-color: var(--dt-accent-text);
+  background: var(--dt-accent);
 }
 
 .dt-checkbox-control:focus-visible .dt-checkbox-box,
@@ -687,8 +924,30 @@
   outline-offset: 2px;
 }
 
+.dt-radio-control {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1.5px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-pill);
+  background: var(--dt-surface);
+  transition: border-color var(--dt-duration-fast) var(--dt-ease);
+}
+
 .dt-radio-root[data-checked] .dt-radio-control {
-  border-color: var(--dt-accent-text) !important;
+  border-color: var(--dt-accent-text);
+}
+
+.dt-switch-track {
+  position: absolute;
+  left: 1px;
+  width: 38px;
+  height: 22px;
+  border-radius: var(--dt-radius-pill);
+  background: var(--dt-border-strong);
+  transition: background-color var(--dt-duration-fast) var(--dt-ease);
 }
 
 .dt-switch-thumb {
@@ -697,7 +956,7 @@
 }
 
 .dt-switch-control[data-checked] .dt-switch-track {
-  background: var(--dt-accent) !important;
+  background: var(--dt-accent);
 }
 
 .dt-switch-control[data-checked] .dt-switch-thumb {
@@ -708,16 +967,55 @@
   animation: dt-menu var(--dt-duration-fast) var(--dt-ease);
 }
 
+/* Menu item base styles moved out of inline styles so highlight/danger
+   state rules win by plain specificity. */
+.dt-menu-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 9px;
+  border: 0;
+  border-radius: var(--dt-radius-control);
+  background: transparent;
+  padding: 8px 10px;
+  color: var(--dt-text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dt-menu-item-icon {
+  display: inline-flex;
+  color: var(--dt-text-subtle);
+}
+
+.dt-menu-item[data-danger],
+.dt-menu-item[data-danger] .dt-menu-item-icon {
+  color: var(--dt-danger);
+}
+
 .dt-menu-item[data-highlighted] {
-  background: var(--dt-surface-sunken) !important;
+  background: var(--dt-surface-sunken);
 }
 
 .dt-menu-item[data-highlighted][data-danger] {
-  background: var(--dt-tint-danger) !important;
+  background: var(--dt-tint-danger);
+}
+
+.dt-tool-card {
+  border: 1px solid var(--dt-border);
+  border-radius: var(--dt-radius-card);
+  background: var(--dt-surface);
+  padding: 16px 18px;
+  transition:
+    box-shadow var(--dt-duration-base) var(--dt-ease),
+    background-color var(--dt-duration-base) var(--dt-ease);
 }
 
 .dt-tool-card:hover {
-  border-color: var(--dt-border-strong) !important;
+  border-color: var(--dt-border-strong);
 }
 
 .dt-tool-card .dt-chip {
@@ -738,31 +1036,12 @@
   color: var(--dt-accent-text);
 }
 
-.dt-alert-motion-subtle {
-  animation: dt-alert-enter var(--dt-duration-base) var(--dt-ease) backwards;
-}
-
-.dt-alert-motion-pulse {
-  animation: dt-alert-pulse 1.8s var(--dt-ease) infinite;
-}
-
 .dt-toast {
   animation: dt-toast-enter var(--dt-duration-base) var(--dt-ease) backwards;
 }
 
 .dt-spinner-svg {
   animation: dt-spin 0.7s linear infinite;
-}
-
-@keyframes dt-alert-enter {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes dt-menu {
@@ -795,16 +1074,6 @@
   }
 }
 
-@keyframes dt-alert-pulse {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.08);
-  }
-}
-
 @keyframes dt-toast-enter {
   from {
     opacity: 0;
@@ -819,8 +1088,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dt-alert-motion-subtle,
-  .dt-alert-motion-pulse,
   .dt-dialog-overlay,
   .dt-dialog-popup,
   .dt-menu-popup,
@@ -834,10 +1101,12 @@
   .dt-card-action,
   .dt-checkbox-box,
   .dt-chip-interactive,
+  .dt-copy-button,
   .dt-file-upload-dropzone,
   .dt-file-upload-remove,
   .dt-filter-chip,
   .dt-filter-chip-remove,
+  .dt-link,
   .dt-radio-control,
   .dt-switch-thumb,
   .dt-switch-track,
@@ -859,69 +1128,10 @@
   --dt-product-muted: #786f63;
   --dt-product-line: transparent;
   min-height: 100vh;
-  color: var(--dt-product-accent);
-  font-family: var(--dt-font-sans);
-}
-
-.dt-product-shell-cinematic {
-  background: var(--dt-product-paper);
-}
-
-.dt-product-shell-console {
   background: var(--dt-bg);
   color: var(--dt-text);
+  font-family: var(--dt-font-sans);
 }
-
-.dt-product-cinematic-backdrop {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.dt-product-cinematic-wash {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, color-mix(in srgb, #ffffff 10%, transparent), transparent 58%);
-}
-
-.dt-product-cinematic-lines {
-  position: absolute;
-  inset: auto 0 16px;
-  display: none;
-  width: 100%;
-  height: min(62vw, 620px);
-  opacity: 0;
-}
-
-.dt-product-cinematic-track,
-.dt-product-cinematic-flow {
-  fill: none;
-  stroke-linecap: round;
-}
-
-.dt-product-cinematic-track {
-  stroke: transparent;
-  stroke-width: 0;
-}
-
-.dt-product-cinematic-flow {
-  stroke: var(--dt-product-accent);
-  stroke-width: 1.8;
-  stroke-dasharray: 46 360;
-}
-
-.dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
-  animation: dt-product-cinematic-flow 7s linear infinite;
-}
-
-.dt-product-cinematic-flow-b {
-  animation-delay: -2.1s;
-}
-
-.dt-product-cinematic-flow-c {
-  animation-delay: -4.2s;
 }
 
 .dt-product-topbar {
@@ -967,24 +1177,6 @@
   min-width: 0;
   align-items: center;
   gap: 12px;
-}
-
-.dt-product-topbar-actions .dt-product-action-pill {
-  min-height: 44px;
-  padding-inline: 22px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.dt-product-topbar-actions .dt-product-action-pill-icon-only {
-  width: 44px;
-  min-width: 44px;
-  padding-inline: 0;
-}
-
-.dt-product-topbar-actions .dt-product-action-pill-icon:only-child,
-.dt-product-topbar-icon .dt-product-action-pill-icon {
-  margin-inline: auto;
 }
 
 .dt-product-topbar-menu {
@@ -1069,87 +1261,6 @@
   pointer-events: none;
 }
 
-.dt-product-topbar-menu-panel .dt-product-action-pill {
-  max-width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  justify-content: flex-start;
-  border-radius: var(--dt-radius-control);
-  padding-inline: 16px;
-  font-size: 13px;
-}
-
-.dt-product-topbar-menu-panel .dt-product-action-pill-icon-only {
-  width: auto;
-}
-
-.dt-product-action-pill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  border: none;
-  border-radius: var(--dt-radius-lg);
-  color: var(--dt-product-accent);
-  font-weight: 500;
-  text-decoration: none;
-  transition:
-    transform var(--dt-duration-base) var(--dt-ease),
-    border-color var(--dt-duration-base) var(--dt-ease),
-    background-color var(--dt-duration-base) var(--dt-ease),
-    color var(--dt-duration-base) var(--dt-ease);
-}
-
-.dt-product-action-pill:hover {
-  transform: translateY(-1px);
-}
-
-.dt-product-action-pill:active {
-  transform: scale(var(--dt-press-scale));
-}
-
-.dt-product-action-pill-compact {
-  min-height: 44px;
-  padding-inline: 22px;
-  border-radius: var(--dt-radius-lg);
-  font-size: 12px;
-}
-
-.dt-product-action-pill-hero {
-  min-height: 56px;
-  min-width: 96px;
-  padding-inline: 26px;
-  border-radius: var(--dt-radius-lg);
-  font-size: 14px;
-  font-weight: 600;
-}
-
-.dt-product-action-pill-default {
-  background: color-mix(in srgb, #ffffff 54%, var(--dt-product-paper));
-}
-
-.dt-product-action-pill-outline {
-  background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
-}
-
-.dt-product-action-pill-accent {
-  background: var(--dt-text-strong);
-  color: var(--dt-surface);
-}
-
-.dt-product-action-pill-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-}
-
-.dt-product-action-pill-label {
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-}
-
 .dt-product-side-rail {
   position: fixed;
   left: clamp(18px, 4vw, 72px);
@@ -1166,86 +1277,6 @@
   font-weight: 500;
   line-height: 1.2;
   text-decoration: none;
-}
-
-.dt-product-motion-field {
-  position: absolute;
-  right: clamp(64px, 16vw, 260px);
-  top: clamp(310px, 39vw, 470px);
-  z-index: 1;
-  display: grid;
-  width: clamp(180px, 19vw, 280px);
-  aspect-ratio: 1;
-  place-items: center;
-  color: var(--dt-product-accent);
-  isolation: isolate;
-  pointer-events: none;
-}
-
-.dt-product-motion-grid {
-  position: absolute;
-  inset: -18%;
-  z-index: -1;
-  width: 136%;
-  height: 136%;
-  object-fit: contain;
-  opacity: 0.32;
-  mix-blend-mode: multiply;
-  animation: dt-product-motion-grid 11s ease-in-out infinite alternate;
-}
-
-.dt-product-motion-orbit {
-  position: absolute;
-  inset: 12%;
-  border: 1px solid color-mix(in srgb, var(--dt-product-ink) 18%, transparent);
-  border-radius: 40px;
-  transform: rotate(18deg);
-}
-
-.dt-product-motion-orbit-b {
-  inset: 25%;
-  transform: rotate(-24deg);
-}
-
-.dt-product-motion-node {
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  width: 10px;
-  height: 10px;
-  border-radius: var(--dt-radius-lg);
-  background: var(--dt-product-accent);
-  transform: translateX(-50%);
-}
-
-.dt-product-motion-axis {
-  position: absolute;
-  width: 68%;
-  height: 1px;
-  background: var(--dt-product-accent);
-  opacity: 0.46;
-}
-
-.dt-product-motion-copy {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 66px;
-  height: 46px;
-  border-radius: var(--dt-radius-lg);
-  background: var(--dt-product-accent);
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0;
-}
-
-.dt-product-motion-field .dt-product-motion-orbit-a {
-  animation: dt-product-motion-orbit 9s linear infinite;
-}
-
-.dt-product-motion-field .dt-product-motion-orbit-b {
-  animation: dt-product-motion-orbit 12s linear infinite reverse;
 }
 
 .dt-product-page-header {
@@ -1312,24 +1343,6 @@
   margin-top: 20px;
 }
 
-@keyframes dt-product-cinematic-flow {
-  to {
-    stroke-dashoffset: -406;
-  }
-}
-
-@keyframes dt-product-motion-orbit {
-  to {
-    rotate: 360deg;
-  }
-}
-
-@keyframes dt-product-motion-grid {
-  to {
-    transform: translate3d(2%, -2%, 0) scale(1.04);
-  }
-}
-
 @keyframes dt-product-topbar-menu-reveal {
   from {
     opacity: 0;
@@ -1360,85 +1373,12 @@
   transform: translateY(-1px) scale(1.08);
 }
 
-.dt-window-frame {
-  overflow: hidden;
-  border: 1px solid var(--dt-border-alpha);
-  border-radius: var(--dt-radius-card);
-  background: var(--dt-surface-raised);
-  color: var(--dt-text);
-}
-
-.dt-window-frame-body {
-  min-width: 0;
-}
-
-.dt-window-chrome {
-  display: flex;
-  min-height: 34px;
-  align-items: center;
-  gap: 8px;
-  border-bottom: 1px solid var(--dt-chrome-divider);
-  background: var(--dt-chrome-bar);
-  padding: 8px 12px;
-  color: var(--dt-text-subtle);
-  font-size: 12px;
-}
-
-.dt-window-chrome-dots {
-  display: inline-flex;
-  flex: 0 0 auto;
-  gap: 6px;
-}
-
-.dt-window-chrome-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: var(--dt-radius-pill);
-  box-shadow: inset 0 0 0 1px var(--dt-border-alpha);
-}
-
-.dt-window-chrome-dot-1 {
-  background: var(--dt-chrome-dot-1);
-}
-
-.dt-window-chrome-dot-2 {
-  background: var(--dt-chrome-dot-2);
-}
-
-.dt-window-chrome-dot-3 {
-  background: var(--dt-chrome-dot-3);
-}
-
-.dt-window-chrome-title {
-  display: inline-flex;
-  min-width: 0;
-  align-items: center;
-  gap: 8px;
-  overflow: hidden;
-  font-family: var(--dt-font-mono);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.dt-window-chrome-title strong {
-  color: var(--dt-text-strong);
-  font-weight: 600;
-}
-
-.dt-window-chrome-trailing {
-  margin-left: auto;
-}
-
 .dt-code-pane {
   overflow: hidden;
   border: 1px solid var(--dt-code-border);
   border-radius: var(--dt-radius-card);
   background: var(--dt-code-bg);
   color: var(--dt-code-ink);
-
-  /* Pane chrome (label, copy button) must meet AA on --dt-code-bg; the
-     syntax-comment token is dimmer by design for in-code comments. */
-  --dt-code-pane-muted: color-mix(in srgb, var(--dt-code-ink) 72%, transparent);
 }
 
 .dt-code-pane-header {
@@ -1460,42 +1400,39 @@
   white-space: nowrap;
 }
 
-.dt-code-pane-copy {
-  display: inline-flex;
+/* CopyButton on the always-dark code surface — descendant selectors keep the
+   override above the base `.dt-copy-button` rules regardless of file order. */
+.dt-code-block .dt-copy-button,
+.dt-code-pane .dt-copy-button {
   min-width: 28px;
   min-height: 28px;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
   margin-left: auto;
+  padding: 0;
   border: 0;
   border-radius: var(--dt-radius-chip);
-  background: transparent;
   color: var(--dt-code-pane-muted);
-  cursor: pointer;
   font-family: var(--dt-font-mono);
   font-size: 12px;
   font-weight: 600;
-  transition:
-    background-color var(--dt-duration-fast) var(--dt-ease),
-    color var(--dt-duration-fast) var(--dt-ease);
 }
 
-.dt-code-pane-copy:hover,
-.dt-code-pane-copy:focus-visible {
+.dt-code-block .dt-copy-button:hover:not(:disabled),
+.dt-code-pane .dt-copy-button:hover:not(:disabled),
+.dt-code-block .dt-copy-button:focus-visible,
+.dt-code-pane .dt-copy-button:focus-visible {
   background: color-mix(in srgb, var(--dt-code-ink) 7%, transparent);
   color: var(--dt-code-ink);
 }
 
-.dt-code-pane-copy[data-copied='true'] {
+.dt-code-block .dt-copy-button[data-state='copied'],
+.dt-code-pane .dt-copy-button[data-state='copied'] {
   color: var(--dt-syntax-success);
 }
 
-.dt-code-pane-copy-icon {
-  width: 5px;
-  height: 5px;
-  border-radius: var(--dt-radius-pill);
-  background: currentColor;
+.dt-code-block .dt-copy-button[data-state='failed'],
+.dt-code-pane .dt-copy-button[data-state='failed'] {
+  /* Dark-theme --dt-danger value: the code well is dark in both themes. */
+  color: #f87171;
 }
 
 .dt-code-pane-pre {
@@ -1702,7 +1639,6 @@
   border-radius: var(--dt-radius-pill);
   background: var(--dt-hotspot-ring);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--dt-hotspot-ring) 18%, transparent);
-  animation: dt-hotspot-pulse 1.8s var(--dt-ease) infinite;
 }
 
 .dt-annotation-hotspot-label {
@@ -1731,7 +1667,8 @@
 }
 
 .dt-section-band,
-.dt-section-proof {
+.dt-section-proof,
+.dt-section-sunken {
   background: var(--dt-surface);
 }
 
@@ -1780,11 +1717,15 @@
   border-left: 1px solid var(--dt-border-alpha);
 }
 
-.dt-stat-panel .dt-stat-panel-tile > div:nth-child(2) {
-  color: var(--dt-accent-text) !important;
+/* Scoped custom property instead of an important declaration: StatTile's
+   value reads var(--dt-stat-tile-value-color) with --dt-text-strong as the
+   fallback, so the panel context overrides a plain declaration. */
+.dt-stat-panel .dt-stat-panel-tile {
+  --dt-stat-tile-value-color: var(--dt-accent-text);
 }
 
-.dt-tabs-list-pill {
+.dt-tabs-list-pill,
+.dt-tabs-list-segmented {
   width: fit-content;
   max-width: 100%;
   overflow-x: auto;
@@ -1796,12 +1737,13 @@
   box-shadow: inset 0 1px 2px color-mix(in srgb, var(--dt-text) 5%, transparent);
 }
 
-.dt-tabs-tab-pill {
+.dt-tabs-tab-pill,
+.dt-tabs-tab-segmented {
   flex: 0 0 auto;
   min-height: 34px;
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
   border-radius: var(--dt-radius-pill);
-  padding: 8px 14px !important;
+  padding: 8px 14px;
   transition:
     background-color var(--dt-duration-fast) var(--dt-ease),
     box-shadow var(--dt-duration-fast) var(--dt-ease),
@@ -1831,19 +1773,6 @@
   color: var(--dt-text-subtle);
 }
 
-@keyframes dt-hotspot-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--dt-hotspot-ring) 18%, transparent);
-  }
-
-  50% {
-    transform: scale(1.12);
-    box-shadow: 0 0 0 7px color-mix(in srgb, var(--dt-hotspot-ring) 9%, transparent);
-  }
-}
-
 @media (min-width: 768px) {
   .dt-product-page-header {
     padding: 24px;
@@ -1857,16 +1786,7 @@
 }
 
 @media (max-width: 900px) {
-  .dt-product-cinematic-lines {
-    height: 680px;
-    opacity: 0.5;
-  }
-
   .dt-product-side-rail {
-    display: none;
-  }
-
-  .dt-product-motion-field {
     display: none;
   }
 }
@@ -1883,36 +1803,9 @@
   .dt-product-topbar-menu {
     display: block;
   }
-
-  .dt-product-action-pill-compact {
-    min-height: 44px;
-    padding-inline: 16px;
-    font-size: 12px;
-  }
-
-  .dt-product-action-pill-hero {
-    min-height: 48px;
-    padding-inline: 18px;
-    font-size: 13px;
-  }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dt-product-cinematic-backdrop-animated .dt-product-cinematic-flow {
-    animation: none;
-  }
-
-  .dt-product-motion-grid,
-  .dt-product-motion-field .dt-product-motion-orbit-a,
-  .dt-product-motion-field .dt-product-motion-orbit-b {
-    animation: none;
-  }
-
-  .dt-product-action-pill {
-    transition: none;
-  }
-
   .dt-brand-logo-dot {
     transform: none !important;
     transition: none !important;
@@ -1925,5 +1818,248 @@
 
   .dt-product-topbar-menu-button span {
     transition: none;
+  }
+}
+
+/* ============================================================
+   Scale-locked primitives (DS-41): CopyButton, Kbd, Separator,
+   Link, Text, Heading. Class + token only — no inline styles.
+============================================================ */
+
+/* CopyButton — clipboard action with an announced result state. The outcome
+   is carried by the icon swap, the label text, and a role="status" live
+   region; the status hue is reinforcement, never the only cue (§8). */
+.dt-copy-button {
+  display: inline-flex;
+  min-width: var(--dt-space-5);
+  min-height: var(--dt-space-5);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 var(--dt-space-12);
+  border: 1px solid transparent;
+  border-radius: var(--dt-radius-control);
+  background: transparent;
+  color: var(--dt-text-subtle);
+  cursor: pointer;
+  font-family: var(--dt-font-sans);
+  font-size: var(--dt-small-size);
+  font-weight: 500;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease),
+    color var(--dt-duration-fast) var(--dt-ease),
+    transform var(--dt-duration-fast) var(--dt-ease);
+}
+
+.dt-copy-button:hover:not(:disabled) {
+  border-color: var(--dt-border);
+  background: var(--dt-surface-muted);
+  color: var(--dt-text-strong);
+}
+
+.dt-copy-button:focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: 2px;
+}
+
+.dt-copy-button:active:not(:disabled) {
+  transform: scale(var(--dt-press-scale));
+}
+
+.dt-copy-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.dt-copy-button[data-state='copied'] {
+  color: var(--dt-success);
+}
+
+.dt-copy-button[data-state='failed'] {
+  color: var(--dt-danger);
+}
+
+.dt-copy-button-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+/* Kbd — key glyph in the sans face: key names may be Korean. */
+.dt-kbd {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  border: 1px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-chip);
+  background: var(--dt-surface-sunken);
+  color: var(--dt-text-subtle);
+  font-family: var(--dt-font-sans);
+  font-size: var(--dt-small-size);
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.dt-kbd[data-size='sm'] {
+  min-height: 18px;
+  padding: 0 5px;
+  font-size: var(--dt-caption-size);
+}
+
+/* Separator — hairline divider (base-ui role="separator"). */
+.dt-separator {
+  flex-shrink: 0;
+  border: 0;
+  background: var(--dt-border);
+}
+
+.dt-separator[data-orientation='horizontal'] {
+  width: 100%;
+  height: 1px;
+}
+
+.dt-separator[data-orientation='vertical'] {
+  align-self: stretch;
+  width: 1px;
+}
+
+/* Link — persimmon renders as a glyph only through --dt-accent-text (§4.2).
+   :visited keeps the same color; there is no separate visited hue. */
+.dt-link {
+  color: var(--dt-accent-text);
+  text-decoration-color: color-mix(in srgb, var(--dt-accent-text) 45%, transparent);
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+  transition:
+    color var(--dt-duration-fast) var(--dt-ease),
+    text-decoration-color var(--dt-duration-fast) var(--dt-ease);
+}
+
+.dt-link:hover {
+  color: var(--dt-accent-strong);
+  text-decoration-color: currentColor;
+}
+
+.dt-link:visited {
+  color: var(--dt-accent-text);
+}
+
+.dt-link:focus-visible {
+  border-radius: var(--dt-radius-chip);
+  outline: 3px solid var(--dt-accent);
+  outline-offset: 2px;
+}
+
+.dt-link-icon {
+  vertical-align: -0.15em;
+}
+
+/* Text — the fixed 12/13/14/16 scale with token line-heights (EDD-231). */
+.dt-text {
+  margin: 0;
+  color: var(--dt-text);
+}
+
+.dt-text[data-size='12'] {
+  font-size: var(--dt-caption-size);
+  line-height: var(--dt-caption-leading);
+}
+
+.dt-text[data-size='13'] {
+  font-size: var(--dt-small-size);
+  line-height: var(--dt-small-leading);
+}
+
+.dt-text[data-size='14'] {
+  font-size: var(--dt-label-size);
+  line-height: var(--dt-label-leading);
+}
+
+.dt-text[data-size='16'] {
+  font-size: var(--dt-body-size);
+  line-height: var(--dt-body-leading);
+}
+
+.dt-text[data-weight='400'] {
+  font-weight: 400;
+}
+
+.dt-text[data-weight='500'] {
+  font-weight: 500;
+}
+
+.dt-text[data-weight='600'] {
+  font-weight: 600;
+}
+
+.dt-text[data-tone='muted'] {
+  color: var(--dt-text-muted);
+}
+
+.dt-text[data-tone='accent'] {
+  color: var(--dt-accent-text);
+}
+
+.dt-text[data-tone='danger'] {
+  color: var(--dt-danger);
+}
+
+/* Heading — real h1–h4 on the 20/28/36 display steps, weight capped at 600.
+   Negative tracking applies only to the H1/H2 steps (§4.3). */
+.dt-heading {
+  margin: 0;
+  color: var(--dt-text-strong);
+  font-weight: 600;
+}
+
+.dt-heading[data-size='20'] {
+  font-size: var(--dt-h3-size);
+  line-height: var(--dt-h3-leading);
+}
+
+.dt-heading[data-size='28'] {
+  font-size: var(--dt-h2-size);
+  line-height: var(--dt-h2-leading);
+  letter-spacing: var(--dt-h2-tracking);
+}
+
+.dt-heading[data-size='36'] {
+  font-size: var(--dt-h1-size);
+  line-height: var(--dt-h1-leading);
+  letter-spacing: var(--dt-h1-tracking);
+}
+
+.dt-heading[data-tone='muted'] {
+  color: var(--dt-text-muted);
+}
+
+.dt-heading[data-tone='accent'] {
+  color: var(--dt-accent-text);
+}
+
+.dt-heading[data-tone='danger'] {
+  color: var(--dt-danger);
+}
+
+}
+
+@layer dt.utilities {
+  /* Tabular numerals — renamed from .tabular/.font-tabular (see
+     @bridger-kr/tokens/css/legacy-classes for the deprecated aliases). */
+  .dt-tabular { font-variant-numeric: tabular-nums; }
+
+  .dt-visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
   }
 }

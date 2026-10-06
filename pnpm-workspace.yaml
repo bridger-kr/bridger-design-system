@@ -3,3 +3,4 @@ packages:
 linkWorkspacePackages: true
 allowBuilds:
   esbuild: true
+  lightningcss-cli: true
