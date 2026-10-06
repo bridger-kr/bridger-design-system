@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { cx } from '../../lib/cx';
 import { Icon } from '../../lib/icon';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface FilterChipProps {
   label: string;
@@ -25,6 +26,7 @@ export interface FilterChipProps {
  */
 export const FilterChip = forwardRef<HTMLSpanElement | HTMLButtonElement, FilterChipProps>(
   function FilterChip({ label, count, active = false, removable = false, onToggle, onRemove, icon, className, style }, ref) {
+  const messages = useDSMessages();
     const toggle = (
       <button
         type="button"
@@ -55,7 +57,7 @@ export const FilterChip = forwardRef<HTMLSpanElement | HTMLButtonElement, Filter
         <button
           type="button"
           className="dt-filter-chip-remove"
-          aria-label={`${label} 제거`}
+          aria-label={messages.filterChip.removeAriaLabel(label)}
           onClick={onRemove}
           style={{ color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }}
         >

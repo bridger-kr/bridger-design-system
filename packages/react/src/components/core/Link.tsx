@@ -1,9 +1,10 @@
 import { forwardRef } from 'react';
 import type { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react';
-import { useRender } from '@base-ui-components/react/use-render';
+import { useRender } from '@base-ui/react/use-render';
 import { ExternalLink } from 'lucide-react';
 import { Icon } from '../../lib/icon';
 import { cx } from '../../lib/cx';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 /**
  * Absolute `http(s)` hrefs pointing at a different origin are external. Same
@@ -49,9 +50,10 @@ export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>,
  * and a visually-hidden "(새 창)" cue so the new context is never icon-only.
  */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
-  { href, external, externalLabel = '(새 창)', render, className, children, ...rest },
+  { href, external, externalLabel, render, className, children, ...rest },
   ref,
 ) {
+  const messages = useDSMessages();
   const isExternal = external ?? isExternalHref(href);
 
   return useRender({
@@ -70,7 +72,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
             <>
               {' '}
               <Icon icon={ExternalLink} size="sm" className="dt-link-icon" />
-              <span className="dt-visually-hidden">{externalLabel}</span>
+              <span className="dt-visually-hidden">{externalLabel ?? `(${messages.link.externalCue})`}</span>
             </>
           ) : null}
         </>

@@ -1,10 +1,11 @@
-import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, Search } from 'lucide-react';
 import { forwardRef, useId, useState } from 'react';
 import type { CSSProperties, HTMLAttributes, Ref } from 'react';
 import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
 import { useControllableState } from '../../lib/useControllableState';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 import { Icon } from '../../lib/icon';
 import type { SlotPropsFor } from '../../lib/slot';
 
@@ -64,8 +65,8 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     open,
     defaultOpen,
     onOpenChange,
-    placeholder = '검색…',
-    emptyText = '결과 없음',
+    placeholder,
+    emptyText,
     id,
     slotProps,
     className,
@@ -74,6 +75,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   },
   ref,
 ) {
+  const messages = useDSMessages();
   const [isOpen, setOpen] = useControllableState<boolean>({
     value: open,
     defaultValue: defaultOpen ?? false,
@@ -141,7 +143,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
           id={cbId}
           ref={ref as Ref<HTMLInputElement>}
           value={isOpen ? query : selected ? selected.label : ''}
-          placeholder={selected && !isOpen ? selected.label : placeholder}
+          placeholder={selected && !isOpen ? selected.label : (placeholder ?? messages.combobox.placeholder)}
           onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
@@ -162,7 +164,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
         <BaseCombobox.Positioner sideOffset={6}>
           <BaseCombobox.Popup className="dt-combobox-popup">
           {filtered.length === 0 ? (
-            <BaseCombobox.Empty className="dt-combobox-empty">{emptyText}</BaseCombobox.Empty>
+            <BaseCombobox.Empty className="dt-combobox-empty">{emptyText ?? messages.combobox.empty}</BaseCombobox.Empty>
           ) : (
             <BaseCombobox.List>
             {filtered.map((o) => {

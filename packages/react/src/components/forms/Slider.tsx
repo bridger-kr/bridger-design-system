@@ -1,7 +1,8 @@
-import { Slider as BaseSlider } from '@base-ui-components/react/slider';
+import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { forwardRef, useId } from 'react';
 import type { CSSProperties, HTMLAttributes, Ref } from 'react';
 import { warnOnce } from '../../lib/deprecate';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 import type { SlotPropsFor } from '../../lib/slot';
 
 export type SliderSlotProps = SlotPropsFor<{
@@ -64,10 +65,11 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   },
   ref,
 ) {
+  const messages = useDSMessages();
   const autoId = useId();
   const sId = id ?? autoId;
   const hintId = hint ? `${sId}-hint` : undefined;
-  const inputLabel = ariaLabel ?? label ?? '값';
+  const inputLabel = ariaLabel ?? label ?? messages.slider.valueLabel;
   if (onChange !== undefined) {
     warnOnce('slider-onchange', 'Slider: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
   }

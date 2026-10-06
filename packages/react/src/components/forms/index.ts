@@ -2,6 +2,8 @@ export { Checkbox } from './Checkbox';
 export type { CheckboxProps, CheckboxSlotProps } from './Checkbox';
 export { Combobox } from './Combobox';
 export type { ComboboxOption, ComboboxProps, ComboboxSlotProps } from './Combobox';
+export { Field } from './Field';
+export type { FieldProps, FieldControlProps } from './Field';
 export { FileUpload } from './FileUpload';
 export type { FileUploadProps, UploadedFile } from './FileUpload';
 export { RadioGroup } from './RadioGroup';

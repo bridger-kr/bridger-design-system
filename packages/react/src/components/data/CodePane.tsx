@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { warnOnce } from '../../lib/deprecate';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 import { CodeBlock } from './CodeBlock';
 import type { CodeLine, CodeSegment, CodeSegmentTone } from './CodeBlock';
 
@@ -42,9 +43,10 @@ export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chi
  * `showLineNumbers={false}` and maps its copy labels. Removed in v2.1.
  */
 export const CodePane = forwardRef<HTMLDivElement, CodePaneProps>(function CodePane(
-  { lines = [], label, copyText, copyLabel = '복사', copiedLabel = '복사됨', copyFailedLabel, copyable = false, className, ...rest },
+  { lines = [], label, copyText, copyLabel, copiedLabel, copyFailedLabel, copyable = false, className, ...rest },
   ref,
 ) {
+  const messages = useDSMessages();
   warnOnce('codepane', 'CodePane is deprecated — use `CodeBlock` (`lines`, `copy`). Removed in v2.1.');
   return (
     <CodeBlock
@@ -52,7 +54,7 @@ export const CodePane = forwardRef<HTMLDivElement, CodePaneProps>(function CodeP
       lines={lines}
       label={label}
       copyText={copyText}
-      copy={copyable ? { label: copyLabel, copiedLabel, failedLabel: copyFailedLabel } : false}
+      copy={copyable ? { label: copyLabel ?? messages.code.copy, copiedLabel: copiedLabel ?? messages.code.copied, failedLabel: copyFailedLabel ?? messages.code.failed } : false}
       showLineNumbers={false}
       className={className}
       {...rest}

@@ -243,7 +243,7 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **63 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **65 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
@@ -260,12 +260,12 @@ Naming note: `Panel` is the React component exported from `packages/react/src/co
 | Family | Count | Components |
 | --- | --- | --- |
 | core | 15 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Heading`, `Input`, `Kbd`, `Link`, `Panel`, `Section`, `Separator`, `StatusPill`, `Tabs`, `Text` |
-| forms | 10 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
-| feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
+| forms | 11 | `Checkbox`, `Combobox`, `Field`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
+| feedback | 9 | `Alert`, `ConfirmDialog`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
 | data | 11 | `Avatar`, `CodeBlock`, `CodePane`, `CopyButton`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
 | navigation | 6 | `Breadcrumb`, `CommandPalette`, `ConsolePageHeader`, `Menu`, `Sidebar`, `Stepper` |
 | product | 13 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductShell` (+ `ProductSideRail`), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard` |
-| **Total** | **63** | |
+| **Total** | **65** | |
 
 ### 9.2 Core family
 
