@@ -1,5 +1,7 @@
-import { useRef, useState } from 'react';
+import { File, Upload, X } from 'lucide-react';
+import { forwardRef, useId, useRef, useState } from 'react';
 import type { CSSProperties, DragEvent, HTMLAttributes } from 'react';
+import { Icon } from '../../lib/icon';
 
 function fmtSize(bytes?: number) {
   if (bytes == null) return '';
@@ -13,7 +15,7 @@ export interface UploadedFile {
   size?: number;
 }
 
-export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'id' | 'style'> {
+export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'id' | 'onChange' | 'style'> {
   label?: string;
   /** Accepted file types, passed to the native input. */
   accept?: string;
@@ -30,27 +32,32 @@ export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'i
  * Dashed hairline dropzone for uploading an OpenAPI spec. Idle / drag / filled.
  * @startingPoint section="Forms" subtitle="Dropzone for an OpenAPI spec" viewport="460x180"
  */
-export function FileUpload({
-  label,
-  accept = '.json,.yaml,.yml',
-  hint = 'OpenAPI 스펙 · JSON 또는 YAML',
-  file,
-  onFiles,
-  onRemove,
-  id,
-  style,
-}: FileUploadProps) {
+export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function FileUpload(
+  {
+    label,
+    accept = '.json,.yaml,.yml',
+    hint = 'OpenAPI 스펙 · JSON 또는 YAML',
+    file,
+    onFiles,
+    onRemove,
+    id,
+    className,
+    style,
+    ...rest
+  },
+  ref,
+) {
   const [drag, setDrag] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const fId = id || 'fu';
+  const autoId = useId();
+  const fId = id ?? autoId;
 
   const handle = (files: FileList | null) => {
     if (files && files.length) onFiles?.(files);
   };
 
   return (
-    <div style={{ display: 'grid', gap: 7, ...style }}>
-      {label ? <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>{label}</span> : null}
+    <div className={className} style={{ display: 'grid', gap: 7, ...style }} {...rest}>
+      {label ? <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</span> : null}
 
       {file ? (
         <div
@@ -61,7 +68,7 @@ export function FileUpload({
             padding: '12px 14px',
             background: 'var(--dt-surface)',
             border: '1px solid var(--dt-border-strong)',
-            borderRadius: 'var(--dt-radius-lg)',
+            borderRadius: 'var(--dt-radius-card)',
           }}
         >
           <span
@@ -71,20 +78,12 @@ export function FileUpload({
               flex: '0 0 auto',
               display: 'grid',
               placeItems: 'center',
-              borderRadius: 'var(--dt-radius-md)',
+              borderRadius: 'var(--dt-radius-control)',
               background: 'var(--dt-tint-accent)',
-              color: 'var(--dt-accent)',
+              color: 'var(--dt-accent-text)',
             }}
           >
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinejoin="round"
-              />
-              <path d="M14 2v6h6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
-            </svg>
+            <Icon icon={File} />
           </span>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div
@@ -92,7 +91,7 @@ export function FileUpload({
                 fontFamily: 'var(--dt-font-mono)',
                 fontSize: 13,
                 fontWeight: 600,
-                color: 'var(--dt-ink-strong)',
+                color: 'var(--dt-text-strong)',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
@@ -100,7 +99,7 @@ export function FileUpload({
             >
               {file.name}
             </div>
-            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)', marginTop: 2 }}>
+            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)', marginTop: 2 }}>
               {fmtSize(file.size)} · 업로드 완료
             </div>
           </div>
@@ -115,14 +114,12 @@ export function FileUpload({
               placeItems: 'center',
               border: 'none',
               background: 'var(--dt-surface-sunken)',
-              borderRadius: 'var(--dt-radius-sm)',
-              color: 'var(--dt-muted-strong)',
+              borderRadius: 'var(--dt-radius-chip)',
+              color: 'var(--dt-text-subtle)',
               cursor: 'pointer',
             }}
           >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-            </svg>
+            <Icon icon={X} size="sm" />
           </button>
         </div>
       ) : (
@@ -140,42 +137,16 @@ export function FileUpload({
             setDrag(false);
             handle(e.dataTransfer.files);
           }}
-          style={{
-            display: 'grid',
-            placeItems: 'center',
-            gap: 8,
-            padding: '26px 20px',
-            textAlign: 'center',
-            cursor: 'pointer',
-            borderRadius: 'var(--dt-radius-lg)',
-            border: `1.5px dashed ${drag ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-            background: drag ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-            transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast)',
-          }}
         >
-          <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-muted)' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M12 16V4m0 0L7 9m5-5l5 5"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
+          <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }}>
+            <Icon icon={Upload} size="lg" />
           </span>
-          <span style={{ fontSize: 13.5, color: 'var(--dt-ink-strong)' }}>
-            <span style={{ fontWeight: 600, color: 'var(--dt-accent)' }}>파일 선택</span> 또는 끌어다 놓기
+          <span style={{ fontSize: 13.5, color: 'var(--dt-text-strong)' }}>
+            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>파일 선택</span> 또는 끌어다 놓기
           </span>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>{hint}</span>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint}</span>
           <input
-            ref={inputRef}
+            ref={ref}
             id={fId}
             type="file"
             accept={accept}
@@ -186,4 +157,5 @@ export function FileUpload({
       )}
     </div>
   );
-}
+});
+FileUpload.displayName = 'FileUpload';

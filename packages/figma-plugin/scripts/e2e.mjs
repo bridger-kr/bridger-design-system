@@ -5,7 +5,7 @@
    API faithfully, loads plugin/code.js into that sandbox, fires a real "sync"
    message with the actual tokens + component spec, and asserts:
      - no runtime error is thrown / posted
-     - the expected Variables, Text/Effect styles, and 40 Component Sets exist
+     - the expected Variables, Text/Effect styles, and 46 Component Sets exist
    Any API misuse that would throw in the desktop app throws here too.
    Run: node packages/figma-plugin/scripts/e2e.mjs
 ============================================================ */
@@ -22,7 +22,7 @@ const codeSrc = readFileSync(resolve(FIGMA, 'plugin', 'code.js'), 'utf8');
 
 let idSeq = 0;
 const nid = (p) => `${p}:${++idSeq}`;
-const fail = (m) => { console.error('✗ ' + m); process.exitCode = 1; };
+const fail = (m) => { console.error('[실패] ' + m); process.exitCode = 1; };
 
 // Figma's plugin sandbox is QuickJS — it rejects some modern syntax Node accepts.
 // Object spread crashed v1.0.0 in production, so guard against that class here.
@@ -117,6 +117,15 @@ class TextNode extends BaseNode {
 }
 class EllipseNode extends BaseNode { constructor() { super('ELLIPSE'); this.width = 10; this.height = 10; } }
 class RectangleNode extends BaseNode { constructor() { super('RECTANGLE'); this.width = 10; this.height = 10; } }
+class VectorNode extends BaseNode {
+  constructor() { super('VECTOR'); this.width = 0; this.height = 0; }
+  set vectorPaths(v) {
+    if (!Array.isArray(v) || !v.length) fail('VECTOR.vectorPaths: 빈 배열');
+    v.forEach((p, i) => { if (typeof p.data !== 'string' || !p.data) fail(`VECTOR.vectorPaths[${i}]: data 누락`); });
+    this._vp = v;
+  }
+  get vectorPaths() { return this._vp; }
+}
 class ComponentNode extends BaseNode { constructor() { super('COMPONENT'); this.width = 100; this.height = 40; } }
 class ComponentSetNode extends BaseNode { constructor() { super('COMPONENT_SET'); this.width = 200; this.height = 80; } }
 class PageNode extends BaseNode { constructor() { super('PAGE'); } }
@@ -167,6 +176,7 @@ const figma = {
   createText: () => { const t = new TextNode(); t._charsGuard = true; return t; },
   createEllipse: () => new EllipseNode(),
   createRectangle: () => new RectangleNode(),
+  createVector: () => new VectorNode(),
   createComponent: () => new ComponentNode(),
   createComponentFromNode(node) {
     if (!node || !(node instanceof BaseNode)) fail('createComponentFromNode: SceneNode 아님');
@@ -251,10 +261,10 @@ run().then(() => {
   if (state.collections[0].modes.length !== 2) fail(`모드 2개(Light/Dark) 기대, 실제 ${state.collections[0].modes.length}`);
   if (colorVars < 25) fail(`색상 변수 부족 (${colorVars})`);
   if (floatVars < 13) fail(`spacing+radius 변수 부족 (${floatVars})`);
-  if (state.textStyles.length !== 9) fail(`Text style 9개 기대, 실제 ${state.textStyles.length}`);
-  if (state.effectStyles.length !== 4) fail(`Effect style 4개 기대, 실제 ${state.effectStyles.length}`);
-  if (sets.length !== 40) fail(`컴포넌트 40개 기대, 실제 ${sets.length}`);
-  if (!state.textStyles.some((style) => style.name === 'Bridger/eyebrow')) fail('Bridger/eyebrow Text style 없음');
+  if (state.textStyles.length !== 8) fail(`Text style 8개 기대, 실제 ${state.textStyles.length}`);
+  if (state.effectStyles.length !== 1) fail(`Effect style 1개 기대, 실제 ${state.effectStyles.length}`);
+  if (sets.length !== 46) fail(`컴포넌트 46개 기대, 실제 ${sets.length}`);
+  if (!state.textStyles.some((style) => style.name === 'Bridger/h1')) fail('Bridger/h1 Text style 없음');
   if (!state.textStyles.some((style) => style.name === 'Bridger/caption')) fail('Bridger/caption Text style 없음');
 
   const componentSet = (name) => sets.find((set) => set.name === name);
@@ -275,16 +285,16 @@ run().then(() => {
   if (primarySmall?.height !== 40) fail(`Button sm 40px 기대, 실제 ${primarySmall?.height}`);
   if (primaryMedium?.height !== 44) fail(`Button md 44px 기대, 실제 ${primaryMedium?.height}`);
   if (primaryLarge?.height !== 48) fail(`Button lg 48px 기대, 실제 ${primaryLarge?.height}`);
-  if (dangerMedium?.cornerRadius !== 12) fail(`Button danger radius 12px 기대, 실제 ${dangerMedium?.cornerRadius}`);
+  if (dangerMedium?.cornerRadius !== 6) fail(`Button danger radius 6px 기대, 실제 ${dangerMedium?.cornerRadius}`);
 
   const defaultInput = variant(componentSet('Input'), 'State=default');
   const inputField = defaultInput?.children.find((child) => child.name === 'field');
   if (inputField?.height !== 44) fail(`Input field 44px 기대, 실제 ${inputField?.height}`);
-  if (inputField?.cornerRadius !== 12) fail(`Input field radius 12px 기대, 실제 ${inputField?.cornerRadius}`);
+  if (inputField?.cornerRadius !== 6) fail(`Input field radius 6px 기대, 실제 ${inputField?.cornerRadius}`);
 
   const defaultCard = variant(componentSet('Card'), 'Variant=default');
   const panelCard = variant(componentSet('Card'), 'Variant=panel');
-  if (defaultCard?.cornerRadius !== 14) fail(`Card radius 14px 기대, 실제 ${defaultCard?.cornerRadius}`);
+  if (defaultCard?.cornerRadius !== 8) fail(`Card radius 8px 기대, 실제 ${defaultCard?.cornerRadius}`);
   if (!panelCard) fail('Card panel variant 없음');
 
   const sidebar = componentSet('Sidebar');
@@ -303,7 +313,7 @@ run().then(() => {
   const walk = (n) => {
     if (n.type === 'TEXT') {
       textCount += 1;
-      if (n.textAutoResize === undefined) fail(`TEXT "${n.characters}" textAutoResize 미설정 → 실제 Figma에서 글자 오버랩`);
+      if (n.textAutoResize === undefined) fail(`TEXT "${n.characters}" textAutoResize 미설정 — 실제 Figma에서 글자 오버랩`);
     }
     (n.children || []).forEach(walk);
   };
@@ -311,15 +321,15 @@ run().then(() => {
   if (textCount < 100) fail(`텍스트 노드 수 비정상 (${textCount})`);
 
   if (process.exitCode) {
-    console.error('\n✗ E2E 실패');
+    console.error('\nE2E 실패');
   } else {
-    console.log('✓ E2E 통과');
+    console.log('[완료] E2E 통과');
     console.log(`  컬렉션 1 · 모드 2 · 색상변수 ${colorVars} · 숫자변수 ${floatVars}`);
     console.log(`  TextStyle ${state.textStyles.length} · EffectStyle ${state.effectStyles.length} · 컴포넌트 ${sets.length} · 텍스트노드 ${textCount}`);
-    console.log(`  폰트 폴백: Pretendard/JetBrains 부재 → Inter 로 정상 폴백 (에러 0)`);
+    console.log(`  폰트 폴백: Pretendard/JetBrains 부재 — Inter 로 정상 폴백 (에러 0)`);
     console.log(`  오토레이아웃: layoutSizing은 appendChild 후 적용 · 모든 텍스트 textAutoResize 설정됨`);
   }
 }).catch((e) => {
   fail('sync 실행 중 예외: ' + e.stack);
-  console.error('\n✗ E2E 실패');
+  console.error('\nE2E 실패');
 });

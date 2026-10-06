@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -35,9 +36,13 @@ export interface SidebarProps extends Omit<HTMLAttributes<HTMLElement>, 'childre
  * Console primary nav — flat column, active item marked by a sunken row.
  * @startingPoint section="Navigation" subtitle="Console nav rail" viewport="260x440"
  */
-export function Sidebar({ brand, sections = [], footer, width = 240, onNavigate, className, style, ...rest }: SidebarProps) {
+export const Sidebar = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
+  { brand, sections = [], footer, width = 240, onNavigate, className, style, ...rest },
+  ref,
+) {
   return (
     <nav
+      ref={ref}
       {...rest}
       className={cx('dt-sidebar', className)}
       style={{
@@ -79,4 +84,5 @@ export function Sidebar({ brand, sections = [], footer, width = 240, onNavigate,
       {footer ? <div className="dt-sidebar-footer">{footer}</div> : null}
     </nav>
   );
-}
+});
+Sidebar.displayName = 'Sidebar';

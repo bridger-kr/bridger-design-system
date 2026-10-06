@@ -1,6 +1,6 @@
 import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
-import type { ReactNode } from 'react';
-import { useId, useState } from 'react';
+import { forwardRef, useId, useState } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 export interface TooltipProps {
   label: ReactNode;
@@ -8,13 +8,17 @@ export interface TooltipProps {
   children: ReactNode;
 }
 
-export function Tooltip({ label, position = 'top', children }: TooltipProps) {
+export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Tooltip(
+  { label, position = 'top', children },
+  ref,
+) {
   const tooltipId = useId();
   const [open, setOpen] = useState(false);
   return (
     <BaseTooltip.Provider>
       <BaseTooltip.Root open={open} onOpenChange={setOpen}>
         <BaseTooltip.Trigger
+          ref={ref as Ref<HTMLSpanElement>}
           render={
             <span
               className="dt-tooltip-trigger"
@@ -41,8 +45,8 @@ export function Tooltip({ label, position = 'top', children }: TooltipProps) {
               className="dt-tooltip-popup"
               style={{
                 whiteSpace: 'nowrap', pointerEvents: 'none', padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
-                color: 'var(--dt-paper)', background: 'var(--dt-ink-strong)', borderRadius: 'var(--dt-radius-sm)', boxShadow: 'var(--dt-shadow-md)',
-                transition: 'opacity var(--dt-motion-fast), visibility var(--dt-motion-fast)',
+                color: 'var(--dt-bg)', background: 'var(--dt-text-strong)', borderRadius: 'var(--dt-radius-chip)', boxShadow: 'var(--dt-shadow-overlay)',
+                transition: 'opacity var(--dt-duration-fast) var(--dt-ease), visibility var(--dt-duration-fast) var(--dt-ease)',
               }}
             >
               {label}
@@ -52,4 +56,5 @@ export function Tooltip({ label, position = 'top', children }: TooltipProps) {
       </BaseTooltip.Root>
     </BaseTooltip.Provider>
   );
-}
+});
+Tooltip.displayName = 'Tooltip';

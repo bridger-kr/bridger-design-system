@@ -21,7 +21,7 @@ export function Sidebar({ brand, sections = [], footer, width = 232, style }) {
         {sections.map((sec, si) => (
           <div key={si} style={{ display: 'grid', gap: 2 }}>
             {sec.heading ? (
-              <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--dt-muted)', padding: '4px 10px 6px' }}>{sec.heading}</div>
+              <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--dt-text-muted)', padding: '4px 10px 6px' }}>{sec.heading}</div>
             ) : null}
             {sec.items.map((it, ii) => (
               <a
@@ -30,17 +30,17 @@ export function Sidebar({ brand, sections = [], footer, width = 232, style }) {
                 aria-current={it.active ? 'page' : undefined}
                 style={{
                   position: 'relative', display: 'flex', alignItems: 'center', gap: 11,
-                  padding: '8px 10px 8px 12px', borderRadius: 'var(--dt-radius-md)', textDecoration: 'none',
+                  padding: '8px 10px 8px 12px', borderRadius: 'var(--dt-radius-control)', textDecoration: 'none',
                   fontSize: 13.5, fontWeight: it.active ? 600 : 500,
-                  color: it.active ? 'var(--dt-accent)' : 'var(--dt-muted-strong)',
+                  color: it.active ? 'var(--dt-accent)' : 'var(--dt-text-subtle)',
                   background: it.active ? 'var(--dt-tint-accent)' : 'transparent',
                 }}
               >
                 {it.active ? <span style={{ position: 'absolute', left: 0, top: 7, bottom: 7, width: 3, borderRadius: 2, background: 'var(--dt-accent)' }} /> : null}
-                {it.icon ? <span style={{ display: 'inline-flex', flex: '0 0 auto', color: it.active ? 'var(--dt-accent)' : 'var(--dt-muted)' }} aria-hidden="true">{it.icon}</span> : null}
+                {it.icon ? <span style={{ display: 'inline-flex', flex: '0 0 auto', color: it.active ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }} aria-hidden="true">{it.icon}</span> : null}
                 <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{it.label}</span>
                 {it.badge != null ? (
-                  <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: it.active ? 'var(--dt-accent)' : 'var(--dt-muted)', fontVariantNumeric: 'tabular-nums' }}>{it.badge}</span>
+                  <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: it.active ? 'var(--dt-accent)' : 'var(--dt-text-muted)', fontVariantNumeric: 'tabular-nums' }}>{it.badge}</span>
                 ) : null}
               </a>
             ))}

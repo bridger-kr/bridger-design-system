@@ -4,6 +4,13 @@ This file is the closest-scope AGENTS.md for `vendor/bridger-design-system`.
 Repo-wide rules live in `bridger-web/AGENTS.md` and `bridger-api/AGENTS.md`; this
 file only adds what is specific to this package boundary.
 
+Before any UI work:
+
+<!-- rule:ds:antislop:prework-v2 owner:bridger-kr since:2026-10 source:DESIGN.md#11-anti-slop-prohibitions -->
+- Re-check the v2 prohibition list in `DESIGN.md` §11 (anti-slop
+  prohibitions) before touching UI, and attach the repo slop-scan/stylelint
+  result — or an explicit §11 self-check — to every UI PR.
+
 Scope:
 
 <!-- rule:ds:scope:package owner:bridger-kr since:2026-07 source:DESIGN.md#9-component-manifest-and-package-boundary -->
@@ -34,6 +41,7 @@ Package commands:
   pnpm typecheck    # pnpm -r run typecheck
   pnpm test         # vitest run
   pnpm lint         # oxlint -c _adherence.oxlintrc.json .
+  pnpm check:slop   # DESIGN.md §11 anti-slop gate for examples/ + packages/figma-plugin/
   pnpm pack:dry-run # npm pack --dry-run for tokens + react
   ```
 
@@ -79,8 +87,8 @@ Anti-slop (pointer):
 <!-- rule:ds:antislop owner:bridger-kr since:2026-07 source:DESIGN.md#11-anti-slop-prohibitions -->
 - The prohibitions in `DESIGN.md#11` apply to every package, example, and
   Figma asset shipped from this repo. Reviewers reject PRs that introduce
-  glows, resting shadows, indigo/rainbow gradients, decorative uppercase
-  eyebrows, emoji, or reference-brand visual identity.
+  neon-edge or bloom effects, resting shadows, indigo/rainbow gradients,
+  decorative uppercase eyebrows, emoji, or reference-brand visual identity.
 
 Provenance:
 

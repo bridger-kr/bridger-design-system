@@ -1,26 +1,31 @@
-<!-- @dsCard group="Brand" viewport="700x190" name="Mark detail" subtitle="The persimmon period is the whole mark — restraint over a literal bridge" -->
+<!-- @dsCard group="Brand" viewport="700x190" name="Mark detail" subtitle="Neutral wordmark + persimmon square symbol — BrandLogo is the single source" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" href="../../styles.css">
 <style>
-  body { margin: 0; background: var(--dt-paper); padding: 26px; display: flex; align-items: center; gap: 34px; }
+  body { margin: 0; background: var(--dt-bg); padding: 26px; display: flex; align-items: center; gap: 34px; }
   .lockup { display: grid; gap: 12px; justify-items: start; }
-  .wm { font-family: var(--dt-font-sans); font-weight: 780; letter-spacing: -0.025em; color: var(--dt-ink-strong); line-height: 1; }
-  .wm .dot { color: var(--dt-accent); }
-  .note { color: var(--dt-muted-strong); font-size: 13px; line-height: 1.6; max-width: 320px; }
-  .note b { color: var(--dt-ink-strong); font-weight: 600; letter-spacing: 0; }
+  .wm { font-family: var(--dt-font-sans); font-weight: 600; letter-spacing: 0; color: var(--dt-text-strong); line-height: 1; }
+  .symbol { width: 36px; height: 36px; display: block; }
+  .note { color: var(--dt-text-subtle); font-size: 13px; line-height: 1.6; max-width: 340px; }
+  .note b { color: var(--dt-text-strong); font-weight: 600; }
 </style>
 </head>
 <body>
+  <img class="symbol" src="../../assets/brand/favicon-bridger.svg" alt="Bridger symbol">
   <div class="lockup">
-    <span class="wm" style="font-size:44px">Bridger<span class="dot">.</span></span>
-    <span class="wm" style="font-size:24px">Bridger<span class="dot">.</span></span>
-    <span class="wm" style="font-size:16px">Bridger<span class="dot">.</span></span>
+    <span class="wm" style="font-size:var(--dt-h1-size)">Bridger</span>
+    <span class="wm" style="font-size:var(--dt-h2-size)">Bridger</span>
+    <span class="wm" style="font-size:16px">Bridger</span>
   </div>
   <div class="note">
-    <b>브릿저 — Bridger.</b> The mark is the wordmark plus a single persimmon period — the one place the brand color touches the logotype. No literal bridge glyph; the restraint reads as a confident product, not an illustration.
+    <b>브릿저 — Bridger.</b> The wordmark is plain Pretendard at weight 600 in
+    neutral ink; the symbol is the persimmon square glyph. In product UI both
+    come from the <code>BrandLogo</code> component and
+    <code>assets/brand/</code> — do not recreate the mark in page-local text,
+    SVG, or CSS.
   </div>
 </body>
 </html>

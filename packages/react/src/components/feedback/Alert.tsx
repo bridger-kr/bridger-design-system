@@ -1,5 +1,8 @@
+import { X } from 'lucide-react';
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+import { Icon } from '../../lib/icon';
 
 export const AlertTone = {
   Info: 'info',
@@ -9,14 +12,6 @@ export const AlertTone = {
 } as const;
 
 export type AlertTone = (typeof AlertTone)[keyof typeof AlertTone];
-
-export const AlertMotion = {
-  None: 'none',
-  Subtle: 'subtle',
-  Pulse: 'pulse',
-} as const;
-
-export type AlertMotion = (typeof AlertMotion)[keyof typeof AlertMotion];
 
 const TONE_BACKGROUND = {
   info: 'var(--dt-tint-cobalt)',
@@ -31,34 +26,25 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'
   children?: ReactNode;
   icon?: ReactNode;
   action?: ReactNode;
-  motion?: AlertMotion;
   onDismiss?: () => void;
   style?: CSSProperties;
 }
 
-export function Alert({
-  tone = AlertTone.Info,
-  title,
-  children,
-  icon,
-  action,
-  motion = AlertMotion.None,
-  onDismiss,
-  className,
-  style,
-  ...rest
-}: AlertProps) {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  { tone = AlertTone.Info, title, children, icon, action, onDismiss, className, style, ...rest },
+  ref,
+) {
   const background = TONE_BACKGROUND[tone] ?? TONE_BACKGROUND[AlertTone.Info];
-  const motionClass = motion === AlertMotion.None ? undefined : `dt-alert-motion-${motion}`;
   return (
     <div
+      ref={ref}
       role="status"
-      className={cx('dt-alert', motionClass, className)}
+      className={cx('dt-alert', className)}
       style={{
         alignItems: 'flex-start',
         background,
-        borderRadius: '20px',
-        color: 'var(--dt-ink-strong)',
+        borderRadius: 'var(--dt-radius-card)',
+        color: 'var(--dt-text-strong)',
         display: 'flex',
         gap: 12,
         minHeight: 62,
@@ -78,9 +64,10 @@ export function Alert({
       </div>
       {onDismiss ? (
         <button className="dt-close-control" onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <Icon icon={X} />
         </button>
       ) : null}
     </div>
   );
-}
+});
+Alert.displayName = 'Alert';

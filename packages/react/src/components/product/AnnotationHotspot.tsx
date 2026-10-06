@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -8,9 +9,12 @@ export interface AnnotationHotspotProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
-export function AnnotationHotspot({ x = '50%', y = '50%', label, children, className, style, ...rest }: AnnotationHotspotProps) {
+export const AnnotationHotspot = forwardRef<HTMLDivElement, AnnotationHotspotProps>(function AnnotationHotspot(
+  { x = '50%', y = '50%', label, children, className, style, ...rest },
+  ref,
+) {
   return (
-    <div className={cx('dt-annotation-hotspot-wrap', className)} style={style} {...rest}>
+    <div ref={ref} className={cx('dt-annotation-hotspot-wrap', className)} style={style} {...rest}>
       {children}
       <span className="dt-annotation-hotspot" style={{ left: x, top: y }}>
         <span className="dt-annotation-hotspot-dot" aria-hidden="true" />
@@ -18,4 +22,5 @@ export function AnnotationHotspot({ x = '50%', y = '50%', label, children, class
       </span>
     </div>
   );
-}
+});
+AnnotationHotspot.displayName = 'AnnotationHotspot';

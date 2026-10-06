@@ -4,7 +4,7 @@
    and deterministically builds:
      1. A Variable Collection "Bridger" with Light/Dark modes
      2. Text Styles (typography) + Effect Styles (boxShadow)
-     3. 40 Component Sets (Variants) from components.spec.json
+     3. 46 Component Sets (Variants) from components.spec.json
 
    The spec is a declarative node tree (see components.spec.json). This file
    is the renderer — it never parses JSX. All color/spacing/radius references
@@ -105,7 +105,7 @@ async function buildVariables(tokens) {
   numGroup(tokens.spacing, 'spacing');
   numGroup(tokens.radius, 'radius');
 
-  ui(`✓ Variables: ${Object.keys(varMap).length}개`, 'ok');
+  ui(`[완료] Variables ${Object.keys(varMap).length}개`, 'ok');
   return col;
 }
 
@@ -113,7 +113,7 @@ async function buildTextStyles(tokens) {
   ui('Text Styles 생성 중…', 'dim');
   await figma.loadFontAsync({ family: 'Inter', style: 'Regular' }).catch(() => {});
   const fam = { sans: tokens.fontFamily.sans.$value, mono: tokens.fontFamily.mono.$value };
-  const weightStyle = { '400': 'Regular', '600': 'SemiBold', '700': 'Bold' };
+  const weightStyle = { '400': 'Regular', '500': 'Medium', '600': 'SemiBold' };
   const px = (s) => parseFloat(String(s));
   const existing = {};
   for (const s of await figma.getLocalTextStylesAsync()) existing[s.name] = s;
@@ -131,20 +131,22 @@ async function buildTextStyles(tokens) {
       usedFamily = 'Inter'; usedStyle = style === 'SemiBold' ? 'Semi Bold' : style;
       try { await figma.loadFontAsync({ family: usedFamily, style: usedStyle }); }
       catch { usedStyle = 'Regular'; await figma.loadFontAsync({ family: 'Inter', style: 'Regular' }); }
-      ui(`  ⚠ ${family} ${style} 없음 → ${usedFamily} ${usedStyle} 대체`, 'dim');
+      ui(`  [경고] ${family} ${style} 없음 — ${usedFamily} ${usedStyle}로 대체`, 'warn');
     }
     const name = `Bridger/${key}`;
     const ts = existing[name] || figma.createTextStyle();
     ts.name = name;
     ts.fontName = { family: usedFamily, style: usedStyle };
     ts.fontSize = px(tokens.fontSize[key].$value);
-    const lh = parseFloat(tokens.lineHeight[key].$value);
-    ts.lineHeight = { unit: 'PERCENT', value: lh * 100 };
+    const lhRaw = String(tokens.lineHeight[key].$value);
+    ts.lineHeight = lhRaw.endsWith('px')
+      ? { unit: 'PIXELS', value: px(lhRaw) }
+      : { unit: 'PERCENT', value: parseFloat(lhRaw) * 100 };
     const lsRaw = tokens.letterSpacing[key] ? tokens.letterSpacing[key].$value
       : tokens.letterSpacing.base.$value;
     ts.letterSpacing = { unit: 'PERCENT', value: parseFloat(lsRaw) };
   }
-  ui('✓ Text Styles', 'ok');
+  ui('[완료] Text Styles', 'ok');
 }
 
 const effectStyleMap = {};
@@ -169,7 +171,7 @@ async function buildEffectStyles(tokens) {
     }];
     effectStyleMap[name] = es.id;
   }
-  ui('✓ Effect Styles', 'ok');
+  ui('[완료] Effect Styles', 'ok');
 }
 
 // ---- COMPONENT BUILDER ----------------------------------------------------
@@ -197,6 +199,13 @@ function bindStroke(node, ref, weight) {
   if (!ref) return;
   node.strokeWeight = weight || 1;
   node.strokeAlign = 'INSIDE';
+  bindStrokePaint(node, ref);
+}
+
+// Stroke-paint binding without weight/align overrides — icon strokes keep
+// CENTER alignment and the weight the spec carries.
+function bindStrokePaint(node, ref) {
+  if (!ref) return;
   if (typeof ref === 'string' && ref.startsWith('{') && ref.endsWith('}')) {
     const v = varMap[ref.slice(1, -1)];
     if (v) {
@@ -228,7 +237,7 @@ async function ensureFonts() {
 }
 
 function pickFont(family, weight) {
-  const wStyle = { 400: 'Regular', 500: 'Regular', 600: 'SemiBold', 650: 'SemiBold', 700: 'Bold', 780: 'Bold' };
+  const wStyle = { 400: 'Regular', 500: 'Medium', 600: 'SemiBold' };
   const style = wStyle[weight] || 'Regular';
   const isMono = family === 'mono';
   const fam = isMono ? 'JetBrains Mono' : 'Pretendard Variable';
@@ -287,6 +296,24 @@ function buildNode(def) {
   } else if (def.type === 'line') {
     node = figma.createRectangle();
     node.resize(def.w || 1, def.h || 1);
+    if (def.fill) bindFill(node, def.fill);
+  } else if (def.type === 'vector') {
+    // Vector glyphs (check, chevron, upload) carry `paths` authored in a 24px
+    // viewBox; resize() scales the geometry to the spec size. Defs without
+    // `paths` stay empty placeholders (designer swaps in the real SVG).
+    node = figma.createVector();
+    node.resize(24, 24);
+    if (def.paths && def.paths.length) {
+      node.vectorPaths = def.paths.map((d) => ({ windingRule: 'NONZERO', data: d }));
+      node.strokeCap = 'ROUND';
+      node.strokeJoin = 'ROUND';
+      const s = def.w || 24;
+      if (s !== 24 || (def.h && def.h !== 24)) node.resize(s, def.h || s);
+    } else if (def.w) {
+      node.resize(def.w, def.h || def.w);
+    }
+    if (def.stroke) bindStrokePaint(node, def.stroke);
+    if (def.strokeWeight) node.strokeWeight = def.strokeWeight;
     if (def.fill) bindFill(node, def.fill);
   } else {
     node = figma.createFrame();
@@ -373,10 +400,10 @@ async function buildComponents(spec) {
     x += set.width + GAP;
     rowH = Math.max(rowH, set.height);
     count += 1;
-    ui(`  ✓ ${comp.name}`, 'ok');
+    ui(`  [완료] ${comp.name}`, 'ok');
   }
   if (page.children.length) figma.viewport.scrollAndZoomIntoView(page.children);
-  ui(`✓ ${count}개 컴포넌트`, 'ok');
+  ui(`[완료] 컴포넌트 ${count}개`, 'ok');
 }
 
 // ---- MAIN -----------------------------------------------------------------

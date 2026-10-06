@@ -3,7 +3,7 @@
    validate.mjs — CI gate for the Bridger Figma artifacts.
    Checks:
      1. bridger-tokens.tokens.json is valid + has required groups/modes.
-     2. components.spec.json is valid + has 40 components.
+     2. components.spec.json is valid + has 46 components.
      3. Every "{color/...}" / "{var}" ref in the spec resolves to a token.
      4. Every variant has a complete props map (Figma needs matching keys).
    Exits non-zero on any failure so CI fails loudly.
@@ -62,19 +62,21 @@ if (tokens) {
     }
   }
   // required typography keys
-  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono', 'eyebrow']) {
+  for (const k of ['h1', 'h2', 'h3', 'body', 'label', 'small', 'caption', 'mono']) {
     if (!tokens.typography || !tokens.typography[k]) err(`tokens: typography.${k} 누락`);
   }
-  const eyebrow = tokens.typography?.eyebrow?.$value;
-  if (tokens.fontSize?.eyebrow?.$value !== '11px') err('tokens: fontSize.eyebrow=11px 기대');
-  if (tokens.letterSpacing?.eyebrow?.$value !== '18%') err('tokens: letterSpacing.eyebrow=18% 기대');
-  if (tokens.fontWeight?.eyebrow?.$value !== '700') err('tokens: fontWeight.eyebrow=700 기대');
-  if (eyebrow?.fontFamily !== '{fontFamily.sans}') err('tokens: typography.eyebrow fontFamily 참조 기대');
-  if (eyebrow?.fontWeight !== '{fontWeight.eyebrow}') err('tokens: typography.eyebrow fontWeight 참조 기대');
-  if (eyebrow?.fontSize !== '{fontSize.eyebrow}') err('tokens: typography.eyebrow fontSize 참조 기대');
-  if (tokens.lineHeight?.eyebrow?.$value !== '1.55') err('tokens: lineHeight.eyebrow=1.55 기대');
-  if (eyebrow?.lineHeight !== '{lineHeight.eyebrow}') err('tokens: typography.eyebrow lineHeight 참조 기대');
-  if (eyebrow?.letterSpacing !== '{letterSpacing.eyebrow}') err('tokens: typography.eyebrow letterSpacing 참조 기대');
+  // 7-step scale: h1≤36px, weights 400/500/600만
+  const sizeVals = Object.entries(tokens.fontSize || {})
+    .filter(([k]) => !k.startsWith('$')).map(([, v]) => parseFloat(v.$value));
+  const allowedSizes = new Set([12, 13, 14, 16, 20, 28, 36]);
+  for (const v of sizeVals) {
+    if (!allowedSizes.has(v)) err(`tokens: fontSize ${v}px 는 스케일 밖 (12/13/14/16/20/28/36만)`);
+  }
+  const weightVals = Object.entries(tokens.fontWeight || {})
+    .filter(([k]) => !k.startsWith('$')).map(([, v]) => v.$value);
+  for (const v of weightVals) {
+    if (!['400', '500', '600'].includes(v)) err(`tokens: fontWeight ${v} 는 400/500/600 밖`);
+  }
 }
 
 // ---- 2 & 3 & 4. spec checks ----------------------------------------------
@@ -97,7 +99,7 @@ function checkNode(node, where) {
 if (spec) {
   if (!Array.isArray(spec.components)) err('spec: components 배열 아님');
   else {
-    if (spec.components.length !== 40) warn(`spec: 컴포넌트 ${spec.components.length}개 (기대 40)`);
+    if (spec.components.length !== 46) warn(`spec: 컴포넌트 ${spec.components.length}개 (기대 46)`);
     const seen = new Set();
     for (const comp of spec.components) {
       if (!comp.name) { err('spec: 이름 없는 컴포넌트'); continue; }
@@ -166,9 +168,9 @@ function expectNamedNodeValue(componentName, props, nodeName, property, expected
 expectNodeValue('Button', { Variant: 'Primary', Size: 'sm' }, 'h', 40);
 expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'h', 44);
 expectNodeValue('Button', { Variant: 'Primary', Size: 'lg' }, 'h', 48);
-expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'fill', '{color/ink/ink-strong}');
+expectNodeValue('Button', { Variant: 'Primary', Size: 'md' }, 'fill', '{color/text/text-strong}');
 expectNodeValue('Button', { Variant: 'Danger', Size: 'md' }, 'fill', '{color/status/danger}');
-expectNodeValue('Card', { Variant: 'default' }, 'radius', 14);
+expectNodeValue('Card', { Variant: 'default' }, 'radius', 8);
 expectNodeValue('Card', { Variant: 'raised' }, 'fill', '{color/surface/surface-raised}');
 expectNodeValue('Card', { Variant: 'panel' }, 'fill', '{color/surface/surface}');
 expectNamedNodeValue('Input', { State: 'default' }, 'field', 'h', 44);
@@ -178,13 +180,13 @@ expectNamedNodeValue('Sidebar', { State: 'default' }, 'active-marker', 'fill', '
 
 // ---- report ---------------------------------------------------------------
 if (warns.length) {
-  console.log('⚠ 경고:');
+  console.log('[경고]');
   warns.forEach((w) => console.log('  - ' + w));
 }
 if (errors.length) {
-  console.error('\n✗ 검증 실패:');
+  console.error('\n[실패] 검증 실패:');
   errors.forEach((e) => console.error('  - ' + e));
   console.error(`\n${errors.length}개 오류.`);
   process.exit(1);
 }
-console.log(`\n✓ 검증 통과 — 토큰 ${TOKEN_PATHS.size}개, 컴포넌트 ${spec ? spec.components.length : 0}개${warns.length ? `, 경고 ${warns.length}개` : ''}`);
+console.log(`\n[완료] 검증 통과 — 토큰 ${TOKEN_PATHS.size}개, 컴포넌트 ${spec ? spec.components.length : 0}개${warns.length ? `, 경고 ${warns.length}개` : ''}`);

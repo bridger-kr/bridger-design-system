@@ -9,8 +9,8 @@ export function Breadcrumb({ items = [], style }) {
         return (
           <React.Fragment key={i}>
             {last
-              ? <span aria-current="page" style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-ink-strong)' }}>{it.label}</span>
-              : <a href={it.href || '#'} style={{ fontSize: 13, fontWeight: 500, color: 'var(--dt-muted)', textDecoration: 'none' }}>{it.label}</a>}
+              ? <span aria-current="page" style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-strong)' }}>{it.label}</span>
+              : <a href={it.href || '#'} style={{ fontSize: 13, fontWeight: 500, color: 'var(--dt-text-muted)', textDecoration: 'none' }}>{it.label}</a>}
             {!last ? (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style={{ color: 'var(--dt-border-strong)' }} aria-hidden="true">
                 <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
-import { fireEvent, render } from '@testing-library/react';
+import { createRef } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
@@ -17,25 +18,62 @@ import {
 } from './index';
 
 describe('forms exports', () => {
-  it('exports all form components as functions', () => {
-    expect(Checkbox).toBeTypeOf('function');
-    expect(Combobox).toBeTypeOf('function');
-    expect(FileUpload).toBeTypeOf('function');
-    expect(RadioGroup).toBeTypeOf('function');
-    expect(SegmentedControl).toBeTypeOf('function');
-    expect(Select).toBeTypeOf('function');
-    expect(Slider).toBeTypeOf('function');
-    expect(Switch).toBeTypeOf('function');
-    expect(ToggleSwitch).toBeTypeOf('function');
-    expect(Textarea).toBeTypeOf('function');
-    expect(ThemeSwitch).toBeTypeOf('function');
+  it('exports all form components as forwardRef objects', () => {
+    for (const component of [Checkbox, Combobox, FileUpload, RadioGroup, SegmentedControl, Select, Slider, Switch, ToggleSwitch, Textarea, ThemeSwitch]) {
+      expect(component).toBeDefined();
+      expect((component as { $$typeof?: symbol }).$$typeof).toBe(Symbol.for('react.forward_ref'));
+    }
   });
 
   it('exposes Select trigger hooks for hover and focus polish', () => {
-    const select = Select({ options: ['서울'], placeholder: '선택' });
-    const trigger = select.props.children[1].props.children[0].props.children[0];
+    const { container } = render(<Select options={['서울']} placeholder="선택" />);
+    const trigger = container.querySelector('.dt-select-trigger');
 
-    expect(trigger.props.className).toContain('dt-select-trigger');
+    expect(trigger).not.toBeNull();
+  });
+
+  it('gives every labeled form control a unique useId-backed id', () => {
+    const { container } = render(
+      <>
+        <Select label="이메일" options={['a']} />
+        <Select label="이메일" options={['b']} />
+        <Checkbox label="동의" />
+        <Checkbox label="동의" />
+        <Textarea label="메모" />
+        <Textarea label="메모" />
+      </>,
+    );
+
+    const labelFor = [...container.querySelectorAll('label[for]')].map((label) => label.getAttribute('for'));
+    expect(labelFor).toHaveLength(6);
+    expect(new Set(labelFor).size).toBe(6);
+    for (const id of labelFor) {
+      expect(id).toBeTruthy();
+      expect(document.getElementById(id as string)).toBeTruthy();
+    }
+
+    expect(screen.getAllByLabelText('이메일').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByLabelText('메모')).toHaveLength(2);
+  });
+
+  it('forwards refs to the underlying form controls', () => {
+    const selectRef = createRef<HTMLButtonElement>();
+    const checkboxRef = createRef<HTMLButtonElement>();
+    const textareaRef = createRef<HTMLTextAreaElement>();
+    const comboboxRef = createRef<HTMLInputElement>();
+    render(
+      <>
+        <Select ref={selectRef} label="지역" options={['서울']} />
+        <Checkbox ref={checkboxRef} label="동의" />
+        <Textarea ref={textareaRef} label="메모" />
+        <Combobox ref={comboboxRef} label="검색" options={[{ value: 'a', label: 'A' }]} />
+      </>,
+    );
+
+    expect(selectRef.current).toBeInstanceOf(HTMLButtonElement);
+    expect(checkboxRef.current).toBeInstanceOf(HTMLButtonElement);
+    expect(textareaRef.current).toBeInstanceOf(HTMLTextAreaElement);
+    expect(comboboxRef.current).toBeInstanceOf(HTMLInputElement);
   });
 
   it('uses the popover layer token without injecting Select styles', () => {
@@ -46,7 +84,8 @@ describe('forms exports', () => {
     if (trigger) fireEvent.click(trigger);
 
     const popup = document.querySelector('[role="listbox"]')?.parentElement;
-    expect(popup?.style.zIndex).toBe('var(--dt-z-index-popover)');
+    expect(popup?.className).toContain('dt-select-popup');
+    expect(popup?.style.zIndex).toBe('');
     expect(popup?.querySelector('style')).toBeNull();
   });
 
@@ -60,7 +99,8 @@ describe('forms exports', () => {
     if (input) fireEvent.focus(input);
 
     const popup = document.querySelector('[role="listbox"]')?.parentElement;
-    expect(popup?.style.zIndex).toBe('var(--dt-z-index-popover)');
+    expect(popup?.className).toContain('dt-combobox-popup');
+    expect(popup?.style.zIndex).toBe('');
     expect(popup?.querySelector('style')).toBeNull();
   });
 
