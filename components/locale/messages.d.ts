@@ -64,6 +64,14 @@ export interface DSMessageCatalog {
         /** Accessible name for the chip remove button, given the chip label. */
         removeAriaLabel: (label: string) => string;
     };
+    link: {
+        /** Visually-hidden cue appended to external links; Link wraps it in parentheses. */
+        externalCue: string;
+    };
+    slider: {
+        /** Fallback accessible name when neither `label` nor `ariaLabel` is given. */
+        valueLabel: string;
+    };
     pagination: {
         nav: string;
         previous: string;

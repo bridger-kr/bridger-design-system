@@ -56,6 +56,12 @@ export const DS_MESSAGES_KO = {
     filterChip: {
         removeAriaLabel: (label) => `${label} 제거`,
     },
+    link: {
+        externalCue: '새 창',
+    },
+    slider: {
+        valueLabel: '값',
+    },
     pagination: {
         nav: '페이지',
         previous: '이전',
@@ -113,6 +119,12 @@ export const DS_MESSAGES_EN = {
     },
     filterChip: {
         removeAriaLabel: (label) => `Remove ${label}`,
+    },
+    link: {
+        externalCue: 'new window',
+    },
+    slider: {
+        valueLabel: 'Value',
     },
     pagination: {
         nav: 'Pagination',

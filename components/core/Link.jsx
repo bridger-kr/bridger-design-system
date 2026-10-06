@@ -7,6 +7,7 @@ import { useRender } from '@base-ui/react/use-render';
 import { ExternalLink } from 'lucide-react';
 import { Icon } from '../lib/icon.jsx';
 import { cx } from '../lib/cx.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 /**
  * Absolute `http(s)` hrefs pointing at a different origin are external. Same
  * as the DocsLayout rule: when `window` is unavailable (SSR) an absolute URL
@@ -30,7 +31,8 @@ function isExternalHref(href) {
  * tab with `noopener noreferrer`, an `ExternalLink` glyph (`aria-hidden`),
  * and a visually-hidden "(새 창)" cue so the new context is never icon-only.
  */
-export const Link = forwardRef(function Link({ href, external, externalLabel = '(새 창)', render, className, children, ...rest }, ref) {
+export const Link = forwardRef(function Link({ href, external, externalLabel, render, className, children, ...rest }, ref) {
+    const messages = useDSMessages();
     const isExternal = external ?? isExternalHref(href);
     return useRender({
         render,
@@ -46,7 +48,7 @@ export const Link = forwardRef(function Link({ href, external, externalLabel = '
           {isExternal ? (<>
               {' '}
               <Icon icon={ExternalLink} size="sm" className="dt-link-icon"/>
-              <span className="dt-visually-hidden">{externalLabel}</span>
+              <span className="dt-visually-hidden">{externalLabel ?? `(${messages.link.externalCue})`}</span>
             </>) : null}
         </>),
         },
