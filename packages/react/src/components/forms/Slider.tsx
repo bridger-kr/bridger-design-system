@@ -59,6 +59,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     slotProps,
     className,
     style,
+    'aria-label': ariaLabel,
     ...rest
   },
   ref,
@@ -66,6 +67,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   const autoId = useId();
   const sId = id ?? autoId;
   const hintId = hint ? `${sId}-hint` : undefined;
+  const inputLabel = ariaLabel ?? label ?? '값';
   if (onChange !== undefined) {
     warnOnce('slider-onchange', 'Slider: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
   }
@@ -117,7 +119,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
           </span>
         </div>
       <BaseSlider.Control
-        style={{ position: 'relative', height: 20, display: 'flex', alignItems: 'center', cursor: 'pointer', outline: 'none' }}
+        className="dt-slider-control"
+        style={{ position: 'relative', height: 20, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
       >
         <BaseSlider.Track
           style={{
@@ -132,6 +135,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         />
         <BaseSlider.Indicator style={{ position: 'absolute', left: 0, width: `${pct}%`, height: 4, borderRadius: 2, background: 'var(--dt-accent)' }} />
         <BaseSlider.Thumb
+          className="dt-slider-thumb"
+          getAriaLabel={() => inputLabel}
           style={{
             position: 'absolute',
             width: 16,

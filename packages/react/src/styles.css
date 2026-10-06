@@ -259,6 +259,12 @@
   border-bottom: 1px solid var(--dt-border);
 }
 
+/* The input's own outline is suppressed; the search row carries the ring. */
+.dt-command-search:focus-within {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
+}
+
 .dt-command-search-icon {
   flex: 0 0 auto;
   color: var(--dt-text-muted);
@@ -310,9 +316,7 @@
   align-items: center;
   gap: var(--dt-space-2);
   padding: var(--dt-space-2) var(--dt-space-12);
-  border: 0;
   border-radius: var(--dt-radius-md);
-  outline: 0;
   background: transparent;
   font-family: inherit;
   text-align: left;
@@ -321,6 +325,19 @@
 
 .dt-command-option[aria-selected='true'] {
   background: var(--dt-tint-accent);
+}
+
+/* Fallback ring if an option ever takes DOM focus; primary pattern is
+   aria-activedescendant on the combobox input. */
+.dt-command-option:focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
+}
+
+/* Focus lands on the clipped input nested inside the thumb. */
+.dt-slider-thumb:focus-within {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: 2px;
 }
 
 .dt-command-option-icon {

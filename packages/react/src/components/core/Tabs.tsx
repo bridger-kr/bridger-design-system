@@ -60,6 +60,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
       className={className}
     >
       <BaseTabs.List
+        activateOnFocus
         className={cx('dt-tabs-list', `dt-tabs-list-${resolvedVariant}`)}
         style={{
           display: 'flex',
