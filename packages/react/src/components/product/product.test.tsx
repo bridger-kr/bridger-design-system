@@ -81,8 +81,9 @@ describe('Product components', () => {
   });
 
   describe('SectionCard', () => {
-    it('is a function', () => {
-      expect(typeof SectionCard).toBe('function');
+    it('renders content', () => {
+      render(<SectionCard>내용</SectionCard>);
+      expect(screen.getByText('내용')).toBeDefined();
     });
 
     it('has correct default props', () => {
@@ -91,8 +92,9 @@ describe('Product components', () => {
   });
 
   describe('ToolCard', () => {
-    it('is a function', () => {
-      expect(typeof ToolCard).toBe('function');
+    it('renders content', () => {
+      render(<ToolCard name="air_quality" description="도구 설명" />);
+      expect(screen.getByText('도구 설명')).toBeDefined();
     });
 
     it('has correct default props', () => {
@@ -108,7 +110,7 @@ describe('Product components', () => {
         </SearchPill>,
       );
 
-      const pill = screen.getByText('날씨 데이터 찾기');
+      const pill = screen.getByText('날씨 데이터 찾기').closest('.dt-search-pill');
       expect(pill.className).toContain('dt-search-pill-accent');
       expect(pill.className).toContain('dt-search-pill-lg');
     });
@@ -342,9 +344,9 @@ describe('Product components', () => {
 
   describe('SectionCard', () => {
     it('accepts optional headers and content class names', () => {
-      expect(SectionCard({ contentClassName: 'body', children: '내용' })).toMatchObject({
-        props: expect.objectContaining({ children: expect.any(Array) }),
-      });
+      const { container } = render(<SectionCard contentClassName="body">내용</SectionCard>);
+      expect(container.querySelector('.body')).not.toBeNull();
+      expect(screen.getByText('내용')).toBeDefined();
     });
   });
 });
