@@ -44,6 +44,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(function Ch
 ) {
   const autoId = useId();
   const cbId = id ?? autoId;
+  const labelId = label ? `${cbId}-label` : undefined;
   const handleCheckedChange = (nextChecked: boolean) => {
     onChange?.(nextChecked);
   };
@@ -87,6 +88,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(function Ch
           cursor: disabled ? 'not-allowed' : 'pointer',
           ...controlStyle,
         }}
+        aria-labelledby={labelId}
         {...(rest as ComponentProps<typeof BaseCheckbox.Root>)}
         {...(controlRest as ComponentProps<typeof BaseCheckbox.Root>)}
       >
@@ -98,7 +100,7 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(function Ch
         </span>
       </BaseCheckbox.Root>
       {label ? (
-        <span style={{ fontSize: 14, color: 'var(--dt-text)' }} {...slotProps?.label}>
+        <span id={labelId} style={{ fontSize: 14, color: 'var(--dt-text)' }} {...slotProps?.label}>
           {label}
         </span>
       ) : null}
