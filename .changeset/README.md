@@ -12,4 +12,4 @@ Select the packages that changed, choose the appropriate bump type, and write a 
 
 When changesets are merged to `main`, the release workflow opens a version PR. Merging that version PR publishes the public packages to npm when `NPM_TOKEN` is available to the repository from GitHub Actions secrets, including the Bridger org secret. The workflow fails fast when `NPM_TOKEN` is missing so a release cannot appear successful without publishing.
 
-The private `bridger-figma-plugin` workspace is ignored and is never versioned or published by Changesets.
+The private `bridger-figma-plugin` workspace is versioned by Changesets (`privatePackages.version`) so its changes keep a CHANGELOG trail for Figma-spec parity, but it is never published to npm or tagged.

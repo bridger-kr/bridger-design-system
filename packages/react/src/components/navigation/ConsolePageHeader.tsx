@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -17,16 +18,19 @@ export interface ConsolePageHeaderProps extends Omit<HTMLAttributes<HTMLElement>
  * not carry decorative kickers.
  * @startingPoint section="Navigation" subtitle="Console page header" viewport="720x160"
  */
-export function ConsolePageHeader({
-  title,
-  description,
-  actions,
-  children,
-  className,
-  ...rest
-}: ConsolePageHeaderProps) {
+export const ConsolePageHeader = forwardRef<HTMLElement, ConsolePageHeaderProps>(function ConsolePageHeader(
+  {
+    title,
+    description,
+    actions,
+    children,
+    className,
+    ...rest
+  },
+  ref,
+) {
   return (
-    <header className={cx('dt-console-page-header', className)} {...rest}>
+    <header ref={ref} className={cx('dt-console-page-header', className)} {...rest}>
       <div className="dt-console-page-header-row">
         <div className="dt-console-page-header-text">
           <h1>{title}</h1>
@@ -37,4 +41,6 @@ export function ConsolePageHeader({
       {children ? <div className="dt-console-page-header-content">{children}</div> : null}
     </header>
   );
-}
+});
+
+ConsolePageHeader.displayName = 'ConsolePageHeader';
