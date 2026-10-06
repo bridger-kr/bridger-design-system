@@ -83,6 +83,22 @@ describe('ToastProvider', () => {
     expect(document.querySelectorAll('.dt-toast').length).toBe(3);
   });
 
+
+  it('caps visible toasts at the limit and queues the overflow', () => {
+    render(
+      <ToastProvider limit={2}>
+        <Trigger options={{ title: 'Pinned', message: 'stays', tone: 'info', timeout: 0 }} />
+      </ToastProvider>,
+    );
+    const trigger = screen.getByRole('button', { name: 'Notify' });
+
+    fireEvent.click(trigger);
+    fireEvent.click(trigger);
+    fireEvent.click(trigger);
+
+    expect(document.querySelectorAll('.dt-toast').length).toBe(2);
+  });
+
   it('matches the ko snapshot for a queued toast', () => {
     render(
       <ToastProvider>

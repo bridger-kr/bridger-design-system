@@ -63,6 +63,14 @@ export interface DSMessageCatalog {
     /** Accessible name for the chip remove button, given the chip label. */
     removeAriaLabel: (label: string) => string;
   };
+  link: {
+    /** Visually-hidden cue appended to external links; Link wraps it in parentheses. */
+    externalCue: string;
+  };
+  slider: {
+    /** Fallback accessible name when neither `label` nor `ariaLabel` is given. */
+    valueLabel: string;
+  };
   pagination: {
     nav: string;
     previous: string;
@@ -123,6 +131,12 @@ export const DS_MESSAGES_KO: DSMessageCatalog = {
   filterChip: {
     removeAriaLabel: (label) => `${label} 제거`,
   },
+  link: {
+    externalCue: '새 창',
+  },
+  slider: {
+    valueLabel: '값',
+  },
   pagination: {
     nav: '페이지',
     previous: '이전',
@@ -181,6 +195,12 @@ export const DS_MESSAGES_EN: DSMessageCatalog = {
   },
   filterChip: {
     removeAriaLabel: (label) => `Remove ${label}`,
+  },
+  link: {
+    externalCue: 'new window',
+  },
+  slider: {
+    valueLabel: 'Value',
   },
   pagination: {
     nav: 'Pagination',

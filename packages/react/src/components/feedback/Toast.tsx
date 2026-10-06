@@ -118,18 +118,21 @@ export interface ToastProviderProps {
  * viewport at `--dt-z-index-toast`. Queued toasts are announced through Base
  * UI's live region; mount once near the app root.
  */
-export function ToastProvider({ children, timeout = 5000, limit }: ToastProviderProps) {
+export function ToastProvider({ children, timeout = 5000, limit = 3 }: ToastProviderProps) {
   return (
-    <BaseToast.Provider timeout={timeout} {...(limit === undefined ? {} : { limit })}>
+    <BaseToast.Provider timeout={timeout} limit={limit}>
       {children}
-      <ToastViewport />
+      <ToastViewport limit={limit} />
     </BaseToast.Provider>
   );
 }
 
-function ToastViewport() {
+function ToastViewport({ limit }: { limit: number }) {
   const { toasts } = BaseToast.useToastManager<ToastData>();
   const messages = useDSMessages();
+  // Base UI only limits auto-dismiss grouping — overflow stays in `toasts`, so
+  // cap what we render to keep the viewport from stacking past `limit`.
+  const visible = toasts.slice(0, Math.max(0, limit));
   return (
     <BaseToast.Portal>
       <BaseToast.Viewport
@@ -139,7 +142,7 @@ function ToastViewport() {
           display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end',
         }}
       >
-        {toasts.map((toast) => (
+        {visible.map((toast) => (
           <ToastCard key={toast.id} toast={toast} closeLabel={messages.common.close} />
         ))}
       </BaseToast.Viewport>
