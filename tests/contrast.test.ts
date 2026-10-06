@@ -38,13 +38,44 @@ function extractVars(body: string): Map<string, string> {
   return vars;
 }
 
+/**
+ * contract.css defines themed colors as single `light-dark(<light>, <dark>)`
+ * values on :root (DS #44). Resolve one arm per theme so the tests below see
+ * plain colors; the explicit dark block still restates the overlay shadow.
+ */
+function splitLightDark(value: string): [string, string] | null {
+  const m = value.match(/^\s*light-dark\(\s*([\s\S]*?)\s*\)\s*$/);
+  if (!m) return null;
+  const inner = m[1];
+  let depth = 0;
+  for (let i = 0; i < inner.length; i += 1) {
+    const ch = inner[i];
+    if (ch === '(') depth += 1;
+    else if (ch === ')') depth -= 1;
+    else if (ch === ',' && depth === 0) {
+      return [inner.slice(0, i).trim(), inner.slice(i + 1).trim()];
+    }
+  }
+  return null;
+}
+
+function themedVars(body: string, theme: 'light' | 'dark'): Map<string, string> {
+  const vars = new Map<string, string>();
+  for (const [name, value] of extractVars(body)) {
+    const arms = splitLightDark(value);
+    vars.set(name, arms ? arms[theme === 'light' ? 0 : 1] : value);
+  }
+  return vars;
+}
+
 const blocks = topLevelBlocks(contractCss);
 const darkBlock = blocks.find((b) => /\[data-theme=['"]dark['"]|\.dark/.test(b.selector));
 const lightBlock = blocks.find((b) => b !== darkBlock && /:root/.test(b.selector));
 if (!lightBlock || !darkBlock) throw new Error('contract.css theme blocks not found');
 
-const lightVars = extractVars(lightBlock.body);
-const darkVars = extractVars(darkBlock.body);
+const lightVars = themedVars(lightBlock.body, 'light');
+const darkVars = themedVars(lightBlock.body, 'dark');
+for (const [name, value] of extractVars(darkBlock.body)) darkVars.set(name, value);
 
 /**
  * Declarations of a top-level class rule in base.css — used to test the
