@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { DSLocaleProvider } from '../../locale/DSLocaleProvider';
 import { Field } from './Field';
 import { Input } from '../core/Input';
+import { Switch } from './Switch';
 
 describe('Field', () => {
   it('binds the label to the control and links the hint via aria-describedby', () => {
@@ -62,6 +63,31 @@ describe('Field', () => {
     const input = screen.getByLabelText('Endpoint');
     expect(input.id).toBe('endpoint');
     expect(input.getAttribute('aria-describedby')).toBe('endpoint-hint');
+  });
+
+
+  it('merges a control\'s own aria-describedby with the generated hint/error ids', () => {
+    render(
+      <Field label="API key" id="key" hint="Shown once" error="Required">
+        <input aria-describedby="external-note" />
+      </Field>,
+    );
+
+    const input = screen.getByLabelText('API key');
+    expect(input.getAttribute('aria-describedby')).toBe('external-note key-hint key-error');
+  });
+
+  it('injects Field wiring onto Switch (composition)', () => {
+    render(
+      <Field label="Notifications" id="notif" hint="Email only" error="Required">
+        <Switch />
+      </Field>,
+    );
+
+    const control = screen.getByRole('switch', { name: 'Notifications' });
+    expect(control.id).toBe('notif');
+    expect(control.getAttribute('aria-describedby')).toBe('notif-hint notif-error');
+    expect(control.getAttribute('aria-invalid')).toBe('true');
   });
 
   it('matches the ko snapshot', () => {

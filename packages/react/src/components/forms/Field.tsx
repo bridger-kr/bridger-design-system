@@ -55,8 +55,16 @@ export function Field({
   const errorId = `${controlId}-error`;
   const invalid = error != null && error !== false;
 
-  const describedBy = [hint ? hintId : null, invalid ? errorId : null]
+  const childDescribedBy = isValidElement(children)
+    ? (children.props as FieldControlProps)['aria-describedby']
+    : undefined;
+  const describedBy = [
+    childDescribedBy,
+    hint ? hintId : null,
+    invalid ? errorId : null,
+  ]
     .filter(Boolean)
+    .filter((id, index, ids) => ids.indexOf(id) === index)
     .join(' ') || undefined;
 
   const controlProps: FieldControlProps = {

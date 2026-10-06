@@ -2,8 +2,8 @@
 
 exports[`ToastProvider > matches the en snapshot for a queued toast 1`] = `
 <div
-  aria-describedby="_r_l_"
-  aria-labelledby="_r_k_"
+  aria-describedby="_r_s_"
+  aria-labelledby="_r_r_"
   aria-modal="false"
   class="dt-toast"
   data-type="warning"
@@ -20,14 +20,14 @@ exports[`ToastProvider > matches the en snapshot for a queued toast 1`] = `
   >
     <h2
       data-type="warning"
-      id="_r_k_"
+      id="_r_r_"
       style="font-size: 14px; font-weight: 650; color: var(--dt-text-strong);"
     >
       Saved
     </h2>
     <p
       data-type="warning"
-      id="_r_l_"
+      id="_r_s_"
       style="margin-top: 2px; font-size: 13px; line-height: 1.5; color: var(--dt-text-subtle);"
     >
       Changes applied
@@ -61,8 +61,8 @@ exports[`ToastProvider > matches the en snapshot for a queued toast 1`] = `
 
 exports[`ToastProvider > matches the ko snapshot for a queued toast 1`] = `
 <div
-  aria-describedby="_r_i_"
-  aria-labelledby="_r_h_"
+  aria-describedby="_r_p_"
+  aria-labelledby="_r_o_"
   aria-modal="false"
   class="dt-toast"
   data-type="warning"
@@ -79,14 +79,14 @@ exports[`ToastProvider > matches the ko snapshot for a queued toast 1`] = `
   >
     <h2
       data-type="warning"
-      id="_r_h_"
+      id="_r_o_"
       style="font-size: 14px; font-weight: 650; color: var(--dt-text-strong);"
     >
       Saved
     </h2>
     <p
       data-type="warning"
-      id="_r_i_"
+      id="_r_p_"
       style="margin-top: 2px; font-size: 13px; line-height: 1.5; color: var(--dt-text-subtle);"
     >
       Changes applied
