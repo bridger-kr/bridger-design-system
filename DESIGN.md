@@ -192,8 +192,11 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 ## 6. Iconography and imagery
 
-- Lucide line icons are the only product icon set. Use approximately 1.85 to 2px stroke and 14px to 20px sizes according to component scale.
-- Use `lucide-react` or the approved Lucide delivery path. Common product icons include dashboard, tools, boxes, library, keys, gauge, server, logs, settings, database, lock, shield, terminal, store, arrow right, check, copy, external link, and code.
+- Lucide line icons are the only product icon set. Sizes come from the icon scale only — `--dt-icon-sm` (14px), `--dt-icon-md` (16px), `--dt-icon-lg` (20px) — and stroke is fixed at `--dt-icon-stroke` (1.75). Icon color is `currentColor` so it inherits the text role; an icon next to text never outweighs the text.
+- Use `lucide-react` (a required peer of `@bridger-kr/react`) or the approved Lucide delivery path. Import only the icons used, by name — `import { X, Check } from 'lucide-react'`. Namespace imports (`import * as`), the `icons` object, and `DynamicIcon` defeat tree-shaking and are rejected. Package components render icons through the internal `Icon` helper (`packages/react/src/lib/icon.tsx`), which pins the size scale, the 1.75 stroke, `currentColor`, and the accessibility contract below. The only documented exception is the `Checkbox` check glyph, which uses a heavier stroke for 12px-box legibility.
+- Decorative icons are `aria-hidden`. An icon that carries meaning on its own gets an `aria-label` (rendered as `role="img"`). An icon-only button requires an accessible name — `Button` enforces `aria-label` at the type level when no `children` label exists.
+- "AI" decoration is banned. `Sparkles`, `Sparkle`, `WandSparkles`, `Wand`, `Wand2`, `Stars`, `Rocket`, `Zap`, and `Flame` never appear in product UI, examples, or Figma assets — sparkle/magic/rocket metaphors for AI features are design slop. `Bot` is allowed only for an actual bot or agent account glyph; mark it with a `// slop-allow: Bot` comment. `scripts/slop-scan.mjs` fails the lint gate on banned icon imports, JSX usage, and icon-name literals.
+- Common product icons include dashboard, tools, boxes, library, keys, gauge, server, logs, settings, database, lock, shield, terminal, store, arrow right, check, copy, external link, and code.
 - Third-party client marks may use approved Simple Icons assets. Korean agency marks use the local SVG assets in `assets/agency-logos/`.
 - A status dot may use the semantic status token, but color must be paired with visible text or another non-color cue. Status dots do not pulse.
 - Icons never carry meaning alone in navigation, buttons, or data rows. Pair them with a label or accessible name.
@@ -435,7 +438,7 @@ The following are invalid Bridger design decisions and must be rejected in revie
 - Ending a heading with an accent-colored period or other decorative punctuation. The persimmon period belongs to the `BrandLogo` wordmark only.
 - Adding decorative motion: idle pulses, breathing elements, drifting fields, tickers, marquees, scroll-reveal, staggered entrance choreography, or any animation outside the 120–180ms band.
 - Nesting card-in-card structures without a clear code, data, or form-group semantic role.
-- Using emoji, unicode pictograms, or decorative icon sets in product UI.
+- Using emoji, unicode pictograms, or decorative icon sets in product UI — including decorative "AI" iconography (`Sparkles`, `Wand*`, `Stars`, `Rocket`, `Zap`, `Flame`; see Section 6).
 - Adding decorative uppercase eyebrows above ordinary headings.
 - Using full-bleed photography or illustration where a real product specimen or clear content would be more useful.
 - Centering headlines, paragraphs, or hero copy. Composition is left-aligned; only numeric columns right-align.

@@ -34,6 +34,7 @@
        cards and panels take `1px solid var(--dt-border)`
      - motion: --dt-duration-fast 120ms / --dt-duration-base 160ms /
        one --dt-ease. No infinite-animation or ambient-motion tokens.
+     - icons: Lucide only, three sizes 14/16/20, stroke 1.75.
      - --dt-font-mono is for code surfaces only.
 ============================================================ */
 
@@ -147,6 +148,13 @@
   /* Pixel-named fill steps for the two most common off-scale values. */
   --dt-space-12: 12px;
   --dt-space-32: 32px;
+
+  /* Iconography: Lucide line icons only (DESIGN.md §6). Three sizes,
+     one stroke width, currentColor. */
+  --dt-icon-sm: 14px;
+  --dt-icon-md: 16px;
+  --dt-icon-lg: 20px;
+  --dt-icon-stroke: 1.75;
 
   /* Radius scale: the only four radius values. */
   --dt-radius-sm: 4px;

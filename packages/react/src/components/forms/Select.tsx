@@ -1,9 +1,11 @@
 import { Select as BaseSelect } from '@base-ui-components/react/select';
+import { ChevronDown } from 'lucide-react';
 import { forwardRef, useId } from 'react';
 import type { CSSProperties, HTMLAttributes, Ref } from 'react';
 import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
 import type { SlotPropsFor } from '../../lib/slot';
+import { Icon } from '../../lib/icon';
 
 export interface SelectOption {
   value: string;
@@ -137,16 +139,7 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
             </BaseSelect.Positioner>
           </BaseSelect.Portal>
         </BaseSelect.Root>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          className="dt-select-chevron"
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <Icon icon={ChevronDown} className="dt-select-chevron" />
       </div>
       {hint ? (
         <span id={hintId} className="dt-input-hint" {...slotProps?.hint}>

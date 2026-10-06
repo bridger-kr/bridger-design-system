@@ -1,4 +1,5 @@
 import { Checkbox as BaseCheckbox } from '@base-ui-components/react/checkbox';
+import { Check } from 'lucide-react';
 import { forwardRef, useId } from 'react';
 import type { ComponentProps, ComponentPropsWithRef, CSSProperties, DOMAttributes, InputHTMLAttributes, ReactNode, Ref } from 'react';
 import { cx } from '../../lib/cx';
@@ -91,15 +92,8 @@ export const Checkbox = forwardRef<HTMLButtonElement, CheckboxProps>(function Ch
       >
         <span className="dt-checkbox-box">
           <BaseCheckbox.Indicator>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path
-                d="M5 12l4.5 4.5L19 7"
-                stroke="var(--dt-accent-ink)"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            {/* 12px box needs a heavier stroke than the 1.75 icon canon. */}
+            <Check size={12} strokeWidth={2.5} color="var(--dt-accent-ink)" aria-hidden="true" />
           </BaseCheckbox.Indicator>
         </span>
       </BaseCheckbox.Root>
