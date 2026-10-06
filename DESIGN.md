@@ -260,10 +260,10 @@ Naming note: `Panel` is the React component exported from `packages/react/src/co
 | Family | Count | Components |
 | --- | --- | --- |
 | core | 15 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Heading`, `Input`, `Kbd`, `Link`, `Panel`, `Section`, `Separator`, `StatusPill`, `Tabs`, `Text` |
-| forms | 9 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
+| forms | 10 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
 | feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
 | data | 11 | `Avatar`, `CodeBlock`, `CodePane`, `CopyButton`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
-| navigation | 7 | `Breadcrumb`, `CommandPalette`, `ConsolePageHeader`, `Menu`, `Sidebar`, `Stepper`, `ThemeSwitch` |
+| navigation | 6 | `Breadcrumb`, `CommandPalette`, `ConsolePageHeader`, `Menu`, `Sidebar`, `Stepper` |
 | product | 13 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductShell` (+ `ProductSideRail`), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard` |
 | **Total** | **63** | |
 

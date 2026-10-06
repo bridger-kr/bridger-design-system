@@ -111,6 +111,8 @@ describe('Product components', () => {
       );
 
       const pill = screen.getByText('날씨 데이터 찾기').closest('.dt-search-pill');
+      expect(pill).not.toBeNull();
+      if (!pill) return;
       expect(pill.className).toContain('dt-search-pill-accent');
       expect(pill.className).toContain('dt-search-pill-lg');
     });
