@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
 export interface BreadcrumbItem {
@@ -11,9 +12,13 @@ export interface BreadcrumbProps extends Omit<HTMLAttributes<HTMLElement>, 'chil
 }
 
 /** Breadcrumb trail — last item is the current page. */
-export function Breadcrumb({ items = [], style, ...rest }: BreadcrumbProps) {
+export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb(
+  { items = [], style, ...rest },
+  ref,
+) {
   return (
     <nav
+      ref={ref}
       {...rest}
       aria-label="breadcrumb"
       style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', ...style }}
@@ -58,4 +63,5 @@ export function Breadcrumb({ items = [], style, ...rest }: BreadcrumbProps) {
       </ol>
     </nav>
   );
-}
+});
+Breadcrumb.displayName = 'Breadcrumb';

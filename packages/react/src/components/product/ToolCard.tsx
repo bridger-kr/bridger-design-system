@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes } from 'react';
 
 const STATE_COLOR: Record<'available' | 'managed' | 'locked', string> = {
@@ -23,22 +24,27 @@ export interface ToolCardProps extends HTMLAttributes<HTMLElement> {
 /**
  * An MCP tool as shown in the catalog and tool list.
  */
-export function ToolCard({
-  name,
-  method = 'GET',
-  category,
-  description = '설명 없음',
-  path = '/',
-  state = 'available',
-  stateLabel,
-  style,
-  ...rest
-}: ToolCardProps) {
+export const ToolCard = forwardRef<HTMLElement, ToolCardProps>(function ToolCard(
+  {
+    name,
+    method = 'GET',
+    category,
+    description = '설명 없음',
+    path = '/',
+    state = 'available',
+    stateLabel,
+    className,
+    style,
+    ...rest
+  },
+  ref,
+) {
   const cat = category ?? (name ? name.split('_')[0] : 'etc');
   const labels = { available: '사용 가능', managed: '관리형 키', locked: '키 등록' };
   return (
     <article
-      className="dt-tool-card"
+      ref={ref}
+      className={className ? `dt-tool-card ${className}` : 'dt-tool-card'}
       {...rest}
       style={{
         borderRadius: 'var(--dt-radius-card)',
@@ -77,4 +83,5 @@ export function ToolCard({
       </div>
     </article>
   );
-}
+});
+ToolCard.displayName = 'ToolCard';

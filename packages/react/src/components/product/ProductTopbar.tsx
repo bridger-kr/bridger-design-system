@@ -1,5 +1,6 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { forwardRef, useEffect, useId, useRef } from 'react';
 import type { HTMLAttributes, MouseEvent, ReactNode } from 'react';
+import { useControllableState } from '../../lib/useControllableState';
 import { cx } from '../../lib/cx';
 
 const PRODUCT_TOPBAR_MENU_KEY = {
@@ -44,21 +45,41 @@ export interface ProductTopbarMenuProps extends HTMLAttributes<HTMLDivElement> {
   dialogLabel?: string;
   label?: string;
   navigationLabel?: string;
+  /** Controlled open state of the mobile menu. */
+  open?: boolean;
+  /** Uncontrolled initial open state. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-export function ProductTopbarMenu({
-  children,
-  closeLabel,
-  dialogLabel = 'Mobile menu',
-  label = 'Menu',
-  navigationLabel = 'Mobile primary',
-  className,
-  ...rest
-}: ProductTopbarMenuProps) {
-  const [open, setOpen] = useState(false);
+export const ProductTopbarMenu = forwardRef<HTMLDivElement, ProductTopbarMenuProps>(function ProductTopbarMenu(
+  {
+    children,
+    closeLabel,
+    dialogLabel = 'Mobile menu',
+    label = 'Menu',
+    navigationLabel = 'Mobile primary',
+    className,
+    open: openProp,
+    defaultOpen,
+    onOpenChange,
+    ...rest
+  },
+  ref,
+) {
+  const [open, setOpen] = useControllableState<boolean>({
+    value: openProp,
+    defaultValue: defaultOpen ?? false,
+    onChange: onOpenChange,
+  });
   const panelId = useId();
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const mergeRef = (node: HTMLDivElement | null) => {
+    menuRef.current = node;
+    if (typeof ref === 'function') ref(node);
+    else if (ref) ref.current = node;
+  };
   const handleToggle = () => {
     setOpen((currentOpen) => !currentOpen);
   };
@@ -126,7 +147,7 @@ export function ProductTopbarMenu({
       document.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('resize', handleResize);
     };
-  }, [open]);
+  }, [open, setOpen]);
 
   useEffect(() => {
     if (!open) return;
@@ -167,7 +188,7 @@ export function ProductTopbarMenu({
   return (
     <div
       {...rest}
-      ref={menuRef}
+      ref={mergeRef}
       className={cx('dt-product-topbar-menu', className)}
       data-open={open ? 'true' : undefined}
       role={open ? 'dialog' : undefined}
@@ -196,21 +217,25 @@ export function ProductTopbarMenu({
       ) : null}
     </div>
   );
-}
+});
+ProductTopbarMenu.displayName = 'ProductTopbarMenu';
 
-export function ProductTopbar({
-  brand,
-  actions,
-  mobileActions,
-  mobileMenuCloseLabel,
-  mobileMenuDialogLabel,
-  mobileMenuLabel = 'Menu',
-  mobileMenuNavigationLabel,
-  className,
-  ...rest
-}: ProductTopbarProps) {
+export const ProductTopbar = forwardRef<HTMLElement, ProductTopbarProps>(function ProductTopbar(
+  {
+    brand,
+    actions,
+    mobileActions,
+    mobileMenuCloseLabel,
+    mobileMenuDialogLabel,
+    mobileMenuLabel = 'Menu',
+    mobileMenuNavigationLabel,
+    className,
+    ...rest
+  },
+  ref,
+) {
   return (
-    <header className={cx('dt-product-topbar', className)} {...rest}>
+    <header ref={ref} className={cx('dt-product-topbar', className)} {...rest}>
       <div className="dt-product-topbar-brand">{brand}</div>
       <nav className="dt-product-topbar-actions" aria-label="Primary">
         {actions}
@@ -225,4 +250,5 @@ export function ProductTopbar({
       </ProductTopbarMenu>
     </header>
   );
-}
+});
+ProductTopbar.displayName = 'ProductTopbar';

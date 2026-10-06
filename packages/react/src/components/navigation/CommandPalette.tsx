@@ -1,6 +1,7 @@
 import type { ChangeEvent, CSSProperties, HTMLAttributes, KeyboardEvent, MouseEvent as ReactMouseEvent, ReactNode } from 'react';
-import { useState, useEffect } from 'react';
+import { forwardRef, useState } from 'react';
 import { cx } from '../../lib/cx';
+import { useControllableState } from '../../lib/useControllableState';
 
 export interface CommandItem {
   label: string;
@@ -16,7 +17,12 @@ export interface CommandGroup {
 }
 
 export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onSelect'> {
+  /** Controlled open state. */
   open?: boolean;
+  /** Uncontrolled initial open state (defaults to `true`). */
+  defaultOpen?: boolean;
+  /** Called when the palette requests an open-state change (e.g. Escape). */
+  onOpenChange?: (open: boolean) => void;
   query?: string;
   onQueryChange?: (q: string) => void;
   groups?: CommandGroup[];
@@ -25,13 +31,16 @@ export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>
   style?: CSSProperties;
 }
 
-export function CommandPalette({ open = true, query = '', onQueryChange, groups = [], footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기', onSelect, style, className, ...rest }: CommandPaletteProps) {
+export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(function CommandPalette(
+  { open, defaultOpen, onOpenChange, query = '', onQueryChange, groups = [], footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기', onSelect, style, className, ...rest },
+  ref,
+) {
   const [activeIndex, setActiveIndex] = useState([0, 0]);
-  const [isOpen, setIsOpen] = useState(open);
-
-  useEffect(() => {
-    setIsOpen(open);
-  }, [open]);
+  const [isOpen, setIsOpen] = useControllableState<boolean>({
+    value: open,
+    defaultValue: defaultOpen ?? true,
+    onChange: onOpenChange,
+  });
 
   if (!isOpen) return null;
 
@@ -71,6 +80,7 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
 
   return (
     <div
+      ref={ref}
       {...rest}
       role="listbox"
       onKeyDown={handleKeyDown}
@@ -128,4 +138,5 @@ export function CommandPalette({ open = true, query = '', onQueryChange, groups 
       ) : null}
     </div>
   );
-}
+});
+CommandPalette.displayName = 'CommandPalette';
