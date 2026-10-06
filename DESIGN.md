@@ -243,7 +243,7 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **58 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **65 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 - `DSLocaleProvider` + `useDSMessages` supply the `ko`/`en` message dictionaries (`DS_MESSAGES_KO`, `DS_MESSAGES_EN`) that back every localized default in the package.
 - `ToastProvider` hosts the toast queue and `useToast` exposes it to callers; the counted primitive remains `Toast`.
@@ -263,12 +263,12 @@ Naming note: `Panel` is the React component exported from `packages/react/src/co
 | Family | Count | Components |
 | --- | --- | --- |
 | core | 15 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Heading`, `Input`, `Kbd`, `Link`, `Panel`, `Section`, `Separator`, `StatusPill`, `Tabs`, `Text` |
-| forms | 10 | `Checkbox`, `Combobox`, `Field`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
+| forms | 11 | `Checkbox`, `Combobox`, `Field`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
 | feedback | 9 | `Alert`, `ConfirmDialog`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast` (+ `ToastProvider`, `useToast`), `Tooltip` |
 | data | 11 | `Avatar`, `CodeBlock`, `CodePane`, `CopyButton`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
 | navigation | 6 | `Breadcrumb`, `CommandPalette`, `ConsolePageHeader`, `Menu`, `Sidebar`, `Stepper` |
 | product | 13 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductShell` (+ `ProductSideRail`), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard` |
-| **Total** | **58** | |
+| **Total** | **65** | |
 
 ### 9.2 Core family
 
@@ -390,7 +390,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | --- | --- | --- |
 | `packages/tokens/css/contract.css` | Canonical CSS custom-property token contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/css/contract.css` |
 | `packages/tokens/src/index.ts` | Frozen TS token objects mirrored from the contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/src/index.ts` |
-| `packages/react/src/index.ts` | Public React barrel (58 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
+| `packages/react/src/index.ts` | Public React barrel (65 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
 | `DESIGN.md` (this file) | Brand and component canon | `https://github.com/bridger-kr/bridger-design-system/blob/main/DESIGN.md` |
 | `bridger-web` consuming repo | App integration, mirror checks | `https://github.com/bridger-kr/bridger-web/blob/main/README.md` |
 | Figma component library | Brand assets and Component Sets | Figma file `DXAVhKo8uCGJ4HSQYAq9dY` |
@@ -538,7 +538,7 @@ This checklist is the explicit, reproducible record for each release. Every row 
 | Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable |
 | Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Not applicable |
 | Layering | Focus trap | Tab inside an open dialog and confirm focus does not escape | Not applicable |
-| Component contract | 58-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
+| Component contract | 65-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
 | Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Not applicable |
 
 This table is reset to `Not applicable` between releases and filled in per release. A row is `Not applicable` only when the release does not touch that dimension; rows covering touched surfaces must become `Captured` with a linked artifact path or the command that produced the evidence.
