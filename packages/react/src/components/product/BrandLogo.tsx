@@ -238,3 +238,4 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
     </span>
   );
 });
+BrandLogo.displayName = 'BrandLogo';

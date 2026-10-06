@@ -1,6 +1,7 @@
 import type { ChangeEvent, CSSProperties, HTMLAttributes, KeyboardEvent, MouseEvent as ReactMouseEvent, ReactNode } from 'react';
-import { useState, useEffect, useId } from 'react';
+import { forwardRef, useEffect, useId, useState } from 'react';
 import { cx } from '../../lib/cx';
+import { useControllableState } from '../../lib/useControllableState';
 
 export interface CommandItem {
   label: string;
@@ -16,13 +17,16 @@ export interface CommandGroup {
 }
 
 export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onSelect'> {
+  /** Controlled open state. */
   open?: boolean;
-  /** Called when the palette asks to close (Escape). Pair with `open` for controlled usage. */
+  /** Uncontrolled initial open state (defaults to `true`). */
+  defaultOpen?: boolean;
+  /** Called when the palette requests an open-state change (e.g. Escape). */
   onOpenChange?: (open: boolean) => void;
   query?: string;
   onQueryChange?: (q: string) => void;
   groups?: CommandGroup[];
-  /** Accessible name for the search input (rendered as a combobox). */
+  /** Accessible name for the search input (combobox). */
   inputLabel?: string;
   /** Accessible name for the results listbox. */
   listboxLabel?: string;
@@ -31,20 +35,10 @@ export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>
   style?: CSSProperties;
 }
 
-export function CommandPalette({
-  open = true,
-  onOpenChange,
-  query = '',
-  onQueryChange,
-  groups = [],
-  inputLabel = '도구 · 액션 검색',
-  listboxLabel = '검색 결과',
-  footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기',
-  onSelect,
-  style,
-  className,
-  ...rest
-}: CommandPaletteProps) {
+export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(function CommandPalette(
+  { open, defaultOpen, onOpenChange, query = '', onQueryChange, groups = [], inputLabel = '도구 · 액션 검색', listboxLabel = '검색 결과', footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기', onSelect, style, className, ...rest },
+  ref,
+) {
   const uid = useId();
   const listboxId = `${uid}-listbox`;
   const optionId = (gi: number, ii: number) => `${uid}-option-${gi}-${ii}`;
@@ -52,11 +46,11 @@ export function CommandPalette({
 
   const flatItems = groups.flatMap((g, gi) => g.items.map((item, ii) => ({ item, gi, ii })));
   const [activeFlat, setActiveFlat] = useState(0);
-  const [isOpen, setIsOpen] = useState(open);
-
-  useEffect(() => {
-    setIsOpen(open);
-  }, [open]);
+  const [isOpen, setIsOpen] = useControllableState<boolean>({
+    value: open,
+    defaultValue: defaultOpen ?? true,
+    onChange: onOpenChange,
+  });
 
   useEffect(() => {
     setActiveFlat(0);
@@ -77,11 +71,6 @@ export function CommandPalette({
     setActiveFlat((prev) => (prev + delta + flatItems.length) % flatItems.length);
   };
 
-  const close = () => {
-    setIsOpen(false);
-    onOpenChange?.(false);
-  };
-
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -100,12 +89,13 @@ export function CommandPalette({
       if (active) onSelect?.(active.item);
     } else if (e.key === 'Escape') {
       e.preventDefault();
-      close();
+      setIsOpen(false);
     }
   };
 
   return (
     <div
+      ref={ref}
       {...rest}
       className={cx('dt-command-palette', className)}
       style={style}
@@ -178,4 +168,5 @@ export function CommandPalette({
       ) : null}
     </div>
   );
-}
+});
+CommandPalette.displayName = 'CommandPalette';

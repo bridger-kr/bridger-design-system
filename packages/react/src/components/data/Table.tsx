@@ -1,4 +1,5 @@
-import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
 import { cx } from '../../lib/cx';
 
 export type TableAlign = 'left' | 'center' | 'right';
@@ -92,20 +93,24 @@ function rowActionState<Row extends TableRow>(action: TableRowAction<Row>, row: 
  * Data table — scannable, dense, hairline-divided. Columns define header,
  * alignment, and an optional cell renderer. Built for comparison, not decoration.
  */
-export function Table<Row extends TableRow = TableRow>({
-  columns = [],
-  rows = [],
-  rowKey,
-  rowAction,
-  empty,
-  className,
-  style,
-  ...rest
-}: TableProps<Row>) {
+function TableInner<Row extends TableRow = TableRow>(
+  {
+    columns = [],
+    rows = [],
+    rowKey,
+    rowAction,
+    empty,
+    className,
+    style,
+    ...rest
+  }: TableProps<Row>,
+  ref: Ref<HTMLDivElement>,
+) {
   if (!rows.length && empty) return empty;
 
   return (
     <div
+      ref={ref}
       {...rest}
       className={cx('dt-table', className)}
       style={{
@@ -173,3 +178,8 @@ export function Table<Row extends TableRow = TableRow>({
     </div>
   );
 }
+
+export const Table = forwardRef(TableInner) as <Row extends TableRow = TableRow>(
+  props: TableProps<Row> & { ref?: Ref<HTMLDivElement> },
+) => ReactElement;
+(Table as { displayName?: string }).displayName = 'Table';

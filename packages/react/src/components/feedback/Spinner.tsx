@@ -1,6 +1,7 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
 
-export interface SpinnerProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'> {
+export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
   size?: number;
   stroke?: number;
   color?: string;
@@ -9,11 +10,16 @@ export interface SpinnerProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'sty
   style?: CSSProperties;
 }
 
-export function Spinner({ size = 18, stroke = 2, color = 'var(--dt-accent)', label = '로딩 중', style, ...rest }: SpinnerProps) {
+export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinner(
+  { size = 18, stroke = 2, color = 'var(--dt-accent)', label = '로딩 중', className, style, ...rest },
+  ref,
+) {
   const hidden = rest['aria-hidden'] === true || rest['aria-hidden'] === 'true';
   return (
     <span
+      ref={ref}
       {...rest}
+      className={className}
       style={{ display: 'inline-flex', ...style }}
       role={hidden ? undefined : 'status'}
       aria-label={hidden ? undefined : label}
@@ -24,4 +30,5 @@ export function Spinner({ size = 18, stroke = 2, color = 'var(--dt-accent)', lab
       </svg>
     </span>
   );
-}
+});
+Spinner.displayName = 'Spinner';

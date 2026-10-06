@@ -618,8 +618,10 @@
 }
 
 .dt-card-default,
-.dt-card-panel { background: var(--dt-surface); }
-.dt-card-muted { background: var(--dt-surface-sunken); }
+.dt-card-panel,
+.dt-card-plain { background: var(--dt-surface); }
+.dt-card-muted,
+.dt-card-sunken { background: var(--dt-surface-sunken); }
 .dt-card-raised { background: var(--dt-surface-raised); }
 
 .dt-card-action:hover:not(:disabled) {
@@ -699,7 +701,8 @@
   color: var(--dt-text-strong) !important;
 }
 
-.dt-tabs-tab-pill[aria-selected='true'] {
+.dt-tabs-tab-pill[aria-selected='true'],
+.dt-tabs-tab-segmented[aria-selected='true'] {
   background: var(--dt-surface-raised) !important;
   border: 1px solid var(--dt-border) !important;
   color: var(--dt-text-strong) !important;
@@ -768,31 +771,12 @@
   color: var(--dt-accent-text);
 }
 
-.dt-alert-motion-subtle {
-  animation: dt-alert-enter var(--dt-duration-base) var(--dt-ease) backwards;
-}
-
-.dt-alert-motion-pulse {
-  animation: dt-alert-pulse 1.8s var(--dt-ease) infinite;
-}
-
 .dt-toast {
   animation: dt-toast-enter var(--dt-duration-base) var(--dt-ease) backwards;
 }
 
 .dt-spinner-svg {
   animation: dt-spin 0.7s linear infinite;
-}
-
-@keyframes dt-alert-enter {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 @keyframes dt-menu {
@@ -825,16 +809,6 @@
   }
 }
 
-@keyframes dt-alert-pulse {
-  0%,
-  100% {
-    filter: brightness(1);
-  }
-  50% {
-    filter: brightness(1.08);
-  }
-}
-
 @keyframes dt-toast-enter {
   from {
     opacity: 0;
@@ -849,8 +823,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dt-alert-motion-subtle,
-  .dt-alert-motion-pulse,
   .dt-dialog-overlay,
   .dt-dialog-popup,
   .dt-menu-popup,
@@ -864,10 +836,12 @@
   .dt-card-action,
   .dt-checkbox-box,
   .dt-chip-interactive,
+  .dt-copy-button,
   .dt-file-upload-dropzone,
   .dt-file-upload-remove,
   .dt-filter-chip,
   .dt-filter-chip-remove,
+  .dt-link,
   .dt-radio-control,
   .dt-switch-thumb,
   .dt-switch-track,
@@ -1459,16 +1433,21 @@
   margin-left: auto;
 }
 
+.dt-code-pane,
+.dt-code-block {
+  /* Pane chrome (label, copy button) must meet AA on --dt-code-bg; the
+     syntax-comment token is dimmer by design for in-code comments. The code
+     well is dark in both themes, so chrome uses the code-ink ramp and status
+     values that mirror the dark theme. */
+  --dt-code-pane-muted: color-mix(in srgb, var(--dt-code-ink) 72%, transparent);
+}
+
 .dt-code-pane {
   overflow: hidden;
   border: 1px solid var(--dt-code-border);
   border-radius: var(--dt-radius-card);
   background: var(--dt-code-bg);
   color: var(--dt-code-ink);
-
-  /* Pane chrome (label, copy button) must meet AA on --dt-code-bg; the
-     syntax-comment token is dimmer by design for in-code comments. */
-  --dt-code-pane-muted: color-mix(in srgb, var(--dt-code-ink) 72%, transparent);
 }
 
 .dt-code-pane-header {
@@ -1490,42 +1469,39 @@
   white-space: nowrap;
 }
 
-.dt-code-pane-copy {
-  display: inline-flex;
+/* CopyButton on the always-dark code surface — descendant selectors keep the
+   override above the base `.dt-copy-button` rules regardless of file order. */
+.dt-code-block .dt-copy-button,
+.dt-code-pane .dt-copy-button {
   min-width: 28px;
   min-height: 28px;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
   margin-left: auto;
+  padding: 0;
   border: 0;
   border-radius: var(--dt-radius-chip);
-  background: transparent;
   color: var(--dt-code-pane-muted);
-  cursor: pointer;
   font-family: var(--dt-font-mono);
   font-size: 12px;
   font-weight: 600;
-  transition:
-    background-color var(--dt-duration-fast) var(--dt-ease),
-    color var(--dt-duration-fast) var(--dt-ease);
 }
 
-.dt-code-pane-copy:hover,
-.dt-code-pane-copy:focus-visible {
+.dt-code-block .dt-copy-button:hover:not(:disabled),
+.dt-code-pane .dt-copy-button:hover:not(:disabled),
+.dt-code-block .dt-copy-button:focus-visible,
+.dt-code-pane .dt-copy-button:focus-visible {
   background: color-mix(in srgb, var(--dt-code-ink) 7%, transparent);
   color: var(--dt-code-ink);
 }
 
-.dt-code-pane-copy[data-copied='true'] {
+.dt-code-block .dt-copy-button[data-state='copied'],
+.dt-code-pane .dt-copy-button[data-state='copied'] {
   color: var(--dt-syntax-success);
 }
 
-.dt-code-pane-copy-icon {
-  width: 5px;
-  height: 5px;
-  border-radius: var(--dt-radius-pill);
-  background: currentColor;
+.dt-code-block .dt-copy-button[data-state='failed'],
+.dt-code-pane .dt-copy-button[data-state='failed'] {
+  /* Dark-theme --dt-danger value: the code well is dark in both themes. */
+  color: #f87171;
 }
 
 .dt-code-pane-pre {
@@ -1761,7 +1737,8 @@
 }
 
 .dt-section-band,
-.dt-section-proof {
+.dt-section-proof,
+.dt-section-sunken {
   background: var(--dt-surface);
 }
 
@@ -1814,7 +1791,8 @@
   color: var(--dt-accent-text) !important;
 }
 
-.dt-tabs-list-pill {
+.dt-tabs-list-pill,
+.dt-tabs-list-segmented {
   width: fit-content;
   max-width: 100%;
   overflow-x: auto;
@@ -1826,7 +1804,8 @@
   box-shadow: inset 0 1px 2px color-mix(in srgb, var(--dt-text) 5%, transparent);
 }
 
-.dt-tabs-tab-pill {
+.dt-tabs-tab-pill,
+.dt-tabs-tab-segmented {
   flex: 0 0 auto;
   min-height: 34px;
   margin-bottom: 0 !important;
@@ -1956,4 +1935,227 @@
   .dt-product-topbar-menu-button span {
     transition: none;
   }
+}
+
+/* ============================================================
+   Scale-locked primitives (DS-41): CopyButton, Kbd, Separator,
+   Link, Text, Heading. Class + token only — no inline styles.
+============================================================ */
+
+/* CopyButton — clipboard action with an announced result state. The outcome
+   is carried by the icon swap, the label text, and a role="status" live
+   region; the status hue is reinforcement, never the only cue (§8). */
+.dt-copy-button {
+  display: inline-flex;
+  min-width: var(--dt-space-5);
+  min-height: var(--dt-space-5);
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 var(--dt-space-12);
+  border: 1px solid transparent;
+  border-radius: var(--dt-radius-control);
+  background: transparent;
+  color: var(--dt-text-subtle);
+  cursor: pointer;
+  font-family: var(--dt-font-sans);
+  font-size: var(--dt-small-size);
+  font-weight: 500;
+  transition:
+    background-color var(--dt-duration-fast) var(--dt-ease),
+    border-color var(--dt-duration-fast) var(--dt-ease),
+    color var(--dt-duration-fast) var(--dt-ease),
+    transform var(--dt-duration-fast) var(--dt-ease);
+}
+
+.dt-copy-button:hover:not(:disabled) {
+  border-color: var(--dt-border);
+  background: var(--dt-surface-muted);
+  color: var(--dt-text-strong);
+}
+
+.dt-copy-button:focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: 2px;
+}
+
+.dt-copy-button:active:not(:disabled) {
+  transform: scale(var(--dt-press-scale));
+}
+
+.dt-copy-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.dt-copy-button[data-state='copied'] {
+  color: var(--dt-success);
+}
+
+.dt-copy-button[data-state='failed'] {
+  color: var(--dt-danger);
+}
+
+.dt-copy-button-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+}
+
+/* Kbd — key glyph in the sans face: key names may be Korean. */
+.dt-kbd {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 1px 6px;
+  border: 1px solid var(--dt-border-strong);
+  border-radius: var(--dt-radius-chip);
+  background: var(--dt-surface-sunken);
+  color: var(--dt-text-subtle);
+  font-family: var(--dt-font-sans);
+  font-size: var(--dt-small-size);
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.dt-kbd[data-size='sm'] {
+  min-height: 18px;
+  padding: 0 5px;
+  font-size: var(--dt-caption-size);
+}
+
+/* Separator — hairline divider (base-ui role="separator"). */
+.dt-separator {
+  flex-shrink: 0;
+  border: 0;
+  background: var(--dt-border);
+}
+
+.dt-separator[data-orientation='horizontal'] {
+  width: 100%;
+  height: 1px;
+}
+
+.dt-separator[data-orientation='vertical'] {
+  align-self: stretch;
+  width: 1px;
+}
+
+/* Link — persimmon renders as a glyph only through --dt-accent-text (§4.2).
+   :visited keeps the same color; there is no separate visited hue. */
+.dt-link {
+  color: var(--dt-accent-text);
+  text-decoration-color: color-mix(in srgb, var(--dt-accent-text) 45%, transparent);
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+  transition:
+    color var(--dt-duration-fast) var(--dt-ease),
+    text-decoration-color var(--dt-duration-fast) var(--dt-ease);
+}
+
+.dt-link:hover {
+  color: var(--dt-accent-strong);
+  text-decoration-color: currentColor;
+}
+
+.dt-link:visited {
+  color: var(--dt-accent-text);
+}
+
+.dt-link:focus-visible {
+  border-radius: var(--dt-radius-chip);
+  outline: 3px solid var(--dt-accent);
+  outline-offset: 2px;
+}
+
+.dt-link-icon {
+  vertical-align: -0.15em;
+}
+
+/* Text — the fixed 12/13/14/16 scale with token line-heights (EDD-231). */
+.dt-text {
+  margin: 0;
+  color: var(--dt-text);
+}
+
+.dt-text[data-size='12'] {
+  font-size: var(--dt-caption-size);
+  line-height: var(--dt-caption-leading);
+}
+
+.dt-text[data-size='13'] {
+  font-size: var(--dt-small-size);
+  line-height: var(--dt-small-leading);
+}
+
+.dt-text[data-size='14'] {
+  font-size: var(--dt-label-size);
+  line-height: var(--dt-label-leading);
+}
+
+.dt-text[data-size='16'] {
+  font-size: var(--dt-body-size);
+  line-height: var(--dt-body-leading);
+}
+
+.dt-text[data-weight='400'] {
+  font-weight: 400;
+}
+
+.dt-text[data-weight='500'] {
+  font-weight: 500;
+}
+
+.dt-text[data-weight='600'] {
+  font-weight: 600;
+}
+
+.dt-text[data-tone='muted'] {
+  color: var(--dt-text-muted);
+}
+
+.dt-text[data-tone='accent'] {
+  color: var(--dt-accent-text);
+}
+
+.dt-text[data-tone='danger'] {
+  color: var(--dt-danger);
+}
+
+/* Heading — real h1–h4 on the 20/28/36 display steps, weight capped at 600.
+   Negative tracking applies only to the H1/H2 steps (§4.3). */
+.dt-heading {
+  margin: 0;
+  color: var(--dt-text-strong);
+  font-weight: 600;
+}
+
+.dt-heading[data-size='20'] {
+  font-size: var(--dt-h3-size);
+  line-height: var(--dt-h3-leading);
+}
+
+.dt-heading[data-size='28'] {
+  font-size: var(--dt-h2-size);
+  line-height: var(--dt-h2-leading);
+  letter-spacing: var(--dt-h2-tracking);
+}
+
+.dt-heading[data-size='36'] {
+  font-size: var(--dt-h1-size);
+  line-height: var(--dt-h1-leading);
+  letter-spacing: var(--dt-h1-tracking);
+}
+
+.dt-heading[data-tone='muted'] {
+  color: var(--dt-text-muted);
+}
+
+.dt-heading[data-tone='accent'] {
+  color: var(--dt-accent-text);
+}
+
+.dt-heading[data-tone='danger'] {
+  color: var(--dt-danger);
 }

@@ -66,21 +66,41 @@ describe('CommandPalette a11y', () => {
     expect(onSelect).toHaveBeenCalledWith(groups[0].items[0]);
   });
 
-  it('closes on Escape and reports through onOpenChange', () => {
+  it('closes on Escape when uncontrolled', () => {
+    const { container } = render(<CommandPalette defaultOpen groups={groups} />);
+    fireEvent.keyDown(inputOf(container), { key: 'Escape' });
+    expect(container.querySelector('[role="listbox"]')).toBeNull();
+  });
+
+  it('reports Escape through onOpenChange when controlled', () => {
     const onOpenChange = vi.fn();
     const { container } = render(
       <CommandPalette open groups={groups} onOpenChange={onOpenChange} />,
     );
     fireEvent.keyDown(inputOf(container), { key: 'Escape' });
     expect(onOpenChange).toHaveBeenCalledWith(false);
-    expect(container.querySelector('[role="listbox"]')).toBeNull();
+    // controlled: the palette only reports — the parent owns visibility
+    expect(container.querySelector('[role="listbox"]')).not.toBeNull();
   });
+
 
   it('follows the open prop when consumers control visibility', () => {
     const { container, rerender } = render(<CommandPalette open={false} groups={groups} />);
     expect(container.querySelector('[role="listbox"]')).toBeNull();
     rerender(<CommandPalette open groups={groups} />);
     expect(container.querySelector('[role="listbox"]')).not.toBeNull();
+  });
+
+  it('keeps the listbox open after Escape reports through onOpenChange', () => {
+    const onOpenChange = vi.fn();
+    const { container, rerender } = render(<CommandPalette open groups={groups} onOpenChange={onOpenChange} />);
+
+    fireEvent.keyDown(inputOf(container), { key: 'Escape' });
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(container.querySelector('[role="listbox"]')).not.toBeNull();
+
+    rerender(<CommandPalette open={false} groups={groups} onOpenChange={onOpenChange} />);
+    expect(container.querySelector('[role="listbox"]')).toBeNull();
   });
 });
 

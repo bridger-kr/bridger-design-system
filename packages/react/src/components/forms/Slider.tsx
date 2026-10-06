@@ -1,11 +1,18 @@
 import { Slider as BaseSlider } from '@base-ui-components/react/slider';
-import { useState } from 'react';
-import type { CSSProperties, InputHTMLAttributes } from 'react';
+import { forwardRef, useId } from 'react';
+import type { CSSProperties, HTMLAttributes, Ref } from 'react';
+import { warnOnce } from '../../lib/deprecate';
+import type { SlotPropsFor } from '../../lib/slot';
+
+export type SliderSlotProps = SlotPropsFor<{
+  label: 'label';
+  hint: 'span';
+}>;
 
 export interface SliderProps
   extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    'defaultValue' | 'id' | 'max' | 'min' | 'onChange' | 'step' | 'style' | 'value'
+    HTMLAttributes<HTMLDivElement>,
+    'className' | 'defaultValue' | 'onChange' | 'style'
   > {
   label?: string;
   min?: number;
@@ -13,11 +20,20 @@ export interface SliderProps
   step?: number;
   value?: number;
   defaultValue?: number;
+  /** Called with the newly selected value. */
+  onValueChange?: (value: number) => void;
+  /** @deprecated Use `onValueChange`. Removed in v2.1. */
   onChange?: (value: number) => void;
   /** Suffix shown after the value readout, e.g. "회/일" or "ms". */
   unit?: string;
   hint?: string;
   id?: string;
+  name?: string;
+  disabled?: boolean;
+  /** Prop bags for inner elements (`label`, `hint`). */
+  slotProps?: SliderSlotProps;
+  /** Root element class. */
+  className?: string;
   style?: CSSProperties;
 }
 
@@ -25,32 +41,48 @@ export interface SliderProps
  * Numeric range input — hairline track, persimmon fill, tabular value readout.
  * @startingPoint section="Forms" subtitle="Numeric range with tabular readout" viewport="420x90"
  */
-export function Slider({
-  label,
-  min = 0,
-  max = 100,
-  step = 1,
-  value,
-  defaultValue,
-  onChange,
-  unit = '',
-  hint,
-  id,
-  style,
-  'aria-label': ariaLabel,
-}: SliderProps) {
-  const sId = id || (label ? `sl-${label.replace(/\s+/g, '-')}` : undefined);
+export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
+  {
+    label,
+    min = 0,
+    max = 100,
+    step = 1,
+    value,
+    defaultValue,
+    onValueChange,
+    onChange,
+    unit = '',
+    hint,
+    id,
+    name,
+    disabled,
+    slotProps,
+    className,
+    style,
+    'aria-label': ariaLabel,
+    ...rest
+  },
+  ref,
+) {
+  const autoId = useId();
+  const sId = id ?? autoId;
+  const hintId = hint ? `${sId}-hint` : undefined;
   const inputLabel = ariaLabel ?? label ?? '값';
-  const [internal, setInternal] = useState(defaultValue ?? min);
-  const v = value ?? internal;
+  if (onChange !== undefined) {
+    warnOnce('slider-onchange', 'Slider: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
+  }
+  const v = value ?? defaultValue ?? min;
   const pct = ((v - min) / (max - min)) * 100;
-  const handleValueChange = (nextValue: number) => {
-    if (value === undefined) setInternal(nextValue);
-    onChange?.(nextValue);
+  const handleValueChange = (nextValue: number | readonly number[]) => {
+    if (typeof nextValue === 'number') {
+      onValueChange?.(nextValue);
+      onChange?.(nextValue);
+    }
   };
 
   return (
     <BaseSlider.Root
+      ref={ref as Ref<HTMLDivElement>}
       id={sId}
       min={min}
       max={max}
@@ -58,13 +90,18 @@ export function Slider({
       value={value}
       defaultValue={defaultValue ?? min}
       onValueChange={handleValueChange}
+      name={name}
+      disabled={disabled}
+      aria-describedby={hintId}
+      className={className}
       style={{ display: 'grid', gap: 9, ...style }}
+      {...rest}
     >
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
           {label ? (
-            <span id={sId ? `${sId}-label` : undefined} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>
+            <label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }} {...slotProps?.label}>
               {label}
-            </span>
+            </label>
           ) : (
             <span />
           )}
@@ -111,7 +148,12 @@ export function Slider({
           }}
         />
       </BaseSlider.Control>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
+      {hint ? (
+        <span id={hintId} style={{ fontSize: 12, color: 'var(--dt-text-muted)' }} {...slotProps?.hint}>
+          {hint}
+        </span>
+      ) : null}
     </BaseSlider.Root>
   );
-}
+});
+Slider.displayName = 'Slider';

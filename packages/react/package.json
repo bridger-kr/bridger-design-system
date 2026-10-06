@@ -31,6 +31,7 @@
     "dev": "tsup --watch"
   },
   "peerDependencies": {
+    "lucide-react": "^1.11.0",
     "react": "^19",
     "react-dom": "^19"
   },
@@ -45,6 +46,7 @@
     "@types/react-dom": "^19.3.0",
     "axe-core": "4.13.0",
     "jsdom": "29.1.1",
+    "lucide-react": "1.11.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "vitest-axe": "1.0.0-pre.5"
