@@ -54,10 +54,10 @@ If your bundler does not resolve package `@import` statements in CSS, import bot
 
 ## Component Categories
 
-- `core` — Badge, Button, Card, FilterChip, Input, Panel/Surface, StatusPill, Tabs
+- `core` — Badge, Button, Card, FilterChip, Heading, Input, Kbd, Link, Panel/Surface, Separator, StatusPill, Tabs, Text
 - `forms` — Checkbox, Combobox, FileUpload, RadioGroup, SegmentedControl, Select, Slider, Switch/ToggleSwitch, Textarea
 - `feedback` — Alert, Dialog, Drawer, EmptyState, Skeleton, Spinner, Toast, Tooltip
-- `data` — Avatar, CodeBlock, CodePane (deprecated → CodeBlock), KeyValue, LogRow, Pagination, StatTile, Table, UsageMeter
+- `data` — Avatar, CodeBlock, CodePane (deprecated → CodeBlock), CopyButton, KeyValue, LogRow, Pagination, StatTile, Table, UsageMeter
 - `navigation` — Breadcrumb, CommandPalette, Menu, Sidebar, Stepper
 - `product` — BrandLogo, SectionCard, ToolCard
 

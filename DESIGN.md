@@ -243,7 +243,7 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **61 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **67 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
@@ -261,13 +261,13 @@ Deprecation note: several v1 product-family exports exist only to render decorat
 
 | Family | Count | Components |
 | --- | --- | --- |
-| core | 10 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Input`, `Panel`, `Section`, `StatusPill`, `Tabs` |
-| forms | 9 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
+| core | 15 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Heading`, `Input`, `Kbd`, `Link`, `Panel`, `Section`, `Separator`, `StatusPill`, `Tabs`, `Text` |
+| forms | 10 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
 | feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
-| data | 10 | `Avatar`, `CodeBlock`, `CodePane`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
+| data | 11 | `Avatar`, `CodeBlock`, `CodePane`, `CopyButton`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
 | navigation | 5 | `Breadcrumb`, `CommandPalette`, `Menu`, `Sidebar`, `Stepper` |
 | product | 18 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductActionPill`, `ProductShell` (+ `ProductMotionField`, `ProductSideRail`, decorative hero backdrop), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard`, `WindowChrome` (+ `WindowFrame`) |
-| **Total** | **60** | |
+| **Total** | **67** | |
 
 ### 9.2 Core family
 
@@ -285,6 +285,11 @@ Resting on the canonical neutral border plane with persimmon focus and selection
 | `Input` | label, field, hint, error | size, validation tone | Visible label; error associates with the field. |
 | `Tabs` | tab list + tab panels | variant (`underline`, `pill`) | Roving tabindex, arrow-key navigation. |
 | `FilterChip` | label, optional count, optional close | active state, removable state | Catalog filter; toggles between rest and selected. |
+| `Text` | scale-locked text node | `size` (`12`, `13`, `14`, `16`), `weight` (`400`, `500`, `600`), `tone` (`default`, `muted`, `accent`, `danger`), `as` (`p`, `span`, `div`) | Enforces the body-range type scale; never renders a heading element. |
+| `Heading` | semantic `h1`–`h4` | `level` (`1`–`4`, required), `size` (`20`, `28`, `36`; defaults to the step paired with `level`), `tone` | Level is semantic, size is visual. Weight stays at the 600 display cap. |
+| `Link` | anchor | `external` (auto-detected from `href` when omitted), `externalLabel`, `render` | External links get `target="_blank" rel="noopener noreferrer"`, an `ExternalLink` glyph, and a visually-hidden new-context cue. `:visited` keeps `--dt-accent-text`. |
+| `Separator` | hairline divider (base-ui) | `orientation` (`horizontal`, `vertical`) | `role="separator"`; uses `--dt-border`. |
+| `Kbd` | key glyph (`<kbd>`) | `size` (`sm`, `md`) | Sans face at caption/small size; key names may be Korean. |
 
 ### 9.3 Forms family
 
@@ -327,8 +332,9 @@ Quiet, tabular, scannable. Use tabular figures and mono styling where required b
 | `Table` | header + body rows | column alignment, empty state, row click | Real `<table>` semantics; header cells identify columns. Numeric columns right-align. |
 | `StatTile` | label + value + optional delta + hint | delta tone (`up`, `down`, `neutral`) | Tabular figures on the value. |
 | `StatPanel` | array of `StatPanelItem` | variant (`card`, `row`) | Multi-stat plane. |
-| `CodeBlock` | dark code surface with line numbers, optional copy | language, line numbers, copyable | Dark code surface in both themes. |
-| `CodePane` | tokenized code pane | tone (`CODE_PANE_TONE`), segments, lines | For composed code specimens with per-segment styling. |
+| `CodeBlock` | dark code surface with line numbers, optional copy | language, line numbers, copyable | Dark code surface in both themes. Copy affordance is `CopyButton`. |
+| `CodePane` | tokenized code pane | tone (`CODE_PANE_TONE`), segments, lines | For composed code specimens with per-segment styling. Copy affordance is `CopyButton`. |
+| `CopyButton` | clipboard copy button with announced result | `iconOnly`, `label`/`copiedLabel`/`failedLabel`, `onCopy` | `idle`/`copied`/`failed` on `data-state`; result announced via `role="status"`. Icon-only use requires `aria-label`. |
 | `KeyValue` | definition list of `KeyValueItem` | columns (`1`, `2`) | Spec metadata and configuration rows. |
 | `LogRow` | stream entry with timestamp, level, message | level (`info`, `success`, `warning`, `danger`) | Monospace timestamps and IDs. |
 | `UsageMeter` | label + value + max + unit + hint | tone (`default`, `warning`, `danger`) | Quota bar; values use tabular figures. |

@@ -1,7 +1,8 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
+import { CopyButton } from './CopyButton';
 
 type TokenKind = 'plain' | 'key' | 'str' | 'num' | 'kw' | 'pun';
 
@@ -87,6 +88,12 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'st
   copyable?: boolean;
   /** Override the text placed on the clipboard (defaults to the rendered code). */
   copyText?: string;
+  /** Copy button label in the idle state. Alias for `copy.label`. */
+  copyLabel?: ReactNode;
+  /** Copy button label after a successful copy; also announced via live region. Alias for `copy.copiedLabel`. */
+  copiedLabel?: ReactNode;
+  /** Copy button label after a failed copy; also announced via live region. Alias for `copy.failedLabel`. */
+  copyFailedLabel?: ReactNode;
   style?: CSSProperties;
 }
 
@@ -97,39 +104,27 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'st
  * @startingPoint section="Data" subtitle="Dark code block with copy" viewport="520x220"
  */
 export const CodeBlock = forwardRef<HTMLDivElement, CodeBlockProps>(function CodeBlock(
-  { code = '', lines, label, language = 'json', showLineNumbers = true, copy, copyable, copyText, className, style, ...rest },
+  { code = '', lines, label, language = 'json', showLineNumbers = true, copy, copyable, copyText, copyLabel, copiedLabel, copyFailedLabel, className, style, ...rest },
   ref,
 ) {
   if (copyable !== undefined) {
     warnOnce('codeblock-copyable', 'CodeBlock: `copyable` is deprecated — use `copy`. Removed in v2.1.');
   }
-  const copyLabels: CodeBlockCopyLabels = typeof copy === 'object' && copy !== null ? copy : {};
+  const copyLabels: CodeBlockCopyLabels = {
+    label: copyLabel,
+    copiedLabel,
+    failedLabel: copyFailedLabel,
+    ...(typeof copy === 'object' && copy !== null ? copy : {}),
+  };
   const showCopy = copy === false ? false : (copyable ?? (typeof copy === 'boolean' ? copy : true));
-  const [copied, setCopied] = useState<'idle' | 'copied' | 'failed'>('idle');
   const codeText = lines ? lines.map((l) => l.segments.map((s) => s.text).join('')).join('\n') : String(code).replace(/\n$/, '');
   const textLines = codeText.split('\n');
-
-  const doCopy = () => {
-    try {
-      navigator.clipboard?.writeText(copyText ?? codeText)?.then(
-        () => setCopied('copied'),
-        () => setCopied('failed'),
-      );
-      if (!navigator.clipboard) setCopied('copied');
-    } catch {
-      setCopied('failed');
-    }
-    setTimeout(() => setCopied('idle'), 1400);
-  };
-
-  const copyLabel = copyLabels.label ?? '복사';
-  const buttonLabel = copied === 'copied' ? copyLabels.copiedLabel ?? '복사됨' : copied === 'failed' ? copyLabels.failedLabel ?? '복사' : copyLabel;
 
   return (
     <div
       ref={ref}
       {...rest}
-      className={className}
+      className={cx('dt-code-block', className)}
       style={{
         background: 'var(--dt-code-bg)', border: '1px solid var(--dt-code-border)',
         borderRadius: 'var(--dt-radius-card)', overflow: 'hidden', ...style,
@@ -142,20 +137,13 @@ export const CodeBlock = forwardRef<HTMLDivElement, CodeBlockProps>(function Cod
         }}>
           <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: '#8a91a3' }}>{label || language}</span>
           {showCopy ? (
-            <button
-              type="button" onClick={doCopy}
-              style={{
-                marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, border: 'none',
-                background: 'transparent', color: copied === 'copied' ? '#4ade80' : '#8a91a3', cursor: 'pointer',
-                fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, padding: 0,
-              }}
-            >
-              {copied === 'copied' ? (
-                <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>{buttonLabel}</>
-              ) : (
-                <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>{buttonLabel}</>
-              )}
-            </button>
+            <CopyButton
+              className="dt-code-block-copy"
+              value={copyText ?? codeText}
+              label={copyLabels.label}
+              copiedLabel={copyLabels.copiedLabel}
+              failedLabel={copyLabels.failedLabel}
+            />
           ) : null}
         </div>
       ) : null}
