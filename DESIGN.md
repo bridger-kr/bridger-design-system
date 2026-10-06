@@ -243,7 +243,7 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **62 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **63 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
@@ -263,9 +263,9 @@ Naming note: `Panel` is the React component exported from `packages/react/src/co
 | forms | 9 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
 | feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
 | data | 11 | `Avatar`, `CodeBlock`, `CodePane`, `CopyButton`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
-| navigation | 6 | `Breadcrumb`, `CommandPalette`, `Menu`, `Sidebar`, `Stepper`, `ThemeSwitch` |
+| navigation | 7 | `Breadcrumb`, `CommandPalette`, `ConsolePageHeader`, `Menu`, `Sidebar`, `Stepper`, `ThemeSwitch` |
 | product | 13 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductShell` (+ `ProductSideRail`), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard` |
-| **Total** | **62** | |
+| **Total** | **63** | |
 
 ### 9.2 Core family
 
@@ -340,7 +340,8 @@ Persistent structures. Sidebar and command palette must expose correct landmarks
 | Component | Anatomy | Variant axes | Notes |
 | --- | --- | --- | --- |
 | `Breadcrumb` | linked trail of items, current page | separator | `aria-current="page"` on the current item. |
-| `Sidebar` | brand + sections + footer | width | Console navigation rail; landmark role `navigation`. |
+| `Sidebar` | brand + sections + footer | width | Console navigation rail; landmark role `navigation`; active row is sunken (no accent marker). |
+| `ConsolePageHeader` | title + description + actions | — | Flat route header for console pages; single h1, no eyebrow. |
 | `Menu` | trigger + popover list | align (`left`, `right`), width | Roving focus inside the menu, escape closes. |
 | `CommandPalette` | search input + grouped results + footer hint | open, query, groups | `⌘K` invocation; keyboard-first navigation. |
 | `Stepper` | ordered steps + current indicator | orientation (`horizontal`, `vertical`) | Onboarding progress. |
@@ -384,7 +385,7 @@ Bridger identity is canonical. External references may inform hierarchy, density
 | --- | --- | --- |
 | `packages/tokens/css/contract.css` | Canonical CSS custom-property token contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/css/contract.css` |
 | `packages/tokens/src/index.ts` | Frozen TS token objects mirrored from the contract | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/tokens/src/index.ts` |
-| `packages/react/src/index.ts` | Public React barrel (55 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
+| `packages/react/src/index.ts` | Public React barrel (56 components + helpers) | `https://github.com/bridger-kr/bridger-design-system/blob/main/packages/react/src/index.ts` |
 | `DESIGN.md` (this file) | Brand and component canon | `https://github.com/bridger-kr/bridger-design-system/blob/main/DESIGN.md` |
 | `bridger-web` consuming repo | App integration, mirror checks | `https://github.com/bridger-kr/bridger-web/blob/main/README.md` |
 | Figma component library | Brand assets and Component Sets | Figma file `DXAVhKo8uCGJ4HSQYAq9dY` |

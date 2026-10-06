@@ -106,7 +106,7 @@ function TableInner<Row extends TableRow = TableRow>(
   }: TableProps<Row>,
   ref: Ref<HTMLDivElement>,
 ) {
-  if (!rows.length && empty) return empty;
+  if (!rows.length && empty) return <>{empty}</>;
 
   return (
     <div

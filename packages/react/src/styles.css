@@ -843,7 +843,7 @@
 .dt-sidebar-item {
   position: relative;
   display: flex;
-  min-height: var(--dt-space-5);
+  min-height: var(--dt-space-32);
   align-items: center;
   gap: var(--dt-space-2);
   border-radius: var(--dt-radius-control);
@@ -855,9 +855,13 @@
   transition: background-color var(--dt-duration-fast) var(--dt-ease), color var(--dt-duration-fast) var(--dt-ease);
 }
 
+/* Drawer mode is touch-first: rows grow back to the 40px touch target. */
+@media (max-width: 767px) {
+  .dt-sidebar-item { min-height: var(--dt-space-5); }
+}
+
 .dt-sidebar-item:hover { background: var(--dt-surface-muted); color: var(--dt-text-strong); }
 .dt-sidebar-item-active { background: var(--dt-surface-sunken); color: var(--dt-text-strong); font-weight: 600; }
-.dt-sidebar-item-marker { position: absolute; inset-block: var(--dt-space-2); left: 0; width: 3px; border-radius: var(--dt-radius-pill); background: var(--dt-accent); }
 .dt-sidebar-item-icon { display: inline-flex; flex: 0 0 auto; color: var(--dt-text-muted); }
 .dt-sidebar-item-active .dt-sidebar-item-icon { color: var(--dt-accent-strong); }
 .dt-sidebar-item-label { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1343,6 +1347,62 @@
   margin-top: 20px;
 }
 
+.dt-console-page-header {
+  color: var(--dt-text);
+}
+
+.dt-console-page-header-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dt-space-3);
+}
+
+.dt-console-page-header-text {
+  display: grid;
+  min-width: 0;
+  gap: var(--dt-space-2);
+}
+
+.dt-console-page-header h1,
+.dt-console-page-header p {
+  margin: 0;
+}
+
+.dt-console-page-header h1 {
+  max-width: 64rem;
+  color: var(--dt-text-strong);
+  font-size: var(--dt-h3-size);
+  font-weight: 600;
+  line-height: 1.25;
+  word-break: keep-all;
+}
+
+.dt-console-page-header p {
+  max-width: 48rem;
+  color: var(--dt-text-muted);
+  font-size: var(--dt-label-size);
+  line-height: 1.55;
+  word-break: keep-all;
+}
+
+.dt-console-page-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dt-space-2);
+}
+
+.dt-console-page-header-content {
+  margin-top: var(--dt-space-3);
+}
+
+@media (min-width: 768px) {
+  .dt-console-page-header-row {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
 @keyframes dt-product-topbar-menu-reveal {
   from {
     opacity: 0;
