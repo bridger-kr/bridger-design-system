@@ -58,8 +58,10 @@
 
   --dt-text: light-dark(oklch(0.205 0 0), oklch(0.97 0 0));
   --dt-text-strong: light-dark(oklch(0.145 0 0), oklch(1 0 0));
-  --dt-text-subtle: light-dark(oklch(0.556 0 0), oklch(0.708 0 0));
-  --dt-text-muted: light-dark(oklch(0.54 0 0), oklch(0.72 0 0));
+  /* Light values sit at oklch 0.50/0.52 so both reach WCAG AA 4.5:1 on
+     `--dt-surface-muted` (#f5f5f5), not only on pure white. */
+  --dt-text-subtle: light-dark(oklch(0.50 0 0), oklch(0.708 0 0));
+  --dt-text-muted: light-dark(oklch(0.52 0 0), oklch(0.72 0 0));
   --dt-text-placeholder: light-dark(oklch(0.708 0 0), oklch(0.556 0 0));
 
   --dt-border: light-dark(oklch(0.145 0 0 / 0.10), oklch(1 0 0 / 0.08));
