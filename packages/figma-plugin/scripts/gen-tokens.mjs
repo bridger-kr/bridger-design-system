@@ -38,13 +38,40 @@ function topLevelBlocks(css) {
   }
   return blocks;
 }
+
+// Themed colors are single light-dark(<light>, <dark>) definitions on :root
+// (DS #44); resolve one arm per theme. Nested functions (color-mix) carry
+// commas, so split at paren depth 0.
+function splitLightDark(value) {
+  const m = value.match(/^\s*light-dark\(\s*([\s\S]*?)\s*\)\s*$/);
+  if (!m) return null;
+  const inner = m[1];
+  let depth = 0;
+  for (let i = 0; i < inner.length; i += 1) {
+    const ch = inner[i];
+    if (ch === '(') depth += 1;
+    else if (ch === ')') depth -= 1;
+    else if (ch === ',' && depth === 0) {
+      return [inner.slice(0, i).trim(), inner.slice(i + 1).trim()];
+    }
+  }
+  return null;
+}
+function themedVars(body, theme) {
+  const out = {};
+  for (const [name, value] of Object.entries(extractVars(body))) {
+    const arms = splitLightDark(value);
+    out[name] = arms ? arms[theme === 'light' ? 0 : 1] : value;
+  }
+  return out;
+}
 function splitColorBlocks(css) {
   const blocks = topLevelBlocks(css);
   const darkBlock = blocks.find((b) => /\[data-theme=['"]dark['"]\]|\.dark/.test(b.selector));
   const lightBlock = blocks.find((b) => b !== darkBlock && /:root/.test(b.selector));
   return {
-    light: extractVars(lightBlock ? lightBlock.body : ''),
-    dark: extractVars(darkBlock ? darkBlock.body : ''),
+    light: themedVars(lightBlock ? lightBlock.body : '', 'light'),
+    dark: { ...themedVars(lightBlock ? lightBlock.body : '', 'dark'), ...extractVars(darkBlock ? darkBlock.body : '') },
   };
 }
 

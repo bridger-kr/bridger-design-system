@@ -1,6 +1,7 @@
-import type { CSSProperties, ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
-export interface EmptyStateProps {
+export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   icon?: ReactNode;
   title?: ReactNode;
   description?: ReactNode;
@@ -9,13 +10,21 @@ export interface EmptyStateProps {
 }
 
 /** Empty state for lists/tables — quiet icon, title, guidance, action. */
-export function EmptyState({ icon, title, description, action, style }: EmptyStateProps) {
+export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(function EmptyState(
+  { icon, title, description, action, className, style, ...rest },
+  ref,
+) {
   return (
-    <div style={{
-      display: 'grid', placeItems: 'center', gap: 10, textAlign: 'center',
-      padding: '40px 24px', borderRadius: 'var(--dt-radius-card)',
-      background: 'var(--dt-surface-sunken)', ...style,
-    }}>
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        display: 'grid', placeItems: 'center', gap: 10, textAlign: 'center',
+        padding: '40px 24px', borderRadius: 'var(--dt-radius-card)',
+        background: 'var(--dt-surface-sunken)', ...style,
+      }}
+      {...rest}
+    >
       {icon ? (
         <span style={{
           display: 'inline-flex', width: 44, height: 44, alignItems: 'center', justifyContent: 'center',
@@ -28,4 +37,5 @@ export function EmptyState({ icon, title, description, action, style }: EmptySta
       {action ? <div style={{ marginTop: 6 }}>{action}</div> : null}
     </div>
   );
-}
+});
+EmptyState.displayName = 'EmptyState';

@@ -19,11 +19,13 @@ export {
 export { ChatBubble, type ChatBubbleProps } from './ChatBubble';
 export {
   PRODUCT_ACTION_PILL_SIZE,
+  PRODUCT_ACTION_PILL_TONE,
   PRODUCT_ACTION_PILL_VARIANT,
   ProductActionPill,
   productActionPillClassName,
   type ProductActionPillProps,
   type ProductActionPillSize,
+  type ProductActionPillTone,
   type ProductActionPillVariant,
 } from './ProductActionPill';
 export {
@@ -49,6 +51,6 @@ export {
   type SearchPillSize,
   type SearchPillTone,
 } from './SearchPill';
-export { SectionCard, type SectionCardProps } from './SectionCard';
+export { SectionCard, type SectionCardProps, type SectionCardSlotProps } from './SectionCard';
 export { ToolCard, type ToolCardProps } from './ToolCard';
 export { WindowChrome, WindowFrame, type WindowChromeProps, type WindowFrameProps } from './WindowChrome';

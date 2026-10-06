@@ -275,6 +275,56 @@
         { "props": { "State": "available" }, "node": { "type": "frame", "name": "ToolCard", "dir": "vertical", "gap": 12, "align": "MIN", "w": 320, "padding": { "t": 16, "b": 16, "l": 18, "r": 18 }, "radius": 8, "fill": "{color/surface/surface}", "stroke": "{color/border/border}", "children": [ { "type": "frame", "name": "top", "dir": "horizontal", "gap": 12, "align": "MIN", "justify": "SPACE_BETWEEN", "grow": true, "children": [ { "type": "frame", "name": "chips", "dir": "horizontal", "gap": 8, "align": "CENTER", "children": [ { "type": "frame", "name": "chip", "dir": "horizontal", "align": "CENTER", "padding": { "t": 3, "b": 3, "l": 8, "r": 8 }, "radius": 4, "fill": "{color/surface/surface-sunken}", "children": [ { "type": "text", "font": "mono", "text": "weather", "size": 12, "weight": 600, "color": "{color/text/text-subtle}" } ] }, { "type": "frame", "name": "chip", "dir": "horizontal", "align": "CENTER", "padding": { "t": 3, "b": 3, "l": 8, "r": 8 }, "radius": 4, "fill": "{color/surface/surface-sunken}", "children": [ { "type": "text", "font": "mono", "text": "GET", "size": 12, "weight": 600, "color": "{color/accent/accent}" } ] } ] }, { "type": "frame", "name": "state", "dir": "horizontal", "gap": 6, "align": "CENTER", "children": [ { "type": "ellipse", "w": 6, "h": 6, "fill": "{color/status/success}" }, { "type": "text", "text": "사용 가능", "size": 12, "weight": 600, "color": "{color/status/success}" } ] } ] }, { "type": "text", "text": "weather_now", "size": 16, "weight": 600, "color": "{color/text/text-strong}" }, { "type": "text", "text": "기상청 단기예보를 단일 MCP 도구로 노출.", "size": 13, "color": "{color/text/text-subtle}" }, { "type": "frame", "name": "foot", "dir": "horizontal", "align": "CENTER", "justify": "MIN", "grow": true, "padding": { "t": 13 }, "stroke": "{color/border/border}", "children": [ { "type": "text", "font": "mono", "text": "/api/weather/now", "size": 12, "color": "{color/text/text-muted}" } ] } ] } },
         { "props": { "State": "locked" }, "node": { "type": "frame", "name": "ToolCard", "dir": "vertical", "gap": 12, "align": "MIN", "w": 320, "padding": { "t": 16, "b": 16, "l": 18, "r": 18 }, "radius": 8, "fill": "{color/surface/surface}", "stroke": "{color/border/border}", "children": [ { "type": "frame", "name": "top", "dir": "horizontal", "gap": 12, "align": "MIN", "justify": "SPACE_BETWEEN", "grow": true, "children": [ { "type": "frame", "name": "chips", "dir": "horizontal", "gap": 8, "align": "CENTER", "children": [ { "type": "frame", "name": "chip", "dir": "horizontal", "align": "CENTER", "padding": { "t": 3, "b": 3, "l": 8, "r": 8 }, "radius": 4, "fill": "{color/surface/surface-sunken}", "children": [ { "type": "text", "font": "mono", "text": "realty", "size": 12, "weight": 600, "color": "{color/text/text-subtle}" } ] }, { "type": "frame", "name": "chip", "dir": "horizontal", "align": "CENTER", "padding": { "t": 3, "b": 3, "l": 8, "r": 8 }, "radius": 4, "fill": "{color/surface/surface-sunken}", "children": [ { "type": "text", "font": "mono", "text": "GET", "size": 12, "weight": 600, "color": "{color/accent/accent}" } ] } ] }, { "type": "frame", "name": "state", "dir": "horizontal", "gap": 6, "align": "CENTER", "children": [ { "type": "ellipse", "w": 6, "h": 6, "fill": "{color/status/warning}" }, { "type": "text", "text": "키 등록", "size": 12, "weight": 600, "color": "{color/status/warning}" } ] } ] }, { "type": "text", "text": "realty_trade", "size": 16, "weight": 600, "color": "{color/text/text-strong}" }, { "type": "text", "text": "국토부 실거래가를 조회하는 도구.", "size": 13, "color": "{color/text/text-subtle}" }, { "type": "frame", "name": "foot", "dir": "horizontal", "align": "CENTER", "justify": "MIN", "grow": true, "padding": { "t": 13 }, "stroke": "{color/border/border}", "children": [ { "type": "text", "font": "mono", "text": "/api/realty/trade", "size": 12, "color": "{color/text/text-muted}" } ] } ] } }
       ]
+    },
+    {
+      "name": "CopyButton",
+      "variants": [
+        { "props": { "State": "idle" }, "node": { "type": "frame", "name": "CopyButton", "dir": "horizontal", "gap": 6, "align": "CENTER", "justify": "CENTER", "h": 40, "padding": { "l": 12, "r": 12 }, "radius": 6, "children": [ { "type": "vector", "name": "icon", "w": 14, "h": 14, "stroke": "{color/text/text-subtle}", "strokeWeight": 1.75 }, { "type": "text", "text": "복사", "size": 13, "weight": 500, "color": "{color/text/text-subtle}" } ] } },
+        { "props": { "State": "copied" }, "node": { "type": "frame", "name": "CopyButton", "dir": "horizontal", "gap": 6, "align": "CENTER", "justify": "CENTER", "h": 40, "padding": { "l": 12, "r": 12 }, "radius": 6, "children": [ { "type": "vector", "name": "icon", "w": 14, "h": 14, "stroke": "{color/status/success}", "strokeWeight": 1.75 }, { "type": "text", "text": "복사됨", "size": 13, "weight": 500, "color": "{color/status/success}" } ] } },
+        { "props": { "State": "failed" }, "node": { "type": "frame", "name": "CopyButton", "dir": "horizontal", "gap": 6, "align": "CENTER", "justify": "CENTER", "h": 40, "padding": { "l": 12, "r": 12 }, "radius": 6, "children": [ { "type": "vector", "name": "icon", "w": 14, "h": 14, "stroke": "{color/status/danger}", "strokeWeight": 1.75 }, { "type": "text", "text": "복사하지 못했어요", "size": 13, "weight": 500, "color": "{color/status/danger}" } ] } },
+        { "props": { "State": "iconOnly" }, "node": { "type": "frame", "name": "CopyButton iconOnly", "dir": "horizontal", "align": "CENTER", "justify": "CENTER", "w": 40, "h": 40, "radius": 6, "children": [ { "type": "vector", "name": "icon", "w": 14, "h": 14, "stroke": "{color/text/text-subtle}", "strokeWeight": 1.75 } ] } }
+      ]
+    },
+    {
+      "name": "Text",
+      "variants": [
+        { "props": { "Size": 12, "Tone": "default" }, "node": { "type": "text", "name": "Text caption", "text": "캡션과 메타 정보", "size": 12, "color": "{color/text/text}" } },
+        { "props": { "Size": 13, "Tone": "default" }, "node": { "type": "text", "name": "Text small", "text": "보조 설명 텍스트", "size": 13, "color": "{color/text/text}" } },
+        { "props": { "Size": 14, "Tone": "default" }, "node": { "type": "text", "name": "Text label", "text": "레이블과 컨트롤 텍스트", "size": 14, "color": "{color/text/text}" } },
+        { "props": { "Size": 16, "Tone": "default" }, "node": { "type": "text", "name": "Text body", "text": "본문 텍스트 단계", "size": 16, "color": "{color/text/text}" } },
+        { "props": { "Size": 13, "Tone": "muted" }, "node": { "type": "text", "name": "Text muted", "text": "덜 강조된 보조 텍스트", "size": 13, "color": "{color/text/text-muted}" } },
+        { "props": { "Size": 14, "Tone": "accent" }, "node": { "type": "text", "name": "Text accent", "text": "액센트 역할 텍스트", "size": 14, "color": "{color/accent/accent-text}" } },
+        { "props": { "Size": 14, "Tone": "danger" }, "node": { "type": "text", "name": "Text danger", "text": "오류 상태 텍스트", "size": 14, "color": "{color/status/danger}" } }
+      ]
+    },
+    {
+      "name": "Heading",
+      "variants": [
+        { "props": { "Level": 1, "Size": 36 }, "node": { "type": "text", "name": "Heading H1", "text": "페이지 제목", "size": 36, "weight": 600, "color": "{color/text/text-strong}" } },
+        { "props": { "Level": 2, "Size": 28 }, "node": { "type": "text", "name": "Heading H2", "text": "섹션 제목", "size": 28, "weight": 600, "color": "{color/text/text-strong}" } },
+        { "props": { "Level": 3, "Size": 20 }, "node": { "type": "text", "name": "Heading H3", "text": "패널 제목", "size": 20, "weight": 600, "color": "{color/text/text-strong}" } }
+      ]
+    },
+    {
+      "name": "Link",
+      "variants": [
+        { "props": { "External": false }, "node": { "type": "text", "name": "Link internal", "text": "내부 링크", "size": 14, "color": "{color/accent/accent-text}" } },
+        { "props": { "External": true }, "node": { "type": "frame", "name": "Link external", "dir": "horizontal", "gap": 4, "align": "CENTER", "children": [ { "type": "text", "text": "외부 문서", "size": 14, "color": "{color/accent/accent-text}" }, { "type": "vector", "name": "icon-external", "w": 14, "h": 14, "stroke": "{color/accent/accent-text}", "strokeWeight": 1.75 } ] } }
+      ]
+    },
+    {
+      "name": "Kbd",
+      "variants": [
+        { "props": { "Size": "md" }, "node": { "type": "frame", "name": "Kbd", "dir": "horizontal", "align": "CENTER", "justify": "CENTER", "padding": { "t": 1, "b": 1, "l": 6, "r": 6 }, "radius": 4, "fill": "{color/surface/surface-sunken}", "stroke": "{color/border/border-strong}", "children": [ { "type": "text", "text": "⌘", "size": 13, "weight": 500, "color": "{color/text/text-subtle}" } ] } },
+        { "props": { "Size": "sm" }, "node": { "type": "frame", "name": "Kbd sm", "dir": "horizontal", "align": "CENTER", "justify": "CENTER", "padding": { "l": 5, "r": 5 }, "radius": 4, "fill": "{color/surface/surface-sunken}", "stroke": "{color/border/border-strong}", "children": [ { "type": "text", "text": "K", "size": 12, "weight": 500, "color": "{color/text/text-subtle}" } ] } }
+      ]
+    },
+    {
+      "name": "Separator",
+      "variants": [
+        { "props": { "Orientation": "horizontal" }, "node": { "type": "rectangle", "name": "Separator horizontal", "w": 320, "h": 1, "fill": "{color/border/border}" } },
+        { "props": { "Orientation": "vertical" }, "node": { "type": "rectangle", "name": "Separator vertical", "w": 1, "h": 40, "fill": "{color/border/border}" } }
+      ]
     }
   ]
 }

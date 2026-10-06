@@ -5,7 +5,7 @@
    API faithfully, loads plugin/code.js into that sandbox, fires a real "sync"
    message with the actual tokens + component spec, and asserts:
      - no runtime error is thrown / posted
-     - the expected Variables, Text/Effect styles, and 40 Component Sets exist
+     - the expected Variables, Text/Effect styles, and 46 Component Sets exist
    Any API misuse that would throw in the desktop app throws here too.
    Run: node packages/figma-plugin/scripts/e2e.mjs
 ============================================================ */
@@ -263,7 +263,7 @@ run().then(() => {
   if (floatVars < 13) fail(`spacing+radius 변수 부족 (${floatVars})`);
   if (state.textStyles.length !== 8) fail(`Text style 8개 기대, 실제 ${state.textStyles.length}`);
   if (state.effectStyles.length !== 1) fail(`Effect style 1개 기대, 실제 ${state.effectStyles.length}`);
-  if (sets.length !== 40) fail(`컴포넌트 40개 기대, 실제 ${sets.length}`);
+  if (sets.length !== 46) fail(`컴포넌트 46개 기대, 실제 ${sets.length}`);
   if (!state.textStyles.some((style) => style.name === 'Bridger/h1')) fail('Bridger/h1 Text style 없음');
   if (!state.textStyles.some((style) => style.name === 'Bridger/caption')) fail('Bridger/caption Text style 없음');
 

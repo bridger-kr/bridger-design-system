@@ -34,6 +34,7 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 - Use the `BrandLogo` component from `@bridger-kr/react`. Do not recreate the wordmark in page-local SVG, text, or CSS.
 - `BrandLogo` supports `lg`, `md`, `symbol`, and `favicon` variants. Use `lg` and `md` for wordmarks, and `symbol` or `favicon` only where the available slot cannot hold the wordmark.
 - Public product and marketing branding uses Bridger names and approved Bridger domains. Infrastructure or service endpoint identifiers may appear only where the user needs to copy, configure, or inspect an exact technical value. They must never replace the Bridger name in navigation, page titles, metadata, or primary calls to action.
+- The `dt-` prefix on CSS custom properties (`--dt-*`) and component classes (`.dt-*`) means **design token** — see `docs/adr/0001-token-prefix.md` (Accepted 2026-09-28). It is an internal identifier, not a brand abbreviation; new tokens and classes use it unconditionally.
 
 ### 3.2 Language and voice
 
@@ -50,9 +51,9 @@ v2 tightens the canon to a strictly flat, neutral system. The quality bar is Kum
 
 ### 4.1 Theme
 
-- **Light is the default.** New sessions render the light token set unless the user has explicitly selected and persisted dark mode.
+- **Follows the OS by default.** With no stored preference, `:root` carries `color-scheme: light dark` and themed tokens resolve through `light-dark()` under `prefers-color-scheme` — the correct theme renders before any JavaScript runs, and in JS-free surfaces (docs embeds, e-mail previews, the Figma plugin).
 - **Dark has full parity.** Every component, semantic state, contrast relationship, focus treatment, and surface hierarchy must have a deliberate dark treatment. Dark is not an afterthought or an inversion filter.
-- Theme state must be explicit and persistent. Implementations may use the existing `:root[data-theme='dark']`, `:root[data-theme='light']`, or `.dark` selectors according to the consuming app, but they must resolve to the same token roles.
+- Theme state must be explicit and persistent. An explicit `:root[data-theme='light'|'dark']` — written by `ThemeSwitch` or the consumer's pre-paint script — pins `color-scheme` and wins over the OS. `.dark` is a deprecated alias for the same dark scope, removed in v2.1.
 - Do not create a component that works only in one theme. Verify light and dark for shared components and console surfaces.
 
 ### 4.2 Color roles
@@ -84,9 +85,9 @@ Persimmon is the only decorative brand accent. It may fill the single primary ac
 
 ### 4.3 Typography
 
-- Use `--dt-font-sans`: `'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif` for Korean and interface text.
-- Use `--dt-font-mono`: `'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace` for code, API paths, request IDs, timestamps, methods, and other technical values. Mono is never applied to Korean or prose copy.
-- Pretendard Variable is the required Bridger UI font. Do not substitute a reference font or ship a reference brand font.
+- Use `--dt-font-sans`: `'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif` for Korean and interface text.
+- Use `--dt-font-mono`: `'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace` for code, API paths, request IDs, timestamps, methods, and other technical values. The stack ends in `'Pretendard Variable'` before the generic `monospace` so Korean glyphs inside a code surface fall back with a consistent width. Mono is ASCII-only by policy: it is never applied to Korean labels, buttons, headings, or prose copy.
+- Pretendard Variable and JetBrains Mono are the required Bridger fonts, self-hosted through `@bridger-kr/tokens` (`css/fonts.css`). Pretendard ships as a unicode-range dynamic subset so pages download only the slices they render; JetBrains Mono ships as an ASCII/box-drawing subset that is only fetched when a page actually renders code. Do not substitute a reference font or ship a reference brand font.
 - All font sizes live inside the 12–36px range. The type scale is fixed steps, not fluid `clamp()` expressions: caption `12px`, small `13px`, label `14px`, body `16px`, H3 `20px`, H2 `28px`, H1 `36px`, and mono `13px`. No size outside this scale is permitted.
 - Font weights are `400`, `500`, and `600` only. Display headings do not exceed `600` under v2.
 - Body and labels use `0` letter spacing. Negative tracking is limited to real H1 and H2 display headings.
@@ -195,8 +196,11 @@ Use the shared order. Do not introduce an arbitrary z-index that conflicts with 
 
 ## 6. Iconography and imagery
 
-- Lucide line icons are the only product icon set. Use approximately 1.85 to 2px stroke and 14px to 20px sizes according to component scale.
-- Use `lucide-react` or the approved Lucide delivery path. Common product icons include dashboard, tools, boxes, library, keys, gauge, server, logs, settings, database, lock, shield, terminal, store, arrow right, check, copy, external link, and code.
+- Lucide line icons are the only product icon set. Sizes come from the icon scale only — `--dt-icon-sm` (14px), `--dt-icon-md` (16px), `--dt-icon-lg` (20px) — and stroke is fixed at `--dt-icon-stroke` (1.75). Icon color is `currentColor` so it inherits the text role; an icon next to text never outweighs the text.
+- Use `lucide-react` (a required peer of `@bridger-kr/react`) or the approved Lucide delivery path. Import only the icons used, by name — `import { X, Check } from 'lucide-react'`. Namespace imports (`import * as`), the `icons` object, and `DynamicIcon` defeat tree-shaking and are rejected. Package components render icons through the internal `Icon` helper (`packages/react/src/lib/icon.tsx`), which pins the size scale, the 1.75 stroke, `currentColor`, and the accessibility contract below. The only documented exception is the `Checkbox` check glyph, which uses a heavier stroke for 12px-box legibility.
+- Decorative icons are `aria-hidden`. An icon that carries meaning on its own gets an `aria-label` (rendered as `role="img"`). An icon-only button requires an accessible name — `Button` enforces `aria-label` at the type level when no `children` label exists.
+- "AI" decoration is banned. `Sparkles`, `Sparkle`, `WandSparkles`, `Wand`, `Wand2`, `Stars`, `Rocket`, `Zap`, and `Flame` never appear in product UI, examples, or Figma assets — sparkle/magic/rocket metaphors for AI features are design slop. `Bot` is allowed only for an actual bot or agent account glyph; mark it with a `// slop-allow: Bot` comment. `scripts/slop-scan.mjs` fails the lint gate on banned icon imports, JSX usage, and icon-name literals.
+- Common product icons include dashboard, tools, boxes, library, keys, gauge, server, logs, settings, database, lock, shield, terminal, store, arrow right, check, copy, external link, and code.
 - Third-party client marks may use approved Simple Icons assets. Korean agency marks use the local SVG assets in `assets/agency-logos/`.
 - A status dot may use the semantic status token, but color must be paired with visible text or another non-color cue. Status dots do not pulse.
 - Icons never carry meaning alone in navigation, buttons, or data rows. Pair them with a label or accessible name.
@@ -243,13 +247,13 @@ The minimum target is WCAG 2.2 AA for all published surfaces and component examp
 
 ## 9. Component manifest and package boundary
 
-The `@bridger-kr/react` package exports **61 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
+The `@bridger-kr/react` package exports **67 typed React components** across six families (core, forms, feedback, data, navigation, product), plus the `cx` class-name helper and a small set of token enums, class-name helpers, and type-only exports. The full public API is enumerated below from `packages/react/src/index.ts` and the per-family barrels; that barrel chain is the source of truth, not this table.
 
 Aliases, helpers, and constants are listed alongside each family and are not counted as separate components:
 
 - `ToggleSwitch` is a legacy alias of `Switch` and resolves to the same component.
 - `cx` is a class-name helper re-exported from the package root.
-- Token enums: `CardTone`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `AlertMotion`, `CODE_PANE_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
+- Token enums: `CardTone` (deprecated alias of `CardVariant`), `CARD_VARIANT`, `SurfaceTone`, `MetricAccent`, `AlertTone`, `CODE_PANE_TONE` (deprecated alias of `CODE_SEGMENT_TONE`), `CODE_SEGMENT_TONE`, `PRODUCT_SHELL_TONE`, `PRODUCT_ACTION_PILL_VARIANT`, `PRODUCT_ACTION_PILL_TONE`, `PRODUCT_ACTION_PILL_SIZE`, `BRAND_LOGO_LANGUAGE`, `BRAND_LOGO_SIZE_NAME`.
 - Class-name helpers: `metricAccentColor`, `actionListClassName`, `actionListItemClassName`, `productActionPillClassName`.
 - Companion types only (no runtime export): `BrandLogoHandle`, `BrandLogoLanguage`, `BrandLogoSize`, and the per-component `*Props` / option types in each file.
 
@@ -261,13 +265,13 @@ Deprecation note: several v1 product-family exports exist only to render decorat
 
 | Family | Count | Components |
 | --- | --- | --- |
-| core | 10 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Input`, `Panel`, `Section`, `StatusPill`, `Tabs` |
-| forms | 9 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea` |
+| core | 15 | `Badge`, `Button`, `Card`, `Chip`, `FilterChip`, `Heading`, `Input`, `Kbd`, `Link`, `Panel`, `Section`, `Separator`, `StatusPill`, `Tabs`, `Text` |
+| forms | 10 | `Checkbox`, `Combobox`, `FileUpload`, `RadioGroup`, `SegmentedControl`, `Select`, `Slider`, `Switch` (+ `ToggleSwitch` alias), `Textarea`, `ThemeSwitch` |
 | feedback | 8 | `Alert`, `Dialog`, `Drawer`, `EmptyState`, `Skeleton`, `Spinner`, `Toast`, `Tooltip` |
-| data | 10 | `Avatar`, `CodeBlock`, `CodePane`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
+| data | 11 | `Avatar`, `CodeBlock`, `CodePane`, `CopyButton`, `KeyValue`, `LogRow`, `Pagination`, `StatPanel`, `StatTile`, `Table`, `UsageMeter` |
 | navigation | 5 | `Breadcrumb`, `CommandPalette`, `Menu`, `Sidebar`, `Stepper` |
 | product | 18 | `ActionList` (+ `ActionListIndex`), `AnnotationHotspot`, `BrandLogo`, `ChatBubble`, `ProductActionPill`, `ProductShell` (+ `ProductMotionField`, `ProductSideRail`, decorative hero backdrop), `ProductPageHeader`, `ProductTopbar` (+ `ProductTopbarMenu`), `SearchPill`, `SectionCard`, `ToolCard`, `WindowChrome` (+ `WindowFrame`) |
-| **Total** | **60** | |
+| **Total** | **67** | |
 
 ### 9.2 Core family
 
@@ -285,6 +289,11 @@ Resting on the canonical neutral border plane with persimmon focus and selection
 | `Input` | label, field, hint, error | size, validation tone | Visible label; error associates with the field. |
 | `Tabs` | tab list + tab panels | variant (`underline`, `pill`) | Roving tabindex, arrow-key navigation. |
 | `FilterChip` | label, optional count, optional close | active state, removable state | Catalog filter; toggles between rest and selected. |
+| `Text` | scale-locked text node | `size` (`12`, `13`, `14`, `16`), `weight` (`400`, `500`, `600`), `tone` (`default`, `muted`, `accent`, `danger`), `as` (`p`, `span`, `div`) | Enforces the body-range type scale; never renders a heading element. |
+| `Heading` | semantic `h1`–`h4` | `level` (`1`–`4`, required), `size` (`20`, `28`, `36`; defaults to the step paired with `level`), `tone` | Level is semantic, size is visual. Weight stays at the 600 display cap. |
+| `Link` | anchor | `external` (auto-detected from `href` when omitted), `externalLabel`, `render` | External links get `target="_blank" rel="noopener noreferrer"`, an `ExternalLink` glyph, and a visually-hidden new-context cue. `:visited` keeps `--dt-accent-text`. |
+| `Separator` | hairline divider (base-ui) | `orientation` (`horizontal`, `vertical`) | `role="separator"`; uses `--dt-border`. |
+| `Kbd` | key glyph (`<kbd>`) | `size` (`sm`, `md`) | Sans face at caption/small size; key names may be Korean. |
 
 ### 9.3 Forms family
 
@@ -327,8 +336,9 @@ Quiet, tabular, scannable. Use tabular figures and mono styling where required b
 | `Table` | header + body rows | column alignment, empty state, row click | Real `<table>` semantics; header cells identify columns. Numeric columns right-align. |
 | `StatTile` | label + value + optional delta + hint | delta tone (`up`, `down`, `neutral`) | Tabular figures on the value. |
 | `StatPanel` | array of `StatPanelItem` | variant (`card`, `row`) | Multi-stat plane. |
-| `CodeBlock` | dark code surface with line numbers, optional copy | language, line numbers, copyable | Dark code surface in both themes. |
-| `CodePane` | tokenized code pane | tone (`CODE_PANE_TONE`), segments, lines | For composed code specimens with per-segment styling. |
+| `CodeBlock` | dark code surface with line numbers, optional copy | language, line numbers, copyable | Dark code surface in both themes. Copy affordance is `CopyButton`. |
+| `CodePane` | tokenized code pane | tone (`CODE_PANE_TONE`), segments, lines | For composed code specimens with per-segment styling. Copy affordance is `CopyButton`. |
+| `CopyButton` | clipboard copy button with announced result | `iconOnly`, `label`/`copiedLabel`/`failedLabel`, `onCopy` | `idle`/`copied`/`failed` on `data-state`; result announced via `role="status"`. Icon-only use requires `aria-label`. |
 | `KeyValue` | definition list of `KeyValueItem` | columns (`1`, `2`) | Spec metadata and configuration rows. |
 | `LogRow` | stream entry with timestamp, level, message | level (`info`, `success`, `warning`, `danger`) | Monospace timestamps and IDs. |
 | `UsageMeter` | label + value + max + unit + hint | tone (`default`, `warning`, `danger`) | Quota bar; values use tabular figures. |
@@ -378,8 +388,42 @@ Brand and marketing composites. These are the landing-side primitives that depen
 - Each component documents its supported variants, semantic purpose, keyboard behavior, focus behavior, loading and disabled behavior, and light and dark rendering.
 - Component variants must preserve the surface rules. A raised or featured variant is an explicit exception with a named role, not a license for resting shadows, translucency, or arbitrary color.
 - Examples and Figma Component Sets must use the same names and state vocabulary as the React package.
-- Subpath imports (`@bridger-kr/react/components/<family>/<Component>`) are reserved for tree-shaking; the package root barrel is the supported public entry.
+- Subpath imports (`@bridger-kr/react/components/<family>`) are reserved for tree-shaking; the package root barrel is the supported public entry.
 - Components that own motion must implement `prefers-reduced-motion: reduce` per Section 7.
+
+### 9.9 Component API conventions
+
+These rules govern the public prop surface of `@bridger-kr/react`. They are enforced by `packages/react/src/api-conventions.test-d.tsx` and the family runtime tests.
+
+**Variant-prop naming.** One prop name per meaning, fixed across the package:
+
+| Prop | Meaning | Allowed values |
+| --- | --- | --- |
+| `variant` | Visual shape / emphasis | Button `solid \| outline \| ghost`, Card `plain \| sunken`, Tabs `underline \| segmented` |
+| `tone` | Semantic color | `neutral \| accent \| success \| warning \| danger \| info` (component-specific subsets allowed) |
+| `size` | Scale | `sm \| md \| lg` (32/36/40px floors) |
+| `status` | Data state only | `loading \| ok \| error \| na` (e.g. `StatTile`); never a visual alias |
+
+Renamed props keep the old name as a deprecated alias for one minor release (removed in v2.1). Aliases emit a single development-mode `console.warn` per key via `lib/deprecate.ts#warnOnce`; they must never warn in production builds.
+
+**Refs.** Every component that renders a DOM element is a `forwardRef` component with `displayName` set. Form controls forward to the real control element (`<input>`, `<textarea>`, trigger `<button>`); all other components forward to their root element. This is what unblocks `react-hook-form` registration, first-error focus, and Tooltip/Popover anchoring.
+
+**IDs.** Control ids default to `useId()`. Deriving ids from label text is prohibited — repeated labels must never collide. Hints/descriptions derive from the control id (`${id}-hint`) and attach via `aria-describedby`.
+
+**`className` / `style`.** Always apply to the component's root element. Inner elements are customized through `slotProps` prop bags typed by `lib/slot.ts#SlotPropsFor` (e.g. `slotProps.input.className` on `Input`).
+
+**Composition.** `Button` accepts base-ui's `render` prop (`<Button render={<a href="…" />}>`), so consuming apps never restyle raw anchors with button classes. Icon-only buttons must declare `aria-label` at the type level.
+
+**Controlled state.** Stateful components follow `open`/`defaultOpen`/`onOpenChange` or `value`/`defaultValue`/`onValueChange` via `lib/useControllableState.ts`. A `value`/`open` prop makes the component controlled; the default-prefixed prop seeds uncontrolled state.
+
+**Single-purpose exports.** Overlapping components collapse into one canonical API — `CodeBlock` is the only code-display component; `CodePane` is a deprecated wrapper and is removed in v2.1.
+
+### 9.10 CSS layering and import contract
+
+- All shipped DS styles live in explicit cascade layers, in this order: `@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`. Consumer CSS outside a layer always wins over every DS layer, so overrides never need `!important`; the DS `!important` budget is three declarations, reserved for the reduced-motion override.
+- `@bridger-kr/tokens/css` imports fonts, the token contract (`dt.tokens`), and the minimal reset (`dt.reset`) only. Element defaults (`body`, headings, links, `code`, `pre`) are opt-in via `@bridger-kr/tokens/css/base` (`dt.base`). Component and utility classes ship from `@bridger-kr/react/styles.css` in `dt.components` / `dt.utilities`.
+- Only `.dt-*` classes are public. Unprefixed primitive classes were removed from `base.css`; a transition alias sheet lives at `@bridger-kr/tokens/css/legacy-classes` and is deleted in 2.1.0.
+- Tailwind v3 consumers disable `preflight` (`corePlugins: { preflight: false }`) — the DS `dt.reset` layer owns the reset — or wrap `@tailwind base` in a later `@layer` after verifying locally. Unlayered app CSS then overrides DS styles without `!important`.
 
 ## 10. Provenance and reference discipline
 
@@ -445,7 +489,7 @@ The following are invalid Bridger design decisions and must be rejected in revie
 - Ending a heading with an accent-colored period or other decorative punctuation. The persimmon period belongs to the `BrandLogo` wordmark only.
 - Adding decorative motion: idle pulses, breathing elements, drifting fields, tickers, marquees, scroll-reveal, staggered entrance choreography, or any animation outside the 120–180ms band.
 - Nesting card-in-card structures without a clear code, data, or form-group semantic role.
-- Using emoji, unicode pictograms, or decorative icon sets in product UI.
+- Using emoji, unicode pictograms, or decorative icon sets in product UI — including decorative "AI" iconography (`Sparkles`, `Wand*`, `Stars`, `Rocket`, `Zap`, `Flame`; see Section 6).
 - Adding decorative uppercase eyebrows above ordinary headings.
 - Using full-bleed photography or illustration where a real product specimen or clear content would be more useful.
 - Centering headlines, paragraphs, or hero copy. Composition is left-aligned; only numeric columns right-align.
@@ -525,7 +569,7 @@ This checklist is the explicit, reproducible record for each release. Every row 
 | Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Captured |
 | Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Captured |
 | Theme | Light (default) | Screenshot in light theme per changed surface | Captured |
-| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']` or `.dark`) | Captured |
+| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']`; the deprecated `.dark` alias also works) | Captured |
 | Interaction state | Rest | Default screenshot for the surface | Captured |
 | Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Captured |
 | Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Captured |

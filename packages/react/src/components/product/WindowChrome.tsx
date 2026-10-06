@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -12,9 +13,12 @@ export interface WindowFrameProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
-export function WindowChrome({ title, url, trailing, className, ...rest }: WindowChromeProps) {
+export const WindowChrome = forwardRef<HTMLDivElement, WindowChromeProps>(function WindowChrome(
+  { title, url, trailing, className, ...rest },
+  ref,
+) {
   return (
-    <div className={cx('dt-window-chrome', className)} {...rest}>
+    <div ref={ref} className={cx('dt-window-chrome', className)} {...rest}>
       <span className="dt-window-chrome-dots" aria-hidden="true">
         <span className="dt-window-chrome-dot dt-window-chrome-dot-1" />
         <span className="dt-window-chrome-dot dt-window-chrome-dot-2" />
@@ -29,13 +33,18 @@ export function WindowChrome({ title, url, trailing, className, ...rest }: Windo
       {trailing ? <span className="dt-window-chrome-trailing">{trailing}</span> : null}
     </div>
   );
-}
+});
+WindowChrome.displayName = 'WindowChrome';
 
-export function WindowFrame({ chrome, children, className, ...rest }: WindowFrameProps) {
+export const WindowFrame = forwardRef<HTMLDivElement, WindowFrameProps>(function WindowFrame(
+  { chrome, children, className, ...rest },
+  ref,
+) {
   return (
-    <div className={cx('dt-window-frame', className)} {...rest}>
+    <div ref={ref} className={cx('dt-window-frame', className)} {...rest}>
       {chrome ?? <WindowChrome />}
       <div className="dt-window-frame-body">{children}</div>
     </div>
   );
-}
+});
+WindowFrame.displayName = 'WindowFrame';

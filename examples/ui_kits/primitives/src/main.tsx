@@ -5,8 +5,15 @@ import {
   BUTTON_VARIANT,
   Button,
   Card,
+  CodeBlock,
+  CopyButton,
+  Heading,
   Input,
+  Kbd,
+  Link,
+  Separator,
   Sidebar,
+  Text,
 } from '@bridger-kr/react';
 import '@bridger-kr/tokens/css';
 import '@bridger-kr/react/styles.css';
@@ -104,6 +111,28 @@ function PrimitiveShowcase() {
               </div>
               <Button variant={BUTTON_VARIANT.Secondary}>연결 방법 보기</Button>
             </Card>
+
+            <section id="primitives" aria-labelledby="primitives-heading" className="showcase-primitives">
+              <p className="showcase-eyebrow">공통 부품</p>
+              <Heading level={2} id="primitives-heading">
+                스케일에 고정된 텍스트와 링크
+              </Heading>
+              <Text as="p" size={16}>
+                본문은 12/13/14/16 단계만 사용하고, 제목은 20/28/36 단계만 사용합니다.{' '}
+                <Link href="#search">같은 페이지 링크</Link>와{' '}
+                <Link href="https://data.go.kr">외부 문서 링크</Link>를 나란히 놓아 비교합니다.
+              </Text>
+              <Text as="p" size={13} tone="muted">
+                단축키는 <Kbd>⌘</Kbd> <Kbd>K</Kbd> 형태의 키 글리프로 표시합니다.
+              </Text>
+              <Separator />
+              <div className="showcase-actions" aria-label="CopyButton states">
+                <CopyButton value="https://mcp.bridger.kr/v1" />
+                <CopyButton iconOnly value="https://mcp.bridger.kr/v1" aria-label="MCP 주소 복사" />
+                <CopyButton value="x" disabled />
+              </div>
+              <CodeBlock code={'{"endpoint": "https://mcp.bridger.kr/v1"}'} label="response" />
+            </section>
           </div>
         </div>
       </section>

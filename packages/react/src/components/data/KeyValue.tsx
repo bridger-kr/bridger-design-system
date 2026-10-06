@@ -1,9 +1,10 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 
 export interface KeyValueItem {
   key: string;
   value: ReactNode;
-  /** Render the value in JetBrains Mono (paths, IDs, methods). */
+  /** Render the value in the mono stack (ASCII: paths, IDs, methods). */
   mono?: boolean;
   /** Tint the value persimmon (highlighted field). */
   accent?: boolean;
@@ -20,9 +21,12 @@ export interface KeyValueProps extends Omit<HTMLAttributes<HTMLDListElement>, 'c
  * Definition list for spec metadata — hairline rows, muted key, ink value.
  * @startingPoint section="Data" subtitle="Spec metadata as a definition list" viewport="460x220"
  */
-export function KeyValue({ items = [], columns = 1, style, ...rest }: KeyValueProps) {
+export const KeyValue = forwardRef<HTMLDListElement, KeyValueProps>(function KeyValue(
+  { items = [], columns = 1, style, ...rest },
+  ref,
+) {
   return (
-    <dl {...rest} style={{
+    <dl ref={ref} {...rest} style={{
       margin: 0, display: 'grid',
       gridTemplateColumns: columns === 2 ? '1fr 1fr' : '1fr',
       border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
@@ -57,4 +61,5 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }: KeyValuePr
       })}
     </dl>
   );
-}
+});
+KeyValue.displayName = 'KeyValue';

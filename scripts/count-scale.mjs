@@ -2,14 +2,14 @@
 /* EDD-231 완료기준 카운트: contract.css의 스케일 토큰 개수를 검증한다.
    기대값: radius 값 4종, font-size 7종, weight ⊆ {400,500,600},
    shadow 토큰 1종(overlay), motion 토큰 3종, clamp() 0,
-   dark 블록 = 색 + overlay 그림자만.
+   dark 블록 = overlay 그림자만(DS #44: 색은 :root의 light-dark() 단일 정의).
    Run: node scripts/count-scale.mjs */
 import { readFileSync } from 'node:fs';
 
 const css = readFileSync('packages/tokens/css/contract.css', 'utf8')
   .replace(/\/\*[\s\S]*?\*\//g, '');
-const light = css.slice(css.indexOf(":root[data-theme='light']"),
-  css.indexOf(":root[data-theme='dark']"));
+const light = css.slice(css.indexOf(':root {'),
+  css.indexOf(":root[data-theme='light']"));
 const dark = css.slice(css.indexOf(":root[data-theme='dark']"));
 
 const vals = (re, src) => (re.global ? [...src.matchAll(re)].map((m) => m[1].trim())
@@ -38,7 +38,7 @@ const checks = [
   ['shadow 토큰 1종(overlay)', shadowsL.size === 1 && shadowsL.has('--dt-shadow-overlay'), [...shadowsL].join(' / ')],
   ['motion 토큰 3종', motion.size === 3, [...motion].join(' / ')],
   ['clamp() 0건', clampCount === 0, String(clampCount)],
-  ['dark: 색 + overlay만', darkOffenders.length === 0 && shadowsD.size === 1, `${darkKeys.length}개 키 (offenders: ${darkOffenders.join(', ') || 'none'})`],
+  ['dark: overlay만 (색은 light-dark()로 통합)', darkOffenders.length === 0 && shadowsD.size === 1, `${darkKeys.length}개 키 (offenders: ${darkOffenders.join(', ') || 'none'})`],
   ['H1 ≤ 36px', num(vals(/--dt-h1-size:\s*([^;]+);/, light)[0]) <= 36, vals(/--dt-h1-size:\s*([^;]+);/, light)[0]],
 ];
 

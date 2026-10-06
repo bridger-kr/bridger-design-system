@@ -37,9 +37,11 @@ pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 Import the token contract once, then the React component styles:
 
 ```ts
-import '@bridger-kr/tokens/css';   // --dt-* variables, fonts, base classes
+import '@bridger-kr/tokens/css';   // fonts + dt.reset + --dt-* variables
 import '@bridger-kr/react/styles.css';
 ```
+
+All DS rules ship inside `@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`, so unlayered app CSS always wins — no `!important` needed for overrides. Element defaults (`body`, headings, `code`) are opt-in via `@bridger-kr/tokens/css/base`. Tailwind v3 consumers should disable `preflight` (the DS `dt.reset` layer owns the reset); see `packages/react/README.md` and `DESIGN.md` §9.9 for the full consumer contract.
 
 ### React usage
 
@@ -47,10 +49,10 @@ import '@bridger-kr/react/styles.css';
 import { Button, Table, CommandPalette } from '@bridger-kr/react';
 ```
 
-Per-component subpath imports for maximum tree-shaking:
+Category-level subpath imports for maximum tree-shaking:
 
 ```tsx
-import { Button } from '@bridger-kr/react/components/core/Button';
+import { Button } from '@bridger-kr/react/components/core';
 ```
 
 ### Tokens in TS/JS
@@ -243,9 +245,12 @@ tabular numbers.
 
 ## ICONOGRAPHY
 
-- **System:** [**Lucide**](https://lucide.dev) line icons, ~1.85–2px stroke,
-  used at 14–20px. This is the *only* product icon set. Load from CDN
-  (`lucide` or `lucide-react`). Common glyphs in use: `LayoutDashboard`,
+- **System:** [**Lucide**](https://lucide.dev) line icons, fixed 1.75px stroke
+  (`--dt-icon-stroke`), at exactly `--dt-icon-sm`/`md`/`lg` (14/16/20px). This
+  is the *only* product icon set; `@bridger-kr/react` takes `lucide-react` as
+  a peer and uses named imports only. Decorative "AI" icons are banned
+  (`Sparkles`, `Wand*`, `Stars`, `Rocket`, `Zap`, `Flame` — see DESIGN.md §6).
+  Common glyphs in use: `LayoutDashboard`,
   `Wrench`, `Boxes`, `LibraryBig`, `KeyRound`, `Gauge`, `Server`, `FileClock`,
   `Settings`, `Database`, `LockKeyhole`, `ShieldCheck`, `Terminal`, `Store`,
   `ArrowRight`, `CheckCircle2`, `Copy`, `ExternalLink`, `Code2`.

@@ -8,6 +8,7 @@ import {
   AnnotationHotspot,
   BRAND_LOGO_LANGUAGE,
   PRODUCT_ACTION_PILL_SIZE,
+  PRODUCT_ACTION_PILL_TONE,
   PRODUCT_ACTION_PILL_VARIANT,
   PRODUCT_SHELL_TONE,
   SEARCH_PILL_SIZE,
@@ -90,8 +91,9 @@ describe('Product components', () => {
   });
 
   describe('SectionCard', () => {
-    it('is a function', () => {
-      expect(typeof SectionCard).toBe('function');
+    it('is a forwardRef component', () => {
+      expect((SectionCard as { $$typeof?: symbol }).$$typeof).toBe(Symbol.for('react.forward_ref'));
+      expect(SectionCard.displayName).toBe('SectionCard');
     });
 
     it('has correct default props', () => {
@@ -100,8 +102,9 @@ describe('Product components', () => {
   });
 
   describe('ToolCard', () => {
-    it('is a function', () => {
-      expect(typeof ToolCard).toBe('function');
+    it('is a forwardRef component', () => {
+      expect((ToolCard as { $$typeof?: symbol }).$$typeof).toBe(Symbol.for('react.forward_ref'));
+      expect(ToolCard.displayName).toBe('ToolCard');
     });
 
     it('has correct default props', () => {
@@ -111,14 +114,15 @@ describe('Product components', () => {
 
   describe('Product composition primitives', () => {
     it('publishes enum-like search specimen variants for consumers', () => {
-      const pill = SearchPill({
-        tone: SEARCH_PILL_TONE.Accent,
-        size: SEARCH_PILL_SIZE.Large,
-        children: '날씨 데이터 찾기',
-      });
+      render(
+        <SearchPill tone={SEARCH_PILL_TONE.Accent} size={SEARCH_PILL_SIZE.Large}>
+          날씨 데이터 찾기
+        </SearchPill>,
+      );
 
-      expect(pill.props.className).toContain('dt-search-pill-accent');
-      expect(pill.props.className).toContain('dt-search-pill-lg');
+      const pill = screen.getByText('날씨 데이터 찾기').closest('.dt-search-pill');
+      expect(pill?.className).toContain('dt-search-pill-accent');
+      expect(pill?.className).toContain('dt-search-pill-lg');
     });
 
     it('exports the console action-list contract for guide-first flows', () => {
@@ -138,7 +142,12 @@ describe('Product components', () => {
 
     it('renders product action pill variants through the shared contract', () => {
       render(
-        <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
+        <ProductActionPill
+          href="/console"
+          variant={PRODUCT_ACTION_PILL_VARIANT.Solid}
+          tone={PRODUCT_ACTION_PILL_TONE.Accent}
+          size={PRODUCT_ACTION_PILL_SIZE.Hero}
+        >
           콘솔 열기
         </ProductActionPill>,
       );
@@ -181,7 +190,8 @@ describe('Product components', () => {
       );
 
       expect(container.querySelector('.dt-product-shell-cinematic')).toBeTruthy();
-      expect(container.querySelector('.dt-product-cinematic-lines')).toBeTruthy();
+      expect(container.querySelector('.dt-product-cinematic-backdrop')).toBeTruthy();
+      expect(container.querySelector('.dt-product-cinematic-backdrop svg')).toBeNull();
       expect(container.querySelector('.dt-product-motion-field')).toBeTruthy();
       expect(container.querySelector('.dt-product-motion-grid')?.getAttribute('src')).toBe('/grid.svg');
       expect(container.querySelector('.dt-product-motion-orbit')).toBeTruthy();
@@ -202,7 +212,12 @@ describe('Product components', () => {
             </ProductActionPill>
           }
           actions={
-            <ProductActionPill href="/console" variant={PRODUCT_ACTION_PILL_VARIANT.Accent} size={PRODUCT_ACTION_PILL_SIZE.Hero}>
+            <ProductActionPill
+              href="/console"
+              variant={PRODUCT_ACTION_PILL_VARIANT.Solid}
+              tone={PRODUCT_ACTION_PILL_TONE.Accent}
+              size={PRODUCT_ACTION_PILL_SIZE.Hero}
+            >
               콘솔 열기
             </ProductActionPill>
           }
@@ -386,9 +401,9 @@ describe('Product components', () => {
 
   describe('SectionCard', () => {
     it('accepts optional headers and content class names', () => {
-      expect(SectionCard({ contentClassName: 'body', children: '내용' })).toMatchObject({
-        props: expect.objectContaining({ children: expect.any(Array) }),
-      });
+      const { container } = render(<SectionCard contentClassName="body">내용</SectionCard>);
+
+      expect(container.querySelector('.body')).toBeTruthy();
     });
   });
 });
