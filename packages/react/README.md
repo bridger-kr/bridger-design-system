@@ -2,7 +2,7 @@
 
 React component library for the Bridger Design System.
 
-Exports 61 components across six categories (core, forms, feedback, data, navigation, product) plus the `cx` class-name helper, all consumable from the package root.
+Exports the component set across six families (core, forms, feedback, data, navigation, product) plus the `cx` class-name helper, all consumable from the package root. `DESIGN.md` §9 enumerates the public API.
 
 ## Install
 
@@ -12,7 +12,7 @@ pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 
 ## Peer Dependencies
 
-`@bridger-kr/react` expects React and React DOM 19, and `@bridger-kr/tokens`:
+`@bridger-kr/react` expects React 19, React DOM 19, and `@bridger-kr/tokens`:
 
 ```json
 {

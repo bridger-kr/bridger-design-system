@@ -61,6 +61,11 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
     defaultValue,
     onValueChange,
     onChange,
+    'aria-label': ariaLabel,
+    'aria-labelledby': ariaLabelledby,
+    'aria-describedby': ariaDescribedby,
+    'aria-invalid': ariaInvalid,
+    'aria-required': ariaRequired,
     open,
     defaultOpen,
     onOpenChange,
@@ -116,7 +121,11 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
             id={selId}
             ref={ref as Ref<HTMLButtonElement>}
             className={cx('dt-field dt-select-trigger', triggerClassName)}
-            aria-describedby={hintId}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledby}
+            aria-describedby={ariaDescribedby ?? hintId}
+            aria-invalid={ariaInvalid}
+            aria-required={ariaRequired ?? (required ? true : undefined)}
             {...triggerRest}
           >
             <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>

@@ -19,7 +19,14 @@ export interface ConsolePageHeaderProps extends Omit<HTMLAttributes<HTMLElement>
  * @startingPoint section="Navigation" subtitle="Console page header" viewport="720x160"
  */
 export const ConsolePageHeader = forwardRef<HTMLElement, ConsolePageHeaderProps>(function ConsolePageHeader(
-  { title, description, actions, children, className, ...rest },
+  {
+    title,
+    description,
+    actions,
+    children,
+    className,
+    ...rest
+  },
   ref,
 ) {
   return (
