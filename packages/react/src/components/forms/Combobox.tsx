@@ -1,4 +1,4 @@
-import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, Search } from 'lucide-react';
 import { forwardRef, useId, useState } from 'react';
 import type { CSSProperties, HTMLAttributes, Ref } from 'react';
@@ -7,6 +7,7 @@ import { warnOnce } from '../../lib/deprecate';
 import { useControllableState } from '../../lib/useControllableState';
 import { Icon } from '../../lib/icon';
 import type { SlotPropsFor } from '../../lib/slot';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface ComboboxOption {
   value: string;
@@ -64,8 +65,8 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
     open,
     defaultOpen,
     onOpenChange,
-    placeholder = '검색…',
-    emptyText = '결과 없음',
+    placeholder,
+    emptyText,
     id,
     slotProps,
     className,
@@ -74,6 +75,9 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
   },
   ref,
 ) {
+  const messages = useDSMessages();
+  const resolvedPlaceholder = placeholder ?? messages.combobox.placeholder;
+  const resolvedEmptyText = emptyText ?? messages.combobox.empty;
   const [isOpen, setOpen] = useControllableState<boolean>({
     value: open,
     defaultValue: defaultOpen ?? false,
@@ -162,7 +166,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
         <BaseCombobox.Positioner sideOffset={6}>
           <BaseCombobox.Popup className="dt-combobox-popup">
           {filtered.length === 0 ? (
-            <BaseCombobox.Empty className="dt-combobox-empty">{emptyText}</BaseCombobox.Empty>
+            <BaseCombobox.Empty className="dt-combobox-empty">{resolvedEmptyText}</BaseCombobox.Empty>
           ) : (
             <BaseCombobox.List>
             {filtered.map((o) => {

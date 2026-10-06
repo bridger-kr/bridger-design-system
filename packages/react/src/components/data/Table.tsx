@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
 import { cx } from '../../lib/cx';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export type TableAlign = 'left' | 'center' | 'right';
 export type TableRow = Record<string, ReactNode>;
@@ -39,6 +40,8 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
    */
   readonly rowAction?: TableRowAction<Row>;
   readonly empty?: ReactNode;
+  /** Header cell for the row-action column; defaults to the ambient locale. */
+  readonly rowActionHeader?: ReactNode;
   readonly style?: CSSProperties;
 }
 
@@ -99,6 +102,7 @@ function TableInner<Row extends TableRow = TableRow>(
     rows = [],
     rowKey,
     rowAction,
+    rowActionHeader,
     empty,
     className,
     style,
@@ -106,6 +110,7 @@ function TableInner<Row extends TableRow = TableRow>(
   }: TableProps<Row>,
   ref: Ref<HTMLDivElement>,
 ) {
+  const messages = useDSMessages();
   if (!rows.length && empty) return <>{empty}</>;
 
   return (
@@ -143,7 +148,7 @@ function TableInner<Row extends TableRow = TableRow>(
                 {column.header}
               </th>
             ))}
-            {rowAction ? <th className="dt-table-row-action-header" scope="col">행 작업</th> : null}
+            {rowAction ? <th className="dt-table-row-action-header" scope="col">{rowActionHeader ?? messages.table.rowActions}</th> : null}
           </tr>
         </thead>
         <tbody>

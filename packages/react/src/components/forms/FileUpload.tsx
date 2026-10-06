@@ -2,6 +2,7 @@ import { File, Upload, X } from 'lucide-react';
 import { forwardRef, useId, useRef, useState } from 'react';
 import type { CSSProperties, DragEvent, HTMLAttributes } from 'react';
 import { Icon } from '../../lib/icon';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 function fmtSize(bytes?: number) {
   if (bytes == null) return '';
@@ -24,6 +25,11 @@ export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'i
   file?: UploadedFile | null;
   onFiles?: (files: FileList) => void;
   onRemove?: () => void;
+  /** Copy overrides; each defaults to the ambient locale. */
+  chooseFileLabel?: string;
+  dropHintLabel?: string;
+  uploadedLabel?: string;
+  removeLabel?: string;
   id?: string;
   style?: CSSProperties;
 }
@@ -36,10 +42,14 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
   {
     label,
     accept = '.json,.yaml,.yml',
-    hint = 'OpenAPI 스펙 · JSON 또는 YAML',
+    hint,
     file,
     onFiles,
     onRemove,
+    chooseFileLabel,
+    dropHintLabel,
+    uploadedLabel,
+    removeLabel,
     id,
     className,
     style,
@@ -47,6 +57,7 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
   },
   ref,
 ) {
+  const messages = useDSMessages();
   const [drag, setDrag] = useState(false);
   const autoId = useId();
   const fId = id ?? autoId;
@@ -100,13 +111,13 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
               {file.name}
             </div>
             <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)', marginTop: 2 }}>
-              {fmtSize(file.size)} · 업로드 완료
+              {fmtSize(file.size)} · {uploadedLabel ?? messages.fileUpload.uploaded}
             </div>
           </div>
           <button
             type="button"
             onClick={onRemove}
-            aria-label="제거"
+            aria-label={removeLabel ?? messages.fileUpload.remove}
             className="dt-file-upload-remove"
             style={{
               flex: '0 0 auto',
@@ -142,9 +153,9 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
             <Icon icon={Upload} size="lg" />
           </span>
           <span style={{ fontSize: 13.5, color: 'var(--dt-text-strong)' }}>
-            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>파일 선택</span> 또는 끌어다 놓기
+            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>{chooseFileLabel ?? messages.fileUpload.chooseFile}</span> {dropHintLabel ?? messages.fileUpload.dropHint}
           </span>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint}</span>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint ?? messages.fileUpload.specHint}</span>
           <input
             ref={ref}
             id={fId}

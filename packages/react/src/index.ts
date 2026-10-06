@@ -13,3 +13,4 @@ export * from './components/feedback';
 export * from './components/data';
 export * from './components/navigation';
 export * from './components/product';
+export * from './locale';

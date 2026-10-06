@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import type { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react';
-import { useRender } from '@base-ui-components/react/use-render';
+import { useRender } from '@base-ui/react/use-render';
 import { ExternalLink } from 'lucide-react';
 import { Icon } from '../../lib/icon';
 import { cx } from '../../lib/cx';

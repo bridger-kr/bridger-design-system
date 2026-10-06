@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import type { ButtonHTMLAttributes, CSSProperties, ReactElement, ReactNode } from 'react';
-import { useRender } from '@base-ui-components/react/use-render';
+import { useRender } from '@base-ui/react/use-render';
 import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
 

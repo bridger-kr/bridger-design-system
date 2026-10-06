@@ -1,0 +1,117 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ConfirmDialog > matches the en snapshot 1`] = `
+<div
+  aria-labelledby="base-ui-_r_e_"
+  class="dt-dialog-popup dt-confirm-dialog"
+  data-base-ui-focusable=""
+  data-danger=""
+  data-open=""
+  id="_r_c_"
+  role="alertdialog"
+  style="--nested-dialogs: 0; width: 100%; max-width: 420px; background: var(--dt-surface); pointer-events: auto; border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-lg); overflow: hidden; font-family: var(--dt-font-sans);"
+  tabindex="-1"
+>
+  <div
+    style="padding: 22px 24px;"
+  >
+    <h3
+      id="base-ui-_r_e_"
+      style="margin: 0px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--dt-ink-strong);"
+    >
+      Delete this key?
+    </h3>
+    <div
+      style="margin-top: 14px; display: grid; gap: 5px; padding: 11px 13px; background: var(--dt-surface-sunken); border: 1px solid var(--dt-danger); border-radius: var(--dt-radius-md);"
+    >
+      <span
+        style="font-family: var(--dt-font-mono); font-size: 13px; font-weight: 600; color: var(--dt-ink-strong); word-break: break-all;"
+      >
+        weather_getForecast
+      </span>
+      <span
+        style="font-size: 12.5px; line-height: 1.5; color: var(--dt-muted-strong);"
+      >
+        Calls using this key stop working immediately.
+      </span>
+    </div>
+  </div>
+  <div
+    style="display: flex; justify-content: flex-end; gap: 8px; padding: 14px 24px; border-top: 1px solid var(--dt-border); background: var(--dt-surface-sunken);"
+  >
+    <button
+      class="dt-button dt-button-md dt-button-outline"
+      tabindex="0"
+      type="button"
+    >
+      Cancel
+    </button>
+    <button
+      class="dt-button dt-button-md dt-button-solid"
+      data-tone="danger"
+      tabindex="0"
+      type="button"
+    >
+      Delete
+    </button>
+  </div>
+</div>
+`;
+
+exports[`ConfirmDialog > matches the ko snapshot 1`] = `
+<div
+  aria-labelledby="base-ui-_r_b_"
+  class="dt-dialog-popup dt-confirm-dialog"
+  data-base-ui-focusable=""
+  data-danger=""
+  data-open=""
+  id="_r_9_"
+  role="alertdialog"
+  style="--nested-dialogs: 0; width: 100%; max-width: 420px; background: var(--dt-surface); pointer-events: auto; border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-lg); overflow: hidden; font-family: var(--dt-font-sans);"
+  tabindex="-1"
+>
+  <div
+    style="padding: 22px 24px;"
+  >
+    <h3
+      id="base-ui-_r_b_"
+      style="margin: 0px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--dt-ink-strong);"
+    >
+      Delete this key?
+    </h3>
+    <div
+      style="margin-top: 14px; display: grid; gap: 5px; padding: 11px 13px; background: var(--dt-surface-sunken); border: 1px solid var(--dt-danger); border-radius: var(--dt-radius-md);"
+    >
+      <span
+        style="font-family: var(--dt-font-mono); font-size: 13px; font-weight: 600; color: var(--dt-ink-strong); word-break: break-all;"
+      >
+        weather_getForecast
+      </span>
+      <span
+        style="font-size: 12.5px; line-height: 1.5; color: var(--dt-muted-strong);"
+      >
+        Calls using this key stop working immediately.
+      </span>
+    </div>
+  </div>
+  <div
+    style="display: flex; justify-content: flex-end; gap: 8px; padding: 14px 24px; border-top: 1px solid var(--dt-border); background: var(--dt-surface-sunken);"
+  >
+    <button
+      class="dt-button dt-button-md dt-button-outline"
+      tabindex="0"
+      type="button"
+    >
+      취소
+    </button>
+    <button
+      class="dt-button dt-button-md dt-button-solid"
+      data-tone="danger"
+      tabindex="0"
+      type="button"
+    >
+      삭제
+    </button>
+  </div>
+</div>
+`;

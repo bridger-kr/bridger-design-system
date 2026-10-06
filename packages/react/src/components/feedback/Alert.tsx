@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 import { Icon } from '../../lib/icon';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export const AlertTone = {
   Info: 'info',
@@ -27,13 +28,17 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'
   icon?: ReactNode;
   action?: ReactNode;
   onDismiss?: () => void;
+  /** Accessible name for the dismiss button; defaults to the ambient locale. */
+  closeLabel?: string;
   style?: CSSProperties;
 }
 
 export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  { tone = AlertTone.Info, title, children, icon, action, onDismiss, className, style, ...rest },
+  { tone = AlertTone.Info, title, children, icon, action, onDismiss,
+    closeLabel, className, style, ...rest },
   ref,
 ) {
+  const messages = useDSMessages();
   const background = TONE_BACKGROUND[tone] ?? TONE_BACKGROUND[AlertTone.Info];
   return (
     <div
@@ -63,7 +68,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
         {action ? <div style={{ marginTop: 10 }}>{action}</div> : null}
       </div>
       {onDismiss ? (
-        <button className="dt-close-control" onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
+        <button className="dt-close-control" onClick={onDismiss} aria-label={closeLabel ?? messages.common.close} style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
           <Icon icon={X} />
         </button>
       ) : null}

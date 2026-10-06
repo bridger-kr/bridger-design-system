@@ -279,6 +279,21 @@ describe('core exports', () => {
     expect(stylesheet).toMatch(/\.dt-filter-chip\s*\{[^}]*min-height:\s*var\(--dt-space-5\)/s);
   });
 
+  it('locks §11 anti-slop invariants in the stylesheet (EDD-232)', () => {
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+
+    expect(stylesheet).not.toMatch(/backdrop-filter/);
+    expect(stylesheet).not.toMatch(/radial-gradient|linear-gradient/);
+    // The only permitted looping animation is the Spinner.
+    const infiniteLoops = stylesheet.match(/\binfinite\b/g) ?? [];
+    expect(infiniteLoops).toHaveLength(1);
+    // `!important` is reserved for the prefers-reduced-motion override blocks
+    // that must beat consumer inline transitions.
+    const outsideReducedMotion = stylesheet.replace(/@media \(prefers-reduced-motion[^}]*\{[\s\S]*?\n\}/g, '');
+    expect(outsideReducedMotion).not.toMatch(/!important/);
+  });
+
   it('exports chip, section, and segmented tabs as additive contracts', () => {
     render(
       <>

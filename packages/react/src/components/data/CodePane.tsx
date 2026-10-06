@@ -3,6 +3,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import { warnOnce } from '../../lib/deprecate';
 import { CodeBlock } from './CodeBlock';
 import type { CodeLine, CodeSegment, CodeSegmentTone } from './CodeBlock';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 /**
  * @deprecated Use `CodeBlock` (`lines`, `copy`, `label`). `CodePane` is a
@@ -44,7 +45,10 @@ export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chi
 export const CodePane = forwardRef<HTMLDivElement, CodePaneProps>(function CodePane(
   { lines = [], label, copyText, copyLabel = '복사', copiedLabel = '복사됨', copyFailedLabel, copyable = false, className, ...rest },
   ref,
-) {
+) {  const messages = useDSMessages();
+  const resolvedCopyLabel = copyLabel ?? messages.code.copy;
+  const resolvedCopiedLabel = copiedLabel ?? messages.code.copied;
+
   warnOnce('codepane', 'CodePane is deprecated — use `CodeBlock` (`lines`, `copy`). Removed in v2.1.');
   return (
     <CodeBlock
