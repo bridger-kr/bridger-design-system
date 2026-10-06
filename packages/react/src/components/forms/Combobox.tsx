@@ -1,6 +1,10 @@
 import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
-import { useState } from 'react';
-import type { CSSProperties, HTMLAttributes } from 'react';
+import { forwardRef, useId } from 'react';
+import type { CSSProperties, HTMLAttributes, Ref } from 'react';
+import { cx } from '../../lib/cx';
+import { warnOnce } from '../../lib/deprecate';
+import { useControllableState } from '../../lib/useControllableState';
+import type { SlotPropsFor } from '../../lib/slot';
 
 export interface ComboboxOption {
   value: string;
@@ -8,46 +12,96 @@ export interface ComboboxOption {
   meta?: string;
 }
 
-export interface ComboboxProps extends Omit<HTMLAttributes<HTMLDivElement>, 'id' | 'onChange' | 'style'> {
+export type ComboboxSlotProps = SlotPropsFor<{
+  input: 'input';
+  label: 'label';
+  hint: 'span';
+}>;
+
+export interface ComboboxProps extends Omit<HTMLAttributes<HTMLDivElement>, 'defaultValue' | 'id' | 'onChange' | 'style'> {
   label?: string;
   hint?: string;
   options?: ComboboxOption[];
+  /** Controlled selected option value. */
   value?: string;
+  /** Uncontrolled initial selected option value. */
+  defaultValue?: string;
+  /** Called with the selected option's value. */
+  onValueChange?: (value: string) => void;
+  /** @deprecated Use `onValueChange`. Removed in v2.1. */
   onChange?: (value: string) => void;
+  /** Controlled open state of the option list. */
+  open?: boolean;
+  /** Uncontrolled initial open state. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   placeholder?: string;
   emptyText?: string;
   id?: string;
+  /** Prop bags for inner elements (`input`, `label`, `hint`). */
+  slotProps?: ComboboxSlotProps;
   style?: CSSProperties;
 }
 
 /**
  * Searchable select for large option sets (the 230+ public-data API catalog).
  * Hairline field; the listbox is a bordered plane. Filters on label + meta.
+ * Controlled via `value`/`onValueChange` and `open`/`onOpenChange`, or
+ * uncontrolled with `defaultValue`/`defaultOpen`.
  * @startingPoint section="Forms" subtitle="Searchable select over a large catalog" viewport="460x320"
  */
-export function Combobox({
-  label,
-  hint,
-  options = [],
-  value,
-  onChange,
-  placeholder = '검색…',
-  emptyText = '결과 없음',
-  id,
-  style,
-}: ComboboxProps) {
-  const [open, setOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const cbId = id || (label ? `cb-${label.replace(/\s+/g, '-')}` : undefined);
+export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Combobox(
+  {
+    label,
+    hint,
+    options = [],
+    value,
+    defaultValue,
+    onValueChange,
+    onChange,
+    open,
+    defaultOpen,
+    onOpenChange,
+    placeholder = '검색…',
+    emptyText = '결과 없음',
+    id,
+    slotProps,
+    className,
+    style,
+    ...rest
+  },
+  ref,
+) {
+  const [isOpen, setOpen] = useControllableState<boolean>({
+    value: open,
+    defaultValue: defaultOpen ?? false,
+    onChange: onOpenChange,
+  });
+  const [selectedValue, setSelectedValue] = useControllableState<string | undefined>({
+    value,
+    defaultValue,
+    onChange: (next) => {
+      onValueChange?.(next as string);
+      onChange?.(next as string);
+    },
+  });
+  const [query, setQuery] = useControllableState<string>({ defaultValue: '' });
+  const autoId = useId();
+  const cbId = id ?? autoId;
+  const hintId = hint ? `${cbId}-hint` : undefined;
 
-  const selected = options.find((o) => o.value === value) || null;
-  const q = query.trim().toLowerCase();
+  if (onChange !== undefined) {
+    warnOnce('combobox-onchange', 'Combobox: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
+  }
+
+  const selected = options.find((o) => o.value === selectedValue) || null;
+  const q = (query ?? '').trim().toLowerCase();
   const filtered = q
     ? options.filter((o) => (o.label + ' ' + (o.meta || '')).toLowerCase().includes(q))
     : options;
 
   const commit = (o: ComboboxOption) => {
-    onChange?.(o.value);
+    setSelectedValue(o.value);
     setOpen(false);
     setQuery('');
   };
@@ -60,68 +114,53 @@ export function Combobox({
     if (nextValue) commit(nextValue);
   };
 
+  const { className: inputClassName, ...inputRest } = slotProps?.input ?? {};
+
   return (
     <BaseCombobox.Root<ComboboxOption>
-      open={open}
+      open={isOpen}
       onOpenChange={setOpen}
       value={selected ?? undefined}
       items={filtered}
       itemToStringLabel={(option) => option.label}
-      isItemEqualToValue={(itemValue, selectedValue) => itemValue.value === selectedValue.value}
+      isItemEqualToValue={(itemValue, selectedOption) => itemValue.value === selectedOption.value}
       onInputValueChange={handleInputValueChange}
       onValueChange={handleValueChange}
     >
-    <div style={{ display: 'grid', gap: 7, position: 'relative', ...style }}>
+    <div className={cx('dt-combobox', className)} style={style} {...rest}>
       {label ? (
-        <label htmlFor={cbId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
+        <label htmlFor={cbId} className="dt-input-label" {...slotProps?.label}>
           {label}
         </label>
       ) : null}
-      <div
-        className="dt-field"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 9,
-          height: 44,
-          padding: '0 12px',
-          boxShadow: open ? 'var(--dt-shadow-focus)' : undefined,
-          background: open ? 'var(--dt-surface)' : 'var(--dt-surface-sunken)',
-        }}
-      >
+      <div className="dt-field dt-combobox-field">
         <svg
           width="16"
           height="16"
           viewBox="0 0 24 24"
           fill="none"
           aria-hidden="true"
-          style={{ color: 'var(--dt-muted)', flex: '0 0 auto' }}
+          className="dt-combobox-field-icon"
         >
           <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
           <path d="M21 21l-4-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
         </svg>
         <BaseCombobox.Input
           id={cbId}
-          value={open ? query : selected ? selected.label : ''}
-          placeholder={selected && !open ? selected.label : placeholder}
+          ref={ref as Ref<HTMLInputElement>}
+          value={isOpen ? query : selected ? selected.label : ''}
+          placeholder={selected && !isOpen ? selected.label : placeholder}
           onChange={(e) => {
             setQuery(e.target.value);
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          style={{
-            flex: 1,
-            minWidth: 0,
-            border: 'none',
-            outline: 'none',
-            background: 'transparent',
-            fontSize: 14,
-            fontFamily: 'inherit',
-            color: 'var(--dt-ink-strong)',
-          }}
+          aria-describedby={hintId}
+          className={cx('dt-input-control', inputClassName)}
+          {...inputRest}
         />
-        {selected && !open ? (
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-muted)' }}>
+        {selected && !isOpen ? (
+          <span className="dt-combobox-selected-meta">
             {selected.meta}
           </span>
         ) : null}
@@ -129,62 +168,24 @@ export function Combobox({
 
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner sideOffset={6}>
-          <BaseCombobox.Popup
-            className="dt-combobox-popup"
-            style={{
-              zIndex: 'var(--dt-z-index-popover)',
-              background: 'var(--dt-surface)',
-              border: '1px solid var(--dt-border-strong)',
-              borderRadius: 'var(--dt-radius-lg)',
-              boxShadow: 'var(--dt-shadow-md)',
-              maxHeight: 240,
-              overflowY: 'auto',
-              padding: 4,
-            }}
-          >
+          <BaseCombobox.Popup className="dt-combobox-popup">
           {filtered.length === 0 ? (
-            <BaseCombobox.Empty style={{ padding: '12px 12px', fontSize: 13, color: 'var(--dt-muted)' }}>{emptyText}</BaseCombobox.Empty>
+            <BaseCombobox.Empty className="dt-combobox-empty">{emptyText}</BaseCombobox.Empty>
           ) : (
             <BaseCombobox.List>
             {filtered.map((o) => {
-              const isSel = o.value === value;
+              const isSel = o.value === selectedValue;
               return (
                 <BaseCombobox.Item
                   key={o.value}
                   value={o}
                   className="dt-combobox-option"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 10,
-                    padding: '9px 10px',
-                    borderRadius: 'var(--dt-radius-md)',
-                    cursor: 'pointer',
-                  }}
                 >
-                  <span
-                    style={{
-                      flex: 1,
-                      minWidth: 0,
-                      fontSize: 13.5,
-                      fontWeight: isSel ? 600 : 500,
-                      color: 'var(--dt-ink-strong)',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
+                  <span className="dt-combobox-option-label">
                     {o.label}
                   </span>
                   {o.meta ? (
-                    <span
-                      style={{
-                        fontFamily: 'var(--dt-font-mono)',
-                        fontSize: 11,
-                        color: 'var(--dt-muted)',
-                        flex: '0 0 auto',
-                      }}
-                    >
+                    <span className="dt-combobox-option-meta">
                       {o.meta}
                     </span>
                   ) : null}
@@ -195,7 +196,7 @@ export function Combobox({
                       viewBox="0 0 24 24"
                       fill="none"
                       aria-hidden="true"
-                      style={{ color: 'var(--dt-accent)', flex: '0 0 auto' }}
+                      className="dt-combobox-option-check"
                     >
                       <path
                         d="M20 6L9 17l-5-5"
@@ -214,8 +215,13 @@ export function Combobox({
           </BaseCombobox.Popup>
         </BaseCombobox.Positioner>
       </BaseCombobox.Portal>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? (
+        <span id={hintId} className="dt-input-hint" {...slotProps?.hint}>
+          {hint}
+        </span>
+      ) : null}
     </div>
     </BaseCombobox.Root>
   );
-}
+});
+Combobox.displayName = 'Combobox';

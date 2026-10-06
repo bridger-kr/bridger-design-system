@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -9,17 +10,12 @@ export interface ProductPageHeaderProps extends Omit<HTMLAttributes<HTMLElement>
   children?: ReactNode;
 }
 
-export function ProductPageHeader({
-  eyebrow,
-  title,
-  description,
-  actions,
-  children,
-  className,
-  ...rest
-}: ProductPageHeaderProps) {
+export const ProductPageHeader = forwardRef<HTMLElement, ProductPageHeaderProps>(function ProductPageHeader(
+  { eyebrow, title, description, actions, children, className, ...rest },
+  ref,
+) {
   return (
-    <header className={cx('dt-product-page-header', className)} {...rest}>
+    <header ref={ref} className={cx('dt-product-page-header', className)} {...rest}>
       <div className="dt-product-page-header-row">
         <div className="dt-product-page-header-copy">
           {eyebrow ? <span className="dt-product-page-header-eyebrow">{eyebrow}</span> : null}
@@ -33,4 +29,5 @@ export function ProductPageHeader({
       {children ? <div className="dt-product-page-header-content">{children}</div> : null}
     </header>
   );
-}
+});
+ProductPageHeader.displayName = 'ProductPageHeader';

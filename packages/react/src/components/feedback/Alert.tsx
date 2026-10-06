@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -9,14 +10,6 @@ export const AlertTone = {
 } as const;
 
 export type AlertTone = (typeof AlertTone)[keyof typeof AlertTone];
-
-export const AlertMotion = {
-  None: 'none',
-  Subtle: 'subtle',
-  Pulse: 'pulse',
-} as const;
-
-export type AlertMotion = (typeof AlertMotion)[keyof typeof AlertMotion];
 
 const TONE_BACKGROUND = {
   info: 'var(--dt-tint-cobalt)',
@@ -31,34 +24,25 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'
   children?: ReactNode;
   icon?: ReactNode;
   action?: ReactNode;
-  motion?: AlertMotion;
   onDismiss?: () => void;
   style?: CSSProperties;
 }
 
-export function Alert({
-  tone = AlertTone.Info,
-  title,
-  children,
-  icon,
-  action,
-  motion = AlertMotion.None,
-  onDismiss,
-  className,
-  style,
-  ...rest
-}: AlertProps) {
+export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  { tone = AlertTone.Info, title, children, icon, action, onDismiss, className, style, ...rest },
+  ref,
+) {
   const background = TONE_BACKGROUND[tone] ?? TONE_BACKGROUND[AlertTone.Info];
-  const motionClass = motion === AlertMotion.None ? undefined : `dt-alert-motion-${motion}`;
   return (
     <div
+      ref={ref}
       role="status"
-      className={cx('dt-alert', motionClass, className)}
+      className={cx('dt-alert', className)}
       style={{
         alignItems: 'flex-start',
         background,
-        borderRadius: '20px',
-        color: 'var(--dt-ink-strong)',
+        borderRadius: 'var(--dt-radius-card)',
+        color: 'var(--dt-text-strong)',
         display: 'flex',
         gap: 12,
         minHeight: 62,
@@ -83,4 +67,5 @@ export function Alert({
       ) : null}
     </div>
   );
-}
+});
+Alert.displayName = 'Alert';

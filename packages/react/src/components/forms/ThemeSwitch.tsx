@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import type { CSSProperties, ReactNode } from 'react';
 
 export const THEME_PREFERENCE = {
@@ -73,14 +73,10 @@ export interface ThemeSwitchProps {
  * to `storageKey`, and keeps following `prefers-color-scheme` while the
  * preference stays on `system`.
  */
-export function ThemeSwitch({
-  labels,
-  icons,
-  storageKey = DEFAULT_THEME_STORAGE_KEY,
-  className = '',
-  style,
-  onChange,
-}: ThemeSwitchProps) {
+export const ThemeSwitch = forwardRef<HTMLDivElement, ThemeSwitchProps>(function ThemeSwitch(
+  { labels, icons, storageKey = DEFAULT_THEME_STORAGE_KEY, className = '', style, onChange },
+  ref,
+) {
   const [preference, setPreference] = useState<ThemePreference>(() => readStoredPreference(storageKey));
   const [system, setSystem] = useState<ResolvedTheme>(systemTheme);
   const resolved: ResolvedTheme = preference === THEME_PREFERENCE.System ? system : preference;
@@ -117,6 +113,7 @@ export function ThemeSwitch({
 
   return (
     <div
+      ref={ref}
       role="group"
       aria-label={mergedLabels.group}
       className={`dt-theme-switch${className ? ` ${className}` : ''}`}
@@ -141,4 +138,5 @@ export function ThemeSwitch({
       })}
     </div>
   );
-}
+});
+ThemeSwitch.displayName = 'ThemeSwitch';

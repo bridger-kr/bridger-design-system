@@ -5,7 +5,7 @@
    API faithfully, loads plugin/code.js into that sandbox, fires a real "sync"
    message with the actual tokens + component spec, and asserts:
      - no runtime error is thrown / posted
-     - the expected Variables, Text/Effect styles, and 40 Component Sets exist
+     - the expected Variables, Text/Effect styles, and 46 Component Sets exist
    Any API misuse that would throw in the desktop app throws here too.
    Run: node packages/figma-plugin/scripts/e2e.mjs
 ============================================================ */
@@ -251,10 +251,10 @@ run().then(() => {
   if (state.collections[0].modes.length !== 2) fail(`모드 2개(Light/Dark) 기대, 실제 ${state.collections[0].modes.length}`);
   if (colorVars < 25) fail(`색상 변수 부족 (${colorVars})`);
   if (floatVars < 13) fail(`spacing+radius 변수 부족 (${floatVars})`);
-  if (state.textStyles.length !== 9) fail(`Text style 9개 기대, 실제 ${state.textStyles.length}`);
-  if (state.effectStyles.length !== 4) fail(`Effect style 4개 기대, 실제 ${state.effectStyles.length}`);
-  if (sets.length !== 40) fail(`컴포넌트 40개 기대, 실제 ${sets.length}`);
-  if (!state.textStyles.some((style) => style.name === 'Bridger/eyebrow')) fail('Bridger/eyebrow Text style 없음');
+  if (state.textStyles.length !== 8) fail(`Text style 8개 기대, 실제 ${state.textStyles.length}`);
+  if (state.effectStyles.length !== 1) fail(`Effect style 1개 기대, 실제 ${state.effectStyles.length}`);
+  if (sets.length !== 46) fail(`컴포넌트 46개 기대, 실제 ${sets.length}`);
+  if (!state.textStyles.some((style) => style.name === 'Bridger/h1')) fail('Bridger/h1 Text style 없음');
   if (!state.textStyles.some((style) => style.name === 'Bridger/caption')) fail('Bridger/caption Text style 없음');
 
   const componentSet = (name) => sets.find((set) => set.name === name);
@@ -275,16 +275,16 @@ run().then(() => {
   if (primarySmall?.height !== 40) fail(`Button sm 40px 기대, 실제 ${primarySmall?.height}`);
   if (primaryMedium?.height !== 44) fail(`Button md 44px 기대, 실제 ${primaryMedium?.height}`);
   if (primaryLarge?.height !== 48) fail(`Button lg 48px 기대, 실제 ${primaryLarge?.height}`);
-  if (dangerMedium?.cornerRadius !== 12) fail(`Button danger radius 12px 기대, 실제 ${dangerMedium?.cornerRadius}`);
+  if (dangerMedium?.cornerRadius !== 6) fail(`Button danger radius 6px 기대, 실제 ${dangerMedium?.cornerRadius}`);
 
   const defaultInput = variant(componentSet('Input'), 'State=default');
   const inputField = defaultInput?.children.find((child) => child.name === 'field');
   if (inputField?.height !== 44) fail(`Input field 44px 기대, 실제 ${inputField?.height}`);
-  if (inputField?.cornerRadius !== 12) fail(`Input field radius 12px 기대, 실제 ${inputField?.cornerRadius}`);
+  if (inputField?.cornerRadius !== 6) fail(`Input field radius 6px 기대, 실제 ${inputField?.cornerRadius}`);
 
   const defaultCard = variant(componentSet('Card'), 'Variant=default');
   const panelCard = variant(componentSet('Card'), 'Variant=panel');
-  if (defaultCard?.cornerRadius !== 14) fail(`Card radius 14px 기대, 실제 ${defaultCard?.cornerRadius}`);
+  if (defaultCard?.cornerRadius !== 8) fail(`Card radius 8px 기대, 실제 ${defaultCard?.cornerRadius}`);
   if (!panelCard) fail('Card panel variant 없음');
 
   const sidebar = componentSet('Sidebar');

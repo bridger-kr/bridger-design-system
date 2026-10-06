@@ -39,7 +39,7 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
   const s = document.createElement('style');
   s.id = 'dc-styles';
   s.textContent = [
-    '.dc-editable{cursor:text;outline:none;white-space:nowrap;border-radius:3px;padding:0 2px;margin:0 -2px}',
+    '.dc-editable{cursor:text;outline:none;white-space:nowrap;border-radius:4px;padding:0 2px;margin:0 -2px}',
     '.dc-editable:focus{background:#fff;box-shadow:0 0 0 1.5px #c96442}',
     '[data-dc-slot]{transition:transform .18s cubic-bezier(.2,.7,.3,1)}',
     '[data-dc-slot].dc-dragging{transition:none;z-index:10;pointer-events:none}',
@@ -75,7 +75,7 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
     '.dc-labeltext .dc-editable:focus{overflow:visible;text-overflow:clip}',
     '.dc-btns{flex:0 0 auto;margin-left:auto;display:flex;gap:2px;opacity:0;transition:opacity .12s}',
     '[data-dc-slot]:hover .dc-btns,.dc-btns:has(.dc-menu){opacity:1}',
-    '.dc-expand,.dc-kebab{width:22px;height:22px;border-radius:5px;border:none;cursor:pointer;padding:0;',
+    '.dc-expand,.dc-kebab{width:22px;height:22px;border-radius:4px;border:none;cursor:pointer;padding:0;',
     '  background:transparent;color:rgba(60,50,40,.7);display:flex;align-items:center;justify-content:center;',
     '  font:inherit;transition:background .12s,color .12s}',
     '.dc-expand:hover,.dc-kebab:hover{background:rgba(0,0,0,.06);color:#2a251f}',
@@ -84,9 +84,9 @@ if (typeof document !== 'undefined' && !document.getElementById('dc-styles')) {
     // clipped by the next card.
     '[data-dc-slot]:has(.dc-menu){z-index:10}',
     '.dc-menu{position:absolute;top:100%;right:0;margin-top:4px;background:#fff;border-radius:8px;',
-    '  box-shadow:0 8px 28px rgba(0,0,0,.18),0 0 0 1px rgba(0,0,0,.05);padding:4px;min-width:160px;z-index:10}',
+    '  box-shadow:var(--dt-shadow-overlay);padding:4px;min-width:160px;z-index:10}',
     '.dc-menu button{display:block;width:100%;padding:7px 10px;border:0;background:transparent;',
-    '  border-radius:5px;font-family:inherit;font-size:13px;font-weight:500;line-height:1.2;',
+    '  border-radius:4px;font-family:inherit;font-size:13px;font-weight:500;line-height:1.2;',
     '  color:#29261b;cursor:pointer;text-align:left;transition:background .12s;white-space:nowrap}',
     '.dc-menu button:hover{background:rgba(0,0,0,.05)}',
     '.dc-menu hr{border:0;border-top:1px solid rgba(0,0,0,.08);margin:4px 2px}',
@@ -772,7 +772,7 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
           </div>
           <div className="dc-labeltext" onClick={onFocus} title="Click to focus">
             <DCEditable value={label} onChange={onRename} onClick={(e) => e.stopPropagation()}
-              style={{ fontSize: 15, fontWeight: 500, color: DC.label, lineHeight: 1 }} />
+              style={{ fontSize: 14, fontWeight: 500, color: DC.label, lineHeight: 1 }} />
           </div>
         </div>
         <div className="dc-btns">
@@ -798,7 +798,7 @@ function DCArtboardFrame({ sectionId, artboard, label, order, onRename, onReorde
         </div>
       </div>
       <div ref={cardRef} className="dc-card"
-        style={{ borderRadius: 2, boxShadow: '0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06)', overflow: 'hidden', width, height, background: '#fff', ...style }}>
+        style={{ borderRadius: 8, boxShadow: '0 0 0 1px rgba(0,0,0,.06)', overflow: 'hidden', width, height, background: '#fff', ...style }}>
         {children || <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#bbb', fontSize: 13, fontFamily: DC.font }}>{id}</div>}
       </div>
     </div>
@@ -865,7 +865,7 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
     <button onClick={(e) => { e.stopPropagation(); onClick(); }}
       style={{ position: 'absolute', top: '50%', [dir]: 28, transform: 'translateY(-50%)',
         border: 'none', background: 'rgba(255,255,255,.08)', color: 'rgba(255,255,255,.9)',
-        width: 44, height: 44, borderRadius: 22, fontSize: 18, cursor: 'pointer',
+        width: 44, height: 44, borderRadius: 9999, fontSize: 20, cursor: 'pointer',
         display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background .15s' }}
       onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,.18)')}
       onMouseLeave={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,.08)')}>
@@ -890,19 +890,19 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
             style={{ border: 'none', background: 'transparent', color: '#fff', cursor: 'pointer', padding: '6px 8px',
               borderRadius: 6, textAlign: 'left', fontFamily: 'inherit' }}>
             <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontSize: 18, fontWeight: 600, letterSpacing: -0.3 }}>{meta.title}</span>
+              <span style={{ fontSize: 20, fontWeight: 600, letterSpacing: -0.3 }}>{meta.title}</span>
               <svg width="11" height="11" viewBox="0 0 11 11" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" style={{ opacity: .7 }}><path d="M2 4l3.5 3.5L9 4"/></svg>
             </span>
             {meta.subtitle && <span style={{ display: 'block', fontSize: 13, opacity: .6, fontWeight: 400, marginTop: 2 }}>{meta.subtitle}</span>}
           </button>
           {ddOpen && (
             <div style={{ position: 'absolute', top: '100%', left: 0, marginTop: 4, background: '#2a251f', borderRadius: 8,
-              boxShadow: '0 8px 32px rgba(0,0,0,.4)', padding: 4, minWidth: 200, zIndex: 10 }}>
+              boxShadow: 'var(--dt-shadow-overlay)', padding: 4, minWidth: 200, zIndex: 10 }}>
               {sectionOrder.filter((sid) => sectionMeta[sid].slotIds.length).map((sid) => (
                 <button key={sid} onClick={() => { setDd(false); const f = sectionMeta[sid].slotIds[0]; if (f) ctx.setFocus(`${sid}/${f}`); }}
                   style={{ display: 'block', width: '100%', textAlign: 'left', border: 'none', cursor: 'pointer',
                     background: sid === sectionId ? 'rgba(255,255,255,.1)' : 'transparent', color: '#fff',
-                    padding: '8px 12px', borderRadius: 5, fontSize: 14, fontWeight: sid === sectionId ? 600 : 400, fontFamily: 'inherit' }}>
+                    padding: '8px 12px', borderRadius: 6, fontSize: 14, fontWeight: sid === sectionId ? 600 : 400, fontFamily: 'inherit' }}>
                   {sectionMeta[sid].title}
                 </button>
               ))}
@@ -914,7 +914,7 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
           onMouseEnter={(e) => (e.currentTarget.style.background = 'rgba(255,255,255,.12)')}
           onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
           style={{ border: 'none', background: 'transparent', color: 'rgba(255,255,255,.7)', width: 32, height: 32,
-            borderRadius: 16, fontSize: 20, cursor: 'pointer', lineHeight: 1, transition: 'background .12s' }}>×</button>
+            borderRadius: 8, fontSize: 20, cursor: 'pointer', lineHeight: 1, transition: 'background .12s' }}>×</button>
       </div>
 
       {/* card centered, label + index below — only the card itself stops
@@ -942,7 +942,7 @@ function DCFocusOverlay({ entry, sectionMeta, sectionOrder }) {
         style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: 8 }}>
         {peers.map((p, i) => (
           <button key={p} onClick={() => ctx.setFocus(`${sectionId}/${p}`)}
-            style={{ border: 'none', padding: 0, cursor: 'pointer', width: 6, height: 6, borderRadius: 3,
+            style={{ border: 'none', padding: 0, cursor: 'pointer', width: 6, height: 6, borderRadius: 9999,
               background: i === idx ? '#fff' : 'rgba(255,255,255,.3)' }} />
         ))}
       </div>

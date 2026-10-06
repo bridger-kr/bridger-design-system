@@ -42,9 +42,9 @@ export function Slider({
   return (
     <div style={{ display: 'grid', gap: 9, ...style }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-        {label ? <label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>{label}</label> : <span />}
-        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--dt-ink-strong)', fontVariantNumeric: 'tabular-nums' }}>
-          {v}{unit ? <span style={{ color: 'var(--dt-muted)', fontWeight: 400 }}>{unit}</span> : null}
+        {label ? <label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</label> : <span />}
+        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 13, fontWeight: 600, color: 'var(--dt-text-strong)', fontVariantNumeric: 'tabular-nums' }}>
+          {v}{unit ? <span style={{ color: 'var(--dt-text-muted)', fontWeight: 400 }}>{unit}</span> : null}
         </span>
       </div>
       <div
@@ -65,7 +65,7 @@ export function Slider({
           boxShadow: '0 0 0 1.5px var(--dt-accent)', border: '3px solid var(--dt-surface)',
         }} />
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
     </div>
   );
 }

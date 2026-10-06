@@ -37,9 +37,11 @@ pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 Import the token contract once, then the React component styles:
 
 ```ts
-import '@bridger-kr/tokens/css';   // --dt-* variables, fonts, base classes
+import '@bridger-kr/tokens/css';   // fonts + dt.reset + --dt-* variables
 import '@bridger-kr/react/styles.css';
 ```
+
+All DS rules ship inside `@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`, so unlayered app CSS always wins — no `!important` needed for overrides. Element defaults (`body`, headings, `code`) are opt-in via `@bridger-kr/tokens/css/base`. Tailwind v3 consumers should disable `preflight` (the DS `dt.reset` layer owns the reset); see `packages/react/README.md` and `DESIGN.md` §9.9 for the full consumer contract.
 
 ### React usage
 
@@ -47,10 +49,10 @@ import '@bridger-kr/react/styles.css';
 import { Button, Table, CommandPalette } from '@bridger-kr/react';
 ```
 
-Per-component subpath imports for maximum tree-shaking:
+Category-level subpath imports for maximum tree-shaking:
 
 ```tsx
-import { Button } from '@bridger-kr/react/components/core/Button';
+import { Button } from '@bridger-kr/react/components/core';
 ```
 
 ### Tokens in TS/JS
@@ -175,17 +177,18 @@ AI-slop or dark-glow dev-SaaS like doppler/starburst). **Dark is a full-parity
 alternate** (`:root[data-theme='dark']` / `.dark`) — the console-native mode. Both
 are designed deliberately.
 
-**Color (v2).** Warm near-white surfaces (`#fbfaf8` paper → `#ffffff` card →
-`#f4f3ef` sunken), warm near-black ink (`#1b1a16`, strong `#0c0b08`), and a single
-**persimmon** action color (`#ec5e1f`, hover `#ec5e1f`, highlight `#ec5e1f`) used
-for *one* main action per screen plus active/focus. Cobalt, lime, success,
-warning, danger are **status-semantic only** — never decoration. No second
-decorative accent, no purple/indigo gradients, no glow.
+**Color (v2).** Achromatic neutral surfaces (`#ffffff` bg → `oklch .9875`
+surface → `oklch .97` sunken), neutral gray text (`oklch .205`, strong
+`oklch .145`, muted `oklch .54` — AA on every surface), and a single
+**persimmon** action color (`#ec5e1f` fill / `#b83c0d` when it renders as text)
+used for *one* main action per screen plus active/focus. Cobalt, success,
+warning (amber), danger are **status-semantic only** — same hue in both themes,
+never decoration. No second decorative accent, no purple/indigo gradients, no glow.
 
 **Type.** Pretendard Variable for all Korean + UI; JetBrains Mono for code, API
 paths, request IDs, timestamps, methods. Letter-spacing stays 0em for body/labels
 (tight negative tracking only on large H1/H2 display). H1/H2 are reserved for real
-page headings; H3 (18px/600) titles panels and sections. **No eyebrow kickers** —
+page headings; H3 (20px/600) titles panels and sections. **No eyebrow kickers** —
 a section leads with its noun-phrase title, not an uppercase mono label above it.
 
 **Spacing.** 4 / 8 / 16 / 24 / 40 / 64 / 96 / 128. Console layouts are dense but
@@ -198,40 +201,40 @@ gradient blobs, no full-bleed photography in product, no illustration, no glow.
 Code blocks are kept **dark on the light page** (Stripe-style) for contrast.
 
 **Elevation & depth (v3 — de-slopped).** Structure reads from **hairline borders**,
-not float. A card at rest is a bordered plane on a 1px `--dt-ring` (= `--dt-border`)
-with **no resting shadow** — soft layered "float on warm light" shadows were the
+not float. A card at rest is a bordered plane on a 1px `--dt-border`
+hairline with **no resting shadow** — soft layered "float on warm light" shadows were the
 biggest AI-slop tell and have been retired. Shadows are reserved for layers that
-*genuinely* float: hover hint (`--dt-shadow-sm`), dropdown/menu (`md`), toast (`lg`),
-modal/palette (`xl`) — each kept tight. Dense data UIs divide with internal 1px
+*genuinely* float — menus, toasts, dialogs, and the palette all share one
+`--dt-shadow-overlay`. Hover emphasis comes from a stronger hairline. Dense data UIs divide with internal 1px
 borders. Focus = 3px accent ring. **Never card-in-card.**
 
 **Shape / radius (v3).** Crisp, barely-there softening — slightly rounded, never
-bubbly. Small controls/tags 3–4px, panels 6px, large surfaces/palette 8–10px,
-true pills/avatars/dots full. Radius is paired with a **hairline**, not a shadow:
+bubbly. Compact controls/tags 4px, interactive controls 6px, cards and
+large surfaces 8px, true pills/avatars/dots full. Radius is paired with a **hairline**, not a shadow:
 a bordered plane reads as structure, a rounded box floating on shadow reads as slop.
 
-**Borders.** Hairlines are the primary structural device. `--dt-border #eceae3`
-for dividers/planes; `--dt-border-strong #ddd9cf` for framing a surface against
-the page. Cards are separated from the page by their **border**, not a shadow;
+**Borders.** Hairlines are the primary structural device. `--dt-border`
+(ink 10% alpha) for dividers/planes; `--dt-border-strong` (ink 18% alpha) for
+framing a surface against the page. Cards are separated from the page by their **border**, not a shadow;
 tables and stat rows divide with internal 1px borders.
 
-**Motion.** Calm and fast. Ease `cubic-bezier(0.23,1,0.32,1)`, durations 120–280ms.
-Hover = border brightens + surface lifts one tonal step (and cards translateY(-2px)).
-Press = `scale(0.97)`. Entrances are short fade-ups (`opacity 0→1, y 22→0`, ~0.5s).
+**Motion.** Calm and fast. Ease `cubic-bezier(0.23,1,0.32,1)`, durations 120–160ms.
+Hover = border brightens + surface lifts one tonal step.
+Press = `scale(0.97)`. Entrances are short fades inside the motion band.
 No bounce, no infinite decorative loops (except the deliberate logo line-draw and
 status pulses). All of it collapses under `prefers-reduced-motion`.
 
-**Transparency / blur.** Used sparingly: glassy navbar (`--dt-glass-bg` +
-`saturate(180%) blur(16px)`) and mobile drawer scrims. Tints (`color-mix … 14%`)
+**Transparency / blur.** Mostly gone: the navbar is a flat `surface` with a
+hairline border. Tints (`color-mix … 14%`) Tints (`color-mix … 14%`)
 fill badges and chips.
 
 **Cards.** `background: surface`, 1px border, 6px radius, **no resting shadow**;
-on hover the border strengthens to `--dt-border-strong` and a tight `sm` shadow
-appears. `card-muted` = sunken well, `card-raised` = bordered plane that floats
-(`md`). Console panels are flat bordered planes.
+on hover the border strengthens to `--dt-border-strong`.
+`card-muted` = sunken well, `card-raised` = a slightly lifted tone, still flat.
+Console panels are flat bordered planes.
 
 **Badges & chips.** Classification badges are **crisp small-radius tags** with a
-hairline (`.badge` = 3px radius + inset border), never rounded-full tint cushions.
+hairline (`.badge` = 4px radius + hairline border), never rounded-full tint cushions.
 Status *pills* (`StatusPill`) stay pill-shaped — they read as live state, not tags.
 
 **Imagery vibe.** Essentially none in product. Agency logos render monochrome /
@@ -282,7 +285,7 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 - **navigation** — Breadcrumb, Menu, Sidebar (console nav rail), CommandPalette (⌘K), Stepper (onboarding progress).
 - **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard, ActionList + ActionListIndex (numbered guide list), AnnotationHotspot (annotated product proof, static marker), ChatBubble (composed conversation sample), ProductShell (flat composition host) + ProductSideRail, ProductPageHeader (sub-page hero), ProductTopbar + ProductTopbarMenu (landing topbar with mobile drawer), SearchPill (topbar search).
 
-Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (3–6px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
+Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (4–8px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 
 **`examples/`** — standalone demos (not part of the published library; see [`examples/README.md`](examples/README.md)):
 - `ui_kits/console/` — the Bridger portal console (dashboard, catalog, logs).

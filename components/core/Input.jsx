@@ -21,7 +21,7 @@ export function Input({
       {label ? (
         <label
           htmlFor={inputId}
-          style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}
+          style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}
         >
           {label}
         </label>
@@ -35,7 +35,7 @@ export function Input({
           padding: '0 12px',
         }}
       >
-        {prefix ? <span style={{ color: 'var(--dt-muted)', display: 'inline-flex' }}>{prefix}</span> : null}
+        {prefix ? <span style={{ color: 'var(--dt-text-muted)', display: 'inline-flex' }}>{prefix}</span> : null}
         <input
           id={inputId}
           type={type}
@@ -44,7 +44,7 @@ export function Input({
             border: 'none',
             outline: 'none',
             background: 'transparent',
-            color: 'var(--dt-ink-strong)',
+            color: 'var(--dt-text-strong)',
             padding: '11px 0',
             fontFamily: mono ? 'var(--dt-font-mono)' : 'var(--dt-font-sans)',
             fontSize: mono ? 13 : 14,
@@ -53,7 +53,7 @@ export function Input({
           {...rest}
         />
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{hint}</span> : null}
     </div>
   );
 }

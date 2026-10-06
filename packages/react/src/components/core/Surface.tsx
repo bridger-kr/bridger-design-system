@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -25,7 +26,7 @@ const surfaceToneClass: Record<SurfaceTone, string> = {
 };
 
 const metricAccentClass: Record<MetricAccentName, string> = {
-  [MetricAccent.Accent]: 'text-[var(--dt-accent)]',
+  [MetricAccent.Accent]: 'text-[var(--dt-accent-text)]',
   [MetricAccent.Success]: 'text-[var(--dt-success)]',
   [MetricAccent.Info]: 'text-[var(--dt-info)]',
 };
@@ -35,9 +36,13 @@ export type PanelProps = ComponentPropsWithoutRef<'section'> & {
   readonly children: ReactNode;
 };
 
-export function Panel({ tone = SurfaceTone.Default, className, children, ...props }: PanelProps) {
+export const Panel = forwardRef<HTMLElement, PanelProps>(function Panel(
+  { tone = SurfaceTone.Default, className, children, ...props },
+  ref,
+) {
   return (
     <section
+      ref={ref}
       className={cx(
         'rounded-dtLg border border-[var(--dt-border)] px-5 py-5 md:px-6 md:py-6',
         surfaceToneClass[tone],
@@ -48,7 +53,8 @@ export function Panel({ tone = SurfaceTone.Default, className, children, ...prop
       {children}
     </section>
   );
-}
+});
+Panel.displayName = 'Panel';
 
 export function metricAccentColor(accent: MetricAccentName): string {
   return metricAccentClass[accent];
