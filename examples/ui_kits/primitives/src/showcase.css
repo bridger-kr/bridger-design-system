@@ -21,7 +21,8 @@ body { margin: 0; min-width: 0; }
 .showcase-content,
 .showcase-content > section,
 .showcase-result,
-.showcase-connect {
+.showcase-connect,
+.showcase-primitives {
   display: grid;
   gap: var(--dt-space-3);
 }

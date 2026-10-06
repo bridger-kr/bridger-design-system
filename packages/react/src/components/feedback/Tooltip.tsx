@@ -1,6 +1,6 @@
 import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
-import type { ReactNode } from 'react';
-import { useId, useState } from 'react';
+import { forwardRef, useId, useState } from 'react';
+import type { ReactNode, Ref } from 'react';
 
 export interface TooltipProps {
   label: ReactNode;
@@ -8,13 +8,17 @@ export interface TooltipProps {
   children: ReactNode;
 }
 
-export function Tooltip({ label, position = 'top', children }: TooltipProps) {
+export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Tooltip(
+  { label, position = 'top', children },
+  ref,
+) {
   const tooltipId = useId();
   const [open, setOpen] = useState(false);
   return (
     <BaseTooltip.Provider>
       <BaseTooltip.Root open={open} onOpenChange={setOpen}>
         <BaseTooltip.Trigger
+          ref={ref as Ref<HTMLSpanElement>}
           render={
             <span
               className="dt-tooltip-trigger"
@@ -52,4 +56,5 @@ export function Tooltip({ label, position = 'top', children }: TooltipProps) {
       </BaseTooltip.Root>
     </BaseTooltip.Provider>
   );
-}
+});
+Tooltip.displayName = 'Tooltip';

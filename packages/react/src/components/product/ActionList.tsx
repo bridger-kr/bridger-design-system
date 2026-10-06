@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -22,18 +23,26 @@ export function actionListItemClassName({ interactive = false, className }: Acti
   return cx('dt-action-list-item', interactive && 'dt-action-list-item-interactive', className);
 }
 
-export function ActionList({ children, className, ...rest }: ActionListProps) {
+export const ActionList = forwardRef<HTMLDivElement, ActionListProps>(function ActionList(
+  { children, className, ...rest },
+  ref,
+) {
   return (
-    <div {...rest} className={actionListClassName(className)}>
+    <div ref={ref} {...rest} className={actionListClassName(className)}>
       {children}
     </div>
   );
-}
+});
+ActionList.displayName = 'ActionList';
 
-export function ActionListIndex({ children, className, ...rest }: ActionListIndexProps) {
+export const ActionListIndex = forwardRef<HTMLSpanElement, ActionListIndexProps>(function ActionListIndex(
+  { children, className, ...rest },
+  ref,
+) {
   return (
-    <span {...rest} className={cx('dt-action-list-index', className)}>
+    <span ref={ref} {...rest} className={cx('dt-action-list-index', className)}>
       {children}
     </span>
   );
-}
+});
+ActionListIndex.displayName = 'ActionListIndex';
