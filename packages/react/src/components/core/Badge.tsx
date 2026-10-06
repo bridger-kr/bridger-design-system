@@ -1,12 +1,14 @@
+import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { cx } from '../../lib/cx';
 
 const TONE_CLASS = {
-  neutral: 'badge',
-  accent: 'badge badge-accent',
-  info: 'badge badge-info',
-  success: 'badge badge-success',
-  warning: 'badge badge-warning',
-  danger: 'badge badge-danger',
+  neutral: 'dt-badge',
+  accent: 'dt-badge dt-badge-accent',
+  info: 'dt-badge dt-badge-info',
+  success: 'dt-badge dt-badge-success',
+  warning: 'dt-badge dt-badge-warning',
+  danger: 'dt-badge dt-badge-danger',
 };
 
 export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'> {
@@ -22,10 +24,13 @@ export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style
  * Status / classification badge. Pill-shaped, tinted. Status or
  * classification only — never decorative.
  */
-export function Badge({ children, tone = 'neutral', dot = false, style, ...rest }: BadgeProps) {
-  const cls = TONE_CLASS[tone] ?? TONE_CLASS.neutral;
+export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
+  { children, tone = 'neutral', dot = false, className, style, ...rest },
+  ref,
+) {
+  const cls = cx(TONE_CLASS[tone] ?? TONE_CLASS.neutral, className);
   return (
-    <span className={cls} style={style} {...rest}>
+    <span ref={ref} className={cls} style={style} {...rest}>
       {dot ? (
         <span
           aria-hidden="true"
@@ -41,4 +46,5 @@ export function Badge({ children, tone = 'neutral', dot = false, style, ...rest 
       {children}
     </span>
   );
-}
+});
+Badge.displayName = 'Badge';

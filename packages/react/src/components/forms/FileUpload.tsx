@@ -1,5 +1,5 @@
 import { File, Upload, X } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { forwardRef, useId, useRef, useState } from 'react';
 import type { CSSProperties, DragEvent, HTMLAttributes } from 'react';
 import { Icon } from '../../lib/icon';
 
@@ -15,7 +15,7 @@ export interface UploadedFile {
   size?: number;
 }
 
-export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'id' | 'style'> {
+export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'id' | 'onChange' | 'style'> {
   label?: string;
   /** Accepted file types, passed to the native input. */
   accept?: string;
@@ -32,26 +32,31 @@ export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'i
  * Dashed hairline dropzone for uploading an OpenAPI spec. Idle / drag / filled.
  * @startingPoint section="Forms" subtitle="Dropzone for an OpenAPI spec" viewport="460x180"
  */
-export function FileUpload({
-  label,
-  accept = '.json,.yaml,.yml',
-  hint = 'OpenAPI 스펙 · JSON 또는 YAML',
-  file,
-  onFiles,
-  onRemove,
-  id,
-  style,
-}: FileUploadProps) {
+export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function FileUpload(
+  {
+    label,
+    accept = '.json,.yaml,.yml',
+    hint = 'OpenAPI 스펙 · JSON 또는 YAML',
+    file,
+    onFiles,
+    onRemove,
+    id,
+    className,
+    style,
+    ...rest
+  },
+  ref,
+) {
   const [drag, setDrag] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const fId = id || 'fu';
+  const autoId = useId();
+  const fId = id ?? autoId;
 
   const handle = (files: FileList | null) => {
     if (files && files.length) onFiles?.(files);
   };
 
   return (
-    <div style={{ display: 'grid', gap: 7, ...style }}>
+    <div className={className} style={{ display: 'grid', gap: 7, ...style }} {...rest}>
       {label ? <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</span> : null}
 
       {file ? (
@@ -132,18 +137,6 @@ export function FileUpload({
             setDrag(false);
             handle(e.dataTransfer.files);
           }}
-          style={{
-            display: 'grid',
-            placeItems: 'center',
-            gap: 8,
-            padding: '26px 20px',
-            textAlign: 'center',
-            cursor: 'pointer',
-            borderRadius: 'var(--dt-radius-card)',
-            border: `1.5px dashed ${drag ? 'var(--dt-accent)' : 'var(--dt-border-strong)'}`,
-            background: drag ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-            transition: 'background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease)',
-          }}
         >
           <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }}>
             <Icon icon={Upload} size="lg" />
@@ -153,7 +146,7 @@ export function FileUpload({
           </span>
           <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint}</span>
           <input
-            ref={inputRef}
+            ref={ref}
             id={fId}
             type="file"
             accept={accept}
@@ -164,4 +157,5 @@ export function FileUpload({
       )}
     </div>
   );
-}
+});
+FileUpload.displayName = 'FileUpload';

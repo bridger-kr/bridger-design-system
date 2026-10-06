@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
@@ -6,10 +7,14 @@ export interface ChatBubbleProps extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
 }
 
-export function ChatBubble({ role, children, className, ...rest }: ChatBubbleProps) {
+export const ChatBubble = forwardRef<HTMLDivElement, ChatBubbleProps>(function ChatBubble(
+  { role, children, className, ...rest },
+  ref,
+) {
   return (
-    <div className={cx('dt-chat-message', `dt-chat-message-${role}`, className)} {...rest}>
+    <div ref={ref} className={cx('dt-chat-message', `dt-chat-message-${role}`, className)} {...rest}>
       {children}
     </div>
   );
-}
+});
+ChatBubble.displayName = 'ChatBubble';

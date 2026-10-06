@@ -1,14 +1,29 @@
-import type { ButtonHTMLAttributes, CSSProperties, ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { ButtonHTMLAttributes, CSSProperties, ReactElement, ReactNode } from 'react';
+import { useRender } from '@base-ui-components/react/use-render';
 import { cx } from '../../lib/cx';
+import { warnOnce } from '../../lib/deprecate';
 
 export const BUTTON_VARIANT = {
-  Primary: 'primary',
-  Secondary: 'secondary',
+  Solid: 'solid',
+  Outline: 'outline',
   Ghost: 'ghost',
+  /** @deprecated Use `BUTTON_VARIANT.Solid`. Removed in v2.1. */
+  Primary: 'primary',
+  /** @deprecated Use `BUTTON_VARIANT.Outline`. Removed in v2.1. */
+  Secondary: 'secondary',
+  /** @deprecated Use `variant={BUTTON_VARIANT.Solid}` + `tone="danger"`. Removed in v2.1. */
   Danger: 'danger',
 } as const;
 
 export type ButtonVariant = (typeof BUTTON_VARIANT)[keyof typeof BUTTON_VARIANT];
+
+export const BUTTON_TONE = {
+  Neutral: 'neutral',
+  Danger: 'danger',
+} as const;
+
+export type ButtonTone = (typeof BUTTON_TONE)[keyof typeof BUTTON_TONE];
 
 export const BUTTON_SIZE = {
   Small: 'sm',
@@ -18,19 +33,23 @@ export const BUTTON_SIZE = {
 
 export type ButtonSize = (typeof BUTTON_SIZE)[keyof typeof BUTTON_SIZE];
 
-const VARIANT_CLASS = {
-  primary: 'btn-primary',
-  secondary: 'btn-secondary',
-  ghost: 'btn-ghost',
-  danger: 'btn-danger',
-} satisfies Record<ButtonVariant, string>;
-
 type ButtonBase = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> & {
-  /** primary = strongest action; secondary = regular; ghost = low emphasis; danger = destructive action. */
+  /**
+   * Visual shape/emphasis. `solid` = strongest action, `outline` = regular,
+   * `ghost` = low emphasis. `primary`/`secondary`/`danger` are deprecated
+   * aliases and will be removed in v2.1.
+   */
   variant?: ButtonVariant;
+  /** Semantic color intent. `danger` marks destructive actions. */
+  tone?: ButtonTone;
   size?: ButtonSize;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
+  /**
+   * Replace the rendered element (base-ui `useRender` contract), e.g.
+   * `<Button render={<a href="/pricing" />}>요금</Button>`.
+   */
+  render?: useRender.RenderProp;
   style?: CSSProperties;
 };
 
@@ -51,39 +70,76 @@ export type ButtonProps =
         | { icon?: ReactNode; iconRight: ReactNode }
       ));
 
+const LEGACY_VARIANT = {
+  primary: { variant: BUTTON_VARIANT.Solid, tone: BUTTON_TONE.Neutral },
+  secondary: { variant: BUTTON_VARIANT.Outline, tone: BUTTON_TONE.Neutral },
+  danger: { variant: BUTTON_VARIANT.Solid, tone: BUTTON_TONE.Danger },
+} as const;
+
 /**
- * Bridger button. Primary is the single strongest action per screen;
- * secondary for regular actions; ghost for low-emphasis commands; danger for destructive actions.
- *
- * The one strongest action per screen uses the ink-filled primary variant.
- * @startingPoint section="Core" subtitle="Primary / secondary / ghost / danger actions" viewport="700x140"
+ * Bridger button. `solid` is the single strongest action per surface;
+ * `outline` for regular actions; `ghost` for low-emphasis commands;
+ * `tone="danger"` marks a destructive action.
+ * @startingPoint section="Core" subtitle="Solid / outline / ghost, neutral / danger" viewport="700x140"
  */
-export function Button({
-  children,
-  variant = BUTTON_VARIANT.Primary,
-  size = BUTTON_SIZE.Medium,
-  icon = null,
-  iconRight = null,
-  disabled = false,
-  type = 'button',
-  onClick,
-  className,
-  style,
-  ...rest
-}: ButtonProps) {
-  const cls = VARIANT_CLASS[variant];
-  return (
-    <button
-      type={type}
-      className={cx('dt-button', `dt-button-${size}`, cls, className)}
-      disabled={disabled}
-      onClick={onClick}
-      style={style}
-      {...rest}
-    >
-      {icon ? <span className="dt-button-icon" aria-hidden="true">{icon}</span> : null}
-      {children}
-      {iconRight ? <span className="dt-button-icon" aria-hidden="true">{iconRight}</span> : null}
-    </button>
-  );
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  {
+    children,
+    variant = BUTTON_VARIANT.Solid,
+    tone = BUTTON_TONE.Neutral,
+    size = BUTTON_SIZE.Medium,
+    icon,
+    iconRight,
+    disabled = false,
+    type = 'button',
+    render,
+    onClick,
+    className,
+    style,
+    ...rest
+  },
+  ref,
+) {
+  let resolvedVariant: 'solid' | 'outline' | 'ghost' = variant as 'solid' | 'outline' | 'ghost';
+  let resolvedTone = tone;
+  const legacy = LEGACY_VARIANT[variant as keyof typeof LEGACY_VARIANT];
+  if (legacy) {
+    warnOnce(
+      `button-variant-${variant}`,
+      `Button variant="${variant}" is deprecated — use variant="${legacy.variant}"${legacy.tone === 'danger' ? ' tone="danger"' : ''}. Removed in v2.1.`,
+    );
+    resolvedVariant = legacy.variant;
+    if (tone === BUTTON_TONE.Neutral) resolvedTone = legacy.tone;
+  }
+
+  return useRender({
+    render,
+    defaultTagName: 'button',
+    ref,
+    props: {
+      type,
+      disabled,
+      className: cx('dt-button', `dt-button-${size}`, `dt-button-${resolvedVariant}`, className),
+      'data-tone': resolvedTone === BUTTON_TONE.Danger ? 'danger' : undefined,
+      onClick,
+      style,
+      ...rest,
+      children: (
+        <>
+          {icon ? (
+            <span className="dt-button-icon" aria-hidden="true">
+              {icon}
+            </span>
+          ) : null}
+          {children}
+          {iconRight ? (
+            <span className="dt-button-icon" aria-hidden="true">
+              {iconRight}
+            </span>
+          ) : null}
+        </>
+      ),
+    },
+  }) as ReactElement;
+});
+Button.displayName = 'Button';

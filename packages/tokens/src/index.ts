@@ -199,7 +199,7 @@ export const motion = freeze({
 
 const fontFamilies = freeze({
   sans: "'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif",
-  mono: "'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace",
+  mono: "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace",
 } as const);
 
 const fontSizes = freeze({

@@ -7,3 +7,5 @@ dist
 packages/*/dist
 *.zip
 .omo/
+test-results/
+playwright-report/

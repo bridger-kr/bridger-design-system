@@ -1,9 +1,17 @@
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
-import type { ReactNode } from 'react';
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
+import { warnOnce } from '../../lib/deprecate';
+import { cx } from '../../lib/cx';
 
 export interface DialogProps {
-  open: boolean;
+  /** Controlled open state. */
+  open?: boolean;
+  /** Uncontrolled initial open state. */
+  defaultOpen?: boolean;
+  /** Called whenever the dialog requests an open-state change (Esc, backdrop, close button). */
+  onOpenChange?: (open: boolean) => void;
+  /** @deprecated Use `onOpenChange`. Called only when the dialog closes. Removed in v2.1. */
   onClose?: () => void;
   title?: ReactNode;
   description?: ReactNode;
@@ -11,17 +19,39 @@ export interface DialogProps {
   footer?: ReactNode;
   'aria-label'?: string;
   width?: number;
+  className?: string;
+  style?: CSSProperties;
 }
 
 /** Modal dialog with overlay, Esc/backdrop close, and a footer action bar. */
-export function Dialog({ open, onClose, title, description, children, footer, 'aria-label': ariaLabel, width = 460 }: DialogProps) {
+export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
+  {
+    open,
+    defaultOpen,
+    onOpenChange,
+    onClose,
+    title,
+    description,
+    children,
+    footer,
+    'aria-label': ariaLabel,
+    width = 460,
+    className,
+    style,
+  },
+  ref,
+) {
   const titleId = useId();
+  if (onClose !== undefined) {
+    warnOnce('dialog-onclose', 'Dialog: `onClose` is deprecated — use `onOpenChange(open)`. Removed in v2.1.');
+  }
   const handleOpenChange = (nextOpen: boolean) => {
+    onOpenChange?.(nextOpen);
     if (!nextOpen) onClose?.();
   };
 
   return (
-    <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
+    <BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
         <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay" style={{
           position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-text-strong) 32%, transparent)',
@@ -29,13 +59,15 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
         }} />
         <div data-dt-dialog-content style={{ position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-modal)', display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
           <BaseDialog.Popup
-            className="dt-dialog-popup"
+            ref={ref as Ref<HTMLDivElement>}
+            className={cx('dt-dialog-popup', className)}
             aria-labelledby={title ? titleId : undefined}
             aria-label={title ? undefined : ariaLabel}
             style={{
               width: '100%', maxWidth: width, background: 'var(--dt-surface)', pointerEvents: 'auto',
               borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-overlay)',
               overflow: 'hidden',
+              ...style,
             }}
           >
             <div style={{ padding: '22px 24px' }}>
@@ -49,4 +81,5 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
       </BaseDialog.Portal>
     </BaseDialog.Root>
   );
-}
+});
+Dialog.displayName = 'Dialog';

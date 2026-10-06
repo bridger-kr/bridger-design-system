@@ -1,17 +1,25 @@
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
 import { X } from 'lucide-react';
-import type { CSSProperties, ReactNode } from 'react';
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
+import { warnOnce } from '../../lib/deprecate';
 import { Icon } from '../../lib/icon';
 
 export interface DrawerProps {
+  /** Controlled open state. */
   open?: boolean;
+  /** Uncontrolled initial open state. */
+  defaultOpen?: boolean;
+  /** Called whenever the drawer requests an open-state change (Esc, backdrop, close button). */
+  onOpenChange?: (open: boolean) => void;
   side?: 'right' | 'left';
   title?: string;
   children?: ReactNode;
   footer?: ReactNode;
+  /** @deprecated Use `onOpenChange`. Called only when the drawer closes. Removed in v2.1. */
   onClose?: () => void;
   width?: number;
+  className?: string;
   style?: CSSProperties;
   'aria-label'?: string;
 }
@@ -21,21 +29,42 @@ export interface DrawerProps {
  * Render inside a positioned container (the panel fills its height).
  * @startingPoint section="Feedback" subtitle="Side sheet over a scrim" viewport="560x420"
  */
-export function Drawer({ open = false, side = 'right', title, children, footer, onClose, width = 420, style, 'aria-label': ariaLabel }: DrawerProps) {
+export const Drawer = forwardRef<HTMLElement, DrawerProps>(function Drawer(
+  {
+    open,
+    defaultOpen,
+    onOpenChange,
+    side = 'right',
+    title,
+    children,
+    footer,
+    onClose,
+    width = 420,
+    className,
+    style,
+    'aria-label': ariaLabel,
+  },
+  ref,
+) {
   const titleId = useId();
   const fromRight = side === 'right';
+  if (onClose !== undefined) {
+    warnOnce('drawer-onclose', 'Drawer: `onClose` is deprecated — use `onOpenChange(open)`. Removed in v2.1.');
+  }
   const handleOpenChange = (nextOpen: boolean) => {
+    onOpenChange?.(nextOpen);
     if (!nextOpen) onClose?.();
   };
 
   return (
-    <BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
+    <BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', justifyContent: fromRight ? 'flex-end' : 'flex-start' }}>
           <BaseDialog.Backdrop data-dt-drawer-overlay style={{ position: 'absolute', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-text-strong) 32%, transparent)' }} />
           <BaseDialog.Popup
-            render={<aside />}
+            render={<aside ref={ref as Ref<HTMLElement>} />}
             data-dt-drawer-content
+            className={className}
             aria-labelledby={title ? titleId : undefined}
             aria-label={title ? undefined : ariaLabel || 'pane'}
             style={{
@@ -63,4 +92,5 @@ export function Drawer({ open = false, side = 'right', title, children, footer, 
       </BaseDialog.Portal>
     </BaseDialog.Root>
   );
-}
+});
+Drawer.displayName = 'Drawer';

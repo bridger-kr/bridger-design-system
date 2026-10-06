@@ -7,7 +7,6 @@ export function libConfig(options: Options = {}) {
     format: ['esm', 'cjs'],
     dts: true,
     treeshake: true,
-    splitting: false,
     clean: true,
     sourcemap: true,
     ...options,
