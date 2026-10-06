@@ -17,3 +17,4 @@ export * from './feedback/index';
 export * from './data/index';
 export * from './navigation/index';
 export * from './product/index';
+export * from './locale/index';

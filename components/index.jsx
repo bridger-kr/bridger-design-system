@@ -16,3 +16,4 @@ export * from './feedback/index.jsx';
 export * from './data/index.jsx';
 export * from './navigation/index.jsx';
 export * from './product/index.jsx';
+export * from './locale/index.jsx';

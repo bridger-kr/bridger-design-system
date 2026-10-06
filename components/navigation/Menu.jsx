@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/navigation/Menu.tsx
 // Regenerate: pnpm generate
 
-import { Menu as BaseMenu } from '@base-ui-components/react/menu';
+import { Menu as BaseMenu } from '@base-ui/react/menu';
 import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 export const Menu = forwardRef(function Menu({ trigger, items = [], align = 'left', width = 200, className, style, ...rest }, ref) {

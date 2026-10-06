@@ -5,8 +5,10 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { forwardRef } from 'react';
 import { Icon } from '../lib/icon.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 /** Pagination — prev/next plus compact page numbers with an ellipsis. */
-export const Pagination = forwardRef(function Pagination({ page = 1, pageCount = 1, onChange, style, ...rest }, ref) {
+export const Pagination = forwardRef(function Pagination({ page = 1, pageCount = 1, onChange, navLabel, previousLabel, nextLabel, style, ...rest }, ref) {
+    const messages = useDSMessages();
     const go = (targetPage) => { if (targetPage >= 1 && targetPage <= pageCount && targetPage !== page)
         onChange?.(targetPage); };
     const pages = [];
@@ -32,14 +34,14 @@ export const Pagination = forwardRef(function Pagination({ page = 1, pageCount =
         color: active ? 'var(--dt-accent-ink)' : 'var(--dt-text-subtle)',
     });
     const arrow = (disabled) => ({ ...cell(false), opacity: disabled ? 0.4 : 1, cursor: disabled ? 'not-allowed' : 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' });
-    return (<nav ref={ref} {...rest} style={{ display: 'inline-flex', alignItems: 'center', gap: 2, ...style }} aria-label="페이지">
-      <button style={arrow(page <= 1)} onClick={() => go(page - 1)} disabled={page <= 1} aria-label="이전">
+    return (<nav ref={ref} {...rest} style={{ display: 'inline-flex', alignItems: 'center', gap: 2, ...style }} aria-label={navLabel ?? messages.pagination.nav}>
+      <button style={arrow(page <= 1)} onClick={() => go(page - 1)} disabled={page <= 1} aria-label={previousLabel ?? messages.pagination.previous}>
         <Icon icon={ChevronLeft}/>
       </button>
       {pages.map((pageItem, index) => pageItem === '…'
             ? <span key={`e${index}`} style={{ minWidth: 22, textAlign: 'center', color: 'var(--dt-text-muted)' }}>…</span>
             : <button key={pageItem} style={cell(pageItem === page)} onClick={() => go(pageItem)} aria-current={pageItem === page ? 'page' : undefined}>{pageItem}</button>)}
-      <button style={arrow(page >= pageCount)} onClick={() => go(page + 1)} disabled={page >= pageCount} aria-label="다음">
+      <button style={arrow(page >= pageCount)} onClick={() => go(page + 1)} disabled={page >= pageCount} aria-label={nextLabel ?? messages.pagination.next}>
         <Icon icon={ChevronRight}/>
       </button>
     </nav>);

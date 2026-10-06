@@ -6,8 +6,13 @@ import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Check, CircleAlert, Copy } from 'lucide-react';
 import { Icon } from '../lib/icon.jsx';
 import { cx } from '../lib/cx.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 const RESET_DELAY_MS = 1500;
-export const CopyButton = forwardRef(function CopyButton({ value, label = '복사', copiedLabel = '복사됨', failedLabel = '복사하지 못했어요', iconOnly = false, onCopy, onClick, className, ...rest }, ref) {
+export const CopyButton = forwardRef(function CopyButton({ value, label, copiedLabel, failedLabel, iconOnly = false, onCopy, onClick, className, ...rest }, ref) {
+    const messages = useDSMessages();
+    const resolvedLabel = label ?? messages.code.copy;
+    const resolvedCopiedLabel = copiedLabel ?? messages.code.copied;
+    const resolvedFailedLabel = failedLabel ?? messages.code.failed;
     const [state, setState] = useState('idle');
     const resetTimer = useRef(null);
     useEffect(() => () => {
@@ -35,12 +40,12 @@ export const CopyButton = forwardRef(function CopyButton({ value, label = '복�
             clearTimeout(resetTimer.current);
         resetTimer.current = setTimeout(() => setState('idle'), RESET_DELAY_MS);
     };
-    const stateLabel = state === 'copied' ? copiedLabel : state === 'failed' ? failedLabel : null;
+    const stateLabel = state === 'copied' ? resolvedCopiedLabel : state === 'failed' ? resolvedFailedLabel : null;
     const StateIcon = state === 'copied' ? Check : state === 'failed' ? CircleAlert : Copy;
     return (<>
       <button ref={ref} type="button" className={cx('dt-copy-button', className)} data-state={state === 'idle' ? undefined : state} onClick={handleClick} {...rest}>
         <Icon icon={StateIcon} size="sm" className="dt-copy-button-icon"/>
-        {iconOnly ? null : <span className="dt-copy-button-label">{stateLabel ?? label}</span>}
+        {iconOnly ? null : <span className="dt-copy-button-label">{stateLabel ?? resolvedLabel}</span>}
       </button>
       <span className="dt-visually-hidden" role="status">
         {stateLabel ?? ''}

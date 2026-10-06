@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/forms/Select.tsx
 // Regenerate: pnpm generate
 
-import { Select as BaseSelect } from '@base-ui-components/react/select';
+import { Select as BaseSelect } from '@base-ui/react/select';
 import { ChevronDown } from 'lucide-react';
 import { forwardRef, useId } from 'react';
 import { cx } from '../lib/cx.jsx';

@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/core/Tabs.tsx
 // Regenerate: pnpm generate
 
-import { Tabs as BaseTabs } from '@base-ui-components/react/tabs';
+import { Tabs as BaseTabs } from '@base-ui/react/tabs';
 import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 import { warnOnce } from '../lib/deprecate.jsx';

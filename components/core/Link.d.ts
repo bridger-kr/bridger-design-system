@@ -3,7 +3,7 @@
 // Regenerate: pnpm generate
 
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
-import { useRender } from '@base-ui-components/react/use-render';
+import { useRender } from '@base-ui/react/use-render';
 export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
     href: string;
     /**

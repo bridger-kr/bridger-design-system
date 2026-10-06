@@ -523,9 +523,6 @@
   animation: dt-pop var(--dt-duration-base) var(--dt-ease);
 }
 
-.dt-status-pulse {
-  animation: dt-status-pulse calc(var(--dt-duration-base) * 8) var(--dt-ease) infinite;
-}
 
 .dt-tr {
   transition: background-color var(--dt-duration-fast) var(--dt-ease);
@@ -1074,16 +1071,6 @@
   }
 }
 
-@keyframes dt-status-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
 @keyframes dt-toast-enter {
   from {
     opacity: 0;
@@ -1155,7 +1142,6 @@
   justify-content: space-between;
   background: var(--dt-product-paper);
   padding-inline: clamp(18px, 4vw, 56px);
-  backdrop-filter: blur(18px);
 }
 
 .dt-product-topbar-brand {
@@ -1737,19 +1723,6 @@
   background: var(--dt-surface);
 }
 
-.dt-section-accent-wash {
-  background:
-    radial-gradient(circle at 20% 0, var(--dt-tint-accent-10), transparent 34%),
-    var(--dt-surface);
-}
-
-.dt-section-grid {
-  background:
-    linear-gradient(var(--dt-tint-text-03) 1px, transparent 1px),
-    linear-gradient(90deg, var(--dt-tint-text-03) 1px, transparent 1px),
-    var(--dt-surface);
-  background-size: 32px 32px;
-}
 
 .dt-section-inner {
   width: min(100%, 1180px);

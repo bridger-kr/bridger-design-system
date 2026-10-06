@@ -7,7 +7,13 @@ import { forwardRef, useEffect, useId, useState } from 'react';
 import { cx } from '../lib/cx.jsx';
 import { Icon } from '../lib/icon.jsx';
 import { useControllableState } from '../lib/useControllableState.jsx';
-export const CommandPalette = forwardRef(function CommandPalette({ open, defaultOpen, onOpenChange, query = '', onQueryChange, groups = [], inputLabel = '도구 · 액션 검색', listboxLabel = '검색 결과', footerHint = '↑↓ 이동 · ↵ 실행 · esc 닫기', onSelect, style, className, ...rest }, ref) {
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
+export const CommandPalette = forwardRef(function CommandPalette({ open, defaultOpen, onOpenChange, query = '', onQueryChange, groups = [], inputLabel, listboxLabel, footerHint, placeholder, onSelect, style, className, ...rest }, ref) {
+    const messages = useDSMessages();
+    const resolvedFooterHint = footerHint ?? messages.commandPalette.footerHint;
+    const resolvedPlaceholder = placeholder ?? messages.commandPalette.placeholder;
+    const resolvedInputLabel = inputLabel ?? messages.commandPalette.inputLabel;
+    const resolvedListboxLabel = listboxLabel ?? messages.commandPalette.listboxLabel;
     const uid = useId();
     const listboxId = `${uid}-listbox`;
     const optionId = (gi, ii) => `${uid}-option-${gi}-${ii}`;
@@ -66,12 +72,12 @@ export const CommandPalette = forwardRef(function CommandPalette({ open, default
       {/* search */}
       <div className="dt-command-search">
         <Icon icon={Search} className="dt-command-search-icon"/>
-        <input autoFocus value={query} onChange={(e) => onQueryChange?.(e.target.value)} onKeyDown={handleKeyDown} placeholder="도구 · 액션 검색…" role="combobox" aria-expanded="true" aria-autocomplete="list" aria-controls={listboxId} aria-activedescendant={activeDescendant} aria-label={inputLabel} className="dt-command-input"/>
+        <input autoFocus value={query} onChange={(e) => onQueryChange?.(e.target.value)} onKeyDown={handleKeyDown} placeholder={resolvedPlaceholder} role="combobox" aria-expanded="true" aria-autocomplete="list" aria-controls={listboxId} aria-activedescendant={activeDescendant} aria-label={resolvedInputLabel} className="dt-command-input"/>
         <kbd className="dt-command-kbd">⌘K</kbd>
       </div>
 
       {/* results */}
-      <div id={listboxId} role="listbox" aria-label={listboxLabel} className="dt-command-results">
+      <div id={listboxId} role="listbox" aria-label={resolvedListboxLabel} className="dt-command-results">
         {groups.map((g, gi) => (<div key={gi} role="group" aria-labelledby={g.heading ? groupLabelId(gi) : undefined} className="dt-command-group">
             {g.heading ? (<div id={groupLabelId(gi)} className="dt-command-group-heading">{g.heading}</div>) : null}
             {g.items.map((it, ii) => {
@@ -88,7 +94,7 @@ export const CommandPalette = forwardRef(function CommandPalette({ open, default
           </div>))}
       </div>
 
-      {footerHint ? (<div className="dt-command-footer">{footerHint}</div>) : null}
+      {footerHint ? (<div className="dt-command-footer">{resolvedFooterHint}</div>) : null}
     </div>);
 });
 CommandPalette.displayName = 'CommandPalette';

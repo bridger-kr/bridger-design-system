@@ -29,6 +29,7 @@ export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>
     /** Accessible name for the results listbox. */
     listboxLabel?: string;
     footerHint?: string;
+    placeholder?: string;
     onSelect?: (item: CommandItem) => void;
     style?: CSSProperties;
 }

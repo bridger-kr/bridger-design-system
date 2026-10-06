@@ -4,6 +4,7 @@
 
 import { forwardRef, useEffect, useImperativeHandle, useState, } from 'react';
 import { BRAND_SYMBOL_SIZE, BRAND_SYMBOL_VIEW_BOX, BRAND_WORDMARK_ASPECT_RATIO, BRAND_WORDMARK_PATHS, BRAND_WORDMARK_SIZE, BRAND_WORDMARK_VIEW_BOX, } from './brandLogoGeometry.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 export const BRAND_LOGO_LANGUAGE = {
     Korean: 'ko',
     English: 'en',
@@ -15,12 +16,6 @@ export const BRAND_LOGO_SIZE_NAME = {
     ExtraLarge: 'xl',
     Symbol: 'symbol',
     Favicon: 'favicon',
-};
-const BRAND_WORDMARK = 'Bridger';
-const BRAND_WORDMARK_PERIOD = '.';
-const BRAND_LOGO_LABEL = {
-    [BRAND_LOGO_LANGUAGE.Korean]: '브릿저',
-    [BRAND_LOGO_LANGUAGE.English]: `${BRAND_WORDMARK}${BRAND_WORDMARK_PERIOD}`,
 };
 function playMark(setArmed) {
     const scheduleFrame = typeof requestAnimationFrame === 'function'
@@ -65,6 +60,8 @@ export const BrandLogo = forwardRef(function BrandLogo({ size = BRAND_LOGO_SIZE_
     const isSymbol = size === BRAND_LOGO_SIZE_NAME.Symbol;
     const isFavicon = size === BRAND_LOGO_SIZE_NAME.Favicon;
     const [armed, setArmed] = useState(false);
+    const messages = useDSMessages();
+    const wordmarkLabel = messages.brand.wordmark[lang];
     useImperativeHandle(ref, () => ({
         play() {
             playMark(setArmed);
@@ -95,7 +92,7 @@ export const BrandLogo = forwardRef(function BrandLogo({ size = BRAND_LOGO_SIZE_
     }, [loop]);
     if (isSymbol || isFavicon) {
         const symbolSize = resolveSymbolSize({ isFavicon });
-        return (<span aria-label={BRAND_LOGO_LABEL[lang]} role="img" style={{
+        return (<span aria-label={wordmarkLabel} role="img" style={{
                 display: 'inline-flex',
                 width: symbolSize.width,
                 height: symbolSize.height,
@@ -111,7 +108,7 @@ export const BrandLogo = forwardRef(function BrandLogo({ size = BRAND_LOGO_SIZE_
       </span>);
     }
     const wordmarkSize = resolveWordmarkSize(size);
-    return (<span aria-label={BRAND_LOGO_LABEL[lang]} role="img" className="dt-brand-logo" data-armed={armed ? 'true' : 'false'} style={{
+    return (<span aria-label={wordmarkLabel} role="img" className="dt-brand-logo" data-armed={armed ? 'true' : 'false'} style={{
             display: 'inline-flex',
             alignItems: 'center',
             width: wordmarkSize.width,

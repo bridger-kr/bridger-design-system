@@ -3,7 +3,7 @@
 // Regenerate: pnpm generate
 
 import { forwardRef } from 'react';
-import { useRender } from '@base-ui-components/react/use-render';
+import { useRender } from '@base-ui/react/use-render';
 import { cx } from '../lib/cx.jsx';
 import { warnOnce } from '../lib/deprecate.jsx';
 export const BUTTON_VARIANT = {

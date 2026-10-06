@@ -2,17 +2,19 @@
 // Source: packages/react/src/components/feedback/Drawer.tsx
 // Regenerate: pnpm generate
 
-import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
+import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { X } from 'lucide-react';
 import { forwardRef, useId } from 'react';
 import { warnOnce } from '../lib/deprecate.jsx';
 import { Icon } from '../lib/icon.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 /**
  * Side sheet over a scrim for secondary flows — floats (shadow) but stays flat inside.
  * Render inside a positioned container (the panel fills its height).
  * @startingPoint section="Feedback" subtitle="Side sheet over a scrim" viewport="560x420"
  */
-export const Drawer = forwardRef(function Drawer({ open, defaultOpen, onOpenChange, side = 'right', title, children, footer, onClose, width = 420, className, style, 'aria-label': ariaLabel, }, ref) {
+export const Drawer = forwardRef(function Drawer({ open, defaultOpen, onOpenChange, side = 'right', title, children, footer, onClose, closeLabel, width = 420, className, style, 'aria-label': ariaLabel, }, ref) {
+    const messages = useDSMessages();
     const titleId = useId();
     const fromRight = side === 'right';
     if (onClose !== undefined) {
@@ -36,7 +38,7 @@ export const Drawer = forwardRef(function Drawer({ open, defaultOpen, onOpenChan
         }}>
             <header style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '16px 18px', borderBottom: '1px solid var(--dt-border)' }}>
               {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ margin: 0, flex: 1, minWidth: 0, fontSize: 16, fontWeight: 600, letterSpacing: '-0.01em', color: 'var(--dt-text-strong)' }}/>}>{title}</BaseDialog.Title> : null}
-              <BaseDialog.Close aria-label="닫기" className="dt-close-control" style={{ flex: '0 0 auto', display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-sm)', color: 'var(--dt-text-subtle)', cursor: 'pointer' }}>
+              <BaseDialog.Close aria-label={closeLabel ?? messages.common.close} className="dt-close-control" style={{ flex: '0 0 auto', display: 'grid', placeItems: 'center', border: 'none', background: 'var(--dt-surface-sunken)', borderRadius: 'var(--dt-radius-sm)', color: 'var(--dt-text-subtle)', cursor: 'pointer' }}>
                 <Icon icon={X}/>
               </BaseDialog.Close>
             </header>

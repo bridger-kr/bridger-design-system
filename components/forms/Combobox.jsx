@@ -2,13 +2,14 @@
 // Source: packages/react/src/components/forms/Combobox.tsx
 // Regenerate: pnpm generate
 
-import { Combobox as BaseCombobox } from '@base-ui-components/react/combobox';
+import { Combobox as BaseCombobox } from '@base-ui/react/combobox';
 import { Check, Search } from 'lucide-react';
 import { forwardRef, useId } from 'react';
 import { cx } from '../lib/cx.jsx';
 import { warnOnce } from '../lib/deprecate.jsx';
 import { useControllableState } from '../lib/useControllableState.jsx';
 import { Icon } from '../lib/icon.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 /**
  * Searchable select for large option sets (the 230+ public-data API catalog).
  * Hairline field; the listbox is a bordered plane. Filters on label + meta.
@@ -16,7 +17,10 @@ import { Icon } from '../lib/icon.jsx';
  * uncontrolled with `defaultValue`/`defaultOpen`.
  * @startingPoint section="Forms" subtitle="Searchable select over a large catalog" viewport="460x320"
  */
-export const Combobox = forwardRef(function Combobox({ label, hint, options = [], value, defaultValue, onValueChange, onChange, open, defaultOpen, onOpenChange, placeholder = '검색…', emptyText = '결과 없음', id, slotProps, className, style, ...rest }, ref) {
+export const Combobox = forwardRef(function Combobox({ label, hint, options = [], value, defaultValue, onValueChange, onChange, open, defaultOpen, onOpenChange, placeholder, emptyText, id, slotProps, className, style, ...rest }, ref) {
+    const messages = useDSMessages();
+    const resolvedPlaceholder = placeholder ?? messages.combobox.placeholder;
+    const resolvedEmptyText = emptyText ?? messages.combobox.empty;
     const [isOpen, setOpen] = useControllableState({
         value: open,
         defaultValue: defaultOpen ?? false,
@@ -74,7 +78,7 @@ export const Combobox = forwardRef(function Combobox({ label, hint, options = []
       <BaseCombobox.Portal>
         <BaseCombobox.Positioner sideOffset={6}>
           <BaseCombobox.Popup className="dt-combobox-popup">
-          {filtered.length === 0 ? (<BaseCombobox.Empty className="dt-combobox-empty">{emptyText}</BaseCombobox.Empty>) : (<BaseCombobox.List>
+          {filtered.length === 0 ? (<BaseCombobox.Empty className="dt-combobox-empty">{resolvedEmptyText}</BaseCombobox.Empty>) : (<BaseCombobox.List>
             {filtered.map((o) => {
                 const isSel = o.value === selectedValue;
                 return (<BaseCombobox.Item key={o.value} value={o} className="dt-combobox-option">

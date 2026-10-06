@@ -16,6 +16,11 @@ export interface FileUploadProps extends Omit<HTMLAttributes<HTMLDivElement>, 'i
     file?: UploadedFile | null;
     onFiles?: (files: FileList) => void;
     onRemove?: () => void;
+    /** Copy overrides; each defaults to the ambient locale. */
+    chooseFileLabel?: string;
+    dropHintLabel?: string;
+    uploadedLabel?: string;
+    removeLabel?: string;
     id?: string;
     style?: CSSProperties;
 }

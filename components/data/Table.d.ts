@@ -35,6 +35,8 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
      */
     readonly rowAction?: TableRowAction<Row>;
     readonly empty?: ReactNode;
+    /** Header cell for the row-action column; defaults to the ambient locale. */
+    readonly rowActionHeader?: ReactNode;
     readonly style?: CSSProperties;
 }
 export declare const Table: <Row extends TableRow = TableRow>(props: TableProps<Row> & {

@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/forms/Slider.tsx
 // Regenerate: pnpm generate
 
-import { Slider as BaseSlider } from '@base-ui-components/react/slider';
+import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { forwardRef, useId } from 'react';
 import { warnOnce } from '../lib/deprecate.jsx';
 /**

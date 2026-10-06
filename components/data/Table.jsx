@@ -4,6 +4,7 @@
 
 import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 function rowActionState(action, row) {
     switch (action.kind) {
         case 'button': {
@@ -35,7 +36,8 @@ function rowActionState(action, row) {
  * Data table — scannable, dense, hairline-divided. Columns define header,
  * alignment, and an optional cell renderer. Built for comparison, not decoration.
  */
-function TableInner({ columns = [], rows = [], rowKey, rowAction, empty, className, style, ...rest }, ref) {
+function TableInner({ columns = [], rows = [], rowKey, rowAction, rowActionHeader, empty, className, style, ...rest }, ref) {
+    const messages = useDSMessages();
     if (!rows.length && empty)
         return <>{empty}</>;
     return (<div ref={ref} {...rest} className={cx('dt-table', className)} style={{
@@ -62,7 +64,7 @@ function TableInner({ columns = [], rows = [], rowKey, rowAction, empty, classNa
             }}>
                 {column.header}
               </th>))}
-            {rowAction ? <th className="dt-table-row-action-header" scope="col">행 작업</th> : null}
+            {rowAction ? <th className="dt-table-row-action-header" scope="col">{rowActionHeader ?? messages.table.rowActions}</th> : null}
           </tr>
         </thead>
         <tbody>

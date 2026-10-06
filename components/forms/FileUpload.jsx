@@ -5,6 +5,7 @@
 import { File, Upload, X } from 'lucide-react';
 import { forwardRef, useId, useState } from 'react';
 import { Icon } from '../lib/icon.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 function fmtSize(bytes) {
     if (bytes == null)
         return '';
@@ -18,7 +19,8 @@ function fmtSize(bytes) {
  * Dashed hairline dropzone for uploading an OpenAPI spec. Idle / drag / filled.
  * @startingPoint section="Forms" subtitle="Dropzone for an OpenAPI spec" viewport="460x180"
  */
-export const FileUpload = forwardRef(function FileUpload({ label, accept = '.json,.yaml,.yml', hint = 'OpenAPI 스펙 · JSON 또는 YAML', file, onFiles, onRemove, id, className, style, ...rest }, ref) {
+export const FileUpload = forwardRef(function FileUpload({ label, accept = '.json,.yaml,.yml', hint, file, onFiles, onRemove, chooseFileLabel, dropHintLabel, uploadedLabel, removeLabel, id, className, style, ...rest }, ref) {
+    const messages = useDSMessages();
     const [drag, setDrag] = useState(false);
     const autoId = useId();
     const fId = id ?? autoId;
@@ -63,10 +65,10 @@ export const FileUpload = forwardRef(function FileUpload({ label, accept = '.jso
               {file.name}
             </div>
             <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)', marginTop: 2 }}>
-              {fmtSize(file.size)} · 업로드 완료
+              {fmtSize(file.size)} · {uploadedLabel ?? messages.fileUpload.uploaded}
             </div>
           </div>
-          <button type="button" onClick={onRemove} aria-label="제거" className="dt-file-upload-remove" style={{
+          <button type="button" onClick={onRemove} aria-label={removeLabel ?? messages.fileUpload.remove} className="dt-file-upload-remove" style={{
                 flex: '0 0 auto',
                 display: 'grid',
                 placeItems: 'center',
@@ -90,9 +92,9 @@ export const FileUpload = forwardRef(function FileUpload({ label, accept = '.jso
             <Icon icon={Upload} size="lg"/>
           </span>
           <span style={{ fontSize: 13.5, color: 'var(--dt-text-strong)' }}>
-            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>파일 선택</span> 또는 끌어다 놓기
+            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>{chooseFileLabel ?? messages.fileUpload.chooseFile}</span> {dropHintLabel ?? messages.fileUpload.dropHint}
           </span>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint}</span>
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint ?? messages.fileUpload.specHint}</span>
           <input ref={ref} id={fId} type="file" accept={accept} onChange={(e) => handle(e.target.files)} style={{ display: 'none' }}/>
         </label>)}
     </div>);

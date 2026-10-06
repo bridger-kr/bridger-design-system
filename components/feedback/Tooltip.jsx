@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/feedback/Tooltip.tsx
 // Regenerate: pnpm generate
 
-import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
+import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { forwardRef, useId, useState } from 'react';
 export const Tooltip = forwardRef(function Tooltip({ label, position = 'top', children }, ref) {
     const tooltipId = useId();

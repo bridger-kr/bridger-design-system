@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/forms/Checkbox.tsx
 // Regenerate: pnpm generate
 
-import { Checkbox as BaseCheckbox } from '@base-ui-components/react/checkbox';
+import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
 import { Check } from 'lucide-react';
 import { forwardRef, useId } from 'react';
 import { cx } from '../lib/cx.jsx';

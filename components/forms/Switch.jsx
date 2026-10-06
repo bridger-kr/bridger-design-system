@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/forms/Switch.tsx
 // Regenerate: pnpm generate
 
-import { Switch as BaseSwitch } from '@base-ui-components/react/switch';
+import { Switch as BaseSwitch } from '@base-ui/react/switch';
 import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 import { useControllableState } from '../lib/useControllableState.jsx';

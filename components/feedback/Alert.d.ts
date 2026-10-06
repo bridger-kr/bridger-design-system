@@ -17,6 +17,8 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'
     icon?: ReactNode;
     action?: ReactNode;
     onDismiss?: () => void;
+    /** Accessible name for the dismiss button; defaults to the ambient locale. */
+    closeLabel?: string;
     style?: CSSProperties;
 }
 export declare const Alert: import("react").ForwardRefExoticComponent<AlertProps & import("react").RefAttributes<HTMLDivElement>>;

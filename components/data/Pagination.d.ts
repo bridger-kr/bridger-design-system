@@ -7,6 +7,10 @@ export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onCh
     page?: number;
     pageCount?: number;
     onChange?: (page: number) => void;
+    /** Accessible names; default to the ambient locale. */
+    navLabel?: string;
+    previousLabel?: string;
+    nextLabel?: string;
     style?: CSSProperties;
 }
 /** Pagination — prev/next plus compact page numbers with an ellipsis. */

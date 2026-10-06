@@ -6,6 +6,7 @@ import { X } from 'lucide-react';
 import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 import { Icon } from '../lib/icon.jsx';
+import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 export const AlertTone = {
     Info: 'info',
     Success: 'success',
@@ -18,7 +19,8 @@ const TONE_BACKGROUND = {
     warning: 'var(--dt-tint-warning)',
     danger: 'var(--dt-tint-danger)',
 };
-export const Alert = forwardRef(function Alert({ tone = AlertTone.Info, title, children, icon, action, onDismiss, className, style, ...rest }, ref) {
+export const Alert = forwardRef(function Alert({ tone = AlertTone.Info, title, children, icon, action, onDismiss, closeLabel, className, style, ...rest }, ref) {
+    const messages = useDSMessages();
     const background = TONE_BACKGROUND[tone] ?? TONE_BACKGROUND[AlertTone.Info];
     return (<div ref={ref} role="status" className={cx('dt-alert', className)} style={{
             alignItems: 'flex-start',
@@ -40,7 +42,7 @@ export const Alert = forwardRef(function Alert({ tone = AlertTone.Info, title, c
         {children ? <div style={{ marginTop: title ? 3 : 0, fontSize: 13, fontWeight: 400, lineHeight: 'normal' }}>{children}</div> : null}
         {action ? <div style={{ marginTop: 10 }}>{action}</div> : null}
       </div>
-      {onDismiss ? (<button className="dt-close-control" onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
+      {onDismiss ? (<button className="dt-close-control" onClick={onDismiss} aria-label={closeLabel ?? messages.common.close} style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
           <Icon icon={X}/>
         </button>) : null}
     </div>);

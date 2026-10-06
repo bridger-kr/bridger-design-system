@@ -16,6 +16,8 @@ export interface DrawerProps {
     footer?: ReactNode;
     /** @deprecated Use `onOpenChange`. Called only when the drawer closes. Removed in v2.1. */
     onClose?: () => void;
+    /** Accessible name for the close button; defaults to the ambient locale. */
+    closeLabel?: string;
     width?: number;
     className?: string;
     style?: CSSProperties;

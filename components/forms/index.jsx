@@ -4,6 +4,7 @@
 
 export { Checkbox } from './Checkbox.jsx';
 export { Combobox } from './Combobox.jsx';
+export { Field } from './Field.jsx';
 export { FileUpload } from './FileUpload.jsx';
 export { RadioGroup } from './RadioGroup.jsx';
 export { SegmentedControl } from './SegmentedControl.jsx';

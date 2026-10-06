@@ -3,7 +3,7 @@
 // Regenerate: pnpm generate
 
 import { forwardRef } from 'react';
-import { Separator as BaseSeparator } from '@base-ui-components/react/separator';
+import { Separator as BaseSeparator } from '@base-ui/react/separator';
 import { cx } from '../lib/cx.jsx';
 /**
  * Hairline divider between content groups (base-ui `Separator`). Renders a

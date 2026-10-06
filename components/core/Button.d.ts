@@ -3,7 +3,7 @@
 // Regenerate: pnpm generate
 
 import type { ButtonHTMLAttributes, CSSProperties, ReactNode } from 'react';
-import { useRender } from '@base-ui-components/react/use-render';
+import { useRender } from '@base-ui/react/use-render';
 export declare const BUTTON_VARIANT: {
     readonly Solid: "solid";
     readonly Outline: "outline";

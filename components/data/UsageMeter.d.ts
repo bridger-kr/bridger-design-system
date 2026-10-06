@@ -7,7 +7,7 @@ export interface UsageMeterProps extends Omit<HTMLAttributes<HTMLDivElement>, 's
     label?: ReactNode;
     value?: number;
     max?: number;
-    /** Suffix after max, e.g. "회/일". */
+    /** Suffix after max, e.g. "req/day". */
     unit?: string;
     hint?: ReactNode;
     style?: CSSProperties;

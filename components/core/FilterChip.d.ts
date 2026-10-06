@@ -11,6 +11,8 @@ export interface FilterChipProps {
     removable?: boolean;
     onToggle?: () => void;
     onRemove?: () => void;
+    /** Accessible name for the remove button; defaults to the ambient locale. */
+    removeAriaLabel?: string;
     icon?: ReactNode;
     className?: string;
     style?: CSSProperties;

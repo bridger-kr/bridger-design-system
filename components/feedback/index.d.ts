@@ -2,6 +2,8 @@
 // Source: packages/react/src/components/feedback/index.ts
 // Regenerate: pnpm generate
 
+export { ConfirmDialog } from './ConfirmDialog';
+export type { ConfirmDialogProps } from './ConfirmDialog';
 export { Alert } from './Alert';
 export { AlertTone } from './Alert';
 export type { AlertProps, AlertTone as AlertToneValue } from './Alert';
@@ -15,7 +17,7 @@ export { Skeleton } from './Skeleton';
 export type { SkeletonProps } from './Skeleton';
 export { Spinner } from './Spinner';
 export type { SpinnerProps } from './Spinner';
-export { Toast } from './Toast';
-export type { ToastProps } from './Toast';
+export { Toast, ToastProvider, useToast } from './Toast';
+export type { ToastProps, ToastTone, ToastPushOptions, ToastProviderProps, UseToastReturn } from './Toast';
 export { Tooltip } from './Tooltip';
 export type { TooltipProps } from './Tooltip';
