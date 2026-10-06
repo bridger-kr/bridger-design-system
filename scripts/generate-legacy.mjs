@@ -8,7 +8,7 @@
      packages/react/src/   (.ts/.tsx)            -> components/  (.jsx + .d.ts)
      packages/react/src/   (.css)                -> components/  (.css)
      packages/react/src/   (.prompt.md)          -> components/  (.prompt.md)
-     examples/cards/       (.card.html)          -> components/<family>/
+     specimens/cards/       (.card.html)          -> components/<family>/
 
    The src mirror strips one leading 'components/' segment:
      src/components/<f>/X.tsx  -> components/<f>/X.jsx
@@ -38,7 +38,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC_REACT = join(ROOT, 'packages/react/src');
 const SRC_TOKENS = join(ROOT, 'packages/tokens/css');
-const SRC_CARDS = join(ROOT, 'examples/cards');
+const SRC_CARDS = join(ROOT, 'specimens/cards');
 const OUT_COMPONENTS = join(ROOT, 'components');
 const OUT_TOKENS = join(ROOT, 'tokens');
 
@@ -202,7 +202,7 @@ for (const [fileName, text] of Object.entries(emitted)) {
   countDts += 1;
 }
 
-// --- 5. components/<family>/*.card.html <- examples/cards/ --------------------
+// --- 5. components/<family>/*.card.html <- specimens/cards/ --------------------
 // Card sources are named <family>[-segment].card.html; the family segment
 // selects the output directory.
 let countCards = 0;

@@ -60,7 +60,7 @@ Component and token rules (pointers, not restatements):
   (built by `pnpm generate` / `scripts/generate-legacy.mjs`). Never edit them
   by hand — change the canonical source and regenerate. CI fails on drift.
   `.prompt.md` sources are colocated beside each `.tsx` in `packages/react`;
-  `.card.html` specimen sources live in `examples/cards/`.
+  `.card.html` specimen sources live in `specimens/cards/`.
 
 <!-- rule:ds:react:60-components owner:bridger-kr since:2026-07 source:DESIGN.md#9-component-manifest-and-package-boundary -->
 - `@bridger-kr/react` ships 60 typed components across `core`, `forms`,

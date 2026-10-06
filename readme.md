@@ -286,7 +286,7 @@ Generated-tree sources (edit these, never the mirror):
 - `packages/react/src/**/*.css` → `components/` (`src/styles.css` → `components/styles.css`, the component + state stylesheet)
 - `packages/react/src/**/*.prompt.md` → `components/`
 - `packages/tokens/css/*.css` → `tokens/*.css`
-- `examples/cards/<family>[-segment].card.html` → `components/<family>/`
+- `specimens/cards/<family>[-segment].card.html` → `components/<family>/`
 - `scripts/generate-legacy.mjs` regenerates everything; CI fails if the committed mirror drifts from `pnpm generate`, and `pnpm verify:mirror` fails if any generated import does not resolve or is not declared in root `dependencies`.
 
 **The components**, grouped by family:
