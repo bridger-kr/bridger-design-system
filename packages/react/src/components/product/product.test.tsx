@@ -102,14 +102,15 @@ describe('Product components', () => {
 
   describe('Product composition primitives', () => {
     it('publishes enum-like search specimen variants for consumers', () => {
-      const pill = SearchPill({
-        tone: SEARCH_PILL_TONE.Accent,
-        size: SEARCH_PILL_SIZE.Large,
-        children: '날씨 데이터 찾기',
-      });
+      render(
+        <SearchPill tone={SEARCH_PILL_TONE.Accent} size={SEARCH_PILL_SIZE.Large}>
+          날씨 데이터 찾기
+        </SearchPill>,
+      );
 
-      expect(pill.props.className).toContain('dt-search-pill-accent');
-      expect(pill.props.className).toContain('dt-search-pill-lg');
+      const pill = screen.getByText('날씨 데이터 찾기');
+      expect(pill.className).toContain('dt-search-pill-accent');
+      expect(pill.className).toContain('dt-search-pill-lg');
     });
 
     it('exports the console action-list contract for guide-first flows', () => {

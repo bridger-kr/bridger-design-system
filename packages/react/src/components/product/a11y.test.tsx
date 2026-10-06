@@ -10,17 +10,13 @@ import {
   AnnotationHotspot,
   BrandLogo,
   ChatBubble,
-  ProductActionPill,
-  ProductCinematicBackdrop,
-  ProductMotionField,
   ProductPageHeader,
   ProductShell,
+  ProductSideRail,
   ProductTopbar,
   SearchPill,
   SectionCard,
   ToolCard,
-  WindowChrome,
-  WindowFrame,
 } from './index';
 
 async function expectNoViolations(html: Element | string) {
@@ -46,25 +42,24 @@ describe('product a11y', () => {
         <AnnotationHotspot x="10%" y="20%" label="주석" />
         <BrandLogo />
         <ChatBubble role="assistant">안녕하세요</ChatBubble>
-        <ProductActionPill href="/console">콘솔 열기</ProductActionPill>
         <ProductPageHeader title="공공데이터" description="카탈로그" />
         <ProductTopbar brand={<span>Bridger</span>} actions={<a href="/login">로그인</a>} />
         <SearchPill>검색어</SearchPill>
         <SectionCard title="사용량">내용</SectionCard>
         <ToolCard name="weather_getForecast" description="예보 조회" path="/tools/weather" />
-        <WindowChrome title="Bridger" url="https://bridger.kr" />
-        <WindowFrame>본문</WindowFrame>
       </>,
     );
 
     await expectNoViolations(container);
   });
 
-  it('keeps decorative layers hidden from assistive technology', async () => {
+  it('renders the side rail as a labeled landmark', async () => {
     const { container } = render(
       <ProductShell>
-        <ProductCinematicBackdrop />
-        <ProductMotionField />
+        <ProductSideRail
+          label="섹션"
+          items={[{ key: 'overview', href: '#overview', label: '개요' }]}
+        />
         <p>콘텐츠</p>
       </ProductShell>,
     );
