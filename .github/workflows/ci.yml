@@ -46,6 +46,12 @@ jobs:
       - name: Test
         run: pnpm test
 
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Theme e2e (JS-disabled prefers-color-scheme contract)
+        run: pnpm test:e2e
+
       - name: Lint
         run: pnpm lint
 

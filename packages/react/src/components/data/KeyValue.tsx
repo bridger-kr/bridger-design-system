@@ -4,7 +4,7 @@ import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 export interface KeyValueItem {
   key: string;
   value: ReactNode;
-  /** Render the value in JetBrains Mono (paths, IDs, methods). */
+  /** Render the value in the mono stack (ASCII: paths, IDs, methods). */
   mono?: boolean;
   /** Tint the value persimmon (highlighted field). */
   accent?: boolean;

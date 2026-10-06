@@ -73,9 +73,44 @@ function extractVars(selector: string): Map<string, string> {
   return variables;
 }
 
+/** Split `light-dark(<a>, <b>)` into its two arms; null for plain values. */
+function splitLightDark(value: string): [string, string] | null {
+  const match = value.match(/^\s*light-dark\(\s*([\s\S]*?)\s*\)\s*$/);
+  if (!match) return null;
+  const inner = match[1];
+  let depth = 0;
+  for (let index = 0; index < inner.length; index += 1) {
+    const char = inner[index];
+    if (char === '(') depth += 1;
+    else if (char === ')') depth -= 1;
+    else if (char === ',' && depth === 0) {
+      return [normalizeValue(inner.slice(0, index)), normalizeValue(inner.slice(index + 1))];
+    }
+  }
+  return null;
+}
+
+/** Resolve a contract value for one theme: unwraps the matching light-dark() arm. */
+function themeValue(value: string | undefined, theme: 'light' | 'dark'): string | undefined {
+  if (value == null) return undefined;
+  const arms = splitLightDark(value);
+  return arms ? arms[theme === 'light' ? 0 : 1] : value;
+}
+
+function themedContract(vars: Map<string, string>, theme: 'light' | 'dark'): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const [name, value] of vars) out.set(name, themeValue(value, theme) ?? value);
+  return out;
+}
+
 const lightDefaultContract = extractVars(':root');
 const darkContract = extractVars(":root[data-theme='dark']");
 const lightContract = extractVars(":root[data-theme='light']");
+// :root carries single light-dark() definitions; the explicit dark block only
+// restates the overlay shadow (light-dark() cannot express non-color values).
+const lightThemeContract = themedContract(lightDefaultContract, 'light');
+const darkThemeContract = themedContract(lightDefaultContract, 'dark');
+for (const [name, value] of darkContract) darkThemeContract.set(name, value);
 
 function hexChannel(value: string): number {
   const parsed = Number.parseInt(value, 16) / 255;
@@ -146,10 +181,16 @@ function typographyValues(): TokenRecord {
 }
 
 describe('@bridger-kr/tokens', () => {
-  it('publishes the light theme at :root with an explicit equivalent light selector', () => {
-    expect(lightDefaultContract.get('--dt-bg')).toBe('#ffffff');
-    expect(lightDefaultContract.get('--dt-surface')).toBe('oklch(0.9875 0 0)');
-    expect(lightDefaultContract).toEqual(lightContract);
+  it('follows the OS theme by default and lets explicit data-theme choices win', () => {
+    // DS #44 — system default: :root opts into both schemes, so
+    // prefers-color-scheme resolves light-dark() with no JS involved.
+    expect(contractCss).toContain('color-scheme: light dark');
+    expect(contractCss).toContain('@media (prefers-color-scheme: dark)');
+    // Explicit selectors pin the scheme; they restate no token values.
+    expect(lightContract.size).toBe(0);
+    expect(themeValue(lightDefaultContract.get('--dt-bg'), 'light')).toBe('#ffffff');
+    expect(themeValue(lightDefaultContract.get('--dt-bg'), 'dark')).toBe('oklch(0.145 0 0)');
+    expect(themeValue(lightDefaultContract.get('--dt-surface'), 'light')).toBe('oklch(0.9875 0 0)');
   });
 
   it('keeps root compatibility entrypoints and the Figma generator on the canonical contract', () => {
@@ -159,16 +200,31 @@ describe('@bridger-kr/tokens', () => {
     }
   });
 
-  it('keeps the dark block to color overrides plus the overlay shadow', () => {
-    const colorVarNames: Set<string> = new Set(Object.values(cssVarName.colors));
-    const allowed: Set<string> = new Set([...colorVarNames, cssVarName.shadows.overlay]);
+  it('keeps the explicit dark block to the overlay shadow; themed colors are single light-dark() definitions', () => {
     for (const name of darkContract.keys()) {
-      expect(allowed.has(name), `${name} is not a color or the overlay shadow`).toBe(true);
+      expect(
+        name === cssVarName.shadows.overlay,
+        `${name} is restated in the explicit dark block`,
+      ).toBe(true);
     }
-    // Every dark override must actually differ from (or extend) the light value
-    // it replaces — no verbatim restatements of the shared scale.
-    for (const [name, value] of darkContract) {
-      expect(value, `${name} restates the light value verbatim`).not.toBe(lightDefaultContract.get(name));
+    // Every color token whose light/dark exports differ must be a light-dark()
+    // pair on :root, and the arms must actually differ.
+    for (const [key, varName] of Object.entries(cssVarName.colors)) {
+      const lightExport = colors.light[key as keyof typeof colors.light];
+      const darkExport = colors.dark[key as keyof typeof colors.dark];
+      const contractValue = lightDefaultContract.get(varName);
+      expect(contractValue, `${varName} is missing from contract.css`).toBeDefined();
+      const arms = splitLightDark(contractValue ?? '');
+      if (lightExport !== darkExport) {
+        expect(arms, `${varName} differs per theme but is not light-dark()`).not.toBeNull();
+        expect(arms?.[0], `${varName} light arm must differ from its dark arm`).not.toBe(arms?.[1]);
+      }
+    }
+    // Nothing outside colors + the overlay shadow may vary across themes.
+    const colorVarNames = new Set<string>(Object.values(cssVarName.colors));
+    for (const [name, value] of lightDefaultContract) {
+      const arms = splitLightDark(value);
+      if (arms) expect(colorVarNames.has(name), `${name} uses light-dark() but is not a color token`).toBe(true);
     }
   });
 
@@ -186,16 +242,8 @@ describe('@bridger-kr/tokens', () => {
   });
 
   it('keeps exported color tokens aligned with the CSS contract', () => {
-    expectGroupMatchesContract(lightDefaultContract, colors.light, cssVarName.colors);
-    expectGroupMatchesContract(lightContract, colors.light, cssVarName.colors);
-    // Dark exports resolve through inheritance: every dark contract override
-    // must match the dark export for that key.
-    for (const [key, varName] of Object.entries(cssVarName.colors)) {
-      const darkValue = darkContract.get(varName);
-      if (darkValue !== undefined) {
-        expect(normalizeValue(colors.dark[key as keyof typeof colors.dark]), `${varName} drifted from dark contract`).toBe(darkValue);
-      }
-    }
+    expectGroupMatchesContract(lightThemeContract, colors.light, cssVarName.colors);
+    expectGroupMatchesContract(darkThemeContract, colors.dark, cssVarName.colors);
   });
 
   it('keeps exported scale and typography tokens aligned with the CSS contract', () => {
@@ -205,8 +253,8 @@ describe('@bridger-kr/tokens', () => {
   });
 
   it('keeps exported shadow tokens aligned with both theme blocks in the CSS contract', () => {
-    expectGroupMatchesContract(darkContract, shadows.dark, cssVarName.shadows);
-    expectGroupMatchesContract(lightDefaultContract, shadows.light, cssVarName.shadows);
+    expectGroupMatchesContract(darkThemeContract, shadows.dark, cssVarName.shadows);
+    expectGroupMatchesContract(lightThemeContract, shadows.light, cssVarName.shadows);
   });
 
   it('keeps layers, motion, and effects aligned with the CSS contract', () => {

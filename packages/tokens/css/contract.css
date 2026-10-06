@@ -12,10 +12,14 @@
    Do not import this file into those apps in the design-foundation
    lane. Update the app-local mirrors when changing this contract.
 
-   Theme contract: light is the default token set. Dark activates with
-   :root[data-theme='dark'] or .dark after an explicit user choice and
-   only overrides the tokens that actually change: colors plus the
-   single overlay shadow. Spacing, radius, type, and motion are shared.
+   Theme contract: the theme follows the OS (`prefers-color-scheme`) by
+   default — :root carries `color-scheme: light dark` and themed tokens
+   are single `light-dark()` definitions. An explicit
+   :root[data-theme='light'|'dark'] (written by ThemeSwitch or the
+   pre-paint script) pins `color-scheme` and wins over the OS. `.dark`
+   is a deprecated alias for the same dark scope. Only colors plus the
+   single overlay shadow change across themes; spacing, radius, type,
+   and motion are shared.
 
    Scale contract (DESIGN.md v2, token v2 ③):
      - radius: exactly 4 values — sm 4 / md 6 / lg 8 / pill 9999
@@ -43,49 +47,51 @@
 */
 
 @layer dt.tokens {
-:root,
-:root[data-theme='light'] {
-  color-scheme: light;
-  --dt-bg: #ffffff;
-  --dt-surface: oklch(0.9875 0 0);
-  --dt-surface-raised: #ffffff;
-  --dt-surface-sunken: oklch(0.97 0 0);
-  --dt-surface-muted: oklch(0.975 0 0);
+:root {
+  color-scheme: light dark;
+  --dt-bg: light-dark(#ffffff, oklch(0.145 0 0));
+  --dt-surface: light-dark(oklch(0.9875 0 0), oklch(0.17 0 0));
+  --dt-surface-raised: light-dark(#ffffff, oklch(0.24 0 0));
+  --dt-surface-sunken: light-dark(oklch(0.97 0 0), oklch(0.205 0 0));
+  --dt-surface-muted: light-dark(oklch(0.975 0 0), oklch(0.19 0 0));
 
-  --dt-text: oklch(0.205 0 0);
-  --dt-text-strong: oklch(0.145 0 0);
-  --dt-text-subtle: oklch(0.556 0 0);
-  --dt-text-muted: oklch(0.54 0 0);
-  --dt-text-placeholder: oklch(0.708 0 0);
+  --dt-text: light-dark(oklch(0.205 0 0), oklch(0.97 0 0));
+  --dt-text-strong: light-dark(oklch(0.145 0 0), oklch(1 0 0));
+  --dt-text-subtle: light-dark(oklch(0.556 0 0), oklch(0.708 0 0));
+  --dt-text-muted: light-dark(oklch(0.54 0 0), oklch(0.72 0 0));
+  --dt-text-placeholder: light-dark(oklch(0.708 0 0), oklch(0.556 0 0));
 
-  --dt-border: oklch(0.145 0 0 / 0.10);
-  --dt-border-strong: oklch(0.145 0 0 / 0.18);
-  --dt-divider: color-mix(in srgb, var(--dt-border) 50%, transparent);
+  --dt-border: light-dark(oklch(0.145 0 0 / 0.10), oklch(1 0 0 / 0.08));
+  --dt-border-strong: light-dark(oklch(0.145 0 0 / 0.18), oklch(1 0 0 / 0.16));
+  --dt-divider: light-dark(
+    color-mix(in srgb, var(--dt-border) 50%, transparent),
+    color-mix(in srgb, var(--dt-border) 55%, transparent)
+  );
   --dt-border-alpha: color-mix(in srgb, var(--dt-text) 8%, transparent);
   --dt-border-alpha-strong: color-mix(in srgb, var(--dt-text) 14%, transparent);
 
   /* --dt-accent is a fill role only: it never reaches AA as text.
      Use --dt-accent-text when persimmon renders as a glyph. */
-  --dt-accent: #ec5e1f;
-  --dt-accent-text: #b83c0d;
-  --dt-accent-strong: #93390c;
-  --dt-accent-bright: #ff6f2e;
+  --dt-accent: light-dark(#ec5e1f, #f07a45);
+  --dt-accent-text: light-dark(#b83c0d, #f99566);
+  --dt-accent-strong: light-dark(#93390c, #ffab85);
+  --dt-accent-bright: light-dark(#ff6f2e, #ff9a6a);
   --dt-accent-ink: #1a1206;
 
   /* Single blue hue (oklch ~264) in both themes; --dt-info aliases it. */
-  --dt-cobalt: #1d4ed8;
+  --dt-cobalt: light-dark(#1d4ed8, #7aa2ff);
   --dt-accent-soft: color-mix(in srgb, var(--dt-accent) 14%, transparent);
 
-  --dt-success: #0d7233;
-  --dt-warning: #785800;
-  --dt-danger: #b91c1c;
+  --dt-success: light-dark(#0d7233, #4ade80);
+  --dt-warning: light-dark(#785800, #fbbf24);
+  --dt-danger: light-dark(#b91c1c, #f87171);
   --dt-info: var(--dt-cobalt);
   --dt-status-cobalt: var(--dt-info);
   --dt-status-success: var(--dt-success);
   --dt-status-warning: var(--dt-warning);
-  --dt-code-bg: #14161d;
-  --dt-code-ink: #e8e6df;
-  --dt-code-border: #262a35;
+  --dt-code-bg: light-dark(#14161d, #0a0b0f);
+  --dt-code-ink: light-dark(#e8e6df, #f4f3ee);
+  --dt-code-border: light-dark(#262a35, #23252e);
   --dt-brand-gradient: linear-gradient(120deg, #ec5e1f 0%, #ec5e1f 100%);
   --dt-syntax-key: color-mix(in srgb, var(--dt-code-ink) 70%, var(--dt-info));
   --dt-syntax-string: color-mix(in srgb, var(--dt-accent) 55%, var(--dt-code-ink));
@@ -94,15 +100,33 @@
   --dt-syntax-punctuation: color-mix(in srgb, var(--dt-code-ink) 55%, transparent);
   --dt-syntax-success: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
 
-  --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 12%, transparent);
+  --dt-tint-accent: light-dark(
+    color-mix(in srgb, var(--dt-accent) 12%, transparent),
+    color-mix(in srgb, var(--dt-accent) 14%, transparent)
+  );
   --dt-tint-accent-06: color-mix(in srgb, var(--dt-accent) 6%, transparent);
   --dt-tint-accent-10: color-mix(in srgb, var(--dt-accent) 10%, transparent);
   --dt-tint-accent-16: color-mix(in srgb, var(--dt-accent) 16%, transparent);
-  --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 10%, transparent);
-  --dt-tint-success: color-mix(in srgb, var(--dt-success) 12%, transparent);
-  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 14%, transparent);
-  --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 12%, transparent);
-  --dt-tint-text: color-mix(in srgb, var(--dt-text) 5%, transparent);
+  --dt-tint-cobalt: light-dark(
+    color-mix(in srgb, var(--dt-cobalt) 10%, transparent),
+    color-mix(in srgb, var(--dt-cobalt) 14%, transparent)
+  );
+  --dt-tint-success: light-dark(
+    color-mix(in srgb, var(--dt-success) 12%, transparent),
+    color-mix(in srgb, var(--dt-success) 16%, transparent)
+  );
+  --dt-tint-warning: light-dark(
+    color-mix(in srgb, var(--dt-warning) 14%, transparent),
+    color-mix(in srgb, var(--dt-warning) 16%, transparent)
+  );
+  --dt-tint-danger: light-dark(
+    color-mix(in srgb, var(--dt-danger) 12%, transparent),
+    color-mix(in srgb, var(--dt-danger) 16%, transparent)
+  );
+  --dt-tint-text: light-dark(
+    color-mix(in srgb, var(--dt-text) 5%, transparent),
+    color-mix(in srgb, var(--dt-text) 6%, transparent)
+  );
   --dt-tint-text-03: color-mix(in srgb, var(--dt-text) 3%, transparent);
   --dt-tint-text-05: color-mix(in srgb, var(--dt-text) 5%, transparent);
   --dt-tint-text-07: color-mix(in srgb, var(--dt-text) 7%, transparent);
@@ -155,9 +179,11 @@
   --dt-duration-base: 160ms;
   --dt-ease: cubic-bezier(0.23, 1, 0.32, 1);
 
-  /* Type: --dt-font-mono is for code surfaces only. */
+  /* Type: --dt-font-mono is for code surfaces only. 'Pretendard
+     Variable' sits before the generic monospace so Korean glyphs
+     inside code surfaces keep a consistent fallback width. */
   --dt-font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --dt-font-mono: 'JetBrains Mono', 'Geist Mono', SFMono-Regular, ui-monospace, Menlo, monospace;
+  --dt-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Pretendard Variable', monospace;
   --dt-tabular: 'tnum' 0;
 
   /* Fixed 7-step scale; no size outside it is permitted. */
@@ -184,55 +210,29 @@
   --dt-mono-size: 13px;
   --dt-mono-leading: 18px;
 }
+/* A persisted theme choice pins color-scheme and wins over the OS.
+   :root[data-theme] is written by ThemeSwitch or the consumer's
+   pre-paint script; `.dark` is the deprecated alias (removed in v2.1). */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
 :root[data-theme='dark'],
-.dark {
+.dark /* @deprecated — use :root[data-theme='dark'] */ {
   color-scheme: dark;
-  /* Dark overrides only the tokens whose values actually change:
-     colors plus the overlay shadow. Everything else is inherited. */
-
-  --dt-bg: oklch(0.145 0 0);
-  --dt-surface: oklch(0.17 0 0);
-  --dt-surface-raised: oklch(0.24 0 0);
-  --dt-surface-sunken: oklch(0.205 0 0);
-  --dt-surface-muted: oklch(0.19 0 0);
-
-  --dt-text: oklch(0.97 0 0);
-  --dt-text-strong: oklch(1 0 0);
-  --dt-text-subtle: oklch(0.708 0 0);
-  --dt-text-muted: oklch(0.72 0 0);
-  --dt-text-placeholder: oklch(0.556 0 0);
-
-  --dt-border: oklch(1 0 0 / 0.08);
-  --dt-border-strong: oklch(1 0 0 / 0.16);
-  --dt-divider: color-mix(in srgb, var(--dt-border) 55%, transparent);
-
-  /* --dt-accent is a fill role only; --dt-accent-text renders persimmon as text. */
-  --dt-accent: #f07a45;
-  --dt-accent-text: #f99566;
-  --dt-accent-strong: #ffab85;
-  --dt-accent-bright: #ff9a6a;
-
-  /* Same blue hue (oklch ~265) as the light theme --dt-cobalt. */
-  --dt-cobalt: #7aa2ff;
-
-  --dt-success: #4ade80;
-  --dt-warning: #fbbf24;
-  --dt-danger: #f87171;
-
-  --dt-code-bg: #0a0b0f;
-  --dt-code-ink: #f4f3ee;
-  --dt-code-border: #23252e;
-
-  --dt-tint-accent: color-mix(in srgb, var(--dt-accent) 14%, transparent);
-  --dt-tint-cobalt: color-mix(in srgb, var(--dt-cobalt) 14%, transparent);
-  --dt-tint-success: color-mix(in srgb, var(--dt-success) 16%, transparent);
-  --dt-tint-warning: color-mix(in srgb, var(--dt-warning) 16%, transparent);
-  --dt-tint-danger: color-mix(in srgb, var(--dt-danger) 16%, transparent);
-  --dt-tint-text: color-mix(in srgb, var(--dt-text) 6%, transparent);
-
   --dt-shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55),
                        0 0 0 1px rgba(255, 255, 255, 0.03);
 }
+}
+
+/* light-dark() only resolves colors, so the one themed non-color token —
+   the overlay shadow — is restated for the OS-dark trigger. Keep this
+   declaration identical to the explicit dark block above (theme-parity
+   test enforces it). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --dt-shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55),
+                         0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
 }
 
 /*
