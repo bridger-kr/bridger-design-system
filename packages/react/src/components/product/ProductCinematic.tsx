@@ -44,14 +44,6 @@ export const ProductCinematicBackdrop = forwardRef<HTMLDivElement, ProductCinema
       {...rest}
     >
       <div className="dt-product-cinematic-wash" />
-      <svg className="dt-product-cinematic-lines" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
-        <path className="dt-product-cinematic-track" d="M-60 248 H520 C690 248 710 168 884 168 H1500" />
-        <path className="dt-product-cinematic-track" d="M-60 430 H510 C660 430 692 542 872 542 H1500" />
-        <path className="dt-product-cinematic-track" d="M-60 338 H610 C748 338 770 326 930 326 H1500" />
-        <path className="dt-product-cinematic-flow dt-product-cinematic-flow-a" d="M-60 248 H520 C690 248 710 168 884 168 H1500" />
-        <path className="dt-product-cinematic-flow dt-product-cinematic-flow-b" d="M-60 430 H510 C660 430 692 542 872 542 H1500" />
-        <path className="dt-product-cinematic-flow dt-product-cinematic-flow-c" d="M-60 338 H610 C748 338 770 326 930 326 H1500" />
-      </svg>
     </div>
   );
 });

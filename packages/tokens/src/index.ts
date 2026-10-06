@@ -137,6 +137,13 @@ export const spacing = freeze({
   32: '32px',
 } as const);
 
+export const icons = freeze({
+  sm: '14px',
+  md: '16px',
+  lg: '20px',
+  stroke: 1.75,
+} as const);
+
 export const radius = freeze({
   chip: 'var(--dt-radius-sm)',
   control: 'var(--dt-radius-md)',
@@ -313,6 +320,12 @@ export const cssVarName = freeze({
     12: '--dt-space-12',
     32: '--dt-space-32',
   } as const),
+  icons: freeze({
+    sm: '--dt-icon-sm',
+    md: '--dt-icon-md',
+    lg: '--dt-icon-lg',
+    stroke: '--dt-icon-stroke',
+  } as const),
   radius: freeze({
     chip: '--dt-radius-chip',
     control: '--dt-radius-control',
@@ -379,6 +392,7 @@ export const cssVarName = freeze({
 export const tokens = freeze({
   colors,
   spacing,
+  icons,
   radius,
   shadows,
   layers,
@@ -390,6 +404,7 @@ export const tokens = freeze({
 export type Tokens = typeof tokens;
 export type Colors = typeof colors;
 export type Spacing = typeof spacing;
+export type Icons = typeof icons;
 export type Radius = typeof radius;
 export type Shadows = typeof shadows;
 export type Layers = typeof layers;

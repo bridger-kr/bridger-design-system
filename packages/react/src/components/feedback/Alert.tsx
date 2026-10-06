@@ -1,6 +1,8 @@
+import { X } from 'lucide-react';
 import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+import { Icon } from '../../lib/icon';
 
 export const AlertTone = {
   Info: 'info',
@@ -62,7 +64,7 @@ export const Alert = forwardRef<HTMLDivElement, AlertProps>(function Alert(
       </div>
       {onDismiss ? (
         <button className="dt-close-control" onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
+          <Icon icon={X} />
         </button>
       ) : null}
     </div>
