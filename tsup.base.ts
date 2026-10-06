@@ -1,13 +1,12 @@
 import { defineConfig, type Options } from 'tsup';
 
-const reactExternals = ['react', 'react-dom', 'react/jsx-runtime'];
+const reactExternals = ['react', 'react-dom', 'react/jsx-runtime', 'lucide-react'];
 
 export function libConfig(options: Options = {}) {
   return defineConfig({
     format: ['esm', 'cjs'],
     dts: true,
     treeshake: true,
-    splitting: false,
     clean: true,
     sourcemap: true,
     ...options,

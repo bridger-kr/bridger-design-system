@@ -19,4 +19,4 @@ export interface ToolCardProps extends HTMLAttributes<HTMLElement> {
 /**
  * An MCP tool as shown in the catalog and tool list.
  */
-export declare function ToolCard({ name, method, category, description, path, state, stateLabel, style, ...rest }: ToolCardProps): import("react").JSX.Element;
+export declare const ToolCard: import("react").ForwardRefExoticComponent<ToolCardProps & import("react").RefAttributes<HTMLElement>>;

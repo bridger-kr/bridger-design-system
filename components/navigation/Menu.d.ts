@@ -17,4 +17,4 @@ export interface MenuProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'childr
     width?: number;
     style?: CSSProperties;
 }
-export declare function Menu({ trigger, items, align, width, className, style, ...rest }: MenuProps): import("react").JSX.Element;
+export declare const Menu: import("react").ForwardRefExoticComponent<MenuProps & import("react").RefAttributes<HTMLSpanElement>>;

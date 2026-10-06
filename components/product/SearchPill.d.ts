@@ -22,4 +22,4 @@ export interface SearchPillProps extends HTMLAttributes<HTMLDivElement> {
     artifactLabel?: ReactNode;
     children?: ReactNode;
 }
-export declare function SearchPill({ tone, size, leadingIcon, trailingIcon, artifactLabel, children, className, ...rest }: SearchPillProps): import("react").JSX.Element;
+export declare const SearchPill: import("react").ForwardRefExoticComponent<SearchPillProps & import("react").RefAttributes<HTMLDivElement>>;

@@ -16,4 +16,4 @@ export interface StatTileProps extends Omit<HTMLAttributes<HTMLDivElement>, 'sty
  * Metric tile — uppercase label, large tabular value, optional delta.
  * The console's KPI unit. Compose several inside a bordered stat row.
  */
-export declare function StatTile({ label, value, delta, deltaTone, hint, style, ...rest }: StatTileProps): import("react").JSX.Element;
+export declare const StatTile: import("react").ForwardRefExoticComponent<StatTileProps & import("react").RefAttributes<HTMLDivElement>>;

@@ -2,15 +2,20 @@
 // Source: packages/react/src/components/product/SectionCard.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
+import { warnOnce } from '../lib/deprecate.jsx';
 /**
  * Console section panel — title, description, action, body. No eyebrow kicker:
  * the title is a plain noun-phrase heading, the section's own content does the
  * rest. Lay items flat inside; never card-in-card.
  */
-export function SectionCard({ eyebrow, title, description, action, children, contentClassName, style, ...rest }) {
+export const SectionCard = forwardRef(function SectionCard({ eyebrow, title, description, action, children, contentClassName, slotProps, style, ...rest }, ref) {
     const hasHeader = Boolean(eyebrow || title || description || action);
-    return (<section {...rest} style={{
+    if (contentClassName !== undefined) {
+        warnOnce('sectioncard-contentclassname', 'SectionCard: `contentClassName` is deprecated — use `slotProps.content.className`. Removed in v2.1.');
+    }
+    return (<section ref={ref} {...rest} style={{
             borderRadius: 'var(--dt-radius-card)',
             background: 'var(--dt-surface)',
             border: '1px solid var(--dt-border)',
@@ -43,6 +48,7 @@ export function SectionCard({ eyebrow, title, description, action, children, con
           </div>
           {action ? <div style={{ flex: '0 0 auto' }}>{action}</div> : null}
         </header>) : null}
-      <div className={cx(contentClassName)}>{children}</div>
+      <div {...slotProps?.content} className={cx(slotProps?.content?.className, contentClassName)}>{children}</div>
     </section>);
-}
+});
+SectionCard.displayName = 'SectionCard';

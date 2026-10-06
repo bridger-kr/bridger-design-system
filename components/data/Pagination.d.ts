@@ -10,4 +10,4 @@ export interface PaginationProps extends Omit<HTMLAttributes<HTMLElement>, 'onCh
     style?: CSSProperties;
 }
 /** Pagination — prev/next plus compact page numbers with an ellipsis. */
-export declare function Pagination({ page, pageCount, onChange, style, ...rest }: PaginationProps): import("react").JSX.Element;
+export declare const Pagination: import("react").ForwardRefExoticComponent<PaginationProps & import("react").RefAttributes<HTMLElement>>;

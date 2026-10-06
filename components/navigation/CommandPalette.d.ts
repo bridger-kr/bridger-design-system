@@ -15,12 +15,21 @@ export interface CommandGroup {
     items: CommandItem[];
 }
 export interface CommandPaletteProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'onSelect'> {
+    /** Controlled open state. */
     open?: boolean;
+    /** Uncontrolled initial open state (defaults to `true`). */
+    defaultOpen?: boolean;
+    /** Called when the palette requests an open-state change (e.g. Escape). */
+    onOpenChange?: (open: boolean) => void;
     query?: string;
     onQueryChange?: (q: string) => void;
     groups?: CommandGroup[];
+    /** Accessible name for the search input (combobox). */
+    inputLabel?: string;
+    /** Accessible name for the results listbox. */
+    listboxLabel?: string;
     footerHint?: string;
     onSelect?: (item: CommandItem) => void;
     style?: CSSProperties;
 }
-export declare function CommandPalette({ open, query, onQueryChange, groups, footerHint, onSelect, style, className, ...rest }: CommandPaletteProps): import("react").JSX.Element | null;
+export declare const CommandPalette: import("react").ForwardRefExoticComponent<CommandPaletteProps & import("react").RefAttributes<HTMLDivElement>>;

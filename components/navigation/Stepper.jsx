@@ -2,13 +2,16 @@
 // Source: packages/react/src/components/navigation/Stepper.tsx
 // Regenerate: pnpm generate
 
+import { Check } from 'lucide-react';
+import { forwardRef } from 'react';
+import { Icon } from '../lib/icon.jsx';
 /**
  * Multi-step progress — done (check) / current (persimmon) / upcoming (muted).
  * @startingPoint section="Navigation" subtitle="Onboarding step progress" viewport="560x120"
  */
-export function Stepper({ steps = [], current = 0, orientation = 'horizontal', style, ...rest }) {
+export const Stepper = forwardRef(function Stepper({ steps = [], current = 0, orientation = 'horizontal', style, ...rest }, ref) {
     const vertical = orientation === 'vertical';
-    return (<div {...rest} style={{
+    return (<div ref={ref} {...rest} style={{
             display: 'flex', flexDirection: vertical ? 'column' : 'row',
             alignItems: vertical ? 'stretch' : 'flex-start', gap: 0, ...style,
         }}>
@@ -25,7 +28,7 @@ export function Stepper({ steps = [], current = 0, orientation = 'horizontal', s
                     color: done ? '#fff' : active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)',
                     boxShadow: active ? 'inset 0 0 0 1.5px var(--dt-accent)' : done ? 'none' : 'inset 0 0 0 1px var(--dt-border-strong)',
                 }}>
-                {done ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"/></svg> : i + 1}
+                {done ? <Icon icon={Check} size="sm"/> : i + 1}
               </span>
               {i < steps.length - 1 ? (<span style={{
                         background: done ? 'var(--dt-accent)' : 'var(--dt-border-strong)',
@@ -40,4 +43,5 @@ export function Stepper({ steps = [], current = 0, orientation = 'horizontal', s
           </div>);
         })}
     </div>);
-}
+});
+Stepper.displayName = 'Stepper';

@@ -9,4 +9,4 @@ export interface AnnotationHotspotProps extends HTMLAttributes<HTMLDivElement> {
     label?: ReactNode;
     children?: ReactNode;
 }
-export declare function AnnotationHotspot({ x, y, label, children, className, style, ...rest }: AnnotationHotspotProps): import("react").JSX.Element;
+export declare const AnnotationHotspot: import("react").ForwardRefExoticComponent<AnnotationHotspotProps & import("react").RefAttributes<HTMLDivElement>>;

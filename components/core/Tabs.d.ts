@@ -9,17 +9,23 @@ export interface TabItem {
     icon?: ReactNode;
     count?: number | string;
 }
+export type TabsVariant = 'underline' | 'segmented';
 export interface TabsProps {
     tabs?: TabItem[];
-    variant?: 'underline' | 'pill';
+    /** `underline` or `segmented`. `pill` is deprecated and maps to `segmented`. */
+    variant?: TabsVariant | 'pill';
     /** Controlled active tab id. */
     value?: string;
     defaultValue?: string;
+    /** Called with the newly selected tab id. */
+    onValueChange?: (id: string) => void;
+    /** @deprecated Use `onValueChange`. Removed in v2.1. */
     onChange?: (id: string) => void;
+    className?: string;
     style?: CSSProperties;
 }
 /**
  * Underline-style tab bar for switching console views. Controlled via
- * `value` + `onChange`, or uncontrolled with `defaultValue`.
+ * `value` + `onValueChange`, or uncontrolled with `defaultValue`.
  */
-export declare function Tabs({ tabs, variant, value, defaultValue, onChange, style }: TabsProps): import("react").JSX.Element;
+export declare const Tabs: import("react").ForwardRefExoticComponent<TabsProps & import("react").RefAttributes<HTMLDivElement>>;

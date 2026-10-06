@@ -2,6 +2,7 @@
 // Source: packages/react/src/components/product/ToolCard.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 const STATE_COLOR = {
     available: 'var(--dt-success)',
     managed: 'var(--dt-success)',
@@ -10,17 +11,10 @@ const STATE_COLOR = {
 /**
  * An MCP tool as shown in the catalog and tool list.
  */
-export function ToolCard({ name, method = 'GET', category, description = '설명 없음', path = '/', state = 'available', stateLabel, style, ...rest }) {
+export const ToolCard = forwardRef(function ToolCard({ name, method = 'GET', category, description = '설명 없음', path = '/', state = 'available', stateLabel, className, style, ...rest }, ref) {
     const cat = category ?? (name ? name.split('_')[0] : 'etc');
     const labels = { available: '사용 가능', managed: '관리형 키', locked: '키 등록' };
-    return (<article className="dt-tool-card" {...rest} style={{
-            borderRadius: 'var(--dt-radius-card)',
-            background: 'var(--dt-surface)',
-            border: '1px solid var(--dt-border)',
-            padding: '16px 18px',
-            transition: 'box-shadow var(--dt-duration-base) var(--dt-ease), background-color var(--dt-duration-base) var(--dt-ease)',
-            ...style,
-        }}>
+    return (<article ref={ref} className={className ? `dt-tool-card ${className}` : 'dt-tool-card'} {...rest} style={style}>
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 12 }}>
         <div style={{ minWidth: 0 }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
@@ -48,4 +42,5 @@ export function ToolCard({ name, method = 'GET', category, description = '설명
         </code>
       </div>
     </article>);
-}
+});
+ToolCard.displayName = 'ToolCard';

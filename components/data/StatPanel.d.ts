@@ -11,4 +11,4 @@ export interface StatPanelProps extends HTMLAttributes<HTMLDivElement> {
     items?: readonly StatPanelItem[];
     variant?: 'card' | 'list';
 }
-export declare function StatPanel({ items, variant, className, ...rest }: StatPanelProps): import("react").JSX.Element;
+export declare const StatPanel: import("react").ForwardRefExoticComponent<StatPanelProps & import("react").RefAttributes<HTMLDivElement>>;

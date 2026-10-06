@@ -13,9 +13,12 @@ export interface RadioGroupProps extends Omit<HTMLAttributes<HTMLDivElement>, 'd
     options?: Array<string | RadioOption>;
     value?: string;
     defaultValue?: string;
+    /** Called with the newly selected value. */
+    onValueChange?: (value: string) => void;
+    /** @deprecated Use `onValueChange`. Removed in v2.1. */
     onChange?: (value: string) => void;
     disabled?: boolean;
     style?: CSSProperties;
 }
 /** Radio group with optional per-option hint text. */
-export declare function RadioGroup({ name, options, value, defaultValue, onChange, disabled, style }: RadioGroupProps): import("react").JSX.Element;
+export declare const RadioGroup: import("react").ForwardRefExoticComponent<RadioGroupProps & import("react").RefAttributes<HTMLDivElement>>;

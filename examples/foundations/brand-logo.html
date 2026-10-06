@@ -1,4 +1,4 @@
-<!-- @dsCard group="Brand" viewport="700x180" name="Wordmark" subtitle="Bridger. — mark-only, persimmon period. On light and dark" -->
+<!-- @dsCard group="Brand" viewport="700x180" name="Wordmark" subtitle="Bridger — text wordmark in neutral ink, weight 600, no period. On light and dark" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +7,11 @@
 <style>
   body { margin: 0; display: grid; grid-template-columns: 1fr 1fr; }
   .panel { display: flex; align-items: center; justify-content: center; height: 180px; background: var(--dt-bg); }
-  .light { background: var(--dt-bg); }
-  .wm { font-family: var(--dt-font-sans); font-weight: 600; font-size: var(--dt-h1-size); letter-spacing: -0.025em; color: var(--dt-text-strong); line-height: 1; }
-  .wm .dot { color: var(--dt-accent-text); }
+  .wm { font-family: var(--dt-font-sans); font-weight: 600; font-size: var(--dt-h1-size); letter-spacing: 0; color: var(--dt-text-strong); line-height: 1; }
 </style>
 </head>
 <body>
-  <div class="panel light"><span class="wm">Bridger<span class="dot">.</span></span></div>
-  <div class="panel dark"><span class="wm">Bridger<span class="dot">.</span></span></div>
+  <div class="panel"><span class="wm">Bridger</span></div>
+  <div class="panel dark"><span class="wm">Bridger</span></div>
 </body>
 </html>

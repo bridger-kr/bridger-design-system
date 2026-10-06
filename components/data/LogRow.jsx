@@ -2,6 +2,7 @@
 // Source: packages/react/src/components/data/LogRow.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 const LEVEL = {
     ok: { dot: 'var(--dt-success)', text: 'var(--dt-success)', label: 'OK' },
     warn: { dot: 'var(--dt-warning)', text: 'var(--dt-warning)', label: 'WARN' },
@@ -12,8 +13,8 @@ const LEVEL = {
  * Dense tabular execution-log stream — hairline rows, status dots, mono columns.
  * @startingPoint section="Data" subtitle="Execution-log stream" viewport="560x200"
  */
-export function LogRow({ entries = [], style, ...rest }) {
-    return (<div {...rest} style={{
+export const LogRow = forwardRef(function LogRow({ entries = [], style, ...rest }, ref) {
+    return (<div ref={ref} {...rest} style={{
             border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
             background: 'var(--dt-surface)', fontVariantNumeric: 'tabular-nums', ...style,
         }}>
@@ -36,4 +37,5 @@ export function LogRow({ entries = [], style, ...rest }) {
           </div>);
         })}
     </div>);
-}
+});
+LogRow.displayName = 'LogRow';

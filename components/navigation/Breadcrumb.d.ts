@@ -12,4 +12,4 @@ export interface BreadcrumbProps extends Omit<HTMLAttributes<HTMLElement>, 'chil
     style?: CSSProperties;
 }
 /** Breadcrumb trail — last item is the current page. */
-export declare function Breadcrumb({ items, style, ...rest }: BreadcrumbProps): import("react").JSX.Element;
+export declare const Breadcrumb: import("react").ForwardRefExoticComponent<BreadcrumbProps & import("react").RefAttributes<HTMLElement>>;

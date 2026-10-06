@@ -10,4 +10,4 @@ export interface ProductPageHeaderProps extends Omit<HTMLAttributes<HTMLElement>
     actions?: ReactNode;
     children?: ReactNode;
 }
-export declare function ProductPageHeader({ eyebrow, title, description, actions, children, className, ...rest }: ProductPageHeaderProps): import("react").JSX.Element;
+export declare const ProductPageHeader: import("react").ForwardRefExoticComponent<ProductPageHeaderProps & import("react").RefAttributes<HTMLElement>>;

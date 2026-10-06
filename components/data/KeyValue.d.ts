@@ -6,7 +6,7 @@ import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 export interface KeyValueItem {
     key: string;
     value: ReactNode;
-    /** Render the value in JetBrains Mono (paths, IDs, methods). */
+    /** Render the value in the mono stack (ASCII: paths, IDs, methods). */
     mono?: boolean;
     /** Tint the value persimmon (highlighted field). */
     accent?: boolean;
@@ -21,4 +21,4 @@ export interface KeyValueProps extends Omit<HTMLAttributes<HTMLDListElement>, 'c
  * Definition list for spec metadata — hairline rows, muted key, ink value.
  * @startingPoint section="Data" subtitle="Spec metadata as a definition list" viewport="460x220"
  */
-export declare function KeyValue({ items, columns, style, ...rest }: KeyValueProps): import("react").JSX.Element;
+export declare const KeyValue: import("react").ForwardRefExoticComponent<KeyValueProps & import("react").RefAttributes<HTMLDListElement>>;

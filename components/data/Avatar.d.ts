@@ -21,5 +21,5 @@ export interface AvatarProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'styl
  * Avatar — image or initials in a rounded square. Optional status dot.
  * Deterministic tint from the name when no image is given.
  */
-export declare function Avatar({ name, src, size, status, square, style, ...rest }: AvatarProps): import("react").JSX.Element;
+export declare const Avatar: import("react").ForwardRefExoticComponent<AvatarProps & import("react").RefAttributes<HTMLSpanElement>>;
 export {};

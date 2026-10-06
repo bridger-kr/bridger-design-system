@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/forms/ThemeSwitch.tsx
 // Regenerate: pnpm generate
 
-import { useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 export const THEME_PREFERENCE = {
     System: 'system',
     Light: 'light',
@@ -45,7 +45,7 @@ function systemTheme() {
  * to `storageKey`, and keeps following `prefers-color-scheme` while the
  * preference stays on `system`.
  */
-export function ThemeSwitch({ labels, icons, storageKey = DEFAULT_THEME_STORAGE_KEY, className = '', style, onChange, }) {
+export const ThemeSwitch = forwardRef(function ThemeSwitch({ labels, icons, storageKey = DEFAULT_THEME_STORAGE_KEY, className = '', style, onChange }, ref) {
     const [preference, setPreference] = useState(() => readStoredPreference(storageKey));
     const [system, setSystem] = useState(systemTheme);
     const resolved = preference === THEME_PREFERENCE.System ? system : preference;
@@ -79,7 +79,7 @@ export function ThemeSwitch({ labels, icons, storageKey = DEFAULT_THEME_STORAGE_
         }
         onChange?.(next, next === THEME_PREFERENCE.System ? system : next, previousResolved);
     };
-    return (<div role="group" aria-label={mergedLabels.group} className={`dt-theme-switch${className ? ` ${className}` : ''}`} style={style}>
+    return (<div ref={ref} role="group" aria-label={mergedLabels.group} className={`dt-theme-switch${className ? ` ${className}` : ''}`} style={style}>
       {THEME_SWITCH_ORDER.map((option) => {
             const active = option === preference;
             const icon = icons?.[option];
@@ -88,4 +88,5 @@ export function ThemeSwitch({ labels, icons, storageKey = DEFAULT_THEME_STORAGE_
           </button>);
         })}
     </div>);
-}
+});
+ThemeSwitch.displayName = 'ThemeSwitch';

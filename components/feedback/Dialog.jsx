@@ -3,25 +3,32 @@
 // Regenerate: pnpm generate
 
 import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
+import { warnOnce } from '../lib/deprecate.jsx';
+import { cx } from '../lib/cx.jsx';
 /** Modal dialog with overlay, Esc/backdrop close, and a footer action bar. */
-export function Dialog({ open, onClose, title, description, children, footer, 'aria-label': ariaLabel, width = 460 }) {
+export const Dialog = forwardRef(function Dialog({ open, defaultOpen, onOpenChange, onClose, title, description, children, footer, 'aria-label': ariaLabel, width = 460, className, style, }, ref) {
     const titleId = useId();
+    if (onClose !== undefined) {
+        warnOnce('dialog-onclose', 'Dialog: `onClose` is deprecated — use `onOpenChange(open)`. Removed in v2.1.');
+    }
     const handleOpenChange = (nextOpen) => {
+        onOpenChange?.(nextOpen);
         if (!nextOpen)
             onClose?.();
     };
-    return (<BaseDialog.Root open={open} onOpenChange={handleOpenChange}>
+    return (<BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
         <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay" style={{
             position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-text-strong) 32%, transparent)',
             backdropFilter: 'blur(2px)',
         }}/>
         <div data-dt-dialog-content style={{ position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-modal)', display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
-          <BaseDialog.Popup className="dt-dialog-popup" aria-labelledby={title ? titleId : undefined} aria-label={title ? undefined : ariaLabel} style={{
+          <BaseDialog.Popup ref={ref} className={cx('dt-dialog-popup', className)} aria-labelledby={title ? titleId : undefined} aria-label={title ? undefined : ariaLabel} style={{
             width: '100%', maxWidth: width, background: 'var(--dt-surface)', pointerEvents: 'auto',
             borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-overlay)',
             overflow: 'hidden',
+            ...style,
         }}>
             <div style={{ padding: '22px 24px' }}>
               {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--dt-text-strong)' }}/>}>{title}</BaseDialog.Title> : null}
@@ -33,4 +40,5 @@ export function Dialog({ open, onClose, title, description, children, footer, 'a
         </div>
       </BaseDialog.Portal>
     </BaseDialog.Root>);
-}
+});
+Dialog.displayName = 'Dialog';

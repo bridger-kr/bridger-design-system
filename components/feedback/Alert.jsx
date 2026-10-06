@@ -2,17 +2,15 @@
 // Source: packages/react/src/components/feedback/Alert.tsx
 // Regenerate: pnpm generate
 
+import { X } from 'lucide-react';
+import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
+import { Icon } from '../lib/icon.jsx';
 export const AlertTone = {
     Info: 'info',
     Success: 'success',
     Warning: 'warning',
     Danger: 'danger',
-};
-export const AlertMotion = {
-    None: 'none',
-    Subtle: 'subtle',
-    Pulse: 'pulse',
 };
 const TONE_BACKGROUND = {
     info: 'var(--dt-tint-cobalt)',
@@ -20,10 +18,9 @@ const TONE_BACKGROUND = {
     warning: 'var(--dt-tint-warning)',
     danger: 'var(--dt-tint-danger)',
 };
-export function Alert({ tone = AlertTone.Info, title, children, icon, action, motion = AlertMotion.None, onDismiss, className, style, ...rest }) {
+export const Alert = forwardRef(function Alert({ tone = AlertTone.Info, title, children, icon, action, onDismiss, className, style, ...rest }, ref) {
     const background = TONE_BACKGROUND[tone] ?? TONE_BACKGROUND[AlertTone.Info];
-    const motionClass = motion === AlertMotion.None ? undefined : `dt-alert-motion-${motion}`;
-    return (<div role="status" className={cx('dt-alert', motionClass, className)} style={{
+    return (<div ref={ref} role="status" className={cx('dt-alert', className)} style={{
             alignItems: 'flex-start',
             background,
             borderRadius: 'var(--dt-radius-card)',
@@ -44,7 +41,8 @@ export function Alert({ tone = AlertTone.Info, title, children, icon, action, mo
         {action ? <div style={{ marginTop: 10 }}>{action}</div> : null}
       </div>
       {onDismiss ? (<button className="dt-close-control" onClick={onDismiss} aria-label="닫기" style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'currentColor', padding: 0, lineHeight: 0 }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+          <Icon icon={X}/>
         </button>) : null}
     </div>);
-}
+});
+Alert.displayName = 'Alert';

@@ -131,3 +131,4 @@ export const BrandLogo = forwardRef(function BrandLogo({ size = BRAND_LOGO_SIZE_
       </span>
     </span>);
 });
+BrandLogo.displayName = 'BrandLogo';

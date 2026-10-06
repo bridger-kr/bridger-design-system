@@ -35,4 +35,4 @@ export interface ThemeSwitchProps {
  * to `storageKey`, and keeps following `prefers-color-scheme` while the
  * preference stays on `system`.
  */
-export declare function ThemeSwitch({ labels, icons, storageKey, className, style, onChange, }: ThemeSwitchProps): import("react").JSX.Element;
+export declare const ThemeSwitch: import("react").ForwardRefExoticComponent<ThemeSwitchProps & import("react").RefAttributes<HTMLDivElement>>;

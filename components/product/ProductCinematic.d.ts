@@ -11,16 +11,16 @@ export type ProductShellTone = (typeof PRODUCT_SHELL_TONE)[keyof typeof PRODUCT_
 export interface ProductShellProps extends HTMLAttributes<HTMLDivElement> {
     tone?: ProductShellTone;
 }
-export declare function ProductShell({ tone, className, children, ...rest }: ProductShellProps): import("react").JSX.Element;
+export declare const ProductShell: import("react").ForwardRefExoticComponent<ProductShellProps & import("react").RefAttributes<HTMLDivElement>>;
 export interface ProductCinematicBackdropProps extends HTMLAttributes<HTMLDivElement> {
     animated?: boolean;
 }
-export declare function ProductCinematicBackdrop({ animated, className, ...rest }: ProductCinematicBackdropProps): import("react").JSX.Element;
+export declare const ProductCinematicBackdrop: import("react").ForwardRefExoticComponent<ProductCinematicBackdropProps & import("react").RefAttributes<HTMLDivElement>>;
 export interface ProductMotionFieldProps extends HTMLAttributes<HTMLDivElement> {
     gridSrc?: string;
     label?: string;
 }
-export declare function ProductMotionField({ gridSrc, label, className, ...rest }: ProductMotionFieldProps): import("react").JSX.Element;
+export declare const ProductMotionField: import("react").ForwardRefExoticComponent<ProductMotionFieldProps & import("react").RefAttributes<HTMLDivElement>>;
 export interface ProductSideRailItem {
     key: string;
     href: string;
@@ -30,4 +30,4 @@ export interface ProductSideRailProps extends HTMLAttributes<HTMLElement> {
     items: readonly ProductSideRailItem[];
     label: string;
 }
-export declare function ProductSideRail({ items, label, className, ...rest }: ProductSideRailProps): import("react").JSX.Element;
+export declare const ProductSideRail: import("react").ForwardRefExoticComponent<ProductSideRailProps & import("react").RefAttributes<HTMLElement>>;

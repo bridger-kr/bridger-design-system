@@ -3,8 +3,9 @@
 // Regenerate: pnpm generate
 
 export { Avatar } from './Avatar.jsx';
-export { CodeBlock } from './CodeBlock.jsx';
+export { CODE_SEGMENT_TONE, CodeBlock } from './CodeBlock.jsx';
 export { CODE_PANE_TONE, CodePane } from './CodePane.jsx';
+export { CopyButton } from './CopyButton.jsx';
 export { KeyValue } from './KeyValue.jsx';
 export { LogRow } from './LogRow.jsx';
 export { Pagination } from './Pagination.jsx';

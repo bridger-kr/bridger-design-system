@@ -10,6 +10,7 @@
  * parallel migrations never touch this file.
  */
 export { cx } from './lib/cx';
+export type { SlotPropsFor } from './lib/slot';
 export * from './core/index';
 export * from './forms/index';
 export * from './feedback/index';

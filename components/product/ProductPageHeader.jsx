@@ -2,9 +2,10 @@
 // Source: packages/react/src/components/product/ProductPageHeader.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
-export function ProductPageHeader({ eyebrow, title, description, actions, children, className, ...rest }) {
-    return (<header className={cx('dt-product-page-header', className)} {...rest}>
+export const ProductPageHeader = forwardRef(function ProductPageHeader({ eyebrow, title, description, actions, children, className, ...rest }, ref) {
+    return (<header ref={ref} className={cx('dt-product-page-header', className)} {...rest}>
       <div className="dt-product-page-header-row">
         <div className="dt-product-page-header-copy">
           {eyebrow ? <span className="dt-product-page-header-eyebrow">{eyebrow}</span> : null}
@@ -17,4 +18,5 @@ export function ProductPageHeader({ eyebrow, title, description, actions, childr
       </div>
       {children ? <div className="dt-product-page-header-content">{children}</div> : null}
     </header>);
-}
+});
+ProductPageHeader.displayName = 'ProductPageHeader';

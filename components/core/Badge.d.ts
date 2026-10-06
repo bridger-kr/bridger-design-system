@@ -15,4 +15,4 @@ export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style
  * Status / classification badge. Pill-shaped, tinted. Status or
  * classification only — never decorative.
  */
-export declare function Badge({ children, tone, dot, style, ...rest }: BadgeProps): import("react").JSX.Element;
+export declare const Badge: import("react").ForwardRefExoticComponent<BadgeProps & import("react").RefAttributes<HTMLSpanElement>>;

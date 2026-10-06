@@ -8,4 +8,4 @@ export interface TooltipProps {
     position?: 'top' | 'bottom' | 'left' | 'right';
     children: ReactNode;
 }
-export declare function Tooltip({ label, position, children }: TooltipProps): import("react").JSX.Element;
+export declare const Tooltip: import("react").ForwardRefExoticComponent<TooltipProps & import("react").RefAttributes<HTMLSpanElement>>;

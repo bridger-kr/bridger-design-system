@@ -3,13 +3,13 @@
 // Regenerate: pnpm generate
 
 import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
-import { useId, useState } from 'react';
-export function Tooltip({ label, position = 'top', children }) {
+import { forwardRef, useId, useState } from 'react';
+export const Tooltip = forwardRef(function Tooltip({ label, position = 'top', children }, ref) {
     const tooltipId = useId();
     const [open, setOpen] = useState(false);
     return (<BaseTooltip.Provider>
       <BaseTooltip.Root open={open} onOpenChange={setOpen}>
-        <BaseTooltip.Trigger render={<span className="dt-tooltip-trigger" style={{ display: 'inline-flex' }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}/>}>
+        <BaseTooltip.Trigger ref={ref} render={<span className="dt-tooltip-trigger" style={{ display: 'inline-flex' }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}/>}>
           {children}
         </BaseTooltip.Trigger>
         <BaseTooltip.Portal>
@@ -25,4 +25,5 @@ export function Tooltip({ label, position = 'top', children }) {
         </BaseTooltip.Portal>
       </BaseTooltip.Root>
     </BaseTooltip.Provider>);
-}
+});
+Tooltip.displayName = 'Tooltip';

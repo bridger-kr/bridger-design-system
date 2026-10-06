@@ -3,7 +3,7 @@
 // Regenerate: pnpm generate
 
 export { Alert } from './Alert.jsx';
-export { AlertMotion, AlertTone } from './Alert.jsx';
+export { AlertTone } from './Alert.jsx';
 export { Dialog } from './Dialog.jsx';
 export { Drawer } from './Drawer.jsx';
 export { EmptyState } from './EmptyState.jsx';

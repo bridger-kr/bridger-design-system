@@ -2,7 +2,8 @@
 // Source: packages/react/src/components/product/ProductTopbar.tsx
 // Regenerate: pnpm generate
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { forwardRef, useEffect, useId, useRef } from 'react';
+import { useControllableState } from '../lib/useControllableState.jsx';
 import { cx } from '../lib/cx.jsx';
 const PRODUCT_TOPBAR_MENU_KEY = {
     Close: 'Escape',
@@ -30,11 +31,22 @@ function isFocusableInsideMenu(element, menu) {
     }
     return true;
 }
-export function ProductTopbarMenu({ children, closeLabel, dialogLabel = 'Mobile menu', label = 'Menu', navigationLabel = 'Mobile primary', className, ...rest }) {
-    const [open, setOpen] = useState(false);
+export const ProductTopbarMenu = forwardRef(function ProductTopbarMenu({ children, closeLabel, dialogLabel = 'Mobile menu', label = 'Menu', navigationLabel = 'Mobile primary', className, open: openProp, defaultOpen, onOpenChange, ...rest }, ref) {
+    const [open, setOpen] = useControllableState({
+        value: openProp,
+        defaultValue: defaultOpen ?? false,
+        onChange: onOpenChange,
+    });
     const panelId = useId();
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
+    const mergeRef = (node) => {
+        menuRef.current = node;
+        if (typeof ref === 'function')
+            ref(node);
+        else if (ref)
+            ref.current = node;
+    };
     const handleToggle = () => {
         setOpen((currentOpen) => !currentOpen);
     };
@@ -99,7 +111,7 @@ export function ProductTopbarMenu({ children, closeLabel, dialogLabel = 'Mobile 
             document.removeEventListener('keydown', handleKeyDown);
             window.removeEventListener('resize', handleResize);
         };
-    }, [open]);
+    }, [open, setOpen]);
     useEffect(() => {
         if (!open)
             return;
@@ -135,7 +147,7 @@ export function ProductTopbarMenu({ children, closeLabel, dialogLabel = 'Mobile 
             }
         };
     }, [open]);
-    return (<div {...rest} ref={menuRef} className={cx('dt-product-topbar-menu', className)} data-open={open ? 'true' : undefined} role={open ? 'dialog' : undefined} aria-label={open ? dialogLabel : undefined} aria-modal={open ? 'true' : undefined}>
+    return (<div {...rest} ref={mergeRef} className={cx('dt-product-topbar-menu', className)} data-open={open ? 'true' : undefined} role={open ? 'dialog' : undefined} aria-label={open ? dialogLabel : undefined} aria-modal={open ? 'true' : undefined}>
       <button ref={buttonRef} type="button" className="dt-product-topbar-menu-button" aria-label={open ? closeLabel ?? label : label} aria-controls={panelId} aria-expanded={open} onClick={handleToggle}>
         <span className="dt-product-topbar-menu-line dt-product-topbar-menu-line-top" aria-hidden="true"/>
         <span className="dt-product-topbar-menu-line dt-product-topbar-menu-line-middle" aria-hidden="true"/>
@@ -147,9 +159,10 @@ export function ProductTopbarMenu({ children, closeLabel, dialogLabel = 'Mobile 
           </nav>
         </div>) : null}
     </div>);
-}
-export function ProductTopbar({ brand, actions, mobileActions, mobileMenuCloseLabel, mobileMenuDialogLabel, mobileMenuLabel = 'Menu', mobileMenuNavigationLabel, className, ...rest }) {
-    return (<header className={cx('dt-product-topbar', className)} {...rest}>
+});
+ProductTopbarMenu.displayName = 'ProductTopbarMenu';
+export const ProductTopbar = forwardRef(function ProductTopbar({ brand, actions, mobileActions, mobileMenuCloseLabel, mobileMenuDialogLabel, mobileMenuLabel = 'Menu', mobileMenuNavigationLabel, className, ...rest }, ref) {
+    return (<header ref={ref} className={cx('dt-product-topbar', className)} {...rest}>
       <div className="dt-product-topbar-brand">{brand}</div>
       <nav className="dt-product-topbar-actions" aria-label="Primary">
         {actions}
@@ -158,4 +171,5 @@ export function ProductTopbar({ brand, actions, mobileActions, mobileMenuCloseLa
         {mobileActions ?? actions}
       </ProductTopbarMenu>
     </header>);
-}
+});
+ProductTopbar.displayName = 'ProductTopbar';

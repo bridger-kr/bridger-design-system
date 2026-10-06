@@ -1,0 +1,107 @@
+/* ============================================================
+   GENERATED FILE — DO NOT EDIT.
+   Source: packages/tokens/css/legacy-classes.css
+   Regenerate: pnpm generate
+   ============================================================ */
+
+/* ============================================================
+   Bridger — legacy class aliases  (@deprecated — removed in 2.1.0)
+
+   Opt-in migration shim for the pre-v2 unprefixed global classes.
+   Import it only while migrating markup to the .dt-* vocabulary
+   shipped by @bridger-kr/react/styles.css:
+
+     import '@bridger-kr/tokens/css/legacy-classes';
+
+   Each rule is a verbatim copy of the old self-contained rule so
+   legacy markup keeps rendering identically; the names do NOT exist
+   in the default tokens/css entrypoint anymore.
+
+   .glass-card, .spec-strip, .spec-strip-*, .mono, and .dt-grid-paper
+   have no alias — they were deleted as decoration, not renamed
+   (DESIGN.md §11).
+============================================================ */
+
+@layer dt.components {
+  /* .badge → .dt-badge; .badge-<tone> → .dt-badge-<tone> */
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 8px;
+    font-size: var(--dt-caption-size); font-weight: 600; letter-spacing: 0;
+    border-radius: var(--dt-radius-chip);
+    background: var(--dt-surface-sunken); color: var(--dt-text-muted);
+    border: 1px solid var(--dt-border-strong);
+    transition: background-color var(--dt-duration-fast) var(--dt-ease);
+  }
+  .badge-accent  { background: var(--dt-tint-accent);  color: var(--dt-accent-text); border-color: color-mix(in srgb, var(--dt-accent) 32%, transparent); }
+  .badge-info    { background: var(--dt-tint-cobalt);  color: var(--dt-cobalt); border-color: color-mix(in srgb, var(--dt-cobalt) 32%, transparent); }
+  .badge-success { background: var(--dt-tint-success); color: var(--dt-success); border-color: color-mix(in srgb, var(--dt-success) 32%, transparent); }
+  .badge-warning { background: var(--dt-tint-warning); color: var(--dt-warning); border-color: color-mix(in srgb, var(--dt-warning) 32%, transparent); }
+  .badge-danger  { background: var(--dt-tint-danger);  color: var(--dt-danger); border-color: color-mix(in srgb, var(--dt-danger) 32%, transparent); }
+
+  /* .card → .dt-card; .card-muted → .dt-card-muted; .card-raised → .dt-card-raised */
+  .card {
+    background: var(--dt-surface); color: var(--dt-text);
+    border: 1px solid var(--dt-border);
+    border-radius: var(--dt-radius-card);
+    transition: border-color var(--dt-duration-base) var(--dt-ease), transform var(--dt-duration-base) var(--dt-ease);
+  }
+  .card-muted  { background: var(--dt-surface-sunken); border: 1px solid var(--dt-border); border-radius: var(--dt-radius-card); }
+  .card-raised { background: var(--dt-surface-raised); border: 1px solid var(--dt-border); border-radius: var(--dt-radius-card); }
+
+  /* .btn-primary → .dt-button-solid
+     .btn-secondary → .dt-button-outline
+     .btn-ghost → .dt-button-ghost
+     .btn-danger → .dt-button-solid[data-tone='danger'] */
+  .btn-primary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+    height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+    border-radius: var(--dt-radius-control);
+    background: var(--dt-text-strong); color: var(--dt-surface); border: 1px solid var(--dt-text-strong);
+    text-decoration: none; cursor: pointer;
+    transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+  }
+  .btn-primary:not(:disabled):hover { background: var(--dt-text); border-color: var(--dt-text); transform: translateY(-1px); }
+  .btn-primary:active { transform: scale(var(--dt-press-scale)); }
+
+  .btn-secondary {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+    height: 44px; padding: 0 18px; font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+    border-radius: var(--dt-radius-control);
+    background: var(--dt-surface-sunken); color: var(--dt-text-strong); border: 1px solid var(--dt-border);
+    text-decoration: none; cursor: pointer;
+    transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+  }
+  .btn-secondary:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); transform: translateY(-1px); }
+  .btn-secondary:active { transform: scale(var(--dt-press-scale)); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; white-space: nowrap;
+    height: 36px; padding: 0 var(--dt-space-12); font-size: var(--dt-label-size); font-weight: 600; line-height: 1;
+    border-radius: var(--dt-radius-control);
+    background: transparent; color: var(--dt-text-subtle); border: 1px solid transparent;
+    text-decoration: none; cursor: pointer;
+    transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+  }
+  .btn-ghost:not(:disabled):hover { background: var(--dt-tint-text); border-color: var(--dt-border); color: var(--dt-text-strong); }
+  .btn-ghost:active { transform: scale(var(--dt-press-scale)); }
+
+  .btn-danger {
+    display: inline-flex; align-items: center; justify-content: center; gap: var(--dt-space-2); white-space: nowrap;
+    border: 1px solid var(--dt-danger); border-radius: var(--dt-radius-control);
+    background: var(--dt-danger); color: var(--dt-surface);
+    font-weight: 600; line-height: 1;
+    text-decoration: none; cursor: pointer;
+    transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
+  }
+  .btn-danger:not(:disabled):hover {
+    background: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-text-strong));
+    border-color: color-mix(in srgb, var(--dt-danger) 88%, var(--dt-text-strong));
+    transform: translateY(-1px);
+  }
+  .btn-danger:active:not(:disabled) { transform: scale(var(--dt-press-scale)); }
+
+  /* .tabular/.font-tabular → .dt-tabular */
+  .tabular,
+  .font-tabular { font-variant-numeric: tabular-nums; }
+}

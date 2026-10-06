@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/data/Table.tsx
 // Regenerate: pnpm generate
 
-import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
 export type TableAlign = 'left' | 'center' | 'right';
 export type TableRow = Record<string, ReactNode>;
 export interface TableColumn<Row extends TableRow = TableRow> {
@@ -37,8 +37,6 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
     readonly empty?: ReactNode;
     readonly style?: CSSProperties;
 }
-/**
- * Data table — scannable, dense, hairline-divided. Columns define header,
- * alignment, and an optional cell renderer. Built for comparison, not decoration.
- */
-export declare function Table<Row extends TableRow = TableRow>({ columns, rows, rowKey, rowAction, empty, className, style, ...rest }: TableProps<Row>): string | number | bigint | true | Iterable<ReactNode> | Promise<string | number | bigint | boolean | import("react").ReactPortal | import("react").ReactElement<unknown, string | import("react").JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | import("react").JSX.Element;
+export declare const Table: <Row extends TableRow = TableRow>(props: TableProps<Row> & {
+    ref?: Ref<HTMLDivElement>;
+}) => ReactElement;

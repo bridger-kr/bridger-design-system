@@ -15,5 +15,5 @@ export interface ActionListIndexProps extends HTMLAttributes<HTMLSpanElement> {
 }
 export declare function actionListClassName(className?: string): string;
 export declare function actionListItemClassName({ interactive, className }?: ActionListItemClassNameOptions): string;
-export declare function ActionList({ children, className, ...rest }: ActionListProps): import("react").JSX.Element;
-export declare function ActionListIndex({ children, className, ...rest }: ActionListIndexProps): import("react").JSX.Element;
+export declare const ActionList: import("react").ForwardRefExoticComponent<ActionListProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const ActionListIndex: import("react").ForwardRefExoticComponent<ActionListIndexProps & import("react").RefAttributes<HTMLSpanElement>>;

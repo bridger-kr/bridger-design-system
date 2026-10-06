@@ -2,14 +2,14 @@
 // Source: packages/react/src/components/feedback/Toast.tsx
 // Regenerate: pnpm generate
 
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 declare const DOT: {
     info: string;
     success: string;
     warning: string;
     danger: string;
 };
-export interface ToastProps {
+export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
     tone?: keyof typeof DOT;
     title?: ReactNode;
     message?: ReactNode;
@@ -17,5 +17,5 @@ export interface ToastProps {
     onDismiss?: () => void;
     style?: CSSProperties;
 }
-export declare function Toast({ tone, title, message, action, onDismiss, style }: ToastProps): import("react").JSX.Element;
+export declare const Toast: import("react").ForwardRefExoticComponent<ToastProps & import("react").RefAttributes<HTMLDivElement>>;
 export {};

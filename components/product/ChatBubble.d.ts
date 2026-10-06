@@ -7,4 +7,4 @@ export interface ChatBubbleProps extends HTMLAttributes<HTMLDivElement> {
     role: 'user' | 'assistant';
     children?: ReactNode;
 }
-export declare function ChatBubble({ role, children, className, ...rest }: ChatBubbleProps): import("react").JSX.Element;
+export declare const ChatBubble: import("react").ForwardRefExoticComponent<ChatBubbleProps & import("react").RefAttributes<HTMLDivElement>>;

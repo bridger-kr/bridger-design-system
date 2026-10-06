@@ -2,12 +2,13 @@
 // Source: packages/react/src/components/data/KeyValue.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 /**
  * Definition list for spec metadata — hairline rows, muted key, ink value.
  * @startingPoint section="Data" subtitle="Spec metadata as a definition list" viewport="460x220"
  */
-export function KeyValue({ items = [], columns = 1, style, ...rest }) {
-    return (<dl {...rest} style={{
+export const KeyValue = forwardRef(function KeyValue({ items = [], columns = 1, style, ...rest }, ref) {
+    return (<dl ref={ref} {...rest} style={{
             margin: 0, display: 'grid',
             gridTemplateColumns: columns === 2 ? '1fr 1fr' : '1fr',
             border: '1px solid var(--dt-border-strong)', borderRadius: 'var(--dt-radius-card)', overflow: 'hidden',
@@ -35,4 +36,5 @@ export function KeyValue({ items = [], columns = 1, style, ...rest }) {
           </div>);
         })}
     </dl>);
-}
+});
+KeyValue.displayName = 'KeyValue';

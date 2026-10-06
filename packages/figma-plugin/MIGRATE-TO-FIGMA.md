@@ -52,11 +52,11 @@ Tokens Studio 하단 **Export** → **Export to Figma (Variables)**.
 - Variables 패널(우측 사이드바)에서 `accent/accent = #ec5e1f` (Light) / `#ec5e1f` (Dark) 확인
 - 사각형 하나 그려서 fill을 `surface/surface`로 잡고 Mode를 Dark로 토글 → `#14151b`로 바뀌면 성공
 
-> ⚠️ **변환 시 손실된 것 (CSS → Figma 한계):**
+> **주의 — 변환 시 손실된 것 (CSS → Figma 한계):**
 > - `color-mix()` → 정적 rgba로 미리 계산해 넣음 (tint 6종, accent-soft). 동작은 동일.
-> - `clamp()` 반응형 폰트(h1/h2) → **고정 px**로 박음 (h1=56, h2=34). Figma엔 clamp 개념 없음.
+> - `clamp()` 반응형 폰트(h1/h2) → **고정 px**로 박음 (h1=36, h2=28). Figma엔 clamp 개념 없음.
 > - `--dt-divider`(50% 투명 border) → 생략. 필요하면 `border/border`에 50% opacity 수동 적용.
-> - 모션/ease/glass-blur 토큰 → Figma Variables 대상 아님. 프로토타입 설정에서 수동 (아래 4절).
+> - 모션/ease 토큰 → Figma Variables 대상 아님. 프로토타입 설정에서 수동 (아래 4절).
 
 ---
 
@@ -64,9 +64,9 @@ Tokens Studio 하단 **Export** → **Export to Figma (Variables)**.
 
 코드 컴포넌트는 모두 토큰을 참조한다. Figma에서도 **하드코딩 금지, 무조건 Variable 바인딩**.
 
-핵심 디자인 규칙(readme 기준, 반드시 지킬 것):
-- **카드는 그림자 없음(rest).** 1px border(`border/border`)로만 구분. hover에서만 `border-strong` + shadow-sm.
-- **radius는 크리스프.** 태그/작은 컨트롤 3~4px, 패널 6px, 큰 면 8~10px, pill/avatar/dot만 full.
+핵심 디자인 규칙(DESIGN.md v2 기준, 반드시 지킬 것):
+- **카드는 그림자 없음.** 1px border(`border/border`)로만 구분. 그림자는 floating overlay(Dialog·Menu·Toast·Drawer·CommandPalette) 전용 `shadow/overlay` 1단.
+- **radius는 4/6/8px + pill(9999).** 칩/태그 4, 컨트롤·패널 6, 카드·큰 면 8, pill/avatar/dot만 full.
 - **persimmon은 화면당 1개 액션만.** 나머지 색은 status 의미 전용.
 - **eyebrow kicker 금지**, **카드 안의 카드 금지**, **emoji 금지**.
 - 폰트: Pretendard(한글/UI), JetBrains Mono(코드/API/숫자), tracking 0 (대형 헤딩만 음수).
@@ -77,9 +77,9 @@ Tokens Studio 하단 **Export** → **Export to Figma (Variables)**.
 
 ## 3. 컴포넌트별 스펙 (코드 1:1 매핑)
 
-아래 수치는 실제 소스(`packages/tokens/css/base.css`, `packages/react/src/components/`)에서 그대로 뽑은 값이다.
+아래 수치는 실제 소스(`tokens/base.css`, `components/`)에서 그대로 뽑은 값이다.
 
-### Button (`packages/react/src/components/core/Button.tsx` + `.btn-*`)
+### Button (`components/core/Button.jsx` + `.btn-*`)
 Component Set 속성 2개: **Variant**(primary/secondary/ghost) × **Size**(sm/md/lg)
 
 | Variant | 배경 | 글자색 | hover |
@@ -90,43 +90,43 @@ Component Set 속성 2개: **Variant**(primary/secondary/ghost) × **Size**(sm/m
 
 | Size | height | padding | font-size |
 |---|---|---|---|
-| sm | 36 | 0 14 | 13 |
-| md | 40 | 0 16 | 14 |
-| lg | 48 | 0 20 | 15 |
+| sm | 40 | 0 14 | 13 |
+| md | 44 | 0 16 | 13 |
+| lg | 48 | 0 20 | 16 |
 
-- radius: `radius/md` (4px), font-weight 600, gap 6, Auto-layout 가로 center
+- radius: `radius/control` (6px), font-weight 600, gap 6, Auto-layout 가로 center
 - disabled: opacity 0.55 (별도 boolean variant로 추가 권장)
 - icon/iconRight 슬롯: 좌우 24px 인스턴스 스왑 슬롯으로
 
-### Badge (`packages/react/src/components/core/Badge.tsx` + `.badge-*`)
+### Badge (`components/core/Badge.jsx` + `.badge-*`)
 Variant: neutral / accent / info / success / warning / danger, boolean `dot`
 
-- padding 3 8, font-size 12, weight 600, radius `radius/sm` (3px), gap 6
+- padding 3 8, font-size 12, weight 600, radius `radius/chip` (4px), gap 6
 - **fill = tint, 글자 = solid, 1px inset border = solid 32%** (예: accent → bg `tint/tint-accent`, text `accent/accent`, border accent 32%)
 - neutral만 예외: bg `surface/surface-sunken`, text `ink/muted-strong`, border `border/border-strong`
 - dot: 6×6 원, fill currentColor(=글자색과 동일 variable)
 
-### StatusPill (`packages/react/src/components/core/StatusPill.tsx`)
+### StatusPill (`components/core/StatusPill.jsx`)
 Variant: connected/success, reconnecting/warning, disconnected/danger, info, idle + boolean `pulse`
 
 - radius `radius/full`, padding 4 10, font-size 12, weight 600, gap 6
 - fill = 해당 `tint/*`, 글자 = 해당 status solid
-- pulse: 7×7 원 + opacity 1→0.35 깜빡임 (Figma는 Smart Animate 프로토타입으로만 흉내 가능)
-- **Badge와 구분:** Pill은 full-radius(=라이브 상태), Badge는 3px(=분류 태그). 절대 섞지 말 것.
+- pulse: 7×7 원 + opacity 1~0.35 (실제 라이브 상태 한정, Smart Animate 프로토타입)
+- **Badge와 구분:** Pill은 full-radius(=라이브 상태), Badge는 4px(=분류 태그). 절대 섞지 말 것.
 
 ### Card (`.card` / `.card-muted` / `.card-raised`)
 Variant: default / muted / raised + boolean `hover`
 
-- 공통: radius `radius/lg` (6px)
+- 공통: radius `radius/card` (8px)
 - default(rest): bg `surface/surface`, **그림자 없음**, 1px border `border/border`
-- hover: border `border/border-strong` + Effect `shadow/sm`
+- hover: border `border/border-strong` (그림자 없음 — shadow는 overlay 전용)
 - muted: bg `surface/surface-sunken`, 1px `border/border`
-- raised: bg `surface/surface-raised`, border-strong + `shadow/md`
+- raised: bg `surface/surface-raised` + `border/border-strong`
 - 내부 패딩은 Auto-layout으로 (보통 16 또는 24 = `spacing/3`,`spacing/4`)
 
 ### Input / 폼 필드 (`.dt-field`)
 - bg `surface/surface-sunken`, border 없음, radius `radius/md`
-- focus: bg `surface/surface` + 3px accent ring(Effect: `shadow/focus` = accent 22%)
+- focus: bg `surface/surface` + 3px `accent/accent` outline
 - invalid: 1.5px `status/danger` ring
 
 > 나머지 35개 컴포넌트(Table, Select, Toast, Dialog, Sidebar, CommandPalette 등)도
@@ -135,13 +135,12 @@ Variant: default / muted / raised + boolean `hover`
 
 ---
 
-## 4. 모션/glass (토큰 밖 — 수동)
+## 4. 모션 (토큰 밖 — 수동)
 
-Figma Variables가 못 담는 것들. 프로토타입/Effect로 처리:
-- ease `cubic-bezier(0.22,1,0.36,1)` → 프로토타입 Animation에서 Custom bezier 입력
-- 시간: fast 130ms / base 200ms / slow 420ms
-- press = `scale(0.97)`, hover card = `translateY(-2px)`
-- glass navbar: Effect → **Background blur 20px** + bg를 paper 72% opacity로
+Figma Variables가 못 담는 것들. 프로토타입 설정으로 처리:
+- v2 기준 전환은 **120–180ms 기능 전환만** 허용 — 장식/반복 모션(펄스·리빌·마퀴) 금지
+- ease는 프로토타입 Animation에서 Custom bezier로 입력
+- glass/background-blur는 v2에서 폐기 — 스크림도 flat translucent ink만
 
 ---
 
@@ -157,10 +156,5 @@ Figma Variables가 못 담는 것들. 프로토타입/Effect로 처리:
 
 ## 부록: Light/Dark 어느 쪽이 기본인가?
 
-소스가 충돌한다:
-- `readme.md` / `packages/tokens/css/colors.css` → **Light가 기본** (`#ec5e1f`), Dark는 parity
-- `SKILL.md` → "Dark가 기본" (`#ec5e1f`)
-
-readme가 명시적으로 *"We build on the **codebase contract**, not the Figma exploration"*
-라고 못박았고, `colors.css`의 `:root`가 light다. 따라서 이 JSON은 **Light를 기본(Mode 1)**,
-Dark를 Mode 2로 잡았다. 팀 합의가 Dark-first면 Figma에서 Mode 순서만 바꾸면 된다.
+v2 canon(`DESIGN.md` §4.1)에서 **Light가 기본**, Dark는 full-parity alternate로 확정됐다.
+이 JSON도 **Light를 Mode 1**, Dark를 Mode 2로 잡는다.

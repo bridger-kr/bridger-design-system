@@ -20,4 +20,4 @@ export interface LogRowProps extends Omit<HTMLAttributes<HTMLDivElement>, 'child
  * Dense tabular execution-log stream — hairline rows, status dots, mono columns.
  * @startingPoint section="Data" subtitle="Execution-log stream" viewport="560x200"
  */
-export declare function LogRow({ entries, style, ...rest }: LogRowProps): import("react").JSX.Element;
+export declare const LogRow: import("react").ForwardRefExoticComponent<LogRowProps & import("react").RefAttributes<HTMLDivElement>>;

@@ -2,6 +2,7 @@
 // Source: packages/react/src/components/product/SearchPill.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 export const SEARCH_PILL_TONE = {
     Accent: 'accent',
@@ -12,8 +13,8 @@ export const SEARCH_PILL_SIZE = {
     Medium: 'md',
     Large: 'lg',
 };
-export function SearchPill({ tone = SEARCH_PILL_TONE.Neutral, size = SEARCH_PILL_SIZE.Medium, leadingIcon, trailingIcon, artifactLabel, children, className, ...rest }) {
-    const pill = (<div className={cx('dt-search-pill', `dt-search-pill-${tone}`, `dt-search-pill-${size}`, className)} {...rest}>
+export const SearchPill = forwardRef(function SearchPill({ tone = SEARCH_PILL_TONE.Neutral, size = SEARCH_PILL_SIZE.Medium, leadingIcon, trailingIcon, artifactLabel, children, className, ...rest }, ref) {
+    const pill = (<div ref={ref} className={cx('dt-search-pill', `dt-search-pill-${tone}`, `dt-search-pill-${size}`, className)} {...rest}>
       {leadingIcon ? <span className="dt-search-pill-icon">{leadingIcon}</span> : null}
       <span className="dt-search-pill-label">{children}</span>
       {trailingIcon ? <span className="dt-search-pill-icon">{trailingIcon}</span> : null}
@@ -25,4 +26,5 @@ export function SearchPill({ tone = SEARCH_PILL_TONE.Neutral, size = SEARCH_PILL
       <div className="dt-search-pill-artifact-header">{artifactLabel}</div>
       {pill}
     </div>);
-}
+});
+SearchPill.displayName = 'SearchPill';

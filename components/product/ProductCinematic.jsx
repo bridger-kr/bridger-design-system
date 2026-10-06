@@ -2,6 +2,7 @@
 // Source: packages/react/src/components/product/ProductCinematic.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 export const PRODUCT_SHELL_TONE = {
     Cinematic: 'cinematic',
@@ -11,26 +12,20 @@ const SHELL_TONE_CLASS = {
     [PRODUCT_SHELL_TONE.Cinematic]: 'dt-product-shell-cinematic',
     [PRODUCT_SHELL_TONE.Console]: 'dt-product-shell-console',
 };
-export function ProductShell({ tone = PRODUCT_SHELL_TONE.Cinematic, className, children, ...rest }) {
-    return (<div className={cx('dt-product-shell', SHELL_TONE_CLASS[tone], className)} {...rest}>
+export const ProductShell = forwardRef(function ProductShell({ tone = PRODUCT_SHELL_TONE.Cinematic, className, children, ...rest }, ref) {
+    return (<div ref={ref} className={cx('dt-product-shell', SHELL_TONE_CLASS[tone], className)} {...rest}>
       {children}
     </div>);
-}
-export function ProductCinematicBackdrop({ animated = true, className, ...rest }) {
-    return (<div className={cx('dt-product-cinematic-backdrop', animated && 'dt-product-cinematic-backdrop-animated', className)} aria-hidden="true" {...rest}>
+});
+ProductShell.displayName = 'ProductShell';
+export const ProductCinematicBackdrop = forwardRef(function ProductCinematicBackdrop({ animated = true, className, ...rest }, ref) {
+    return (<div ref={ref} className={cx('dt-product-cinematic-backdrop', animated && 'dt-product-cinematic-backdrop-animated', className)} aria-hidden="true" {...rest}>
       <div className="dt-product-cinematic-wash"/>
-      <svg className="dt-product-cinematic-lines" viewBox="0 0 1440 720" preserveAspectRatio="xMidYMid slice">
-        <path className="dt-product-cinematic-track" d="M-60 248 H520 C690 248 710 168 884 168 H1500"/>
-        <path className="dt-product-cinematic-track" d="M-60 430 H510 C660 430 692 542 872 542 H1500"/>
-        <path className="dt-product-cinematic-track" d="M-60 338 H610 C748 338 770 326 930 326 H1500"/>
-        <path className="dt-product-cinematic-flow dt-product-cinematic-flow-a" d="M-60 248 H520 C690 248 710 168 884 168 H1500"/>
-        <path className="dt-product-cinematic-flow dt-product-cinematic-flow-b" d="M-60 430 H510 C660 430 692 542 872 542 H1500"/>
-        <path className="dt-product-cinematic-flow dt-product-cinematic-flow-c" d="M-60 338 H610 C748 338 770 326 930 326 H1500"/>
-      </svg>
     </div>);
-}
-export function ProductMotionField({ gridSrc, label = 'Live API routing motion', className, ...rest }) {
-    return (<div className={cx('dt-product-motion-field', className)} aria-label={label} {...rest}>
+});
+ProductCinematicBackdrop.displayName = 'ProductCinematicBackdrop';
+export const ProductMotionField = forwardRef(function ProductMotionField({ gridSrc, label = 'Live API routing motion', className, ...rest }, ref) {
+    return (<div ref={ref} className={cx('dt-product-motion-field', className)} aria-label={label} {...rest}>
       {gridSrc ? <img className="dt-product-motion-grid" src={gridSrc} alt="" aria-hidden="true" loading="lazy"/> : null}
       <span className="dt-product-motion-orbit dt-product-motion-orbit-a" aria-hidden="true">
         <span className="dt-product-motion-node"/>
@@ -41,11 +36,13 @@ export function ProductMotionField({ gridSrc, label = 'Live API routing motion',
       <span className="dt-product-motion-axis" aria-hidden="true"/>
       <span className="dt-product-motion-copy">API</span>
     </div>);
-}
-export function ProductSideRail({ items, label, className, ...rest }) {
-    return (<aside className={cx('dt-product-side-rail', className)} aria-label={label} {...rest}>
+});
+ProductMotionField.displayName = 'ProductMotionField';
+export const ProductSideRail = forwardRef(function ProductSideRail({ items, label, className, ...rest }, ref) {
+    return (<aside ref={ref} className={cx('dt-product-side-rail', className)} aria-label={label} {...rest}>
       {items.map((item) => (<a key={item.key} href={item.href}>
           {item.label}
         </a>))}
     </aside>);
-}
+});
+ProductSideRail.displayName = 'ProductSideRail';

@@ -3,22 +3,35 @@
 // Regenerate: pnpm generate
 
 import { Select as BaseSelect } from '@base-ui-components/react/select';
-/** Flat native-backed select with a persimmon focus ring. */
-export function Select({ label, hint, options = [], value, defaultValue, onChange, placeholder, disabled, id, style }) {
-    const selId = id || (label ? `sel-${label.replace(/\s+/g, '-')}` : undefined);
+import { ChevronDown } from 'lucide-react';
+import { forwardRef, useId } from 'react';
+import { cx } from '../lib/cx.jsx';
+import { warnOnce } from '../lib/deprecate.jsx';
+import { Icon } from '../lib/icon.jsx';
+/** Flat select with a persimmon focus ring. */
+export const Select = forwardRef(function Select({ label, hint, options = [], value, defaultValue, onValueChange, onChange, 'aria-label': ariaLabel, 'aria-labelledby': ariaLabelledby, 'aria-describedby': ariaDescribedby, 'aria-invalid': ariaInvalid, 'aria-required': ariaRequired, open, defaultOpen, onOpenChange, placeholder, disabled, id, name, required, slotProps, className, style, ...rest }, ref) {
+    const autoId = useId();
+    const selId = id ?? autoId;
+    const hintId = hint ? `${selId}-hint` : undefined;
     const normalizedOptions = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
     const selectedOption = normalizedOptions.find((option) => option.value === value);
+    if (onChange !== undefined) {
+        warnOnce('select-onchange', 'Select: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
+    }
     const handleValueChange = (nextValue) => {
-        if (nextValue !== null)
+        if (nextValue !== null) {
+            onValueChange?.(nextValue);
             onChange?.(nextValue);
+        }
     };
-    return (<div className="dt-select">
-      {label ? (<label htmlFor={selId} className="dt-input-label">
+    const { className: triggerClassName, ...triggerRest } = slotProps?.trigger ?? {};
+    return (<div className={cx('dt-select', className)} style={style} {...rest}>
+      {label ? (<label htmlFor={selId} className="dt-input-label" {...slotProps?.label}>
           {label}
         </label>) : null}
       <div className="dt-select-box">
-        <BaseSelect.Root id={selId} value={value} defaultValue={defaultValue} disabled={disabled} onValueChange={handleValueChange}>
-          <BaseSelect.Trigger id={selId} className="dt-field dt-select-trigger" style={style}>
+        <BaseSelect.Root value={value} defaultValue={defaultValue} disabled={disabled} name={name} required={required} open={open} defaultOpen={defaultOpen} onOpenChange={(nextOpen) => onOpenChange?.(nextOpen)} onValueChange={handleValueChange}>
+          <BaseSelect.Trigger id={selId} ref={ref} className={cx('dt-field dt-select-trigger', triggerClassName)} aria-label={ariaLabel} aria-labelledby={ariaLabelledby} aria-describedby={ariaDescribedby ?? hintId} aria-invalid={ariaInvalid} aria-required={ariaRequired ?? (required ? true : undefined)} {...triggerRest}>
             <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
           </BaseSelect.Trigger>
           <BaseSelect.Portal>
@@ -33,10 +46,11 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
             </BaseSelect.Positioner>
           </BaseSelect.Portal>
         </BaseSelect.Root>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="dt-select-chevron">
-          <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-        </svg>
+        <Icon icon={ChevronDown} className="dt-select-chevron"/>
       </div>
-      {hint ? <span className="dt-input-hint">{hint}</span> : null}
+      {hint ? (<span id={hintId} className="dt-input-hint" {...slotProps?.hint}>
+          {hint}
+        </span>) : null}
     </div>);
-}
+});
+Select.displayName = 'Select';

@@ -1,0 +1,6 @@
+---
+'@bridger-kr/react': major
+'@bridger-kr/tokens': minor
+---
+
+Icon policy standardization (DS #47, DESIGN.md §6): `lucide-react` is now a required peer of `@bridger-kr/react` — consumers must install it (`^1.11.0`). All 20 hand-drawn inline SVGs across 15 components are replaced with named Lucide imports routed through a new internal `Icon` helper that pins the icon canon: sizes `--dt-icon-sm/md/lg` (14/16/20), fixed `stroke-width` 1.75, `currentColor`, `aria-hidden` for decorative glyphs and `role="img"` + `aria-label` for meaningful ones. The decorative line-tracks SVG inside the deprecated `ProductCinematicBackdrop` is removed (PR #53 deletes the component wholesale). `Button` now requires `aria-label` at the type level when rendering an icon-only button. `scripts/slop-scan.mjs` (EDD-236 scaffold) fails lint on banned decorative "AI" icons (`Sparkles`, `Sparkle`, `WandSparkles`, `Wand`, `Wand2`, `Stars`, `Rocket`, `Zap`, `Flame`; `Bot` warns without `// slop-allow: Bot`) and on namespace/dynamic lucide imports. `@bridger-kr/tokens` gains `--dt-icon-sm`, `--dt-icon-md`, `--dt-icon-lg`, and `--dt-icon-stroke` in the contract plus matching TS mirrors — app-local token mirrors in `landing/` and `dashboard/` need the same four lines before `npm run check:tokens` passes there.

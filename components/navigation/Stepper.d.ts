@@ -18,4 +18,4 @@ export interface StepperProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chil
  * Multi-step progress — done (check) / current (persimmon) / upcoming (muted).
  * @startingPoint section="Navigation" subtitle="Onboarding step progress" viewport="560x120"
  */
-export declare function Stepper({ steps, current, orientation, style, ...rest }: StepperProps): import("react").JSX.Element;
+export declare const Stepper: import("react").ForwardRefExoticComponent<StepperProps & import("react").RefAttributes<HTMLDivElement>>;

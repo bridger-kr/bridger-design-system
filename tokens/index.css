@@ -4,7 +4,12 @@
    Regenerate: pnpm generate
    ============================================================ */
 
-/* Bridger Design System token CSS entrypoint. */
+/* Bridger Design System token CSS entrypoint.
+   Declares the canonical cascade-layer order for the whole system.
+   All DS rules live inside dt.* layers, so any unlayered consumer
+   CSS (app sheets, Tailwind utilities) wins without !important. */
+@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;
+
 @import url('./fonts.css');
+@import url('./reset.css');
 @import url('./contract.css');
-@import url('./base.css');

@@ -2,7 +2,10 @@
 // Source: packages/react/src/components/data/CodeBlock.tsx
 // Regenerate: pnpm generate
 
-import { useState } from 'react';
+import { forwardRef } from 'react';
+import { cx } from '../lib/cx.jsx';
+import { warnOnce } from '../lib/deprecate.jsx';
+import { CopyButton } from './CopyButton.jsx';
 function highlight(line) {
     const out = [];
     const re = /("(?:[^"\\]|\\.)*"\s*:)|("(?:[^"\\]|\\.)*")|(\b-?\d+(?:\.\d+)?\b)|(\b(?:true|false|null|GET|POST|PUT|DELETE)\b)|([{}[\],:])/g;
@@ -27,46 +30,72 @@ function highlight(line) {
         out.push({ t: line.slice(last), c: 'plain' });
     return out;
 }
-const COLOR = { plain: '#cdd0d8', key: '#7fd1c0', str: '#e0a96d', num: '#8fb3ff', kw: '#c98aff', pun: '#8a91a3' };
+/** Semantic color for a pre-tokenized `lines` segment (also accepts tokenizer kinds). */
+export const CODE_SEGMENT_TONE = {
+    Plain: 'plain',
+    Key: 'key',
+    String: 'string',
+    Number: 'number',
+    Comment: 'comment',
+    Punctuation: 'punctuation',
+    Success: 'success',
+};
+const SEGMENT_COLOR = {
+    plain: '#cdd0d8',
+    key: '#7fd1c0',
+    str: '#e0a96d',
+    num: '#8fb3ff',
+    kw: '#c98aff',
+    pun: '#8a91a3',
+    string: '#e0a96d',
+    number: '#8fb3ff',
+    comment: '#8a91a3',
+    punctuation: '#8a91a3',
+    success: '#4ade80',
+};
 /**
  * Dark code surface for the light page (Stripe-style). Header + copy + line numbers.
+ * Renders in the mono stack (ASCII); Korean glyphs fall back to Pretendard Variable.
+ * Accepts a raw `code` string (built-in JSON/shell highlight) or pre-tokenized
+ * `lines` for full control over segment tones.
  * @startingPoint section="Data" subtitle="Dark code block with copy" viewport="520x220"
  */
-export function CodeBlock({ code = '', label, language = 'json', showLineNumbers = true, copyable = true, style, ...rest }) {
-    const [copied, setCopied] = useState(false);
-    const lines = String(code).replace(/\n$/, '').split('\n');
-    const copy = () => {
-        try {
-            navigator.clipboard?.writeText(code);
-        }
-        catch { /* clipboard unavailable */ }
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1400);
+export const CodeBlock = forwardRef(function CodeBlock({ code = '', lines, label, language = 'json', showLineNumbers = true, copy, copyable, copyText, copyLabel, copiedLabel, copyFailedLabel, className, style, ...rest }, ref) {
+    if (copyable !== undefined) {
+        warnOnce('codeblock-copyable', 'CodeBlock: `copyable` is deprecated — use `copy`. Removed in v2.1.');
+    }
+    const copyLabels = {
+        label: copyLabel,
+        copiedLabel,
+        failedLabel: copyFailedLabel,
+        ...(typeof copy === 'object' && copy !== null ? copy : {}),
     };
-    return (<div {...rest} style={{
+    const showCopy = copy === false ? false : (copyable ?? (typeof copy === 'boolean' ? copy : true));
+    const codeText = lines ? lines.map((l) => l.segments.map((s) => s.text).join('')).join('\n') : String(code).replace(/\n$/, '');
+    const textLines = codeText.split('\n');
+    return (<div ref={ref} {...rest} className={cx('dt-code-block', className)} style={{
             background: 'var(--dt-code-bg)', border: '1px solid var(--dt-code-border)',
             borderRadius: 'var(--dt-radius-card)', overflow: 'hidden', ...style,
         }}>
-      {(label || copyable) ? (<div style={{
+      {(label || showCopy) ? (<div style={{
                 display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px',
                 borderBottom: '1px solid var(--dt-code-border)',
             }}>
           <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: '#8a91a3' }}>{label || language}</span>
-          {copyable ? (<button type="button" onClick={copy} style={{
-                    marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, border: 'none',
-                    background: 'transparent', color: copied ? '#4ade80' : '#8a91a3', cursor: 'pointer',
-                    fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, padding: 0,
-                }}>
-              {copied ? (<><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"/></svg>복사됨</>) : (<><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>복사</>)}
-            </button>) : null}
+          {showCopy ? (<CopyButton className="dt-code-block-copy" value={copyText ?? codeText} label={copyLabels.label} copiedLabel={copyLabels.copiedLabel} failedLabel={copyLabels.failedLabel}/>) : null}
         </div>) : null}
       <div style={{ padding: '12px 0', overflowX: 'auto' }}>
-        {lines.map((line, index) => (<div key={index} style={{ display: 'grid', gridTemplateColumns: showLineNumbers ? '38px 1fr' : '1fr', fontFamily: 'var(--dt-font-mono)', fontSize: 12.5, lineHeight: 1.75 }}>
+        {textLines.map((line, index) => (<div key={index} style={{ display: 'grid', gridTemplateColumns: showLineNumbers ? '38px 1fr' : '1fr', fontFamily: 'var(--dt-font-mono)', fontSize: 12.5, lineHeight: 1.75 }}>
             {showLineNumbers ? <span style={{ textAlign: 'right', paddingRight: 14, color: '#5a6273', userSelect: 'none' }}>{index + 1}</span> : null}
-            <code style={{ color: COLOR.plain, whiteSpace: 'pre', paddingRight: 14 }}>
-              {highlight(line).map((segment, segmentIndex) => <span key={segmentIndex} style={{ color: COLOR[segment.c] }}>{segment.t}</span>)}
+            <code style={{ color: SEGMENT_COLOR.plain, whiteSpace: 'pre', paddingRight: 14 }}>
+              {lines
+                ? lines[index]?.segments.map((segment, segmentIndex) => (<span key={segmentIndex} className={cx('dt-code-pane-token', segment.tone && `dt-code-pane-token-${segment.tone}`)} style={segment.tone ? undefined : { color: SEGMENT_COLOR.plain }}>
+                      {segment.text}
+                    </span>))
+                : highlight(line).map((segment, segmentIndex) => <span key={segmentIndex} style={{ color: SEGMENT_COLOR[segment.c] }}>{segment.t}</span>)}
             </code>
           </div>))}
       </div>
     </div>);
-}
+});
+CodeBlock.displayName = 'CodeBlock';

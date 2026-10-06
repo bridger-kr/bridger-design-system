@@ -2,8 +2,8 @@
 // Source: packages/react/src/components/feedback/EmptyState.tsx
 // Regenerate: pnpm generate
 
-import type { CSSProperties, ReactNode } from 'react';
-export interface EmptyStateProps {
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+export interface EmptyStateProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
     icon?: ReactNode;
     title?: ReactNode;
     description?: ReactNode;
@@ -11,4 +11,4 @@ export interface EmptyStateProps {
     style?: CSSProperties;
 }
 /** Empty state for lists/tables — quiet icon, title, guidance, action. */
-export declare function EmptyState({ icon, title, description, action, style }: EmptyStateProps): import("react").JSX.Element;
+export declare const EmptyState: import("react").ForwardRefExoticComponent<EmptyStateProps & import("react").RefAttributes<HTMLDivElement>>;

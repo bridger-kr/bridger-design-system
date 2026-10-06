@@ -20,11 +20,11 @@ two product surfaces.
 This repo is a **pnpm monorepo** that ships two publishable packages plus a
 private Figma plugin:
 
-| Package | Public? | What it is |
+| Package | Distribution | What it is |
 | --- | --- | --- |
-| [`@bridger-kr/tokens`](packages/tokens) | ✅ npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
-| [`@bridger-kr/react`](packages/react) | ✅ npm | 61 typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. |
-| [`bridger-figma-plugin`](packages/figma-plugin) | 🔒 private | Figma Community plugin that builds Variables/Styles/60 Component Sets from the tokens. Not on npm. |
+| [`@bridger-kr/tokens`](packages/tokens) | npm | Design tokens — CSS custom properties (`--dt-*`) + typed TS token objects + Pretendard webfont. |
+| [`@bridger-kr/react`](packages/react) | npm | Typed React components (`.tsx`), tree-shakeable, ESM + CJS + `.d.ts`. The public API is enumerated in `DESIGN.md` §9. |
+| [`bridger-figma-plugin`](packages/figma-plugin) | Figma Community | Private plugin that builds Variables/Styles/Component Sets from the tokens. Not on npm. |
 
 ### Install
 
@@ -37,9 +37,11 @@ pnpm add @bridger-kr/react @bridger-kr/tokens react react-dom
 Import the token contract once, then the React component styles:
 
 ```ts
-import '@bridger-kr/tokens/css';   // --dt-* variables, fonts, base classes
+import '@bridger-kr/tokens/css';   // fonts + dt.reset + --dt-* variables
 import '@bridger-kr/react/styles.css';
 ```
+
+All DS rules ship inside `@layer dt.reset, dt.tokens, dt.base, dt.components, dt.utilities;`, so unlayered app CSS always wins — no `!important` needed for overrides. Element defaults (`body`, headings, `code`) are opt-in via `@bridger-kr/tokens/css/base`. Tailwind v3 consumers should disable `preflight` (the DS `dt.reset` layer owns the reset); see `packages/react/README.md` and `DESIGN.md` §9.9 for the full consumer contract.
 
 ### React usage
 
@@ -47,10 +49,10 @@ import '@bridger-kr/react/styles.css';
 import { Button, Table, CommandPalette } from '@bridger-kr/react';
 ```
 
-Per-component subpath imports for maximum tree-shaking:
+Category-level subpath imports for maximum tree-shaking:
 
 ```tsx
-import { Button } from '@bridger-kr/react/components/core/Button';
+import { Button } from '@bridger-kr/react/components/core';
 ```
 
 ### Tokens in TS/JS
@@ -244,9 +246,12 @@ tabular numbers.
 
 ## ICONOGRAPHY
 
-- **System:** [**Lucide**](https://lucide.dev) line icons, ~1.85–2px stroke,
-  used at 14–20px. This is the *only* product icon set. Load from CDN
-  (`lucide` or `lucide-react`). Common glyphs in use: `LayoutDashboard`,
+- **System:** [**Lucide**](https://lucide.dev) line icons, fixed 1.75px stroke
+  (`--dt-icon-stroke`), at exactly `--dt-icon-sm`/`md`/`lg` (14/16/20px). This
+  is the *only* product icon set; `@bridger-kr/react` takes `lucide-react` as
+  a peer and uses named imports only. Decorative "AI" icons are banned
+  (`Sparkles`, `Wand*`, `Stars`, `Rocket`, `Zap`, `Flame` — see DESIGN.md §6).
+  Common glyphs in use: `LayoutDashboard`,
   `Wrench`, `Boxes`, `LibraryBig`, `KeyRound`, `Gauge`, `Server`, `FileClock`,
   `Settings`, `Database`, `LockKeyhole`, `ShieldCheck`, `Terminal`, `Store`,
   `ArrowRight`, `CheckCircle2`, `Copy`, `ExternalLink`, `Code2`.
@@ -266,7 +271,7 @@ Icons never carry meaning alone — they pair with a text label in nav, buttons,
 
 **`packages/`** — the monorepo workspaces (the publishable surface):
 - **`tokens/`** (`@bridger-kr/tokens`) — `css/` (`fonts`, `colors`, `typography`, `spacing`, `base`) + `src/index.ts` (typed token objects) + the Pretendard webfont. Built with tsup → ESM + CJS + `.d.ts`.
-- **`react/`** (`@bridger-kr/react`) — 61 typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
+- **`react/`** (`@bridger-kr/react`) — the typed `.tsx` primitives under `src/components/{core,forms,feedback,data,navigation,product}/`. Per-component subpath exports for tree-shaking.
 - **`figma-plugin/`** (`bridger-figma-plugin`, private) — `plugin/` (manifest, QuickJS-safe `code.js`, UI), `scripts/` (token/spec generators, validator, headless e2e), `store-assets/`.
 
 **Root files** — the repo-level surface consumed by prototypes and the agent skill:
@@ -284,18 +289,16 @@ Generated-tree sources (edit these, never the mirror):
 - `examples/cards/<family>[-segment].card.html` → `components/<family>/`
 - `scripts/generate-legacy.mjs` regenerates everything; CI fails if the committed mirror drifts from `pnpm generate`, and `pnpm verify:mirror` fails if any generated import does not resolve or is not declared in root `dependencies`.
 
-**The 60 components**, grouped:
-- **core** — Button, Badge, StatusPill, Card, Input, Tabs, FilterChip (toggleable catalog filter), Chip (inline status and tag), Panel (flat section plane, exported from `core/Surface.tsx`), Section (landing band and console panel anchor).
+**The components**, grouped by family:
+- **core** — Button, Badge, StatusPill, Card, Input, Tabs, FilterChip (toggleable catalog filter), Chip (inline status and tag), Panel (flat section plane, exported from `core/Surface.tsx`), Section (landing band and console panel anchor), Heading + Text (type scale), Kbd (key-cap), Link (inline text link), Separator (hairline rule).
 - **forms** — Select, Checkbox, RadioGroup, Switch (+ ToggleSwitch alias), Textarea, SegmentedControl, Combobox (searchable select), Slider (numeric range), FileUpload (OpenAPI-spec dropzone).
 - **feedback** — Alert, Toast, Dialog, Tooltip, EmptyState, Spinner, Skeleton, Drawer (side sheet).
-- **data** — Table, StatTile, Avatar, Pagination, CodeBlock (dark code surface), KeyValue (spec metadata list), LogRow (execution-log stream), UsageMeter (quota bar), CodePane (tokenized code specimen), StatPanel (multi-stat plane).
-- **navigation** — Breadcrumb, Menu, Sidebar (console nav rail), CommandPalette (⌘K), Stepper (onboarding progress).
-- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard, ActionList + ActionListIndex (numbered guide list), AnnotationHotspot (annotated product proof), ChatBubble (composed conversation sample), ProductActionPill (CTA pill), ProductShell (composition host) + ProductSideRail + ProductCinematicBackdrop + ProductMotionField, ProductPageHeader (sub-page hero), ProductTopbar + ProductTopbarMenu (landing topbar with mobile drawer), SearchPill (topbar search), WindowChrome + WindowFrame (browser-window mockup wrapper).
+- **data** — Table, StatTile, Avatar, Pagination, CodeBlock (dark code surface), KeyValue (spec metadata list), LogRow (execution-log stream), UsageMeter (quota bar), CodePane (tokenized code specimen), StatPanel (multi-stat plane), CopyButton (clipboard copy with status feedback).
+- **navigation** — Breadcrumb, Menu, Sidebar (console nav rail), CommandPalette (⌘K), Stepper (onboarding progress), ThemeSwitch (system/light/dark preference).
+- **product** — BrandLogo (wordmark + symbol/favicon variants), SectionCard, ToolCard, ActionList + ActionListIndex (numbered guide list), AnnotationHotspot (annotated product proof, static marker), ChatBubble (composed conversation sample), ProductShell (flat composition host) + ProductSideRail, ProductPageHeader (sub-page hero), ProductTopbar + ProductTopbarMenu (landing topbar with mobile drawer), SearchPill (topbar search).
 
 Every primitive is flat-by-default: a card at rest is a **bordered plane with no shadow**; shadows are for genuinely floating layers only (menus, toasts, drawers, dialogs, the palette). Inline controls use hairlines or fills, radius stays crisp (4–8px), classification badges are crisp tags (not rounded-full cushions), and color is restrained to the one persimmon + status semantics. No eyebrow kickers.
 
 **`examples/`** — standalone demos (not part of the published library; see [`examples/README.md`](examples/README.md)):
-- `ui_kits/console/` — the Bridger portal console (dashboard, catalog, logs).
-- `ui_kits/landing/` — the marketing site recreation.
-- `foundations/` — 13 specimen cards (color, type, spacing, brand).
-- `design-canvas.jsx` — Figma-like composition canvas.
+- `ui_kits/primitives/` — Vite + React showcase built on `@bridger-kr/react` and `@bridger-kr/tokens`.
+- `foundations/` — 12 specimen cards (color, type, spacing, brand).

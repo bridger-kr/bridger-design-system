@@ -3,20 +3,21 @@
 // Regenerate: pnpm generate
 
 import { Switch as BaseSwitch } from '@base-ui-components/react/switch';
-import { useState } from 'react';
+import { forwardRef } from 'react';
+import { cx } from '../lib/cx.jsx';
+import { useControllableState } from '../lib/useControllableState.jsx';
 /** Toggle switch for instant on/off settings — persimmon track when on. */
-export function Switch({ checked, defaultChecked, onChange, disabled, label, style }) {
-    const [internal, setInternal] = useState(defaultChecked ?? false);
-    const isOn = checked !== undefined ? checked : internal;
+export const Switch = forwardRef(function Switch({ checked, defaultChecked, onChange, disabled, label, id, name, uncheckedValue, required, className, style, ...rest }, ref) {
+    const [isOn, setIsOn] = useControllableState({
+        value: checked,
+        defaultValue: defaultChecked ?? false,
+        onChange,
+    });
+    const on = isOn === true;
     const handleCheckedChange = (nextChecked) => {
-        if (checked === undefined)
-            setInternal(nextChecked);
-        onChange?.(nextChecked);
+        setIsOn(nextChecked);
     };
-    const sw = (<BaseSwitch.Root render={<button type="button" disabled={disabled}/>} nativeButton={true} checked={isOn} onClick={() => {
-            if (!disabled)
-                handleCheckedChange(!isOn);
-        }} disabled={disabled} className="dt-switch-control" style={{
+    const sw = (<BaseSwitch.Root render={<button type="button" disabled={disabled}/>} nativeButton={true} ref={ref} id={id} name={name} uncheckedValue={uncheckedValue} required={required} checked={on} onCheckedChange={handleCheckedChange} disabled={disabled} className={cx('dt-switch-control', !label && className)} style={{
             position: 'relative',
             width: 'var(--dt-space-5)',
             height: 'var(--dt-space-5)',
@@ -29,16 +30,9 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
             opacity: disabled ? 0.55 : 1,
             display: 'inline-flex',
             alignItems: 'center',
-        }}>
-      <span aria-hidden="true" className="dt-switch-track" style={{
-            position: 'absolute',
-            left: 1,
-            width: 38,
-            height: 22,
-            borderRadius: 9999,
-            background: 'var(--dt-border-strong)',
-            transition: 'background-color var(--dt-duration-fast) var(--dt-ease)',
-        }}/>
+            ...(!label ? style : undefined),
+        }} {...rest}>
+      <span aria-hidden="true" className="dt-switch-track"/>
       <BaseSwitch.Thumb className="dt-switch-thumb" style={{
             position: 'relative',
             width: 18,
@@ -51,7 +45,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
     </BaseSwitch.Root>);
     if (!label)
         return sw;
-    return (<label style={{
+    return (<label className={className} style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: 10,
@@ -61,13 +55,16 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
       {sw}
       <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span>
     </label>);
-}
-export function ToggleSwitch({ checked, label, onChange, disabled = false, className = '', }) {
-    return (<BaseSwitch.Root render={<button type="button" disabled={disabled}/>} nativeButton={true} checked={checked} aria-checked={checked} aria-label={label} disabled={disabled} onClick={() => {
+});
+Switch.displayName = 'Switch';
+/** @deprecated Alias of `Switch` kept for one minor cycle; prefer `Switch`. */
+export const ToggleSwitch = forwardRef(function ToggleSwitch({ checked, label, onChange, disabled = false, className = '', style }, ref) {
+    return (<BaseSwitch.Root render={<button type="button" disabled={disabled}/>} nativeButton={true} ref={ref} checked={checked} aria-checked={checked} aria-label={label} disabled={disabled} onClick={() => {
             if (!disabled)
                 onChange(!checked);
-        }} className={`relative inline-flex h-11 w-11 shrink-0 items-center rounded-full border border-transparent bg-transparent transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${className}`}>
+        }} className={`relative inline-flex h-11 w-11 shrink-0 items-center rounded-full border border-transparent bg-transparent transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${className}`} style={style}>
       <span aria-hidden className={`pointer-events-none absolute inset-x-0 h-6 rounded-full border transition-colors ${checked ? 'border-success/40 bg-success/80' : 'border-line-strong bg-raised'}`}/>
       <BaseSwitch.Thumb aria-hidden className={`relative inline-block h-4 w-4 transform rounded-full bg-surface shadow-dtSubtle transition-transform ${checked ? 'translate-x-6' : 'translate-x-1'}`}/>
     </BaseSwitch.Root>);
-}
+});
+ToggleSwitch.displayName = 'ToggleSwitch';

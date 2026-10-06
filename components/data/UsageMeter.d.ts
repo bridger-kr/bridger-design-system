@@ -16,4 +16,4 @@ export interface UsageMeterProps extends Omit<HTMLAttributes<HTMLDivElement>, 's
  * Quota / usage bar — hairline track, persimmon fill escalating to warning/danger.
  * @startingPoint section="Data" subtitle="Quota usage with tabular readout" viewport="420x80"
  */
-export declare function UsageMeter({ label, value, max, unit, hint, style, ...rest }: UsageMeterProps): import("react").JSX.Element;
+export declare const UsageMeter: import("react").ForwardRefExoticComponent<UsageMeterProps & import("react").RefAttributes<HTMLDivElement>>;

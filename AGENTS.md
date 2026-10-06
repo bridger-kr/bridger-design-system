@@ -41,6 +41,7 @@ Package commands:
   pnpm typecheck    # pnpm -r run typecheck
   pnpm test         # vitest run
   pnpm lint         # oxlint -c _adherence.oxlintrc.json .
+  pnpm check:slop   # DESIGN.md §11 anti-slop gate for examples/ + packages/figma-plugin/
   pnpm pack:dry-run # npm pack --dry-run for tokens + react
   ```
 
@@ -62,7 +63,7 @@ Component and token rules (pointers, not restatements):
   `.card.html` specimen sources live in `examples/cards/`.
 
 <!-- rule:ds:react:60-components owner:bridger-kr since:2026-07 source:DESIGN.md#9-component-manifest-and-package-boundary -->
-- `@bridger-kr/react` ships 61 typed components across `core`, `forms`,
+- `@bridger-kr/react` ships 60 typed components across `core`, `forms`,
   `feedback`, `data`, `navigation`, and `product` families. The barrel at
   `packages/react/src/index.ts` is the public API; subpath imports exist for
   tree-shaking only. Renaming, adding, or removing a primitive is a breaking

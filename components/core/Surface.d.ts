@@ -20,5 +20,8 @@ export type PanelProps = ComponentPropsWithoutRef<'section'> & {
     readonly tone?: SurfaceTone;
     readonly children: ReactNode;
 };
-export declare function Panel({ tone, className, children, ...props }: PanelProps): import("react").JSX.Element;
+export declare const Panel: import("react").ForwardRefExoticComponent<Omit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLElement>, HTMLElement>, "ref"> & {
+    readonly tone?: SurfaceTone;
+    readonly children: ReactNode;
+} & import("react").RefAttributes<HTMLElement>>;
 export declare function metricAccentColor(accent: MetricAccentName): string;

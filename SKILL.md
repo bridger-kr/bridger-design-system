@@ -50,15 +50,15 @@ complete state coverage, restrained type rhythm, zero decorative chrome.
 - **`packages/tokens/css/contract.css`** — canonical `--dt-*` token source. Edit here, never in a mirror file.
 - **`packages/react/`** — `@bridger-kr/react`, the typed component boundary (Button, Card, Input, Tabs, BrandLogo, SectionCard, ToolCard, …). New reusable UI lands here before apps compose it.
 - **`tokens/`, `components/`** — generated mirrors of `packages/` (built by `pnpm generate`). Never edit them; `.prompt.md` sources are colocated in `packages/react`, `.card.html` sources in `examples/cards/`.
-- **`examples/`** — `ui_kits/` (console + landing recreations) and `foundations/` (color/type/spacing specimen cards) for reference.
+- **`examples/`** — `ui_kits/primitives` (Vite showcase on the public packages) and `foundations/` (color/type/spacing specimen cards) for reference.
 - **`assets/`** — brand logos + favicon, Korean agency logos (KMA, MOLIT, BOK, Seoul, data.go.kr), Pretendard webfont.
 
 ## Non-negotiables (see readme for the full set)
-- **Dark is the default web runtime** and light is a full-parity alternate (`:root[data-theme='light']` / `.light`). Both are designed deliberately.
+- **Light is the default theme** and dark is a full-parity alternate (`:root[data-theme='dark']` / `.dark`). Both are designed deliberately.
 - **One persimmon action per screen** (fill `#ec5e1f` light / `#f07a45` dark; text role `--dt-accent-text`). Cobalt/status hues are semantic only — never decoration.
 - **Pretendard** for Korean + UI; **JetBrains Mono** for code/API/paths/IDs/timestamps. Tracking 0em (negative only on large display headings).
 - **Korean-first, terse, operational copy.** No emoji. Lucide line icons only.
-- **Quiet depth:** tonal surfaces + hairline 1px borders, no resting shadow (shadows only for genuinely floating layers), crisp restrained radii (3–4px controls/tags · 6px panels · 8–10px large surfaces · full pills). No gradient blobs, no glow, no card-in-card.
+- **Quiet depth:** tonal surfaces + hairline 1px borders, no resting shadow (shadows only for genuinely floating layers), restrained radii (4px chips/tags · 6px controls · 8px cards/overlays · full pills). No gradient blobs, no glow, no card-in-card.
 - Build cinematic, detailed surfaces (Stripe / channel.io level of craft) — never generic AI-slop Tailwind.
 
 ## Working rules

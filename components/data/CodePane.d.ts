@@ -3,6 +3,11 @@
 // Regenerate: pnpm generate
 
 import type { HTMLAttributes, ReactNode } from 'react';
+import type { CodeLine, CodeSegment, CodeSegmentTone } from './CodeBlock';
+/**
+ * @deprecated Use `CodeBlock` (`lines`, `copy`, `label`). `CodePane` is a
+ * compatibility wrapper removed in v2.1.
+ */
 export declare const CODE_PANE_TONE: {
     readonly Plain: "plain";
     readonly Key: "key";
@@ -12,20 +17,23 @@ export declare const CODE_PANE_TONE: {
     readonly Punctuation: "punctuation";
     readonly Success: "success";
 };
-export type CodePaneTone = (typeof CODE_PANE_TONE)[keyof typeof CODE_PANE_TONE];
-export interface CodePaneSegment {
-    readonly text: string;
-    readonly tone?: CodePaneTone;
-}
-export interface CodePaneLine {
-    readonly segments: readonly CodePaneSegment[];
-}
+/** @deprecated Use `CodeSegmentTone` from `CodeBlock`. */
+export type CodePaneTone = CodeSegmentTone;
+/** @deprecated Use `CodeSegment` from `CodeBlock`. */
+export type CodePaneSegment = CodeSegment;
+/** @deprecated Use `CodeLine` from `CodeBlock`. */
+export type CodePaneLine = CodeLine;
 export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
     lines?: readonly CodePaneLine[];
     label?: ReactNode;
     copyText?: string;
     copyLabel?: ReactNode;
     copiedLabel?: ReactNode;
+    copyFailedLabel?: ReactNode;
     copyable?: boolean;
 }
-export declare function CodePane({ lines, label, copyText, copyLabel, copiedLabel, copyable, className, ...rest }: CodePaneProps): import("react").JSX.Element;
+/**
+ * @deprecated Use `CodeBlock`. `CodePane` renders `CodeBlock` with
+ * `showLineNumbers={false}` and maps its copy labels. Removed in v2.1.
+ */
+export declare const CodePane: import("react").ForwardRefExoticComponent<CodePaneProps & import("react").RefAttributes<HTMLDivElement>>;

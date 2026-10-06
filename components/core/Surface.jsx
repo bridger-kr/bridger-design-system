@@ -2,6 +2,7 @@
 // Source: packages/react/src/components/core/Surface.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 export const SurfaceTone = {
     Default: 'default',
@@ -23,11 +24,12 @@ const metricAccentClass = {
     [MetricAccent.Success]: 'text-[var(--dt-success)]',
     [MetricAccent.Info]: 'text-[var(--dt-info)]',
 };
-export function Panel({ tone = SurfaceTone.Default, className, children, ...props }) {
-    return (<section className={cx('rounded-dtLg border border-[var(--dt-border)] px-5 py-5 md:px-6 md:py-6', surfaceToneClass[tone], className)} {...props}>
+export const Panel = forwardRef(function Panel({ tone = SurfaceTone.Default, className, children, ...props }, ref) {
+    return (<section ref={ref} className={cx('rounded-dtLg border border-[var(--dt-border)] px-5 py-5 md:px-6 md:py-6', surfaceToneClass[tone], className)} {...props}>
       {children}
     </section>);
-}
+});
+Panel.displayName = 'Panel';
 export function metricAccentColor(accent) {
     return metricAccentClass[accent];
 }

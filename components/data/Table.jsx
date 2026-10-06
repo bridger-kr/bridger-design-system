@@ -2,6 +2,7 @@
 // Source: packages/react/src/components/data/Table.tsx
 // Regenerate: pnpm generate
 
+import { forwardRef } from 'react';
 import { cx } from '../lib/cx.jsx';
 function rowActionState(action, row) {
     switch (action.kind) {
@@ -34,10 +35,10 @@ function rowActionState(action, row) {
  * Data table — scannable, dense, hairline-divided. Columns define header,
  * alignment, and an optional cell renderer. Built for comparison, not decoration.
  */
-export function Table({ columns = [], rows = [], rowKey, rowAction, empty, className, style, ...rest }) {
+function TableInner({ columns = [], rows = [], rowKey, rowAction, empty, className, style, ...rest }, ref) {
     if (!rows.length && empty)
-        return empty;
-    return (<div {...rest} className={cx('dt-table', className)} style={{
+        return <>{empty}</>;
+    return (<div ref={ref} {...rest} className={cx('dt-table', className)} style={{
             overflowX: 'auto',
             borderRadius: 'var(--dt-radius-card)',
             background: 'var(--dt-surface)',
@@ -84,3 +85,5 @@ export function Table({ columns = [], rows = [], rowKey, rowAction, empty, class
       </table>
     </div>);
 }
+export const Table = forwardRef(TableInner);
+Table.displayName = 'Table';

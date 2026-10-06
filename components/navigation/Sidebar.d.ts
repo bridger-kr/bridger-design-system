@@ -2,7 +2,7 @@
 // Source: packages/react/src/components/navigation/Sidebar.tsx
 // Regenerate: pnpm generate
 
-import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode } from 'react';
 export interface SidebarItem {
     label: string;
     icon?: ReactNode;
@@ -10,6 +10,8 @@ export interface SidebarItem {
     active?: boolean;
     /** Trailing count (e.g. tool count), rendered tabular-mono. */
     badge?: ReactNode;
+    /** Opens in a new tab with noreferrer semantics (e.g. a sibling console host). */
+    external?: boolean;
 }
 export interface SidebarSection {
     heading?: string;
@@ -21,10 +23,15 @@ export interface SidebarProps extends Omit<HTMLAttributes<HTMLElement>, 'childre
     sections?: SidebarSection[];
     footer?: ReactNode;
     width?: number;
+    /**
+     * Called when an item is activated. Apps with client-side routers use this
+     * to intercept plain clicks (modifier/middle clicks still open natively).
+     */
+    onNavigate?: (event: MouseEvent<HTMLAnchorElement>, item: SidebarItem) => void;
     style?: CSSProperties;
 }
 /**
- * Console primary nav — flat column, active item marked by a persimmon left bar.
+ * Console primary nav — flat column, active item marked by a sunken row.
  * @startingPoint section="Navigation" subtitle="Console nav rail" viewport="260x440"
  */
-export declare function Sidebar({ brand, sections, footer, width, className, style, ...rest }: SidebarProps): import("react").JSX.Element;
+export declare const Sidebar: import("react").ForwardRefExoticComponent<SidebarProps & import("react").RefAttributes<HTMLElement>>;

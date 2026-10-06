@@ -18,6 +18,11 @@ export interface ProductTopbarMenuProps extends HTMLAttributes<HTMLDivElement> {
     dialogLabel?: string;
     label?: string;
     navigationLabel?: string;
+    /** Controlled open state of the mobile menu. */
+    open?: boolean;
+    /** Uncontrolled initial open state. */
+    defaultOpen?: boolean;
+    onOpenChange?: (open: boolean) => void;
 }
-export declare function ProductTopbarMenu({ children, closeLabel, dialogLabel, label, navigationLabel, className, ...rest }: ProductTopbarMenuProps): import("react").JSX.Element;
-export declare function ProductTopbar({ brand, actions, mobileActions, mobileMenuCloseLabel, mobileMenuDialogLabel, mobileMenuLabel, mobileMenuNavigationLabel, className, ...rest }: ProductTopbarProps): import("react").JSX.Element;
+export declare const ProductTopbarMenu: import("react").ForwardRefExoticComponent<ProductTopbarMenuProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const ProductTopbar: import("react").ForwardRefExoticComponent<ProductTopbarProps & import("react").RefAttributes<HTMLElement>>;

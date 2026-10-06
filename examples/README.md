@@ -1,36 +1,22 @@
-# examples/
+# examples/ — Bridger showcases
 
-Standalone demos and specimens for the Bridger Design System. These are not
-part of the published npm library. The primitive example is a Vite React runtime
-that imports the public package barrel; older specimens remain static references.
+Static specimens and a Vite showcase implementing the **Bridger** design canon
+(`DESIGN.md` v2) for the portal/console product — bridger.kr, portal.bridger.kr,
+mcp.bridger.kr.
 
-| Path | What it is |
-| --- | --- |
-| `ui_kits/console/` | Full-page recreation of the Bridger portal console (`portal.bridger.kr`). Open `index.html` in a browser. |
-| `ui_kits/landing/` | Marketing-site recreation (`bridger.kr`). `app.jsx` / `app2.jsx` / `app3.jsx` are iteration variants. |
-| `cards/` | Authored sources for the `components/<family>/*.card.html` specimen pages in the root mirror. Edit here, then run `pnpm generate` — never edit the generated copies. |
-| `ui_kits/primitives/` | Vite-mounted first-use primitive example using the public `@bridger-kr/react` and `@bridger-kr/tokens` exports. It includes light/dark, keyboard focus, hover/press, disabled, and 40/44/48px Button states. |
-| `foundations/` | 13 specimen cards (color, type, spacing, brand) — design-system documentation visuals. |
-| `design-canvas.jsx` | A Figma-like pan/zoom design canvas used to compose specimens. |
-
-## Running
-
-The static specimens use Babel-standalone and React UMD from `unpkg`. Build the
-mounted primitive example after building the packages:
-
-```sh
-pnpm build
-pnpm build:example:primitives
-pnpm dev:example:primitives
+```
+ui_kits/
+  primitives/   Vite + React showcase — @bridger-kr/react + @bridger-kr/tokens
+                through the public package entry points only.
+                Build check: `pnpm build:example:primitives`
+foundations/    hand-authored HTML specimens for tokens/typography/brand/spacing
 ```
 
-Then open the local Vite URL printed by the command. The example imports only
-the public package contract:
+## Serving
 
-```ts
-import '@bridger-kr/tokens/css';
-import '@bridger-kr/react/styles.css';
-import { Button } from '@bridger-kr/react';
-```
+- `ui_kits/primitives/` — `pnpm --filter @ds/example-primitives dev`
+- `foundations/` — `npx serve examples` then open a specimen file, or use any
+  static server / `file://` (no build step; they import `../../styles.css`).
 
-See the root `readme.md` and each package's `README.md` for library usage.
+No example loads React/Babel from a CDN at runtime — `ui_kits/primitives` is
+bundled by Vite against the workspace packages.
