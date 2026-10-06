@@ -17,24 +17,23 @@ import {
 } from './index';
 
 describe('data exports', () => {
-  it('exports all data components as functions', () => {
-    expect(Avatar).toBeTypeOf('function');
-    expect(CodeBlock).toBeTypeOf('function');
-    expect(CodePane).toBeTypeOf('function');
-    expect(KeyValue).toBeTypeOf('function');
-    expect(LogRow).toBeTypeOf('function');
-    expect(Pagination).toBeTypeOf('function');
-    expect(StatPanel).toBeTypeOf('function');
-    expect(StatTile).toBeTypeOf('function');
-    expect(Table).toBeTypeOf('function');
-    expect(UsageMeter).toBeTypeOf('function');
+  it('exports all data components as forwardRef objects', () => {
+    for (const component of [Avatar, CodeBlock, CodePane, KeyValue, LogRow, Pagination, StatPanel, StatTile, Table, UsageMeter]) {
+      expect(component).toBeDefined();
+      expect((component as { $$typeof?: symbol }).$$typeof).toBe(Symbol.for('react.forward_ref'));
+    }
   });
 
   it('renders tokenized code pane and stat panel contracts', () => {
-    const { container } = render(<CodePane label="response" lines={[{ segments: [{ text: 'status', tone: 'key' }] }]} />);
+    const { container } = render(
+      <>
+        <CodePane label="response" lines={[{ segments: [{ text: 'status', tone: 'key' }] }]} />
+        <StatPanel items={[{ value: '47.2%', label: '성공률' }]} />
+      </>,
+    );
 
     expect(container.querySelector('.dt-code-pane-token-key')).toBeTruthy();
-    expect(StatPanel({ items: [{ value: '47.2%', label: '성공률' }] }).props.className).toContain('dt-stat-panel-card');
+    expect(container.querySelector('.dt-stat-panel-card')).toBeTruthy();
   });
 
   it('renders table interaction hooks without injecting a style tag', () => {

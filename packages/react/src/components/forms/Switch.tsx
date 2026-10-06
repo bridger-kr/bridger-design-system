@@ -1,40 +1,54 @@
 import { Switch as BaseSwitch } from '@base-ui-components/react/switch';
-import { useState } from 'react';
-import type { CSSProperties, InputHTMLAttributes, ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode, Ref } from 'react';
+import { cx } from '../../lib/cx';
+import { useControllableState } from '../../lib/useControllableState';
 
 export interface SwitchProps
-  extends Omit<
-    InputHTMLAttributes<HTMLInputElement>,
-    'checked' | 'defaultChecked' | 'disabled' | 'id' | 'onChange' | 'style'
-  > {
+  extends Omit<HTMLAttributes<HTMLSpanElement>, 'className' | 'defaultChecked' | 'onChange' | 'style'> {
   checked?: boolean;
   defaultChecked?: boolean;
   onChange?: (checked: boolean) => void;
   disabled?: boolean;
   label?: ReactNode;
   id?: string;
+  name?: string;
+  /** Value submitted with the form when the switch is off. */
+  uncheckedValue?: string;
+  required?: boolean;
+  /** Root `<label>`/`<button>` class. */
+  className?: string;
   style?: CSSProperties;
 }
 
 /** Toggle switch for instant on/off settings — persimmon track when on. */
-export function Switch({ checked, defaultChecked, onChange, disabled, label, style }: SwitchProps) {
-  const [internal, setInternal] = useState(defaultChecked ?? false);
-  const isOn = checked !== undefined ? checked : internal;
+export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(function Switch(
+  { checked, defaultChecked, onChange, disabled, label, id, name, uncheckedValue, required, className, style, ...rest },
+  ref,
+) {
+  const [isOn, setIsOn] = useControllableState<boolean>({
+    value: checked,
+    defaultValue: defaultChecked ?? false,
+    onChange,
+  });
+  const on = isOn === true;
   const handleCheckedChange = (nextChecked: boolean) => {
-    if (checked === undefined) setInternal(nextChecked);
-    onChange?.(nextChecked);
+    setIsOn(nextChecked);
   };
 
   const sw = (
     <BaseSwitch.Root
       render={<button type="button" disabled={disabled} />}
       nativeButton={true}
-      checked={isOn}
-      onClick={() => {
-        if (!disabled) handleCheckedChange(!isOn);
-      }}
+      ref={ref as Ref<HTMLButtonElement>}
+      id={id}
+      name={name}
+      uncheckedValue={uncheckedValue}
+      required={required}
+      checked={on}
+      onCheckedChange={handleCheckedChange}
       disabled={disabled}
-      className="dt-switch-control"
+      className={cx('dt-switch-control', !label && className)}
       style={{
         position: 'relative',
         width: 'var(--dt-space-5)',
@@ -48,7 +62,9 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
         opacity: disabled ? 0.55 : 1,
         display: 'inline-flex',
         alignItems: 'center',
+        ...(!label ? style : undefined),
       }}
+      {...rest}
     >
       <span
         aria-hidden="true"
@@ -80,6 +96,7 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
   if (!label) return sw;
   return (
     <label
+      className={className}
       style={{
         display: 'inline-flex',
         alignItems: 'center',
@@ -92,7 +109,8 @@ export function Switch({ checked, defaultChecked, onChange, disabled, label, sty
       <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span>
     </label>
   );
-}
+});
+Switch.displayName = 'Switch';
 
 export interface ToggleSwitchProps {
   readonly checked: boolean;
@@ -100,19 +118,19 @@ export interface ToggleSwitchProps {
   readonly onChange: (next: boolean) => void;
   readonly disabled?: boolean;
   readonly className?: string;
+  readonly style?: CSSProperties;
 }
 
-export function ToggleSwitch({
-  checked,
-  label,
-  onChange,
-  disabled = false,
-  className = '',
-}: ToggleSwitchProps) {
+/** @deprecated Alias of `Switch` kept for one minor cycle; prefer `Switch`. */
+export const ToggleSwitch = forwardRef<HTMLButtonElement, ToggleSwitchProps>(function ToggleSwitch(
+  { checked, label, onChange, disabled = false, className = '', style },
+  ref,
+) {
   return (
     <BaseSwitch.Root
       render={<button type="button" disabled={disabled} />}
       nativeButton={true}
+      ref={ref as Ref<HTMLButtonElement>}
       checked={checked}
       aria-checked={checked}
       aria-label={label}
@@ -121,6 +139,7 @@ export function ToggleSwitch({
         if (!disabled) onChange(!checked);
       }}
       className={`relative inline-flex h-11 w-11 shrink-0 items-center rounded-full border border-transparent bg-transparent transition-colors disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
+      style={style}
     >
       <span
         aria-hidden
@@ -136,4 +155,5 @@ export function ToggleSwitch({
       />
     </BaseSwitch.Root>
   );
-}
+});
+ToggleSwitch.displayName = 'ToggleSwitch';
