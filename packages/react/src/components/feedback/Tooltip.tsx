@@ -1,6 +1,6 @@
-import { Tooltip as BaseTooltip } from '@base-ui-components/react/tooltip';
+import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { forwardRef, useId, useState } from 'react';
-import type { ReactNode, Ref } from 'react';
+import type { ComponentProps, ReactNode, Ref } from 'react';
 
 export interface TooltipProps {
   label: ReactNode;
@@ -18,7 +18,7 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
     <BaseTooltip.Provider>
       <BaseTooltip.Root open={open} onOpenChange={setOpen}>
         <BaseTooltip.Trigger
-          ref={ref as Ref<HTMLSpanElement>}
+          ref={ref as ComponentProps<typeof BaseTooltip.Trigger>['ref']}
           render={
             <span
               className="dt-tooltip-trigger"

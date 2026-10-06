@@ -3,6 +3,7 @@ import { forwardRef } from 'react';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { cx } from '../../lib/cx';
 import { Icon } from '../../lib/icon';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface FilterChipProps {
   label: string;
@@ -12,6 +13,8 @@ export interface FilterChipProps {
   removable?: boolean;
   onToggle?: () => void;
   onRemove?: () => void;
+  /** Accessible name for the remove button; defaults to the ambient locale. */
+  removeAriaLabel?: string;
   icon?: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -24,7 +27,9 @@ export interface FilterChipProps {
  * @startingPoint section="Core" subtitle="Toggleable catalog filter" viewport="520x80"
  */
 export const FilterChip = forwardRef<HTMLSpanElement | HTMLButtonElement, FilterChipProps>(
-  function FilterChip({ label, count, active = false, removable = false, onToggle, onRemove, icon, className, style }, ref) {
+  function FilterChip({ label, count, active = false, removable = false, onToggle, onRemove,
+    removeAriaLabel, icon, className, style }, ref) {
+  const messages = useDSMessages();
     const toggle = (
       <button
         type="button"
@@ -55,7 +60,7 @@ export const FilterChip = forwardRef<HTMLSpanElement | HTMLButtonElement, Filter
         <button
           type="button"
           className="dt-filter-chip-remove"
-          aria-label={`${label} 제거`}
+          aria-label={removeAriaLabel ?? messages.filterChip.removeAriaLabel(label)}
           onClick={onRemove}
           style={{ color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }}
         >

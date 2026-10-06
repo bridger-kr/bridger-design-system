@@ -8,7 +8,7 @@ import { CommandPalette, Menu } from './index';
 
 const groups = [
   {
-    heading: '도구',
+    heading: 'Tools',
     items: [{ label: 'weather_getForecast' }, { label: 'realestate_search' }],
   },
 ];
@@ -107,7 +107,7 @@ describe('CommandPalette a11y', () => {
 describe('Menu a11y', () => {
   it('trigger exposes aria-haspopup and reflects expanded state', () => {
     const { container } = render(
-      <Menu trigger={<span>열기</span>} items={[{ label: '항목' }]} />,
+      <Menu trigger={<span>Open</span>} items={[{ label: 'Item' }]} />,
     );
     const trigger = container.querySelector('[aria-haspopup]');
     expect(trigger).not.toBeNull();
@@ -116,7 +116,7 @@ describe('Menu a11y', () => {
 
   it('uses scoped menu hooks and the canonical popover layer', async () => {
     const { container } = render(
-      <Menu trigger={<span>열기</span>} items={[{ label: '항목' }]} />,
+      <Menu trigger={<span>Open</span>} items={[{ label: 'Item' }]} />,
     );
     const trigger = container.querySelector('[aria-haspopup]');
     expect(trigger).not.toBeNull();

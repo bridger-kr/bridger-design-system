@@ -3,6 +3,7 @@ import type { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { Check, CircleAlert, Copy } from 'lucide-react';
 import { Icon } from '../../lib/icon';
 import { cx } from '../../lib/cx';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export type CopyButtonState = 'idle' | 'copied' | 'failed';
 export type CopyButtonResult = Exclude<CopyButtonState, 'idle'>;
@@ -38,9 +39,9 @@ export type CopyButtonProps = CopyButtonBase &
 export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(function CopyButton(
   {
     value,
-    label = '복사',
-    copiedLabel = '복사됨',
-    failedLabel = '복사하지 못했어요',
+    label,
+    copiedLabel,
+    failedLabel,
     iconOnly = false,
     onCopy,
     onClick,
@@ -49,6 +50,10 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(functio
   },
   ref,
 ) {
+  const messages = useDSMessages();
+  const resolvedLabel = label ?? messages.code.copy;
+  const resolvedCopiedLabel = copiedLabel ?? messages.code.copied;
+  const resolvedFailedLabel = failedLabel ?? messages.code.failed;
   const [state, setState] = useState<CopyButtonState>('idle');
   const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -80,7 +85,7 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(functio
     resetTimer.current = setTimeout(() => setState('idle'), RESET_DELAY_MS);
   };
 
-  const stateLabel = state === 'copied' ? copiedLabel : state === 'failed' ? failedLabel : null;
+  const stateLabel = state === 'copied' ? resolvedCopiedLabel : state === 'failed' ? resolvedFailedLabel : null;
   const StateIcon = state === 'copied' ? Check : state === 'failed' ? CircleAlert : Copy;
 
   return (
@@ -94,7 +99,7 @@ export const CopyButton = forwardRef<HTMLButtonElement, CopyButtonProps>(functio
         {...rest}
       >
         <Icon icon={StateIcon} size="sm" className="dt-copy-button-icon" />
-        {iconOnly ? null : <span className="dt-copy-button-label">{stateLabel ?? label}</span>}
+        {iconOnly ? null : <span className="dt-copy-button-label">{stateLabel ?? resolvedLabel}</span>}
       </button>
       <span className="dt-visually-hidden" role="status">
         {stateLabel ?? ''}

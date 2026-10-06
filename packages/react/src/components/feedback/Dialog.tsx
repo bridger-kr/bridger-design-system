@@ -1,4 +1,4 @@
-import { Dialog as BaseDialog } from '@base-ui-components/react/dialog';
+import { Dialog as BaseDialog } from '@base-ui/react/dialog';
 import { forwardRef, useId } from 'react';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 import { warnOnce } from '../../lib/deprecate';
@@ -55,7 +55,6 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(function Dialog(
       <BaseDialog.Portal>
         <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay" style={{
           position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-text-strong) 32%, transparent)',
-          backdropFilter: 'blur(2px)',
         }} />
         <div data-dt-dialog-content style={{ position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-modal)', display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
           <BaseDialog.Popup

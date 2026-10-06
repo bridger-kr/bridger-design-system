@@ -16,6 +16,7 @@ import {
   BRAND_WORDMARK_VIEW_BOX,
   type BrandLogoFrameSize,
 } from './brandLogoGeometry';
+import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export const BRAND_LOGO_LANGUAGE = {
   Korean: 'ko',
@@ -30,14 +31,6 @@ export const BRAND_LOGO_SIZE_NAME = {
   Symbol: 'symbol',
   Favicon: 'favicon',
 } as const;
-
-const BRAND_WORDMARK = 'Bridger';
-const BRAND_WORDMARK_PERIOD = '.';
-
-const BRAND_LOGO_LABEL: Record<BrandLogoLanguage, string> = {
-  [BRAND_LOGO_LANGUAGE.Korean]: '브릿저',
-  [BRAND_LOGO_LANGUAGE.English]: `${BRAND_WORDMARK}${BRAND_WORDMARK_PERIOD}`,
-};
 
 export type BrandLogoLanguage = (typeof BRAND_LOGO_LANGUAGE)[keyof typeof BRAND_LOGO_LANGUAGE];
 export type BrandLogoSize = keyof typeof BRAND_WORDMARK_SIZE | keyof typeof BRAND_SYMBOL_SIZE;
@@ -143,6 +136,8 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
   const isSymbol = size === BRAND_LOGO_SIZE_NAME.Symbol;
   const isFavicon = size === BRAND_LOGO_SIZE_NAME.Favicon;
   const [armed, setArmed] = useState(false);
+  const messages = useDSMessages();
+  const wordmarkLabel = messages.brand.wordmark[lang];
 
   useImperativeHandle(
     ref,
@@ -181,7 +176,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
 
     return (
       <span
-        aria-label={BRAND_LOGO_LABEL[lang]}
+        aria-label={wordmarkLabel}
         role="img"
         style={{
           display: 'inline-flex',
@@ -212,7 +207,7 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
 
   return (
     <span
-      aria-label={BRAND_LOGO_LABEL[lang]}
+      aria-label={wordmarkLabel}
       role="img"
       className="dt-brand-logo"
       data-armed={armed ? 'true' : 'false'}

@@ -1,4 +1,4 @@
-import { Slider as BaseSlider } from '@base-ui-components/react/slider';
+import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { forwardRef, useId } from 'react';
 import type { CSSProperties, HTMLAttributes, Ref } from 'react';
 import { warnOnce } from '../../lib/deprecate';
