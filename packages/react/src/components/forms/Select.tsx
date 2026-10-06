@@ -1,79 +1,135 @@
 import { Select as BaseSelect } from '@base-ui/react/select';
-import type { CSSProperties, SelectHTMLAttributes } from 'react';
+import { ChevronDown } from 'lucide-react';
+import { forwardRef, useId } from 'react';
+import type { CSSProperties, HTMLAttributes, Ref } from 'react';
+import { cx } from '../../lib/cx';
+import { warnOnce } from '../../lib/deprecate';
+import type { SlotPropsFor } from '../../lib/slot';
+import { Icon } from '../../lib/icon';
 
 export interface SelectOption {
   value: string;
   label: string;
 }
 
+export type SelectSlotProps = SlotPropsFor<{
+  trigger: 'button';
+  label: 'label';
+  hint: 'span';
+}>;
+
 export interface SelectProps
   extends Omit<
-    SelectHTMLAttributes<HTMLSelectElement>,
-    'defaultValue' | 'disabled' | 'id' | 'onChange' | 'style' | 'value'
+    HTMLAttributes<HTMLDivElement>,
+    'className' | 'defaultValue' | 'onChange' | 'style'
   > {
   label?: string;
   hint?: string;
   options?: Array<string | SelectOption>;
+  /** Controlled selected value. */
   value?: string;
+  /** Uncontrolled initial value. */
   defaultValue?: string;
+  /** Called with the newly selected value. */
+  onValueChange?: (value: string) => void;
+  /** @deprecated Use `onValueChange`. Removed in v2.1. */
   onChange?: (value: string) => void;
+  /** Controlled open state of the option list. */
+  open?: boolean;
+  /** Uncontrolled initial open state. */
+  defaultOpen?: boolean;
+  onOpenChange?: (open: boolean) => void;
   placeholder?: string;
   disabled?: boolean;
   id?: string;
+  name?: string;
+  required?: boolean;
+  /** Prop bags for inner elements (`trigger` button, `label`, `hint`). */
+  slotProps?: SelectSlotProps;
+  /** Root `<div>` class. */
+  className?: string;
   style?: CSSProperties;
 }
 
-/** Flat native-backed select with a persimmon focus ring. */
-export function Select({ label, hint, options = [], value, defaultValue, onChange, placeholder, disabled, id, style }: SelectProps) {
-  const selId = id || (label ? `sel-${label.replace(/\s+/g, '-')}` : undefined);
+/** Flat select with a persimmon focus ring. */
+export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select(
+  {
+    label,
+    hint,
+    options = [],
+    value,
+    defaultValue,
+    onValueChange,
+    onChange,
+    open,
+    defaultOpen,
+    onOpenChange,
+    placeholder,
+    disabled,
+    id,
+    name,
+    required,
+    slotProps,
+    className,
+    style,
+    ...rest
+  },
+  ref,
+) {
+  const autoId = useId();
+  const selId = id ?? autoId;
+  const hintId = hint ? `${selId}-hint` : undefined;
   const normalizedOptions = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
   const selectedOption = normalizedOptions.find((option) => option.value === value);
+
+  if (onChange !== undefined) {
+    warnOnce('select-onchange', 'Select: `onChange` is deprecated — use `onValueChange`. Removed in v2.1.');
+  }
   const handleValueChange = (nextValue: string | null) => {
-    if (nextValue !== null) onChange?.(nextValue);
+    if (nextValue !== null) {
+      onValueChange?.(nextValue);
+      onChange?.(nextValue);
+    }
   };
+  const { className: triggerClassName, ...triggerRest } = slotProps?.trigger ?? {};
 
   return (
-    <div style={{ display: 'grid', gap: 7 }}>
+    <div className={cx('dt-select', className)} style={style} {...rest}>
       {label ? (
-        <label htmlFor={selId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}>
+        <label htmlFor={selId} className="dt-input-label" {...slotProps?.label}>
           {label}
         </label>
       ) : null}
-      <div style={{ position: 'relative', display: 'flex' }}>
+      <div className="dt-select-box">
         <BaseSelect.Root<string>
-          id={selId}
           value={value}
           defaultValue={defaultValue}
           disabled={disabled}
+          name={name}
+          required={required}
+          open={open}
+          defaultOpen={defaultOpen}
+          onOpenChange={(nextOpen) => onOpenChange?.(nextOpen)}
           onValueChange={handleValueChange}
         >
           <BaseSelect.Trigger
             id={selId}
-            className="dt-field dt-select-trigger"
-            style={{
-              appearance: 'none', WebkitAppearance: 'none', width: '100%', padding: '10px 36px 10px 13px', fontSize: 14,
-              fontFamily: 'inherit', color: 'var(--dt-ink-strong)', cursor: disabled ? 'not-allowed' : 'pointer',
-              opacity: disabled ? 0.55 : 1, textAlign: 'left', border: '1px solid var(--dt-border)', ...style,
-            }}
+            ref={ref as Ref<HTMLButtonElement>}
+            className={cx('dt-field dt-select-trigger', triggerClassName)}
+            aria-describedby={hintId}
+            {...triggerRest}
           >
             <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
           </BaseSelect.Trigger>
           <BaseSelect.Portal>
             <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
-              <BaseSelect.Popup className="dt-select-popup" style={{
-                 zIndex: 'var(--dt-z-index-popover)', minWidth: 'var(--anchor-width)', padding: 5, background: 'var(--dt-surface)', borderRadius: 'var(--dt-radius-md)',
-                 border: '1px solid var(--dt-border-strong)', boxShadow: 'var(--dt-shadow-lg)',
-              }}>
+              <BaseSelect.Popup className="dt-select-popup">
                 <BaseSelect.List>
                   {normalizedOptions.map((opt) => (
                     <BaseSelect.Item
                       key={opt.value}
                       value={opt.value}
                       className="dt-select-option"
-                      style={{
-                        display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '8px 10px',
-                        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer', fontSize: 13.5, fontWeight: 500, color: 'var(--dt-ink)',
-                      }}
                     >
                       <BaseSelect.ItemText>{opt.label}</BaseSelect.ItemText>
                     </BaseSelect.Item>
@@ -83,25 +139,14 @@ export function Select({ label, hint, options = [], value, defaultValue, onChang
             </BaseSelect.Positioner>
           </BaseSelect.Portal>
         </BaseSelect.Root>
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          style={{
-            position: 'absolute',
-            right: 11,
-            top: '50%',
-            transform: 'translateY(-50%)',
-            pointerEvents: 'none',
-            color: 'var(--dt-muted)',
-          }}
-        >
-          <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+        <Icon icon={ChevronDown} className="dt-select-chevron" />
       </div>
-      {hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span> : null}
+      {hint ? (
+        <span id={hintId} className="dt-input-hint" {...slotProps?.hint}>
+          {hint}
+        </span>
+      ) : null}
     </div>
   );
-}
+});
+Select.displayName = 'Select';

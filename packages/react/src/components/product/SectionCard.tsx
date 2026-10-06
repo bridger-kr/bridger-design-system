@@ -1,5 +1,11 @@
+import { forwardRef } from 'react';
 import type { ReactNode, HTMLAttributes } from 'react';
 import { cx } from '../../lib/cx';
+import { warnOnce } from '../../lib/deprecate';
+
+export type SectionCardSlotProps = {
+  content?: HTMLAttributes<HTMLDivElement>;
+};
 
 export interface SectionCardProps extends Omit<HTMLAttributes<HTMLElement>, 'title'> {
   eyebrow?: string;
@@ -8,7 +14,10 @@ export interface SectionCardProps extends Omit<HTMLAttributes<HTMLElement>, 'tit
   /** Right-aligned action (usually a ghost Button). */
   action?: ReactNode;
   children?: ReactNode;
+  /** @deprecated Use `slotProps.content.className`. Removed in v2.1. */
   contentClassName?: string;
+  /** Prop bags for inner elements (`content` wrapper). */
+  slotProps?: SectionCardSlotProps;
 }
 
 /**
@@ -16,24 +25,22 @@ export interface SectionCardProps extends Omit<HTMLAttributes<HTMLElement>, 'tit
  * the title is a plain noun-phrase heading, the section's own content does the
  * rest. Lay items flat inside; never card-in-card.
  */
-export function SectionCard({
-  eyebrow,
-  title,
-  description,
-  action,
-  children,
-  contentClassName,
-  style,
-  ...rest
-}: SectionCardProps) {
+export const SectionCard = forwardRef<HTMLElement, SectionCardProps>(function SectionCard(
+  { eyebrow, title, description, action, children, contentClassName, slotProps, style, ...rest },
+  ref,
+) {
   const hasHeader = Boolean(eyebrow || title || description || action);
+  if (contentClassName !== undefined) {
+    warnOnce('sectioncard-contentclassname', 'SectionCard: `contentClassName` is deprecated — use `slotProps.content.className`. Removed in v2.1.');
+  }
   return (
     <section
+      ref={ref}
       {...rest}
       style={{
-        borderRadius: 'var(--dt-radius-lg)',
+        borderRadius: 'var(--dt-radius-card)',
         background: 'var(--dt-surface)',
-        boxShadow: 'var(--dt-ring), var(--dt-shadow-xs)',
+        border: '1px solid var(--dt-border)',
         padding: 'var(--dt-space-4)',
         ...style,
       }}
@@ -54,21 +61,21 @@ export function SectionCard({
                 style={{
                   marginBottom: 6,
                   fontSize: 12,
-                  fontWeight: 650,
+                  fontWeight: 600,
                   textTransform: 'uppercase',
-                  color: 'var(--dt-muted)',
+                  color: 'var(--dt-text-muted)',
                 }}
               >
                 {eyebrow}
               </p>
             ) : null}
             {title ? (
-              <h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-ink-strong)' }}>
+              <h3 style={{ fontSize: 18, fontWeight: 650, letterSpacing: '-0.01em', color: 'var(--dt-text-strong)' }}>
                 {title}
               </h3>
             ) : null}
             {description ? (
-              <p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.55, color: 'var(--dt-muted-strong)', maxWidth: 560 }}>
+              <p style={{ marginTop: 6, fontSize: 13, lineHeight: 1.55, color: 'var(--dt-text-subtle)', maxWidth: 560 }}>
                 {description}
               </p>
             ) : null}
@@ -76,7 +83,8 @@ export function SectionCard({
           {action ? <div style={{ flex: '0 0 auto' }}>{action}</div> : null}
         </header>
       ) : null}
-      <div className={cx(contentClassName)}>{children}</div>
+      <div {...slotProps?.content} className={cx(slotProps?.content?.className, contentClassName)}>{children}</div>
     </section>
   );
-}
+});
+SectionCard.displayName = 'SectionCard';

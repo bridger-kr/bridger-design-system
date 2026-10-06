@@ -17,31 +17,30 @@ import {
 } from './index';
 
 describe('data exports', () => {
-  it('exports all data components as functions', () => {
-    expect(Avatar).toBeTypeOf('function');
-    expect(CodeBlock).toBeTypeOf('function');
-    expect(CodePane).toBeTypeOf('function');
-    expect(KeyValue).toBeTypeOf('function');
-    expect(LogRow).toBeTypeOf('function');
-    expect(Pagination).toBeTypeOf('function');
-    expect(StatPanel).toBeTypeOf('function');
-    expect(StatTile).toBeTypeOf('function');
-    expect(Table).toBeTypeOf('function');
-    expect(UsageMeter).toBeTypeOf('function');
+  it('exports all data components as forwardRef objects', () => {
+    for (const component of [Avatar, CodeBlock, CodePane, KeyValue, LogRow, Pagination, StatPanel, StatTile, Table, UsageMeter]) {
+      expect(component).toBeDefined();
+      expect((component as { $$typeof?: symbol }).$$typeof).toBe(Symbol.for('react.forward_ref'));
+    }
   });
 
   it('renders tokenized code pane and stat panel contracts', () => {
-    const { container } = render(<CodePane label="response" lines={[{ segments: [{ text: 'status', tone: 'key' }] }]} />);
+    const { container } = render(
+      <>
+        <CodePane label="response" lines={[{ segments: [{ text: 'status', tone: 'key' }] }]} />
+        <StatPanel items={[{ value: '47.2%', label: '성공률' }]} />
+      </>,
+    );
 
     expect(container.querySelector('.dt-code-pane-token-key')).toBeTruthy();
-    expect(StatPanel({ items: [{ value: '47.2%', label: 'Success rate' }] }).props.className).toContain('dt-stat-panel-card');
+    expect(container.querySelector('.dt-stat-panel-card')).toBeTruthy();
   });
 
   it('renders table interaction hooks without injecting a style tag', () => {
     const { container } = render(
       <Table
-        columns={[{ key: 'name', header: 'Name' }]}
-        rows={[{ name: 'Seoul' }]}
+        columns={[{ key: 'name', header: '이름' }]}
+        rows={[{ name: '서울' }]}
       />,
     );
 
@@ -52,17 +51,17 @@ describe('data exports', () => {
   it('renders row actions as native buttons inside valid table cells', () => {
     render(
       <Table
-        columns={[{ key: 'name', header: 'Name' }]}
-        rows={[{ name: 'Seoul' }]}
+        columns={[{ key: 'name', header: '이름' }]}
+        rows={[{ name: '서울' }]}
         rowAction={{
           kind: 'button',
-          label: (row) => `Open ${row.name}`,
+          label: (row) => `${row.name} 열기`,
           onActivate: () => undefined,
         }}
       />,
     );
 
-    const action = screen.getByRole('button', { name: 'Open Seoul' });
+    const action = screen.getByRole('button', { name: '서울 열기' });
     expect(action.closest('td')).toBeTruthy();
     expect(action.closest('tr')?.children[0]?.tagName).toBe('TD');
   });
@@ -72,41 +71,41 @@ describe('data exports', () => {
     const onActivate = vi.fn();
     render(
       <Table
-        columns={[{ key: 'name', header: 'Name' }]}
-        rows={[{ name: 'Seoul' }, { name: 'Busan' }]}
+        columns={[{ key: 'name', header: '이름' }]}
+        rows={[{ name: '서울' }, { name: '부산' }]}
         rowAction={{
           kind: 'button',
-          label: (row) => `Open ${row.name}`,
+          label: (row) => `${row.name} 열기`,
           onActivate,
-          disabled: (row) => row.name === 'Busan',
+          disabled: (row) => row.name === '부산',
         }}
       />,
     );
 
-    const action = screen.getByRole('button', { name: 'Open Seoul' });
+    const action = screen.getByRole('button', { name: '서울 열기' });
     action.focus();
     expect(document.activeElement).toBe(action);
     await user.keyboard('{Enter}');
     await user.keyboard(' ');
     expect(onActivate).toHaveBeenCalledTimes(2);
 
-    await user.click(screen.getByRole('button', { name: 'Open Busan' }));
+    await user.click(screen.getByRole('button', { name: '부산 열기' }));
     expect(onActivate).toHaveBeenCalledTimes(2);
   });
 
   it('renders navigation row actions as native links', () => {
     render(
       <Table
-        columns={[{ key: 'name', header: 'Name' }]}
-        rows={[{ name: 'Seoul' }]}
+        columns={[{ key: 'name', header: '이름' }]}
+        rows={[{ name: '서울' }]}
         rowAction={{
           kind: 'link',
-          label: (row) => `${row.name} details`,
+          label: (row) => `${row.name} 상세`,
           href: () => '/regions/seoul',
         }}
       />,
     );
 
-    expect(screen.getByRole('link', { name: 'Seoul details' }).getAttribute('href')).toBe('/regions/seoul');
+    expect(screen.getByRole('link', { name: '서울 상세' }).getAttribute('href')).toBe('/regions/seoul');
   });
 });

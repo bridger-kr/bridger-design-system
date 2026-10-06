@@ -29,7 +29,7 @@ export function Checkbox({ label, checked, defaultChecked, onChange, disabled, i
           </svg>
         ) : null}
       </span>
-      {label ? <span style={{ fontSize: 14, color: 'var(--dt-ink)' }}>{label}</span> : null}
+      {label ? <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span> : null}
     </label>
   );
 }

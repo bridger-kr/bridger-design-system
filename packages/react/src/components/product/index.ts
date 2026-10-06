@@ -17,29 +17,14 @@ export {
   type BrandLogoSize,
 } from './BrandLogo';
 export { ChatBubble, type ChatBubbleProps } from './ChatBubble';
+export { ProductPageHeader, type ProductPageHeaderProps } from './ProductPageHeader';
 export {
-  PRODUCT_ACTION_PILL_SIZE,
-  PRODUCT_ACTION_PILL_VARIANT,
-  ProductActionPill,
-  productActionPillClassName,
-  type ProductActionPillProps,
-  type ProductActionPillSize,
-  type ProductActionPillVariant,
-} from './ProductActionPill';
-export {
-  PRODUCT_SHELL_TONE,
-  ProductCinematicBackdrop,
-  ProductMotionField,
   ProductShell,
   ProductSideRail,
-  type ProductCinematicBackdropProps,
-  type ProductMotionFieldProps,
   type ProductShellProps,
-  type ProductShellTone,
   type ProductSideRailItem,
   type ProductSideRailProps,
-} from './ProductCinematic';
-export { ProductPageHeader, type ProductPageHeaderProps } from './ProductPageHeader';
+} from './ProductShell';
 export { ProductTopbar, ProductTopbarMenu, type ProductTopbarMenuProps, type ProductTopbarProps } from './ProductTopbar';
 export {
   SEARCH_PILL_SIZE,
@@ -51,4 +36,3 @@ export {
 } from './SearchPill';
 export { SectionCard, type SectionCardProps } from './SectionCard';
 export { ToolCard, type ToolCardProps } from './ToolCard';
-export { WindowChrome, WindowFrame, type WindowChromeProps, type WindowFrameProps } from './WindowChrome';

@@ -2,12 +2,12 @@
 
 exports[`ConfirmDialog > matches the en snapshot 1`] = `
 <div
-  aria-labelledby="base-ui-:re:"
+  aria-labelledby="base-ui-_r_e_"
   class="dt-dialog-popup dt-confirm-dialog"
   data-base-ui-focusable=""
   data-danger=""
   data-open=""
-  id=":rc:"
+  id="_r_c_"
   role="alertdialog"
   style="--nested-dialogs: 0; width: 100%; max-width: 420px; background: var(--dt-surface); pointer-events: auto; border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-lg); overflow: hidden; font-family: var(--dt-font-sans);"
   tabindex="-1"
@@ -16,7 +16,7 @@ exports[`ConfirmDialog > matches the en snapshot 1`] = `
     style="padding: 22px 24px;"
   >
     <h3
-      id="base-ui-:re:"
+      id="base-ui-_r_e_"
       style="margin: 0px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--dt-ink-strong);"
     >
       Delete this key?
@@ -40,14 +40,15 @@ exports[`ConfirmDialog > matches the en snapshot 1`] = `
     style="display: flex; justify-content: flex-end; gap: 8px; padding: 14px 24px; border-top: 1px solid var(--dt-border); background: var(--dt-surface-sunken);"
   >
     <button
-      class="dt-button dt-button-md btn-secondary"
+      class="dt-button dt-button-md dt-button-outline"
       tabindex="0"
       type="button"
     >
       Cancel
     </button>
     <button
-      class="dt-button dt-button-md btn-danger"
+      class="dt-button dt-button-md dt-button-solid"
+      data-tone="danger"
       tabindex="0"
       type="button"
     >
@@ -59,12 +60,12 @@ exports[`ConfirmDialog > matches the en snapshot 1`] = `
 
 exports[`ConfirmDialog > matches the ko snapshot 1`] = `
 <div
-  aria-labelledby="base-ui-:rb:"
+  aria-labelledby="base-ui-_r_b_"
   class="dt-dialog-popup dt-confirm-dialog"
   data-base-ui-focusable=""
   data-danger=""
   data-open=""
-  id=":r9:"
+  id="_r_9_"
   role="alertdialog"
   style="--nested-dialogs: 0; width: 100%; max-width: 420px; background: var(--dt-surface); pointer-events: auto; border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-lg); box-shadow: var(--dt-shadow-lg); overflow: hidden; font-family: var(--dt-font-sans);"
   tabindex="-1"
@@ -73,7 +74,7 @@ exports[`ConfirmDialog > matches the ko snapshot 1`] = `
     style="padding: 22px 24px;"
   >
     <h3
-      id="base-ui-:rb:"
+      id="base-ui-_r_b_"
       style="margin: 0px; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--dt-ink-strong);"
     >
       Delete this key?
@@ -97,14 +98,15 @@ exports[`ConfirmDialog > matches the ko snapshot 1`] = `
     style="display: flex; justify-content: flex-end; gap: 8px; padding: 14px 24px; border-top: 1px solid var(--dt-border); background: var(--dt-surface-sunken);"
   >
     <button
-      class="dt-button dt-button-md btn-secondary"
+      class="dt-button dt-button-md dt-button-outline"
       tabindex="0"
       type="button"
     >
       취소
     </button>
     <button
-      class="dt-button dt-button-md btn-danger"
+      class="dt-button dt-button-md dt-button-solid"
+      data-tone="danger"
       tabindex="0"
       type="button"
     >

@@ -1,0 +1,21 @@
+/* ============================================================
+   Bridger — minimal reset  (v2)
+   Ships in the default `@bridger-kr/tokens/css` import inside
+   @layer dt.reset, the lowest-priority layer. It replaces the
+   consumer-side reset (e.g. Tailwind preflight, which consumers
+   disable per the Tailwind v3 contract in DESIGN.md).
+============================================================ */
+
+@layer dt.reset {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body, h1, h2, h3, h4, p, li { margin: 0; }
+
+  button, input, select, textarea { font: inherit; color: inherit; }
+}
+
+/* The reduced-motion !important overrides are the only permitted
+   !important declarations in DS CSS (DESIGN.md §4.8, §8); they live in
+   @bridger-kr/react/styles.css so the system-wide budget stays 3. */

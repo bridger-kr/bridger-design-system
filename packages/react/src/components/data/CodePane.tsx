@@ -1,8 +1,14 @@
+import { forwardRef } from 'react';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { useState } from 'react';
-import { cx } from '../../lib/cx';
+import { warnOnce } from '../../lib/deprecate';
+import { CodeBlock } from './CodeBlock';
+import type { CodeLine, CodeSegment, CodeSegmentTone } from './CodeBlock';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
 
+/**
+ * @deprecated Use `CodeBlock` (`lines`, `copy`, `label`). `CodePane` is a
+ * compatibility wrapper removed in v2.1.
+ */
 export const CODE_PANE_TONE = {
   Plain: 'plain',
   Key: 'key',
@@ -13,16 +19,14 @@ export const CODE_PANE_TONE = {
   Success: 'success',
 } as const;
 
-export type CodePaneTone = (typeof CODE_PANE_TONE)[keyof typeof CODE_PANE_TONE];
+/** @deprecated Use `CodeSegmentTone` from `CodeBlock`. */
+export type CodePaneTone = CodeSegmentTone;
 
-export interface CodePaneSegment {
-  readonly text: string;
-  readonly tone?: CodePaneTone;
-}
+/** @deprecated Use `CodeSegment` from `CodeBlock`. */
+export type CodePaneSegment = CodeSegment;
 
-export interface CodePaneLine {
-  readonly segments: readonly CodePaneSegment[];
-}
+/** @deprecated Use `CodeLine` from `CodeBlock`. */
+export type CodePaneLine = CodeLine;
 
 export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'children'> {
   lines?: readonly CodePaneLine[];
@@ -30,74 +34,33 @@ export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chi
   copyText?: string;
   copyLabel?: ReactNode;
   copiedLabel?: ReactNode;
+  copyFailedLabel?: ReactNode;
   copyable?: boolean;
 }
 
-function lineText(line: CodePaneLine): string {
-  return line.segments.map((segment) => segment.text).join('');
-}
-
-function codePaneCopyText(lines: readonly CodePaneLine[]): string {
-  return lines.map(lineText).join('\n');
-}
-
-export function CodePane({
-  lines = [],
-  label,
-  copyText,
-  copyLabel,
-  copiedLabel,
-  copyable = false,
-  className,
-  ...rest
-}: CodePaneProps) {
-  const messages = useDSMessages();
+/**
+ * @deprecated Use `CodeBlock`. `CodePane` renders `CodeBlock` with
+ * `showLineNumbers={false}` and maps its copy labels. Removed in v2.1.
+ */
+export const CodePane = forwardRef<HTMLDivElement, CodePaneProps>(function CodePane(
+  { lines = [], label, copyText, copyLabel = '복사', copiedLabel = '복사됨', copyFailedLabel, copyable = false, className, ...rest },
+  ref,
+) {  const messages = useDSMessages();
   const resolvedCopyLabel = copyLabel ?? messages.code.copy;
   const resolvedCopiedLabel = copiedLabel ?? messages.code.copied;
-  const [copied, setCopied] = useState(false);
-  const textToCopy = copyText ?? codePaneCopyText(lines);
 
-  const copy = () => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      void navigator.clipboard.writeText(textToCopy).then(
-        () => setCopied(true),
-        () => setCopied(true),
-      );
-    } else {
-      setCopied(true);
-    }
-
-    if (typeof window !== 'undefined') {
-      window.setTimeout(() => setCopied(false), 1400);
-    }
-  };
-
+  warnOnce('codepane', 'CodePane is deprecated — use `CodeBlock` (`lines`, `copy`). Removed in v2.1.');
   return (
-    <div className={cx('dt-code-pane', className)} {...rest}>
-      {label || copyable ? (
-        <div className="dt-code-pane-header">
-          {label ? <span className="dt-code-pane-label">{label}</span> : <span />}
-          {copyable ? (
-            <button type="button" className="dt-code-pane-copy" data-copied={copied ? 'true' : 'false'} onClick={copy}>
-              <span aria-hidden="true" className="dt-code-pane-copy-icon" />
-              {copied ? resolvedCopiedLabel : resolvedCopyLabel}
-            </button>
-          ) : null}
-        </div>
-      ) : null}
-      <pre className="dt-code-pane-pre">
-        <code>
-          {lines.map((line, lineIndex) => (
-            <span className="dt-code-pane-line" key={`line-${lineIndex}`}>
-              {line.segments.map((segment, segmentIndex) => (
-                <span className={cx('dt-code-pane-token', segment.tone && `dt-code-pane-token-${segment.tone}`)} key={`segment-${lineIndex}-${segmentIndex}`}>
-                  {segment.text}
-                </span>
-              ))}
-            </span>
-          ))}
-        </code>
-      </pre>
-    </div>
+    <CodeBlock
+      ref={ref}
+      lines={lines}
+      label={label}
+      copyText={copyText}
+      copy={copyable ? { label: copyLabel, copiedLabel, failedLabel: copyFailedLabel } : false}
+      showLineNumbers={false}
+      className={className}
+      {...rest}
+    />
   );
-}
+});
+CodePane.displayName = 'CodePane';

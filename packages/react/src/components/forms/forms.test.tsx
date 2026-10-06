@@ -1,8 +1,8 @@
 // @vitest-environment jsdom
-import { fireEvent, render } from '@testing-library/react';
+import { createRef } from 'react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { DS_MESSAGES_KO } from '../../locale/messages';
 import {
   Checkbox,
   Combobox,
@@ -18,42 +18,80 @@ import {
 } from './index';
 
 describe('forms exports', () => {
-  it('exports all form components as functions', () => {
-    expect(Checkbox).toBeTypeOf('function');
-    expect(Combobox).toBeTypeOf('function');
-    expect(FileUpload).toBeTypeOf('function');
-    expect(RadioGroup).toBeTypeOf('function');
-    expect(SegmentedControl).toBeTypeOf('function');
-    expect(Select).toBeTypeOf('function');
-    expect(Slider).toBeTypeOf('function');
-    expect(Switch).toBeTypeOf('function');
-    expect(ToggleSwitch).toBeTypeOf('function');
-    expect(Textarea).toBeTypeOf('function');
-    expect(ThemeSwitch).toBeTypeOf('function');
+  it('exports all form components as forwardRef objects', () => {
+    for (const component of [Checkbox, Combobox, FileUpload, RadioGroup, SegmentedControl, Select, Slider, Switch, ToggleSwitch, Textarea, ThemeSwitch]) {
+      expect(component).toBeDefined();
+      expect((component as { $$typeof?: symbol }).$$typeof).toBe(Symbol.for('react.forward_ref'));
+    }
   });
 
   it('exposes Select trigger hooks for hover and focus polish', () => {
-    const select = Select({ options: ['Seoul'], placeholder: 'Select' });
-    const trigger = select.props.children[1].props.children[0].props.children[0];
+    const { container } = render(<Select options={['서울']} placeholder="선택" />);
+    const trigger = container.querySelector('.dt-select-trigger');
 
-    expect(trigger.props.className).toContain('dt-select-trigger');
+    expect(trigger).not.toBeNull();
+  });
+
+  it('gives every labeled form control a unique useId-backed id', () => {
+    const { container } = render(
+      <>
+        <Select label="이메일" options={['a']} />
+        <Select label="이메일" options={['b']} />
+        <Checkbox label="동의" />
+        <Checkbox label="동의" />
+        <Textarea label="메모" />
+        <Textarea label="메모" />
+      </>,
+    );
+
+    const labelFor = [...container.querySelectorAll('label[for]')].map((label) => label.getAttribute('for'));
+    expect(labelFor).toHaveLength(6);
+    expect(new Set(labelFor).size).toBe(6);
+    for (const id of labelFor) {
+      expect(id).toBeTruthy();
+      expect(document.getElementById(id as string)).toBeTruthy();
+    }
+
+    expect(screen.getAllByLabelText('이메일').length).toBeGreaterThanOrEqual(2);
+    expect(screen.getAllByLabelText('메모')).toHaveLength(2);
+  });
+
+  it('forwards refs to the underlying form controls', () => {
+    const selectRef = createRef<HTMLButtonElement>();
+    const checkboxRef = createRef<HTMLButtonElement>();
+    const textareaRef = createRef<HTMLTextAreaElement>();
+    const comboboxRef = createRef<HTMLInputElement>();
+    render(
+      <>
+        <Select ref={selectRef} label="지역" options={['서울']} />
+        <Checkbox ref={checkboxRef} label="동의" />
+        <Textarea ref={textareaRef} label="메모" />
+        <Combobox ref={comboboxRef} label="검색" options={[{ value: 'a', label: 'A' }]} />
+      </>,
+    );
+
+    expect(selectRef.current).toBeInstanceOf(HTMLButtonElement);
+    expect(checkboxRef.current).toBeInstanceOf(HTMLButtonElement);
+    expect(textareaRef.current).toBeInstanceOf(HTMLTextAreaElement);
+    expect(comboboxRef.current).toBeInstanceOf(HTMLInputElement);
   });
 
   it('uses the popover layer token without injecting Select styles', () => {
-    const { container } = render(<Select options={['Seoul']} placeholder="Select" />);
+    const { container } = render(<Select options={['서울']} placeholder="선택" />);
     const trigger = container.querySelector('button');
 
     expect(trigger).not.toBeNull();
     if (trigger) fireEvent.click(trigger);
 
     const popup = document.querySelector('[role="listbox"]')?.parentElement;
-    expect(popup?.style.zIndex).toBe('var(--dt-z-index-popover)');
+    expect(popup?.className).toContain('dt-select-popup');
+    expect(popup?.style.zIndex).toBe('');
     expect(popup?.querySelector('style')).toBeNull();
   });
 
   it('uses the popover layer token without injecting Combobox styles', () => {
     const { container } = render(
-      <Combobox label="Region" options={[{ value: 'seoul', label: 'Seoul' }]} />,
+      <Combobox label="지역" options={[{ value: 'seoul', label: '서울' }]} />,
     );
     const input = container.querySelector('input');
 
@@ -61,16 +99,17 @@ describe('forms exports', () => {
     if (input) fireEvent.focus(input);
 
     const popup = document.querySelector('[role="listbox"]')?.parentElement;
-    expect(popup?.style.zIndex).toBe('var(--dt-z-index-popover)');
+    expect(popup?.className).toContain('dt-combobox-popup');
+    expect(popup?.style.zIndex).toBe('');
     expect(popup?.querySelector('style')).toBeNull();
   });
 
   it('exposes stylesheet hooks for checked form control states', () => {
     const { container } = render(
       <>
-        <Checkbox label="Agree" defaultChecked />
-        <RadioGroup options={['Seoul']} defaultValue="Seoul" />
-        <Switch label="Enabled" defaultChecked />
+        <Checkbox label="동의" defaultChecked />
+        <RadioGroup options={['서울']} defaultValue="서울" />
+        <Switch label="활성" defaultChecked />
       </>,
     );
 
@@ -86,14 +125,12 @@ describe('forms exports', () => {
     expect(container.querySelector('label[for="spec"]')?.className).toContain('dt-file-upload-dropzone');
 
     rerender(<FileUpload id="spec" file={{ name: 'openapi.yaml' }} />);
-    expect(
-      container.querySelector(`button[aria-label="${DS_MESSAGES_KO.fileUpload.remove}"]`)?.className,
-    ).toContain('dt-file-upload-remove');
+    expect(container.querySelector('button[aria-label="제거"]')?.className).toContain('dt-file-upload-remove');
   });
 });
 
 describe('ThemeSwitch', () => {
-  const labels = { group: 'Theme', system: 'System', light: 'Light', dark: 'Dark' };
+  const labels = { group: '테마', system: '시스템', light: '라이트', dark: '다크' };
 
   const stubSystemTheme = (light: boolean) => {
     vi.stubGlobal(
@@ -127,7 +164,7 @@ describe('ThemeSwitch', () => {
     const { container } = render(<ThemeSwitch labels={labels} />);
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(container.querySelector('button[aria-label="System"]')?.getAttribute('aria-pressed')).toBe('true');
+    expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
     expect(window.localStorage.getItem('bridger-theme')).toBeNull();
   });
 
@@ -143,14 +180,14 @@ describe('ThemeSwitch', () => {
     stubSystemTheme(true);
     const { container, getByRole } = render(<ThemeSwitch labels={labels} />);
 
-    fireEvent.click(getByRole('button', { name: 'Dark' }));
+    fireEvent.click(getByRole('button', { name: '다크' }));
     expect(window.localStorage.getItem('bridger-theme')).toBe('dark');
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
 
-    fireEvent.click(getByRole('button', { name: 'System' }));
+    fireEvent.click(getByRole('button', { name: '시스템' }));
     expect(window.localStorage.getItem('bridger-theme')).toBeNull();
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
-    expect(container.querySelector('button[aria-label="System"]')?.getAttribute('aria-pressed')).toBe('true');
+    expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
   });
 
   it('keeps the group semantics and option order stable', () => {
@@ -158,8 +195,8 @@ describe('ThemeSwitch', () => {
     const { container } = render(<ThemeSwitch labels={labels} />);
 
     const group = container.querySelector('[role="group"]');
-    expect(group?.getAttribute('aria-label')).toBe('Theme');
+    expect(group?.getAttribute('aria-label')).toBe('테마');
     const options = [...(group?.querySelectorAll('button') ?? [])].map((b) => b.getAttribute('aria-label'));
-    expect(options).toEqual(['System', 'Light', 'Dark']);
+    expect(options).toEqual(['시스템', '라이트', '다크']);
   });
 });

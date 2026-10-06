@@ -1,5 +1,8 @@
-import type { CSSProperties, ReactNode } from 'react';
+import { X } from 'lucide-react';
+import { forwardRef } from 'react';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 import { cx } from '../../lib/cx';
+import { Icon } from '../../lib/icon';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface FilterChipProps {
@@ -13,56 +16,58 @@ export interface FilterChipProps {
   /** Accessible name for the remove button; defaults to the ambient locale. */
   removeAriaLabel?: string;
   icon?: ReactNode;
+  className?: string;
   style?: CSSProperties;
 }
 
 /**
- * FilterChip — a toggleable filter / tag for catalog facets (category, protocol, status).
+ * FilterChip — a toggleable filter / tag for catalog facets (분야, 프로토콜, 상태).
  * Crisp small-radius tag with a hairline, NOT a rounded-full cushion. Active =
  * persimmon tint + border + bold. Optional count (mono) and a removable ✕.
  * @startingPoint section="Core" subtitle="Toggleable catalog filter" viewport="520x80"
  */
-export function FilterChip({ label, count, active = false, removable = false, onToggle, onRemove, removeAriaLabel, icon, style }: FilterChipProps) {
+export const FilterChip = forwardRef<HTMLSpanElement | HTMLButtonElement, FilterChipProps>(
+  function FilterChip({ label, count, active = false, removable = false, onToggle, onRemove,
+    removeAriaLabel, icon, className, style }, ref) {
   const messages = useDSMessages();
-  const toggle = (
-    <button
-      type="button"
-      className={cx('dt-filter-chip', active && 'dt-filter-chip-active')}
-      onClick={onToggle}
-      aria-pressed={active}
-      style={{
-        display: 'inline-flex', alignItems: 'center', gap: 7, minHeight: 'var(--dt-space-5)', padding: '0 10px',
-        borderRadius: 'var(--dt-radius-sm)', cursor: 'pointer',
-        fontFamily: 'var(--dt-font-sans)', fontSize: 13, fontWeight: active ? 650 : 500,
-        background: active ? 'var(--dt-tint-accent)' : 'var(--dt-surface)',
-        color: active ? 'var(--dt-accent)' : 'var(--dt-muted-strong)',
-        border: `1px solid ${active ? 'color-mix(in srgb, var(--dt-accent) 40%, transparent)' : 'var(--dt-border)'}`,
-        transition: 'background-color var(--dt-motion-fast), border-color var(--dt-motion-fast), box-shadow var(--dt-motion-fast), transform var(--dt-motion-fast)',
-        ...style,
-      }}
-    >
-      {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent)' : 'var(--dt-muted)' }} aria-hidden="true">{icon}</span> : null}
-      <span>{label}</span>
-      {count != null ? (
-        <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: active ? 'var(--dt-accent)' : 'var(--dt-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
-      ) : null}
-    </button>
-  );
-
-  if (!removable) return toggle;
-
-  return (
-    <span className="dt-filter-chip-group" data-active={active ? '' : undefined}>
-      {toggle}
+    const toggle = (
       <button
         type="button"
-        className="dt-filter-chip-remove"
-        aria-label={removeAriaLabel ?? messages.filterChip.removeAriaLabel(label)}
-        onClick={onRemove}
-        style={{ color: active ? 'var(--dt-accent)' : 'var(--dt-muted)' }}
+        ref={removable ? undefined : (ref as Ref<HTMLButtonElement>)}
+        className={cx('dt-filter-chip', active && 'dt-filter-chip-active', !removable && className)}
+        onClick={onToggle}
+        aria-pressed={active}
+        style={removable ? undefined : style}
       >
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" /></svg>
+        {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }} aria-hidden="true">{icon}</span> : null}
+        <span>{label}</span>
+        {count != null ? (
+          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
+        ) : null}
       </button>
-    </span>
-  );
-}
+    );
+
+    if (!removable) return toggle;
+
+    return (
+      <span
+        ref={ref as Ref<HTMLSpanElement>}
+        className={cx('dt-filter-chip-group', className)}
+        data-active={active ? '' : undefined}
+        style={style}
+      >
+        {toggle}
+        <button
+          type="button"
+          className="dt-filter-chip-remove"
+          aria-label={removeAriaLabel ?? messages.filterChip.removeAriaLabel(label)}
+          onClick={onRemove}
+          style={{ color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }}
+        >
+          <Icon icon={X} size="sm" />
+        </button>
+      </span>
+    );
+  },
+);
+FilterChip.displayName = 'FilterChip';

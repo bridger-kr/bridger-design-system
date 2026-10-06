@@ -5,18 +5,18 @@ import { describe, expect, it } from 'vitest';
 import {
   Breadcrumb,
   CommandPalette,
+  ConsolePageHeader,
   Menu,
   Sidebar,
   Stepper,
 } from './index';
 
 describe('navigation exports', () => {
-  it('exports all navigation components as functions', () => {
-    expect(Breadcrumb).toBeTypeOf('function');
-    expect(CommandPalette).toBeTypeOf('function');
-    expect(Menu).toBeTypeOf('function');
-    expect(Sidebar).toBeTypeOf('function');
-    expect(Stepper).toBeTypeOf('function');
+  it('exports all navigation components as forwardRef objects', () => {
+    for (const component of [Breadcrumb, CommandPalette, ConsolePageHeader, Menu, Sidebar, Stepper]) {
+      expect(component).toBeDefined();
+      expect((component as { $$typeof?: symbol }).$$typeof).toBe(Symbol.for('react.forward_ref'));
+    }
   });
 });
 

@@ -21,7 +21,7 @@ describe('ConfirmDialog', () => {
     expect(screen.getByText('weather_getForecast')).toBeTruthy();
     expect(screen.getByText('Calls using this key stop working immediately.')).toBeTruthy();
     const confirm = screen.getByRole('button', { name: DS_MESSAGES_KO.confirmDialog.confirmDanger });
-    expect(confirm.className).toContain('btn-danger');
+    expect(confirm.getAttribute('data-tone')).toBe('danger');
     expect(screen.getByRole('button', { name: DS_MESSAGES_KO.confirmDialog.cancel })).toBeTruthy();
   });
 

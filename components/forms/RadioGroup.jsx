@@ -29,8 +29,8 @@ export function RadioGroup({ name, options = [], value, defaultValue, onChange, 
               {on ? <span style={{ width: 9, height: 9, borderRadius: 9999, background: 'var(--dt-accent)' }} /> : null}
             </span>
             <span style={{ display: 'grid', gap: 2 }}>
-              <span style={{ fontSize: 14, color: 'var(--dt-ink)', lineHeight: 1.3 }}>{opt.label}</span>
-              {opt.hint ? <span style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{opt.hint}</span> : null}
+              <span style={{ fontSize: 14, color: 'var(--dt-text)', lineHeight: 1.3 }}>{opt.label}</span>
+              {opt.hint ? <span style={{ fontSize: 12, color: 'var(--dt-text-muted)' }}>{opt.hint}</span> : null}
             </span>
           </label>
         );

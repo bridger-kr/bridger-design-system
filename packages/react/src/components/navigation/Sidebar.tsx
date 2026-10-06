@@ -1,4 +1,5 @@
-import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { forwardRef } from 'react';
+import type { CSSProperties, HTMLAttributes, MouseEvent, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
 export interface SidebarItem {
@@ -8,6 +9,8 @@ export interface SidebarItem {
   active?: boolean;
   /** Trailing count (e.g. tool count), rendered tabular-mono. */
   badge?: ReactNode;
+  /** Opens in a new tab with noreferrer semantics (e.g. a sibling console host). */
+  external?: boolean;
 }
 
 export interface SidebarSection {
@@ -21,16 +24,25 @@ export interface SidebarProps extends Omit<HTMLAttributes<HTMLElement>, 'childre
   sections?: SidebarSection[];
   footer?: ReactNode;
   width?: number;
+  /**
+   * Called when an item is activated. Apps with client-side routers use this
+   * to intercept plain clicks (modifier/middle clicks still open natively).
+   */
+  onNavigate?: (event: MouseEvent<HTMLAnchorElement>, item: SidebarItem) => void;
   style?: CSSProperties;
 }
 
 /**
- * Console primary nav — flat column, active item marked by a persimmon left bar.
+ * Console primary nav — flat column, active item marked by a sunken row.
  * @startingPoint section="Navigation" subtitle="Console nav rail" viewport="260x440"
  */
-export function Sidebar({ brand, sections = [], footer, width = 232, className, style, ...rest }: SidebarProps) {
+export const Sidebar = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
+  { brand, sections = [], footer, width = 240, onNavigate, className, style, ...rest },
+  ref,
+) {
   return (
     <nav
+      ref={ref}
       {...rest}
       className={cx('dt-sidebar', className)}
       style={{
@@ -52,10 +64,12 @@ export function Sidebar({ brand, sections = [], footer, width = 232, className, 
               <a
                 key={ii}
                 href={it.href || '#'}
+                target={it.external ? '_blank' : undefined}
+                rel={it.external ? 'noreferrer noopener' : undefined}
                 aria-current={it.active ? 'page' : undefined}
                 className={cx('dt-sidebar-item', it.active && 'dt-sidebar-item-active')}
+                onClick={onNavigate ? (event) => onNavigate(event, it) : undefined}
               >
-                {it.active ? <span className="dt-sidebar-item-marker" /> : null}
                 {it.icon ? <span className="dt-sidebar-item-icon" aria-hidden="true">{it.icon}</span> : null}
                 <span className="dt-sidebar-item-label">{it.label}</span>
                 {it.badge != null ? (
@@ -70,4 +84,5 @@ export function Sidebar({ brand, sections = [], footer, width = 232, className, 
       {footer ? <div className="dt-sidebar-footer">{footer}</div> : null}
     </nav>
   );
-}
+});
+Sidebar.displayName = 'Sidebar';

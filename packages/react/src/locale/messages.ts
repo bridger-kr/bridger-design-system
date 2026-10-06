@@ -29,6 +29,7 @@ export interface DSMessageCatalog {
   code: {
     copy: string;
     copied: string;
+    failed: string;
   };
   combobox: {
     placeholder: string;
@@ -37,6 +38,8 @@ export interface DSMessageCatalog {
   commandPalette: {
     placeholder: string;
     footerHint: string;
+    inputLabel: string;
+    listboxLabel: string;
   };
   confirmDialog: {
     confirm: string;
@@ -93,6 +96,7 @@ export const DS_MESSAGES_KO: DSMessageCatalog = {
   code: {
     copy: '복사',
     copied: '복사됨',
+    failed: '복사하지 못했어요',
   },
   combobox: {
     placeholder: '검색…',
@@ -101,6 +105,8 @@ export const DS_MESSAGES_KO: DSMessageCatalog = {
   commandPalette: {
     placeholder: '도구 · 액션 검색…',
     footerHint: '↑↓ 이동 · ↵ 실행 · esc 닫기',
+    inputLabel: '도구 · 액션 검색',
+    listboxLabel: '검색 결과',
   },
   confirmDialog: {
     confirm: '확인',
@@ -149,6 +155,7 @@ export const DS_MESSAGES_EN: DSMessageCatalog = {
   code: {
     copy: 'Copy',
     copied: 'Copied',
+    failed: 'Copy failed',
   },
   combobox: {
     placeholder: 'Search…',
@@ -157,6 +164,8 @@ export const DS_MESSAGES_EN: DSMessageCatalog = {
   commandPalette: {
     placeholder: 'Search tools and actions…',
     footerHint: '↑↓ move · ↵ run · esc close',
+    inputLabel: 'Search tools and actions',
+    listboxLabel: 'Search results',
   },
   confirmDialog: {
     confirm: 'Confirm',

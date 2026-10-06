@@ -1,7 +1,7 @@
 import { AlertDialog as BaseAlertDialog } from '@base-ui/react/alert-dialog';
 import type { ReactNode } from 'react';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
-import { BUTTON_VARIANT, Button } from '../core/Button';
+import { BUTTON_TONE, BUTTON_VARIANT, Button } from '../core/Button';
 
 export interface ConfirmDialogProps {
   open: boolean;
@@ -120,15 +120,10 @@ export function ConfirmDialog({
                 background: 'var(--dt-surface-sunken)',
               }}
             >
-              <BaseAlertDialog.Close render={<Button variant={BUTTON_VARIANT.Secondary} />}>
-                {resolvedCancel}
-              </BaseAlertDialog.Close>
+              <BaseAlertDialog.Close render={<Button variant={BUTTON_VARIANT.Outline}>{resolvedCancel}</Button>} />
               <BaseAlertDialog.Close
-                render={<Button variant={danger ? BUTTON_VARIANT.Danger : BUTTON_VARIANT.Primary} />}
-                onClick={onConfirm}
-              >
-                {resolvedConfirm}
-              </BaseAlertDialog.Close>
+                render={<Button variant={BUTTON_VARIANT.Solid} tone={danger ? BUTTON_TONE.Danger : BUTTON_TONE.Neutral} onClick={onConfirm}>{resolvedConfirm}</Button>}
+              />
             </div>
           </BaseAlertDialog.Popup>
         </BaseAlertDialog.Viewport>

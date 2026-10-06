@@ -6,10 +6,11 @@
  * parallel migrations never touch this file.
  */
 export { cx } from './lib/cx';
-export * from './locale';
+export type { SlotPropsFor } from './lib/slot';
 export * from './components/core';
 export * from './components/forms';
 export * from './components/feedback';
 export * from './components/data';
 export * from './components/navigation';
 export * from './components/product';
+export * from './locale';

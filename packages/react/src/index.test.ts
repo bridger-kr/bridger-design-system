@@ -12,4 +12,16 @@ describe('@bridger-kr/react package barrel', () => {
     // core component and proves the barrel -> category -> component chain works.
     expect(api).toHaveProperty('Button');
   });
+
+  it('re-exports the DS-41 primitives (issue #41)', () => {
+    for (const name of ['CopyButton', 'Heading', 'Kbd', 'Link', 'Separator', 'Text']) {
+      expect(api, `missing export: ${name}`).toHaveProperty(name);
+    }
+    // Token enums and companion types ride along with the components.
+    expect(api).toHaveProperty('TEXT_SIZE');
+    expect(api).toHaveProperty('TEXT_TONE');
+    expect(api).toHaveProperty('TEXT_WEIGHT');
+    expect(api).toHaveProperty('HEADING_SIZE');
+    expect(api).toHaveProperty('KBD_SIZE');
+  });
 });

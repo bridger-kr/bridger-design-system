@@ -10,29 +10,42 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./styles.css": "./dist/styles.css",
     "./components/*": {
-      "types": "./dist/components/*.d.ts",
-      "import": "./dist/components/*.mjs",
-      "require": "./dist/components/*.cjs"
-    }
+      "import": {
+        "types": "./dist/components/*/index.d.ts",
+        "default": "./dist/components/*/index.mjs"
+      },
+      "require": {
+        "types": "./dist/components/*/index.d.cts",
+        "default": "./dist/components/*/index.cjs"
+      }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "tsup",
+    "build:css": "lightningcss --minify --bundle --targets '>= 0.5%, not dead' src/styles.css -o dist/styles.css",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "dev": "tsup --watch"
   },
   "peerDependencies": {
-    "react": ">=18",
-    "react-dom": ">=18"
+    "lucide-react": "^1.11.0",
+    "react": "^19",
+    "react-dom": "^19"
   },
   "dependencies": {
     "@base-ui/react": "1.8.0",
@@ -41,11 +54,15 @@
   "devDependencies": {
     "@testing-library/react": "16.3.2",
     "@testing-library/user-event": "14.6.1",
-    "@types/react": "^18.3.31",
-    "@types/react-dom": "^18.3.7",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "axe-core": "4.13.0",
     "jsdom": "29.1.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "lightningcss-cli": "^1.33.0",
+    "lucide-react": "1.11.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "vitest-axe": "1.0.0-pre.5"
   },
   "publishConfig": {
     "access": "public"
