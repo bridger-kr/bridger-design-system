@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { useState } from 'react';
 import { cx } from '../../lib/cx';
+import { CopyButton } from './CopyButton';
 
 export const CODE_PANE_TONE = {
   Plain: 'plain',
@@ -29,6 +29,7 @@ export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chi
   copyText?: string;
   copyLabel?: ReactNode;
   copiedLabel?: ReactNode;
+  copyFailedLabel?: ReactNode;
   copyable?: boolean;
 }
 
@@ -44,29 +45,14 @@ export function CodePane({
   lines = [],
   label,
   copyText,
-  copyLabel = '복사',
-  copiedLabel = '복사됨',
+  copyLabel,
+  copiedLabel,
+  copyFailedLabel,
   copyable = false,
   className,
   ...rest
 }: CodePaneProps) {
-  const [copied, setCopied] = useState(false);
   const textToCopy = copyText ?? codePaneCopyText(lines);
-
-  const copy = () => {
-    if (typeof navigator !== 'undefined' && navigator.clipboard) {
-      void navigator.clipboard.writeText(textToCopy).then(
-        () => setCopied(true),
-        () => setCopied(true),
-      );
-    } else {
-      setCopied(true);
-    }
-
-    if (typeof window !== 'undefined') {
-      window.setTimeout(() => setCopied(false), 1400);
-    }
-  };
 
   return (
     <div className={cx('dt-code-pane', className)} {...rest}>
@@ -74,10 +60,13 @@ export function CodePane({
         <div className="dt-code-pane-header">
           {label ? <span className="dt-code-pane-label">{label}</span> : <span />}
           {copyable ? (
-            <button type="button" className="dt-code-pane-copy" data-copied={copied ? 'true' : 'false'} onClick={copy}>
-              <span aria-hidden="true" className="dt-code-pane-copy-icon" />
-              {copied ? copiedLabel : copyLabel}
-            </button>
+            <CopyButton
+              className="dt-code-pane-copy"
+              value={textToCopy}
+              label={copyLabel}
+              copiedLabel={copiedLabel}
+              failedLabel={copyFailedLabel}
+            />
           ) : null}
         </div>
       ) : null}

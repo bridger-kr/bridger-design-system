@@ -1,5 +1,6 @@
-import type { CSSProperties, HTMLAttributes } from 'react';
-import { useState } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { cx } from '../../lib/cx';
+import { CopyButton } from './CopyButton';
 
 type TokenKind = 'plain' | 'key' | 'str' | 'num' | 'kw' | 'pun';
 
@@ -38,6 +39,12 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'st
   language?: string;
   showLineNumbers?: boolean;
   copyable?: boolean;
+  /** Copy button label in the idle state. */
+  copyLabel?: ReactNode;
+  /** Copy button label after a successful copy; also announced via live region. */
+  copiedLabel?: ReactNode;
+  /** Copy button label after a failed copy; also announced via live region. */
+  copyFailedLabel?: ReactNode;
   style?: CSSProperties;
 }
 
@@ -45,17 +52,11 @@ export interface CodeBlockProps extends Omit<HTMLAttributes<HTMLDivElement>, 'st
  * Dark code surface for the light page (Stripe-style). Header + copy + line numbers.
  * @startingPoint section="Data" subtitle="Dark code block with copy" viewport="520x220"
  */
-export function CodeBlock({ code = '', label, language = 'json', showLineNumbers = true, copyable = true, style, ...rest }: CodeBlockProps) {
-  const [copied, setCopied] = useState(false);
+export function CodeBlock({ code = '', label, language = 'json', showLineNumbers = true, copyable = true, copyLabel, copiedLabel, copyFailedLabel, className, style, ...rest }: CodeBlockProps) {
   const lines = String(code).replace(/\n$/, '').split('\n');
 
-  const copy = () => {
-    try { navigator.clipboard?.writeText(code); } catch { /* clipboard unavailable */ }
-    setCopied(true); setTimeout(() => setCopied(false), 1400);
-  };
-
   return (
-    <div {...rest} style={{
+    <div {...rest} className={cx('dt-code-block', className)} style={{
       background: 'var(--dt-code-bg)', border: '1px solid var(--dt-code-border)',
       borderRadius: 'var(--dt-radius-card)', overflow: 'hidden', ...style,
     }}>
@@ -66,20 +67,13 @@ export function CodeBlock({ code = '', label, language = 'json', showLineNumbers
         }}>
           <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: '#8a91a3' }}>{label || language}</span>
           {copyable ? (
-            <button
-              type="button" onClick={copy}
-              style={{
-                marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 6, border: 'none',
-                background: 'transparent', color: copied ? '#4ade80' : '#8a91a3', cursor: 'pointer',
-                fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, padding: 0,
-              }}
-            >
-              {copied ? (
-                <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 6L9 17l-5-5" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" /></svg>복사됨</>
-              ) : (
-                <><svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" strokeWidth="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>복사</>
-              )}
-            </button>
+            <CopyButton
+              className="dt-code-block-copy"
+              value={code}
+              label={copyLabel}
+              copiedLabel={copiedLabel}
+              failedLabel={copyFailedLabel}
+            />
           ) : null}
         </div>
       ) : null}

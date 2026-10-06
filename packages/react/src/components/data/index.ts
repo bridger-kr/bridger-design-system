@@ -4,6 +4,8 @@ export { CodeBlock } from './CodeBlock';
 export type { CodeBlockProps } from './CodeBlock';
 export { CODE_PANE_TONE, CodePane } from './CodePane';
 export type { CodePaneLine, CodePaneProps, CodePaneSegment, CodePaneTone } from './CodePane';
+export { CopyButton } from './CopyButton';
+export type { CopyButtonProps, CopyButtonResult, CopyButtonState } from './CopyButton';
 export { KeyValue } from './KeyValue';
 export type { KeyValueItem, KeyValueProps } from './KeyValue';
 export { LogRow } from './LogRow';
