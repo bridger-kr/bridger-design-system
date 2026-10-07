@@ -25,7 +25,7 @@ export interface TableLinkRowAction<Row extends TableRow> {
     readonly href: (row: Row) => string;
 }
 export type TableRowAction<Row extends TableRow> = TableButtonRowAction<Row> | TableLinkRowAction<Row>;
-export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'> {
+export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'>, DataTrustProps {
     readonly columns?: readonly TableColumn<Row>[];
     readonly rows?: readonly Row[];
     readonly rowKey?: (row: Row, index: number) => string | number;
