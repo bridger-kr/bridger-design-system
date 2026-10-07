@@ -11,7 +11,7 @@ import { BUTTON_TONE, BUTTON_VARIANT, Button } from '../core/Button.jsx';
  * inside until the user answers. For destructive actions pass `danger` plus
  * `target`/`impact` so the consequence is named before the button.
  */
-export function ConfirmDialog({ open, onClose, onConfirm, title, target, impact, description, children, danger = false, confirmLabel, cancelLabel, width = 420, }) {
+export function ConfirmDialog({ open, onClose, onConfirm, title, target, impact, description, children, danger = false, pending = false, confirmLabel, cancelLabel, width = 420, }) {
     const messages = useDSMessages();
     const handleOpenChange = (nextOpen) => {
         if (!nextOpen)
@@ -39,7 +39,9 @@ export function ConfirmDialog({ open, onClose, onConfirm, title, target, impact,
             </div>
             <div className="dt-dialog-footer">
               <BaseAlertDialog.Close render={<Button variant={BUTTON_VARIANT.Outline}>{resolvedCancel}</Button>}/>
-              <BaseAlertDialog.Close render={<Button variant={BUTTON_VARIANT.Solid} tone={danger ? BUTTON_TONE.Danger : BUTTON_TONE.Neutral} onClick={onConfirm}>{resolvedConfirm}</Button>}/>
+              {pending ? (<Button variant={BUTTON_VARIANT.Solid} tone={danger ? BUTTON_TONE.Danger : BUTTON_TONE.Neutral} loading onClick={onConfirm}>
+                  {resolvedConfirm}
+                </Button>) : (<BaseAlertDialog.Close render={<Button variant={BUTTON_VARIANT.Solid} tone={danger ? BUTTON_TONE.Danger : BUTTON_TONE.Neutral} onClick={onConfirm}>{resolvedConfirm}</Button>}/>)}
             </div>
           </BaseAlertDialog.Popup>
         </BaseAlertDialog.Viewport>

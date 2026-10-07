@@ -44,7 +44,11 @@ exports[`ConfirmDialog > matches the en snapshot 1`] = `
       tabindex="0"
       type="button"
     >
-      Cancel
+      <span
+        class="dt-button-content"
+      >
+        Cancel
+      </span>
     </button>
     <button
       class="dt-button dt-button-md dt-button-solid"
@@ -52,7 +56,11 @@ exports[`ConfirmDialog > matches the en snapshot 1`] = `
       tabindex="0"
       type="button"
     >
-      Delete
+      <span
+        class="dt-button-content"
+      >
+        Delete
+      </span>
     </button>
   </div>
 </div>
@@ -102,7 +110,11 @@ exports[`ConfirmDialog > matches the ko snapshot 1`] = `
       tabindex="0"
       type="button"
     >
-      취소
+      <span
+        class="dt-button-content"
+      >
+        취소
+      </span>
     </button>
     <button
       class="dt-button dt-button-md dt-button-solid"
@@ -110,7 +122,11 @@ exports[`ConfirmDialog > matches the ko snapshot 1`] = `
       tabindex="0"
       type="button"
     >
-      삭제
+      <span
+        class="dt-button-content"
+      >
+        삭제
+      </span>
     </button>
   </div>
 </div>

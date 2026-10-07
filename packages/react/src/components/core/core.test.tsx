@@ -2,7 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { createRef } from 'react';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { X } from 'lucide-react';
 import { describe, expect, it, vi } from 'vitest';
@@ -422,5 +422,20 @@ describe('core exports', () => {
     const { container } = render(<StatusPill status="reconnecting">재연결 중</StatusPill>);
 
     expect(container.querySelector('style')).toBeNull();
+  });
+});
+
+describe('Button loading contract (DS #30)', () => {
+  it('shows a spinner, sets aria-busy, and blocks duplicate activation', () => {
+    const onClick = vi.fn();
+    render(<Button loading onClick={onClick}>저장</Button>);
+
+    const button = screen.getByRole('button', { name: '저장' });
+    expect(button.getAttribute('aria-busy')).toBe('true');
+    expect(button.hasAttribute('disabled')).toBe(true);
+    expect(button.querySelector('.dt-button-spinner')).toBeTruthy();
+    expect(button.querySelector('.dt-button-content')).toBeTruthy();
+    fireEvent.click(button);
+    expect(onClick).not.toHaveBeenCalled();
   });
 });

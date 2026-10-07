@@ -38,6 +38,12 @@ type ButtonBase = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> & {
     tone?: ButtonTone;
     size?: ButtonSize;
     disabled?: boolean;
+    /**
+     * Processing state: label stays rendered (width preserved), a centered
+     * spinner overlays it, `aria-busy` is set, and the button ignores
+     * activations so a mutation cannot be submitted twice.
+     */
+    loading?: boolean;
     type?: 'button' | 'submit' | 'reset';
     /**
      * Replace the rendered element (base-ui `useRender` contract), e.g.

@@ -23,4 +23,4 @@ export interface FilterChipProps {
  * persimmon tint + border + bold. Optional count (mono) and a removable ✕.
  * @startingPoint section="Core" subtitle="Toggleable catalog filter" viewport="520x80"
  */
-export declare const FilterChip: import("react").ForwardRefExoticComponent<FilterChipProps & import("react").RefAttributes<HTMLButtonElement | HTMLSpanElement>>;
+export declare const FilterChip: import("react").ForwardRefExoticComponent<FilterChipProps & import("react").RefAttributes<HTMLSpanElement | HTMLButtonElement>>;

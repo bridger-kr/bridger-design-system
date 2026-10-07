@@ -19,6 +19,12 @@ export interface ConfirmDialogProps {
   children?: ReactNode;
   /** Destructive variant: persimmon → danger confirm button, Delete default. */
   danger?: boolean;
+  /**
+   * Async-confirm in progress: the confirm button shows a spinner, ignores
+   * repeat activations, and the dialog stays open until the consumer flips
+   * `pending` back (and closes it) or the user cancels — cancel stays safe.
+   */
+  pending?: boolean;
   confirmLabel?: string;
   cancelLabel?: string;
   width?: number;
@@ -40,6 +46,7 @@ export function ConfirmDialog({
   description,
   children,
   danger = false,
+  pending = false,
   confirmLabel,
   cancelLabel,
   width = 420,
@@ -86,9 +93,15 @@ export function ConfirmDialog({
             </div>
             <div className="dt-dialog-footer">
               <BaseAlertDialog.Close render={<Button variant={BUTTON_VARIANT.Outline}>{resolvedCancel}</Button>} />
-              <BaseAlertDialog.Close
-                render={<Button variant={BUTTON_VARIANT.Solid} tone={danger ? BUTTON_TONE.Danger : BUTTON_TONE.Neutral} onClick={onConfirm}>{resolvedConfirm}</Button>}
-              />
+              {pending ? (
+                <Button variant={BUTTON_VARIANT.Solid} tone={danger ? BUTTON_TONE.Danger : BUTTON_TONE.Neutral} loading onClick={onConfirm}>
+                  {resolvedConfirm}
+                </Button>
+              ) : (
+                <BaseAlertDialog.Close
+                  render={<Button variant={BUTTON_VARIANT.Solid} tone={danger ? BUTTON_TONE.Danger : BUTTON_TONE.Neutral} onClick={onConfirm}>{resolvedConfirm}</Button>}
+                />
+              )}
             </div>
           </BaseAlertDialog.Popup>
         </BaseAlertDialog.Viewport>

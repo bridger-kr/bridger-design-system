@@ -14,7 +14,8 @@ function resolveTone(tone) {
 }
 export const Toast = forwardRef(function Toast({ tone = 'success', title, message, action, onDismiss, closeLabel, className, style, ...rest }, ref) {
     const messages = useDSMessages();
-    return (<div ref={ref} role="status" className={cx('dt-toast', className)} style={style} {...rest}>
+    const resolved = resolveTone(tone);
+    return (<div ref={ref} role={resolved === 'danger' || resolved === 'warning' ? 'alert' : 'status'} className={cx('dt-toast', className)} style={style} {...rest}>
       <span aria-hidden="true" className={cx('dt-toast-dot', `dt-toast-dot-${resolveTone(tone)}`)}/>
       <div className="dt-toast-body">
         {title ? <div className="dt-toast-title">{title}</div> : null}
@@ -76,7 +77,7 @@ function ToastViewport({ limit }) {
 }
 function ToastCard({ toast, closeLabel }) {
     const tone = resolveTone(toast.type);
-    return (<BaseToast.Root toast={toast} className="dt-toast">
+    return (<BaseToast.Root toast={toast} className="dt-toast" role={tone === 'danger' || tone === 'warning' ? 'alert' : 'status'}>
       <span aria-hidden="true" className={cx('dt-toast-dot', `dt-toast-dot-${tone}`)}/>
       <div className="dt-toast-body">
         {toast.title ? (<BaseToast.Title className="dt-toast-title"/>) : null}

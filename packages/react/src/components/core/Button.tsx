@@ -3,6 +3,7 @@ import type { ButtonHTMLAttributes, CSSProperties, ReactElement, ReactNode } fro
 import { useRender } from '@base-ui/react/use-render';
 import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
+import { Spinner } from '../feedback/Spinner';
 
 export const BUTTON_VARIANT = {
   Solid: 'solid',
@@ -44,6 +45,12 @@ type ButtonBase = Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'type'> & {
   tone?: ButtonTone;
   size?: ButtonSize;
   disabled?: boolean;
+  /**
+   * Processing state: label stays rendered (width preserved), a centered
+   * spinner overlays it, `aria-busy` is set, and the button ignores
+   * activations so a mutation cannot be submitted twice.
+   */
+  loading?: boolean;
   type?: 'button' | 'submit' | 'reset';
   /**
    * Replace the rendered element (base-ui `useRender` contract), e.g.
@@ -91,6 +98,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     icon,
     iconRight,
     disabled = false,
+    loading = false,
     type = 'button',
     render,
     onClick,
@@ -118,23 +126,31 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     ref,
     props: {
       type,
-      disabled,
+      disabled: disabled || loading,
       className: cx('dt-button', `dt-button-${size}`, `dt-button-${resolvedVariant}`, className),
       'data-tone': resolvedTone === BUTTON_TONE.Danger ? 'danger' : undefined,
+      'aria-busy': loading || undefined,
       onClick,
       style,
       ...rest,
       children: (
         <>
-          {icon ? (
-            <span className="dt-button-icon" aria-hidden="true">
-              {icon}
-            </span>
-          ) : null}
-          {children}
-          {iconRight ? (
-            <span className="dt-button-icon" aria-hidden="true">
-              {iconRight}
+          <span className="dt-button-content">
+            {icon ? (
+              <span className="dt-button-icon" aria-hidden="true">
+                {icon}
+              </span>
+            ) : null}
+            {children}
+            {iconRight ? (
+              <span className="dt-button-icon" aria-hidden="true">
+                {iconRight}
+              </span>
+            ) : null}
+          </span>
+          {loading ? (
+            <span className="dt-button-spinner" aria-hidden="true">
+              <Spinner size={16} color="currentColor" />
             </span>
           ) : null}
         </>

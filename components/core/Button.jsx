@@ -6,6 +6,7 @@ import { forwardRef } from 'react';
 import { useRender } from '@base-ui/react/use-render';
 import { cx } from '../lib/cx.jsx';
 import { warnOnce } from '../lib/deprecate.jsx';
+import { Spinner } from '../feedback/Spinner.jsx';
 export const BUTTON_VARIANT = {
     Solid: 'solid',
     Outline: 'outline',
@@ -37,7 +38,7 @@ const LEGACY_VARIANT = {
  * `tone="danger"` marks a destructive action.
  * @startingPoint section="Core" subtitle="Solid / outline / ghost, neutral / danger" viewport="700x140"
  */
-export const Button = forwardRef(function Button({ children, variant = BUTTON_VARIANT.Solid, tone = BUTTON_TONE.Neutral, size = BUTTON_SIZE.Medium, icon, iconRight, disabled = false, type = 'button', render, onClick, className, style, ...rest }, ref) {
+export const Button = forwardRef(function Button({ children, variant = BUTTON_VARIANT.Solid, tone = BUTTON_TONE.Neutral, size = BUTTON_SIZE.Medium, icon, iconRight, disabled = false, loading = false, type = 'button', render, onClick, className, style, ...rest }, ref) {
     let resolvedVariant = variant;
     let resolvedTone = tone;
     const legacy = LEGACY_VARIANT[variant];
@@ -53,19 +54,25 @@ export const Button = forwardRef(function Button({ children, variant = BUTTON_VA
         ref,
         props: {
             type,
-            disabled,
+            disabled: disabled || loading,
             className: cx('dt-button', `dt-button-${size}`, `dt-button-${resolvedVariant}`, className),
             'data-tone': resolvedTone === BUTTON_TONE.Danger ? 'danger' : undefined,
+            'aria-busy': loading || undefined,
             onClick,
             style,
             ...rest,
             children: (<>
-          {icon ? (<span className="dt-button-icon" aria-hidden="true">
-              {icon}
-            </span>) : null}
-          {children}
-          {iconRight ? (<span className="dt-button-icon" aria-hidden="true">
-              {iconRight}
+          <span className="dt-button-content">
+            {icon ? (<span className="dt-button-icon" aria-hidden="true">
+                {icon}
+              </span>) : null}
+            {children}
+            {iconRight ? (<span className="dt-button-icon" aria-hidden="true">
+                {iconRight}
+              </span>) : null}
+          </span>
+          {loading ? (<span className="dt-button-spinner" aria-hidden="true">
+              <Spinner size={16} color="currentColor"/>
             </span>) : null}
         </>),
         },

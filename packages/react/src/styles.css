@@ -82,6 +82,11 @@
 }
 .dt-button:disabled { cursor: not-allowed; opacity: 0.55; }
 
+/* loading: content stays laid out for width, spinner overlays centered */
+.dt-button-content { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
+.dt-button[aria-busy] .dt-button-content { visibility: hidden; }
+.dt-button-spinner { position: absolute; inset: 0; display: inline-flex; align-items: center; justify-content: center; }
+
 .dt-button-icon { display: inline-flex; }
 
 /* ── Badges (status / classification) — crisp tags, not cushiony pills.
