@@ -31,47 +31,57 @@ import type { BrandLogoHandle } from './index';
 
 describe('Product components', () => {
   describe('BrandLogo', () => {
-    it('renders the Figma wordmark with a persimmon period', () => {
+    it('renders the canonical Bridger wordmark without the retired persimmon period', () => {
       const { container } = render(<BrandLogo lang="ko" />);
 
       expect(screen.getByLabelText('브릿저')).toBeTruthy();
       expect(screen.getByRole('img', { name: '브릿저' })).toBeTruthy();
-      expect(container.querySelector('.dt-brand-logo-wordmark svg[viewBox="0 0 148.484 43"]')).toBeTruthy();
-      expect(BRAND_WORDMARK_VIEW_BOX).toBe('0 0 148.484 43');
-      expect(BRAND_WORDMARK_PATHS).toHaveLength(9);
-      expect(container.querySelector('.dt-brand-logo-dot')).toBeTruthy();
-      expect(container.textContent).not.toContain('Bridger.');
-      expect(container.querySelector('svg[viewBox="0 0 44 24"]')).toBeFalsy();
+      expect(
+        container.querySelector(`.dt-brand-logo-wordmark svg[viewBox="${BRAND_WORDMARK_VIEW_BOX}"]`),
+      ).toBeTruthy();
+      expect(BRAND_WORDMARK_VIEW_BOX).toBe('0 0 6958 2444');
+      expect(BRAND_WORDMARK_PATHS).toHaveLength(7);
+      expect(container.querySelector('.dt-brand-logo-wordmark g')).toBeTruthy();
+      expect(container.querySelector('.dt-brand-logo-dot')).toBeFalsy();
       expect(container.querySelector('.dt-brand-logo-line')).toBeFalsy();
       expect(BRAND_LOGO_LANGUAGE.Korean).toBe('ko');
     });
 
-    it('uses the current Figma BrandLogo variant dimensions', () => {
+    it('keeps the canonical wordmark aspect ratio across sizes', () => {
       const { container, rerender } = render(<BrandLogo size="lg" lang="en" />);
-      const largeLogo = screen.getByLabelText('Bridger.');
+      const largeLogo = screen.getByLabelText('Bridger');
 
-      expect(largeLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('148.484px');
+      expect(largeLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('122.42px');
       expect(largeLogo.style.getPropertyValue('--dt-brand-logo-height')).toBe('43px');
-      expect(BRAND_WORDMARK_SIZE.lg).toEqual({ width: 148.484, height: 43 });
-      expect(container.querySelector('svg[viewBox="0 0 148.484 43"]')).toBeTruthy();
+      expect(BRAND_WORDMARK_SIZE.lg.height).toBe(43);
+      expect(container.querySelector(`svg[viewBox="${BRAND_WORDMARK_VIEW_BOX}"]`)).toBeTruthy();
 
       rerender(<BrandLogo size="md" lang="en" />);
-      expect(screen.getByLabelText('Bridger.').style.getPropertyValue('--dt-brand-logo-width')).toBe('69.062px');
-      expect(screen.getByLabelText('Bridger.').style.getPropertyValue('--dt-brand-logo-height')).toBe('20px');
+      expect(screen.getByLabelText('Bridger').style.getPropertyValue('--dt-brand-logo-width')).toBe('56.939px');
+      expect(screen.getByLabelText('Bridger').style.getPropertyValue('--dt-brand-logo-height')).toBe('20px');
 
       rerender(<BrandLogo size="symbol" lang="en" />);
-      const symbolLogo = screen.getByLabelText('Bridger.');
-      expect(symbolLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('15px');
-      expect(symbolLogo.style.getPropertyValue('--dt-brand-logo-height')).toBe('14px');
+      const symbolLogo = screen.getByLabelText('Bridger');
+      expect(symbolLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('20px');
+      expect(symbolLogo.style.getPropertyValue('--dt-brand-logo-height')).toBe('20px');
       expect(symbolLogo.getAttribute('data-variant')).toBe('symbol');
-      expect(container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX.symbol}"]`)).toBeTruthy();
+      expect(container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX}"]`)).toBeTruthy();
 
       rerender(<BrandLogo size="favicon" lang="en" />);
-      const faviconLogo = screen.getByLabelText('Bridger.');
+      const faviconLogo = screen.getByLabelText('Bridger');
       expect(faviconLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('45px');
       expect(faviconLogo.style.getPropertyValue('--dt-brand-logo-height')).toBe('45px');
       expect(faviconLogo.getAttribute('data-variant')).toBe('favicon');
-      expect(container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX.favicon}"]`)).toBeTruthy();
+    });
+
+    it('pins the square-b mark contract: persimmon square, paper glyph, never inverted', () => {
+      const { container } = render(<BrandLogo size="symbol" theme="dark" lang="en" />);
+      const svg = container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX}"]`);
+
+      expect(svg).toBeTruthy();
+      expect(svg?.querySelector('rect')?.getAttribute('fill')).toBe('var(--dt-accent)');
+      expect(svg?.querySelector('path')?.getAttribute('fill')).toBe('#ffffff');
+      expect(screen.getByLabelText('Bridger').getAttribute('data-brand-theme')).toBe('dark');
     });
 
     it('exposes an imperative play handle for brand interactions', () => {

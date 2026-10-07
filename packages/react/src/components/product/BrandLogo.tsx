@@ -1,18 +1,12 @@
+import { forwardRef, useImperativeHandle, type CSSProperties } from 'react';
 import {
-  forwardRef,
-  useEffect,
-  useImperativeHandle,
-  useState,
-  type CSSProperties,
-  type Dispatch,
-  type SetStateAction,
-} from 'react';
-import {
+  BRAND_MARK_GLYPH_PATH,
   BRAND_SYMBOL_SIZE,
   BRAND_SYMBOL_VIEW_BOX,
   BRAND_WORDMARK_ASPECT_RATIO,
   BRAND_WORDMARK_PATHS,
   BRAND_WORDMARK_SIZE,
+  BRAND_WORDMARK_TRANSFORM,
   BRAND_WORDMARK_VIEW_BOX,
   type BrandLogoFrameSize,
 } from './brandLogoGeometry';
@@ -32,55 +26,52 @@ export const BRAND_LOGO_SIZE_NAME = {
   Favicon: 'favicon',
 } as const;
 
+/** Fixed-theme override for surfaces that do not follow the ambient theme —
+ * e.g. a dark page chrome on a light app. §15.3: only the wordmark switches
+ * ink; the mark never inverts. */
+export const BRAND_LOGO_THEME = {
+  Light: 'light',
+  Dark: 'dark',
+} as const;
+
 export type BrandLogoLanguage = (typeof BRAND_LOGO_LANGUAGE)[keyof typeof BRAND_LOGO_LANGUAGE];
 export type BrandLogoSize = keyof typeof BRAND_WORDMARK_SIZE | keyof typeof BRAND_SYMBOL_SIZE;
+export type BrandLogoTheme = (typeof BRAND_LOGO_THEME)[keyof typeof BRAND_LOGO_THEME];
 
 export interface BrandLogoHandle {
+  /**
+   * @deprecated The legacy wordmark pulse is retired with the canonical mark
+   * (EDD-225 §11/§15 — no decorative animation). Kept as a no-op so existing
+   * call sites keep compiling; remove on the next major.
+   */
   readonly play: () => void;
 }
 
 export interface BrandLogoProps {
   size?: BrandLogoSize | number;
+  /** @deprecated No-op — the canonical mark ships no autoplay intro. */
   autoplay?: boolean;
+  /** @deprecated No-op — the canonical mark ships no looped animation. */
   loop?: boolean;
+  /** Language for the accessible label only; the wordmark is never localized. */
   lang?: BrandLogoLanguage;
+  /** Force the wordmark ink for a fixed-theme surface; mark never inverts. */
+  theme?: BrandLogoTheme;
   style?: CSSProperties;
 }
 
-function playMark(setArmed: Dispatch<SetStateAction<boolean>>) {
-  const scheduleFrame = typeof requestAnimationFrame === 'function'
-    ? requestAnimationFrame
-    : (callback: FrameRequestCallback) => setTimeout(callback, 0);
-  setArmed(false);
-  scheduleFrame(() =>
-    scheduleFrame(() => setArmed(true)),
-  );
-}
-
-function renderBrandSymbol({ isFavicon }: { readonly isFavicon: boolean }) {
-  if (isFavicon) {
-    return (
-      <>
-        <rect width="45" height="45" fill="var(--dt-accent)" />
-        <path
-          d="M35 18.31V11C29.5756 11 24.8659 12.6995 22.5 15.1925C20.1341 12.6995 15.4244 11 10 11V18.31C15.4244 18.31 20.1341 20.007 22.5 22.5C20.1341 24.993 15.4244 26.69 10 26.69V34C15.4244 34 20.1341 32.3005 22.5 29.8075C24.8659 32.3005 29.5756 34 35 34V26.69C29.5756 26.69 24.8659 24.993 22.5 22.5C24.8659 20.007 29.5756 18.31 35 18.31Z"
-          fill="var(--dt-bg)"
-        />
-      </>
-    );
-  }
-
+function renderBrandSymbol() {
+  /* Canonical mark: persimmon square + paper glyph — identical in both
+   * themes (§15.3), so the glyph stays a fixed paper color on purpose. */
   return (
-    <path
-      d="M15 4.44959V0C11.7454 0 8.91951 1.0345 7.5 2.55197C6.08049 1.0345 3.25463 0 0 0V4.44959C3.25463 4.44959 6.08049 5.48253 7.5 7C6.08049 8.51747 3.25463 9.55041 0 9.55041V14C3.25463 14 6.08049 12.9655 7.5 11.448C8.91951 12.9655 11.7454 14 15 14V9.55041C11.7454 9.55041 8.91951 8.51747 7.5 7C8.91951 5.48253 11.7454 4.44959 15 4.44959Z"
-      fill="currentColor"
-    />
+    <>
+      <rect width="45" height="45" fill="var(--dt-accent)" />
+      <path d={BRAND_MARK_GLYPH_PATH} fill="#ffffff" />
+    </>
   );
 }
 
 function renderBrandWordmark() {
-  const dotIndex = BRAND_WORDMARK_PATHS.length - 1;
-
   return (
     <svg
       width="100%"
@@ -89,14 +80,11 @@ function renderBrandWordmark() {
       aria-hidden="true"
       focusable="false"
     >
-      {BRAND_WORDMARK_PATHS.map((path, index) => (
-        <path
-          key={path}
-          className={index === dotIndex ? 'dt-brand-logo-dot' : undefined}
-          d={path}
-          fill="currentColor"
-        />
-      ))}
+      <g transform={BRAND_WORDMARK_TRANSFORM} fill="currentColor">
+        {BRAND_WORDMARK_PATHS.map((path, index) => (
+          <path key={index} d={path} />
+        ))}
+      </g>
     </svg>
   );
 }
@@ -123,98 +111,46 @@ function resolveSymbolSize({ isFavicon }: { readonly isFavicon: boolean }): Bran
 }
 
 export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function BrandLogo(
-  {
-    size = BRAND_LOGO_SIZE_NAME.Medium,
-    autoplay = false,
-    loop = false,
-    lang = BRAND_LOGO_LANGUAGE.Korean,
-    style,
-  },
+  { size = BRAND_LOGO_SIZE_NAME.Medium, lang = BRAND_LOGO_LANGUAGE.Korean, theme, style },
   ref,
 ) {
   const isSymbol = size === BRAND_LOGO_SIZE_NAME.Symbol;
   const isFavicon = size === BRAND_LOGO_SIZE_NAME.Favicon;
-  const [armed, setArmed] = useState(false);
   const messages = useDSMessages();
   const wordmarkLabel = messages.brand.wordmark[lang];
+  const frame = isSymbol || isFavicon ? resolveSymbolSize({ isFavicon }) : resolveWordmarkSize(size);
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      play() {
-        playMark(setArmed);
-      },
-    }),
-    [],
-  );
-
-  useEffect(() => {
-    if (!autoplay) return;
-    const timeout = setTimeout(() => playMark(setArmed), 200);
-    return () => clearTimeout(timeout);
-  }, [autoplay]);
-
-  useEffect(() => {
-    if (!loop) return;
-    let alive = true;
-    const interval = setInterval(() => {
-      if (!alive) return;
-      playMark((value) => {
-        if (alive) setArmed(value);
-      });
-    }, 7000);
-
-    return () => {
-      alive = false;
-      clearInterval(interval);
-    };
-  }, [loop]);
-
-  if (isSymbol || isFavicon) {
-    const symbolSize = resolveSymbolSize({ isFavicon });
-
-    return (
-      <span
-        aria-label={wordmarkLabel}
-        role="img"
-        className="dt-brand-logo"
-        data-variant={isFavicon ? 'favicon' : 'symbol'}
-        style={{
-          '--dt-brand-logo-width': `${symbolSize.width}px`,
-          '--dt-brand-logo-height': `${symbolSize.height}px`,
-          ...style,
-        } as CSSProperties}
-      >
-        <svg
-          width="100%"
-          height="100%"
-          viewBox={isFavicon ? BRAND_SYMBOL_VIEW_BOX.favicon : BRAND_SYMBOL_VIEW_BOX.symbol}
-          aria-hidden="true"
-          focusable="false"
-        >
-          {renderBrandSymbol({ isFavicon })}
-        </svg>
-      </span>
-    );
-  }
-
-  const wordmarkSize = resolveWordmarkSize(size);
+  /* play() stays a no-op on the handle — see BrandLogoHandle for why. */
+  useImperativeHandle(ref, () => ({ play: () => undefined }), []);
 
   return (
     <span
       aria-label={wordmarkLabel}
       role="img"
       className="dt-brand-logo"
-      data-armed={armed ? 'true' : 'false'}
+      data-variant={isSymbol ? 'symbol' : isFavicon ? 'favicon' : 'wordmark'}
+      data-brand-theme={theme}
       style={{
-        '--dt-brand-logo-width': `${wordmarkSize.width}px`,
-        '--dt-brand-logo-height': `${wordmarkSize.height}px`,
+        '--dt-brand-logo-width': `${frame.width}px`,
+        '--dt-brand-logo-height': `${frame.height}px`,
         ...style,
       } as CSSProperties}
     >
-      <span className="dt-brand-logo-wordmark" aria-hidden="true">
-        {renderBrandWordmark()}
-      </span>
+      {isSymbol || isFavicon ? (
+        <svg
+          width="100%"
+          height="100%"
+          viewBox={BRAND_SYMBOL_VIEW_BOX}
+          aria-hidden="true"
+          focusable="false"
+        >
+          {renderBrandSymbol()}
+        </svg>
+      ) : (
+        <span className="dt-brand-logo-wordmark" aria-hidden="true">
+          {renderBrandWordmark()}
+        </span>
+      )}
     </span>
   );
 });
