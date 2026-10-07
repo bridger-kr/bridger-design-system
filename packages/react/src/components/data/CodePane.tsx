@@ -43,7 +43,7 @@ export interface CodePaneProps extends Omit<HTMLAttributes<HTMLDivElement>, 'chi
  * `showLineNumbers={false}` and maps its copy labels. Removed in v2.1.
  */
 export const CodePane = forwardRef<HTMLDivElement, CodePaneProps>(function CodePane(
-  { lines = [], label, copyText, copyLabel = '복사', copiedLabel = '복사됨', copyFailedLabel, copyable = false, className, ...rest },
+  { lines = [], label, copyText, copyLabel, copiedLabel, copyFailedLabel, copyable = false, className, ...rest },
   ref,
 ) {  const messages = useDSMessages();
   const resolvedCopyLabel = copyLabel ?? messages.code.copy;
@@ -56,7 +56,7 @@ export const CodePane = forwardRef<HTMLDivElement, CodePaneProps>(function CodeP
       lines={lines}
       label={label}
       copyText={copyText}
-      copy={copyable ? { label: copyLabel, copiedLabel, failedLabel: copyFailedLabel } : false}
+      copy={copyable ? { label: resolvedCopyLabel, copiedLabel: resolvedCopiedLabel, failedLabel: copyFailedLabel } : false}
       showLineNumbers={false}
       className={className}
       {...rest}
