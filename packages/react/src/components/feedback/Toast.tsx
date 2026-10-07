@@ -30,10 +30,11 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
   ref,
 ) {
   const messages = useDSMessages();
+  const resolved = resolveTone(tone);
   return (
     <div
       ref={ref}
-      role="status"
+      role={resolved === 'danger' || resolved === 'warning' ? 'alert' : 'status'}
       className={cx('dt-toast', className)}
       style={style}
       {...rest}
@@ -148,6 +149,7 @@ function ToastCard({ toast, closeLabel }: { toast: BaseToast.Root.ToastObject<To
     <BaseToast.Root
       toast={toast}
       className="dt-toast"
+      role={tone === 'danger' || tone === 'warning' ? 'alert' : 'status'}
     >
       <span aria-hidden="true" className={cx('dt-toast-dot', `dt-toast-dot-${tone}`)} />
       <div className="dt-toast-body">

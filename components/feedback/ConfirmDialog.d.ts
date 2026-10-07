@@ -19,6 +19,12 @@ export interface ConfirmDialogProps {
     children?: ReactNode;
     /** Destructive variant: persimmon → danger confirm button, Delete default. */
     danger?: boolean;
+    /**
+     * Async-confirm in progress: the confirm button shows a spinner, ignores
+     * repeat activations, and the dialog stays open until the consumer flips
+     * `pending` back (and closes it) or the user cancels — cancel stays safe.
+     */
+    pending?: boolean;
     confirmLabel?: string;
     cancelLabel?: string;
     width?: number;
@@ -29,4 +35,4 @@ export interface ConfirmDialogProps {
  * inside until the user answers. For destructive actions pass `danger` plus
  * `target`/`impact` so the consequence is named before the button.
  */
-export declare function ConfirmDialog({ open, onClose, onConfirm, title, target, impact, description, children, danger, confirmLabel, cancelLabel, width, }: ConfirmDialogProps): import("react").JSX.Element;
+export declare function ConfirmDialog({ open, onClose, onConfirm, title, target, impact, description, children, danger, pending, confirmLabel, cancelLabel, width, }: ConfirmDialogProps): import("react").JSX.Element;

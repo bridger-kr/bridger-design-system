@@ -39,13 +39,13 @@ export type CardLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'child
  * `CardLink` for navigation; the removed `interactive` flag produced a
  * pointer-only div and must be migrated to the matching semantic action.
  */
-export declare const Card: import("react").ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDivElement>, "style" | "children"> & CardVisualProps & import("react").RefAttributes<HTMLDivElement>>;
+export declare const Card: import("react").ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDivElement>, "children" | "style"> & CardVisualProps & import("react").RefAttributes<HTMLDivElement>>;
 /** Native card-shaped command. Do not place nested interactive controls inside. */
-export declare const CardButton: import("react").ForwardRefExoticComponent<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type" | "style" | "children"> & CardVisualProps & {
+export declare const CardButton: import("react").ForwardRefExoticComponent<Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children" | "style" | "type"> & CardVisualProps & {
     readonly type?: "button" | "submit" | "reset";
 } & import("react").RefAttributes<HTMLButtonElement>>;
 /** Native card-shaped navigation link. Do not place nested interactive controls inside. */
-export declare const CardLink: import("react").ForwardRefExoticComponent<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "style" | "children" | "href"> & CardVisualProps & {
+export declare const CardLink: import("react").ForwardRefExoticComponent<Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "children" | "style" | "href"> & CardVisualProps & {
     readonly href: string;
 } & import("react").RefAttributes<HTMLAnchorElement>>;
 export {};

@@ -79,3 +79,22 @@ describe('ConfirmDialog', () => {
     expect(document.querySelector('.dt-confirm-dialog')).toMatchSnapshot();
   });
 });
+
+describe('ConfirmDialog pending contract (DS #30)', () => {
+  it('keeps the dialog open and disables re-activation while pending', () => {
+    const onConfirm = vi.fn();
+    const onClose = vi.fn();
+    render(
+      <ConfirmDialog open pending title="Deploy now?" onConfirm={onConfirm} onClose={onClose} />,
+    );
+
+    const confirm = screen.getByRole('button', { name: DS_MESSAGES_KO.confirmDialog.confirm });
+    expect(confirm.getAttribute('aria-busy')).toBe('true');
+    expect(confirm.hasAttribute('disabled')).toBe(true);
+    fireEvent.click(confirm);
+    expect(onConfirm).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByRole('button', { name: DS_MESSAGES_KO.confirmDialog.cancel }));
+    expect(onClose).toHaveBeenCalled();
+  });
+});

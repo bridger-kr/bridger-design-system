@@ -28,5 +28,5 @@ export type ChipProps = StaticChipProps | ActionChipProps;
  * Compact classification tag. Supplying `onClick` creates a native button with
  * keyboard, focus, and disabled behavior; omit it for a non-actionable span.
  */
-export declare const Chip: import("react").ForwardRefExoticComponent<ChipProps & import("react").RefAttributes<HTMLButtonElement | HTMLSpanElement>>;
+export declare const Chip: import("react").ForwardRefExoticComponent<ChipProps & import("react").RefAttributes<HTMLSpanElement | HTMLButtonElement>>;
 export {};
