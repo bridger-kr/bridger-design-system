@@ -131,7 +131,10 @@ export const Select = forwardRef<HTMLButtonElement, SelectProps>(function Select
             <BaseSelect.Value>{selectedOption?.label ?? placeholder ?? ''}</BaseSelect.Value>
           </BaseSelect.Trigger>
           <BaseSelect.Portal>
-            <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false}>
+            {/* z-index lives on the positioner — it is the positioned element; a
+                z-index on the static popup is ignored and loses to app stacking
+                contexts (e.g. `.dashboard-page { z-index: 1 }`). */}
+            <BaseSelect.Positioner sideOffset={6} alignItemWithTrigger={false} style={{ zIndex: 'var(--dt-z-index-popover)' }}>
               <BaseSelect.Popup className="dt-select-popup">
                 <BaseSelect.List>
                   {normalizedOptions.map((opt) => (
