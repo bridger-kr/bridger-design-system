@@ -70,6 +70,18 @@ export const DS_MESSAGES_KO = {
     table: {
         rowActions: '행 작업',
     },
+    consoleShell: {
+        navLabel: '기본 탐색',
+        openNav: '탐색 열기',
+        collapseNav: '탐색 접기',
+        expandNav: '탐색 펼치기',
+        skipToContent: '본문으로 건너뛰기',
+        workspace: {
+            pending: '워크스페이스 전환 중…',
+            success: '워크스페이스를 전환했어요',
+            error: '전환에 실패해 현재 워크스페이스를 유지합니다',
+        },
+    },
     toolCard: {
         emptyDescription: '설명 없음',
         state: {
@@ -133,6 +145,18 @@ export const DS_MESSAGES_EN = {
     },
     table: {
         rowActions: 'Actions',
+    },
+    consoleShell: {
+        navLabel: 'Primary navigation',
+        openNav: 'Open navigation',
+        collapseNav: 'Collapse navigation',
+        expandNav: 'Expand navigation',
+        skipToContent: 'Skip to content',
+        workspace: {
+            pending: 'Switching workspace…',
+            success: 'Workspace switched',
+            error: 'Switch failed — keeping the current workspace',
+        },
     },
     toolCard: {
         emptyDescription: 'No description',

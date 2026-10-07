@@ -25,6 +25,11 @@ export interface SidebarProps extends Omit<HTMLAttributes<HTMLElement>, 'childre
   footer?: ReactNode;
   width?: number;
   /**
+   * Icon-only rail: labels stay in the accessibility tree and each item gets
+   * a native `title` tooltip so the collapsed rail still names destinations.
+   */
+  collapsed?: boolean;
+  /**
    * Called when an item is activated. Apps with client-side routers use this
    * to intercept plain clicks (modifier/middle clicks still open natively).
    */
@@ -37,14 +42,14 @@ export interface SidebarProps extends Omit<HTMLAttributes<HTMLElement>, 'childre
  * @startingPoint section="Navigation" subtitle="Console nav rail" viewport="260x440"
  */
 export const Sidebar = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
-  { brand, sections = [], footer, width = 240, onNavigate, className, style, ...rest },
+  { brand, sections = [], footer, width = 240, collapsed = false, onNavigate, className, style, ...rest },
   ref,
 ) {
   return (
     <nav
       ref={ref}
       {...rest}
-      className={cx('dt-sidebar', className)}
+      className={cx('dt-sidebar', collapsed && 'dt-sidebar-collapsed', className)}
       style={{ '--dt-sidebar-width': `${width}px`, ...style } as CSSProperties}
     >
       {brand ? (
@@ -64,6 +69,7 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
                 target={it.external ? '_blank' : undefined}
                 rel={it.external ? 'noreferrer noopener' : undefined}
                 aria-current={it.active ? 'page' : undefined}
+                title={collapsed && typeof it.label === 'string' ? it.label : undefined}
                 className={cx('dt-sidebar-item', it.active && 'dt-sidebar-item-active')}
                 onClick={onNavigate ? (event) => onNavigate(event, it) : undefined}
               >

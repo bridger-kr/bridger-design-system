@@ -80,6 +80,19 @@ export interface DSMessageCatalog {
     /** Header cell for the row-action column. */
     rowActions: string;
   };
+  consoleShell: {
+    /** Landmark label for the primary navigation rail/drawer. */
+    navLabel: string;
+    /** Accessible name of the mobile navigation trigger. */
+    openNav: string;
+    /** Accessible names of the desktop rail collapse/expand toggle. */
+    collapseNav: string;
+    expandNav: string;
+    /** Skip-link text jumping to the main content region. */
+    skipToContent: string;
+    /** Workspace-switch lifecycle lines; error keeps the previous context. */
+    workspace: Record<'pending' | 'success' | 'error', string>;
+  };
   toolCard: {
     emptyDescription: string;
     state: {
@@ -145,6 +158,18 @@ export const DS_MESSAGES_KO: DSMessageCatalog = {
   table: {
     rowActions: '행 작업',
   },
+  consoleShell: {
+    navLabel: '기본 탐색',
+    openNav: '탐색 열기',
+    collapseNav: '탐색 접기',
+    expandNav: '탐색 펼치기',
+    skipToContent: '본문으로 건너뛰기',
+    workspace: {
+      pending: '워크스페이스 전환 중…',
+      success: '워크스페이스를 전환했어요',
+      error: '전환에 실패해 현재 워크스페이스를 유지합니다',
+    },
+  },
   toolCard: {
     emptyDescription: '설명 없음',
     state: {
@@ -209,6 +234,18 @@ export const DS_MESSAGES_EN: DSMessageCatalog = {
   },
   table: {
     rowActions: 'Actions',
+  },
+  consoleShell: {
+    navLabel: 'Primary navigation',
+    openNav: 'Open navigation',
+    collapseNav: 'Collapse navigation',
+    expandNav: 'Expand navigation',
+    skipToContent: 'Skip to content',
+    workspace: {
+      pending: 'Switching workspace…',
+      success: 'Workspace switched',
+      error: 'Switch failed — keeping the current workspace',
+    },
   },
   toolCard: {
     emptyDescription: 'No description',
