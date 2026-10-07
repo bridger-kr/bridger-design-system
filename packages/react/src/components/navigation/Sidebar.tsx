@@ -45,10 +45,7 @@ export const Sidebar = forwardRef<HTMLElement, SidebarProps>(function Sidebar(
       ref={ref}
       {...rest}
       className={cx('dt-sidebar', className)}
-      style={{
-        width,
-        ...style,
-      }}
+      style={{ '--dt-sidebar-width': `${width}px`, ...style } as CSSProperties}
     >
       {brand ? (
         <div className="dt-sidebar-brand">{brand}</div>

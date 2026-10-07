@@ -22,7 +22,6 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
           render={
             <span
               className="dt-tooltip-trigger"
-              style={{ display: 'inline-flex' }}
               onMouseEnter={() => setOpen(true)}
               onMouseLeave={() => setOpen(false)}
               onFocus={() => setOpen(true)}
@@ -37,17 +36,11 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(function Toolti
             side={position}
             sideOffset={7}
             className="dt-tooltip-positioner"
-            style={{ zIndex: 'var(--dt-z-index-popover)' }}
           >
             <BaseTooltip.Popup
               id={tooltipId}
               role="tooltip"
               className="dt-tooltip-popup"
-              style={{
-                whiteSpace: 'nowrap', pointerEvents: 'none', padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
-                color: 'var(--dt-bg)', background: 'var(--dt-text-strong)', borderRadius: 'var(--dt-radius-chip)', boxShadow: 'var(--dt-shadow-overlay)',
-                transition: 'opacity var(--dt-duration-fast) var(--dt-ease), visibility var(--dt-duration-fast) var(--dt-ease)',
-              }}
             >
               {label}
             </BaseTooltip.Popup>

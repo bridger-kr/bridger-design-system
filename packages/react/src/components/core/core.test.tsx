@@ -324,8 +324,11 @@ describe('core exports', () => {
     expect(staticChip.className).not.toContain('dt-chip-interactive');
     expect(actionChip.getAttribute('type')).toBe('button');
     expect(actionChip.className).toContain('dt-chip-interactive');
-    expect(actionChip.style.minHeight).toBe('var(--dt-space-5)');
-    expect(actionChip.style.minWidth).toBe('var(--dt-space-5)');
+    expect(actionChip.getAttribute('style') ?? '').not.toContain('min-height');
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+    expect(stylesheet).toContain('min-height: var(--dt-space-5)');
+    expect(stylesheet).toContain('min-width: var(--dt-space-5)');
   });
 
   it('activates actionable chips with Enter and Space and blocks disabled actions', async () => {

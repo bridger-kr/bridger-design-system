@@ -4,41 +4,28 @@
 
 import { Check } from 'lucide-react';
 import { forwardRef } from 'react';
+import { cx } from '../lib/cx.jsx';
 import { Icon } from '../lib/icon.jsx';
 /**
  * Multi-step progress — done (check) / current (persimmon) / upcoming (muted).
  * @startingPoint section="Navigation" subtitle="Onboarding step progress" viewport="560x120"
  */
-export const Stepper = forwardRef(function Stepper({ steps = [], current = 0, orientation = 'horizontal', style, ...rest }, ref) {
+export const Stepper = forwardRef(function Stepper({ steps = [], current = 0, orientation = 'horizontal', className, style, ...rest }, ref) {
     const vertical = orientation === 'vertical';
-    return (<div ref={ref} {...rest} style={{
-            display: 'flex', flexDirection: vertical ? 'column' : 'row',
-            alignItems: vertical ? 'stretch' : 'flex-start', gap: 0, ...style,
-        }}>
+    return (<div ref={ref} {...rest} className={cx('dt-stepper', className)} data-orientation={vertical ? 'vertical' : 'horizontal'} style={style}>
       {steps.map((s, i) => {
             const done = i < current, active = i === current;
-            const accent = done || active;
-            return (<div key={i} style={{ display: 'flex', flexDirection: vertical ? 'row' : 'column', alignItems: vertical ? 'flex-start' : 'stretch', flex: vertical ? 'none' : 1, minWidth: 0, gap: vertical ? 12 : 0 }}>
-            {/* marker + connector */}
-            <div style={{ display: 'flex', flexDirection: vertical ? 'column' : 'row', alignItems: 'center', gap: vertical ? 6 : 10, ...(vertical ? {} : { width: '100%' }) }}>
-              <span style={{
-                    flex: '0 0 auto', width: 26, height: 26, display: 'grid', placeItems: 'center',
-                    borderRadius: 'var(--dt-radius-chip)', fontSize: 12, fontWeight: 700,
-                    background: done ? 'var(--dt-accent)' : active ? 'var(--dt-tint-accent)' : 'var(--dt-surface-sunken)',
-                    color: done ? '#fff' : active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)',
-                    boxShadow: active ? 'inset 0 0 0 1.5px var(--dt-accent)' : done ? 'none' : 'inset 0 0 0 1px var(--dt-border-strong)',
-                }}>
+            const state = done ? 'done' : active ? 'active' : 'todo';
+            return (<div key={i} className="dt-step" data-orientation={vertical ? 'vertical' : 'horizontal'}>
+            <div className="dt-step-marker-row">
+              <span className="dt-step-marker" data-state={state}>
                 {done ? <Icon icon={Check} size="sm"/> : i + 1}
               </span>
-              {i < steps.length - 1 ? (<span style={{
-                        background: done ? 'var(--dt-accent)' : 'var(--dt-border-strong)',
-                        ...(vertical ? { width: 2, minHeight: 22, flex: 1, marginTop: 2 } : { height: 2, flex: 1 }),
-                    }}/>) : null}
+              {i < steps.length - 1 ? (<span className="dt-step-connector" data-done={done ? '' : undefined}/>) : null}
             </div>
-            {/* label */}
-            <div style={{ padding: vertical ? '2px 0 16px' : '10px 14px 0 0' }}>
-              <div style={{ fontSize: 13.5, fontWeight: accent ? 650 : 500, color: accent ? 'var(--dt-text-strong)' : 'var(--dt-text-muted)' }}>{s.label}</div>
-              {s.description ? <div style={{ fontSize: 12, color: 'var(--dt-text-muted)', marginTop: 3, lineHeight: 1.45 }}>{s.description}</div> : null}
+            <div className="dt-step-label-block">
+              <div className="dt-step-label" data-accent={done || active ? '' : undefined}>{s.label}</div>
+              {s.description ? <div className="dt-step-desc">{s.description}</div> : null}
             </div>
           </div>);
         })}

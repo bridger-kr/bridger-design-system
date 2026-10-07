@@ -13,7 +13,7 @@ export interface StatTileProps extends Omit<HTMLAttributes<HTMLDivElement>, 'sty
     style?: CSSProperties;
 }
 /**
- * Metric tile — uppercase label, large tabular value, optional delta.
+ * Metric tile — caption-size label, large tabular value, optional delta.
  * The console's KPI unit. Compose several inside a bordered stat row.
  */
 export declare const StatTile: import("react").ForwardRefExoticComponent<StatTileProps & import("react").RefAttributes<HTMLDivElement>>;

@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { fireEvent, render, waitFor } from '@testing-library/react';
 import { axe } from 'vitest-axe';
@@ -125,7 +127,11 @@ describe('Menu a11y', () => {
     await waitFor(() => expect(document.body.querySelector('[role="menu"]')).not.toBeNull());
     const menu = document.body.querySelector('[role="menu"]');
     expect(menu?.className).toContain('dt-menu-popup');
-    expect(menu?.getAttribute('style')).toContain('z-index: var(--dt-z-index-popover)');
+    expect(menu?.getAttribute('style') ?? '').not.toContain('z-index');
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+    expect(stylesheet).toContain('.dt-menu-popup');
+    expect(stylesheet).toContain('z-index: var(--dt-z-index-popover)');
     expect(menu?.querySelector('.dt-menu-item')).not.toBeNull();
     expect(menu?.querySelector('style')).toBeNull();
   });

@@ -73,3 +73,14 @@ body { margin: 0; min-width: 0; }
   .showcase-content { padding: var(--dt-space-4); }
   .showcase-result { grid-template-columns: minmax(0, 1fr) auto; }
 }
+
+.harness {
+  display: grid;
+  gap: var(--dt-space-5);
+  max-width: 760px;
+  padding: var(--dt-space-5);
+  font-family: var(--dt-font-sans);
+}
+.harness-head { display: flex; justify-content: space-between; align-items: center; }
+.harness-head h1 { font-size: var(--dt-h2-size); margin: 0; }
+.harness-section h2 { font-size: var(--dt-h3-size); }

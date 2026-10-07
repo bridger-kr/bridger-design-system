@@ -13,6 +13,11 @@ import {
   Tooltip,
 } from './index';
 
+function stylesheetPath() {
+  const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+  return resolve(packageRoot, 'src/styles.css');
+}
+
 describe('feedback component exports', () => {
   it('exports all feedback components', () => {
     expect(Alert).toBeDefined();
@@ -27,27 +32,31 @@ describe('feedback component exports', () => {
     render(<Alert tone={AlertTone.Warning} title="주의">게이트웨이 응답 지연. 네트워크 확인 필요.</Alert>);
 
     const el = screen.getByRole('status');
-    expect(el.style.alignItems).toBe('flex-start');
-    expect(el.style.background).toBe('var(--dt-tint-warning)');
-    expect(el.style.borderRadius).toBe('var(--dt-radius-card)');
-    expect(el.style.color).toBe('var(--dt-text-strong)');
-    expect(el.style.minHeight).toBe('62px');
-    expect(el.style.padding).toBe('13px 15px');
+    expect(el.className).toContain('dt-alert');
+    expect(el.className).toContain('dt-alert-warning');
+    expect(el.getAttribute('style') ?? '').not.toContain('background');
+    const stylesheet = readFileSync(stylesheetPath(), 'utf8');
+    expect(stylesheet).toContain('.dt-alert {');
+    expect(stylesheet).toContain('min-height: 62px');
+    expect(stylesheet).toContain('padding: 13px 15px');
+    expect(stylesheet).toContain('.dt-alert-warning { background: var(--dt-tint-warning); }');
   });
 
   it('uses adaptive strong contrast for every semantic tone', () => {
-    const toneBackgrounds = [
-      [AlertTone.Info, 'var(--dt-tint-cobalt)'],
-      [AlertTone.Success, 'var(--dt-tint-success)'],
-      [AlertTone.Warning, 'var(--dt-tint-warning)'],
-      [AlertTone.Danger, 'var(--dt-tint-danger)'],
+    const toneClasses = [
+      [AlertTone.Info, 'dt-alert-info', 'var(--dt-tint-cobalt)'],
+      [AlertTone.Success, 'dt-alert-success', 'var(--dt-tint-success)'],
+      [AlertTone.Warning, 'dt-alert-warning', 'var(--dt-tint-warning)'],
+      [AlertTone.Danger, 'dt-alert-danger', 'var(--dt-tint-danger)'],
     ] as const;
 
-    for (const [tone, background] of toneBackgrounds) {
+    const stylesheet = readFileSync(stylesheetPath(), 'utf8');
+    for (const [tone, className, background] of toneClasses) {
       const { unmount } = render(<Alert tone={tone} title="상태">게이트웨이 상태를 확인했습니다.</Alert>);
       const el = screen.getByRole('status');
-      expect(el.style.background).toBe(background);
-      expect(el.style.color).toBe('var(--dt-text-strong)');
+      expect(el.className).toContain(className);
+      expect(el.getAttribute('style') ?? '').not.toContain('background');
+      expect(stylesheet).toContain(`.${className} { background: ${background}; }`);
       unmount();
     }
   });
@@ -56,14 +65,14 @@ describe('feedback component exports', () => {
     render(<Alert title="안내">게이트웨이 응답 정상.</Alert>);
 
     const el = screen.getByRole('status');
-    expect(el.className).toBe('dt-alert');
+    expect(el.className).toContain('dt-alert');
     expect(el.className).not.toContain('dt-alert-motion');
+    expect(el.className).not.toContain('dt-alert-pulse');
     expect(el.style.transition).toBe('');
   });
 
   it('does not attach hover or press motion to static alerts', () => {
-    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
-    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+    const stylesheet = readFileSync(stylesheetPath(), 'utf8');
 
     expect(stylesheet).not.toContain('.dt-alert:hover');
     expect(stylesheet).not.toContain('.dt-alert:active');
@@ -77,15 +86,33 @@ describe('feedback component exports', () => {
   it('uses the declared overlay and modal layers for dialogs', () => {
     render(<Dialog open title="확인">내용</Dialog>);
 
-    expect(document.querySelector('[data-dt-dialog-overlay]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-overlay)');
-    expect(document.querySelector('[data-dt-dialog-content]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-modal)');
+    const overlay = document.querySelector('[data-dt-dialog-overlay]');
+    const content = document.querySelector('[data-dt-dialog-content]');
+    expect(overlay?.className).toContain('dt-dialog-overlay');
+    expect(content?.className).toContain('dt-dialog-viewport');
+    expect(overlay?.getAttribute('style') ?? '').not.toContain('z-index');
+    expect(content?.getAttribute('style') ?? '').not.toContain('z-index');
+    const stylesheet = readFileSync(stylesheetPath(), 'utf8');
+    expect(stylesheet).toContain('.dt-dialog-overlay');
+    expect(stylesheet).toContain('z-index: var(--dt-z-index-overlay)');
+    expect(stylesheet).toContain('.dt-dialog-viewport');
+    expect(stylesheet).toContain('z-index: var(--dt-z-index-modal)');
   });
 
   it('uses declared layers and a shared 40px close target for drawers', () => {
     render(<Drawer open title="세부 정보">내용</Drawer>);
 
-    expect(document.querySelector('[data-dt-drawer-overlay]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-overlay)');
-    expect(document.querySelector('[data-dt-drawer-content]')?.getAttribute('style')).toContain('z-index: var(--dt-z-index-modal)');
+    const overlay = document.querySelector('[data-dt-drawer-overlay]');
+    const content = document.querySelector('[data-dt-drawer-content]');
+    expect(overlay?.className).toContain('dt-drawer-overlay');
+    expect(content?.className).toContain('dt-drawer-popup');
+    expect(overlay?.getAttribute('style') ?? '').not.toContain('z-index');
+    expect(content?.getAttribute('style') ?? '').not.toContain('z-index');
+    const stylesheet = readFileSync(stylesheetPath(), 'utf8');
+    expect(stylesheet).toContain('.dt-drawer-overlay');
+    expect(stylesheet).toContain('z-index: var(--dt-z-index-overlay)');
+    expect(stylesheet).toContain('.dt-drawer-popup');
+    expect(stylesheet).toContain('z-index: var(--dt-z-index-modal)');
     expect(document.querySelector('[aria-label="닫기"]')?.className).toContain('dt-close-control');
   });
 

@@ -1,6 +1,7 @@
 import { ChevronRight } from 'lucide-react';
 import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { cx } from '../../lib/cx';
 import { Icon } from '../../lib/icon';
 
 export interface BreadcrumbItem {
@@ -15,7 +16,7 @@ export interface BreadcrumbProps extends Omit<HTMLAttributes<HTMLElement>, 'chil
 
 /** Breadcrumb trail — last item is the current page. */
 export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Breadcrumb(
-  { items = [], style, ...rest },
+  { items = [], className, style, ...rest },
   ref,
 ) {
   return (
@@ -23,33 +24,24 @@ export const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(function Brea
       ref={ref}
       {...rest}
       aria-label="breadcrumb"
-      style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', ...style }}
+      className={cx('dt-breadcrumb', className)}
+      style={style}
     >
-      <ol
-        style={{
-          margin: 0,
-          padding: 0,
-          display: 'flex',
-          alignItems: 'center',
-          gap: 6,
-          flexWrap: 'wrap',
-          listStyle: 'none',
-        }}
-      >
+      <ol className="dt-breadcrumb-list">
         {items.map((it, i) => {
           const last = i === items.length - 1;
 
           return (
-            <li key={i}>
+            <li key={i} className="dt-breadcrumb-item">
               {last ? (
-                <span aria-current="page" style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-strong)' }}>{it.label}</span>
+                <span aria-current="page" className="dt-breadcrumb-current">{it.label}</span>
               ) : (
-                <a href={it.href || '#'} style={{ fontSize: 13, fontWeight: 500, color: 'var(--dt-text-muted)', textDecoration: 'none' }}>
+                <a href={it.href || '#'} className="dt-breadcrumb-link">
                   {it.label}
                 </a>
               )}
               {!last ? (
-                <Icon icon={ChevronRight} size="sm" style={{ color: 'var(--dt-border-strong)' }} />
+                <Icon icon={ChevronRight} size="sm" className="dt-breadcrumb-sep" />
               ) : null}
             </li>
           );

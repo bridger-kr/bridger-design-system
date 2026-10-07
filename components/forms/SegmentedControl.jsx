@@ -3,6 +3,7 @@
 // Regenerate: pnpm generate
 
 import { forwardRef } from 'react';
+import { cx } from '../lib/cx.jsx';
 import { warnOnce } from '../lib/deprecate.jsx';
 import { useControllableState } from '../lib/useControllableState.jsx';
 /** Inset segmented control for 2–4 short, exclusive options. */
@@ -19,31 +20,11 @@ export const SegmentedControl = forwardRef(function SegmentedControl({ options =
             onChange?.(next);
         },
     });
-    const pad = size === 'sm' ? '5px 11px' : '7px 14px';
-    return (<div ref={ref} className={className} style={{
-            display: 'inline-flex',
-            padding: 3,
-            gap: 2,
-            background: 'var(--dt-surface-sunken)',
-            borderRadius: 'var(--dt-radius-control)',
-            ...style,
-        }} {...rest}>
+    return (<div ref={ref} className={cx('dt-segmented', className)} data-size={size} style={style} {...rest}>
         {options.map((o) => {
             const opt = typeof o === 'string' ? { value: o, label: o } : o;
             const on = opt.value === current;
-            return (<button key={opt.value} type="button" onClick={() => select(opt.value)} style={{
-                    border: on ? '1px solid var(--dt-border)' : '1px solid transparent',
-                    cursor: 'pointer',
-                    padding: pad,
-                    borderRadius: 'var(--dt-radius-chip)',
-                    fontSize: size === 'sm' ? 12 : 13,
-                    fontWeight: 600,
-                    fontFamily: 'inherit',
-                    whiteSpace: 'nowrap',
-                    color: on ? 'var(--dt-text-strong)' : 'var(--dt-text-muted)',
-                    background: on ? 'var(--dt-surface)' : 'transparent',
-                    transition: 'color var(--dt-duration-fast) var(--dt-ease), background-color var(--dt-duration-fast) var(--dt-ease)',
-                }}>
+            return (<button key={opt.value} type="button" onClick={() => select(opt.value)} className="dt-segmented-item" data-active={on ? '' : undefined}>
               {opt.label}
             </button>);
         })}

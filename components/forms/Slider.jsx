@@ -5,6 +5,7 @@
 import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { forwardRef, useId } from 'react';
 import { warnOnce } from '../lib/deprecate.jsx';
+import { cx } from '../lib/cx.jsx';
 import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 /**
  * Numeric range input — hairline track, persimmon fill, tabular value readout.
@@ -21,50 +22,30 @@ export const Slider = forwardRef(function Slider({ label, min = 0, max = 100, st
     }
     const v = value ?? defaultValue ?? min;
     const pct = ((v - min) / (max - min)) * 100;
+    const { className: labelClassName, ...labelRest } = slotProps?.label ?? {};
+    const { className: hintClassName, ...hintRest } = slotProps?.hint ?? {};
     const handleValueChange = (nextValue) => {
         if (typeof nextValue === 'number') {
             onValueChange?.(nextValue);
             onChange?.(nextValue);
         }
     };
-    return (<BaseSlider.Root ref={ref} id={sId} min={min} max={max} step={step} value={value} defaultValue={defaultValue ?? min} onValueChange={handleValueChange} name={name} disabled={disabled} aria-describedby={hintId} className={className} style={{ display: 'grid', gap: 9, ...style }} {...rest}>
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-          {label ? (<label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }} {...slotProps?.label}>
+    return (<BaseSlider.Root ref={ref} id={sId} min={min} max={max} step={step} value={value} defaultValue={defaultValue ?? min} onValueChange={handleValueChange} name={name} disabled={disabled} aria-describedby={hintId} className={cx('dt-slider', className)} style={style} {...rest}>
+      <div className="dt-slider-head">
+          {label ? (<label htmlFor={sId} className={cx('dt-slider-label', labelClassName)} {...labelRest}>
               {label}
             </label>) : (<span />)}
-          <span style={{
-            fontFamily: 'var(--dt-font-mono)',
-            fontSize: 13,
-            fontWeight: 600,
-            color: 'var(--dt-text-strong)',
-            fontVariantNumeric: 'tabular-nums',
-        }}>
+          <span className="dt-slider-value">
             {v}
-            {unit ? <span style={{ color: 'var(--dt-text-muted)', fontWeight: 400 }}>{unit}</span> : null}
+            {unit ? <span className="dt-slider-unit">{unit}</span> : null}
           </span>
         </div>
-      <BaseSlider.Control className="dt-slider-control" style={{ position: 'relative', height: 20, display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-        <BaseSlider.Track style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            height: 4,
-            borderRadius: 'var(--dt-radius-sm)',
-            background: 'var(--dt-surface-sunken)',
-            boxShadow: 'inset 0 0 0 1px var(--dt-border-strong)',
-        }}/>
-        <BaseSlider.Indicator style={{ position: 'absolute', left: 0, width: `${pct}%`, height: 4, borderRadius: 2, background: 'var(--dt-accent)' }}/>
-        <BaseSlider.Thumb className="dt-slider-thumb" getAriaLabel={() => inputLabel} style={{
-            position: 'absolute',
-            width: 16,
-            height: 16,
-            borderRadius: 'var(--dt-radius-sm)',
-            background: 'var(--dt-surface)',
-            boxShadow: '0 0 0 1.5px var(--dt-accent)',
-            border: '3px solid var(--dt-surface)',
-        }}/>
+      <BaseSlider.Control className="dt-slider-control">
+        <BaseSlider.Track className="dt-slider-track"/>
+        <BaseSlider.Indicator className="dt-slider-indicator" style={{ '--dt-slider-pct': `${pct}%` }}/>
+        <BaseSlider.Thumb className="dt-slider-thumb" getAriaLabel={() => inputLabel}/>
       </BaseSlider.Control>
-      {hint ? (<span id={hintId} style={{ fontSize: 12, color: 'var(--dt-text-muted)' }} {...slotProps?.hint}>
+      {hint ? (<span id={hintId} className={cx('dt-slider-hint', hintClassName)} {...hintRest}>
           {hint}
         </span>) : null}
     </BaseSlider.Root>);

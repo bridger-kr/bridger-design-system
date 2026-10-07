@@ -22,7 +22,7 @@ export const Chip = forwardRef(function Chip(props, ref) {
     if (isActionChip(props)) {
         const { tone, variant, size = 'md', className, children, onClick, type = 'button', disabled = false, style, ...rest } = props;
         const resolvedTone = resolveChipTone({ tone, variant });
-        return (<button {...rest} ref={ref} type={type} className={cx('dt-chip', `dt-chip-${resolvedTone}`, `dt-chip-${size}`, 'dt-chip-interactive', className)} disabled={disabled} onClick={onClick} style={{ minHeight: 'var(--dt-space-5)', minWidth: 'var(--dt-space-5)', ...style }}>
+        return (<button {...rest} ref={ref} type={type} className={cx('dt-chip', `dt-chip-${resolvedTone}`, `dt-chip-${size}`, 'dt-chip-interactive', className)} disabled={disabled} onClick={onClick} style={style}>
         {children}
       </button>);
     }

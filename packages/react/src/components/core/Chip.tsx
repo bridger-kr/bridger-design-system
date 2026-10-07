@@ -81,7 +81,7 @@ export const Chip = forwardRef<HTMLSpanElement | HTMLButtonElement, ChipProps>(f
         className={cx('dt-chip', `dt-chip-${resolvedTone}`, `dt-chip-${size}`, 'dt-chip-interactive', className)}
         disabled={disabled}
         onClick={onClick}
-        style={{ minHeight: 'var(--dt-space-5)', minWidth: 'var(--dt-space-5)', ...style }}
+        style={style}
       >
         {children}
       </button>

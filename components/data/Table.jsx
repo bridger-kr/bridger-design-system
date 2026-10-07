@@ -40,28 +40,11 @@ function TableInner({ columns = [], rows = [], rowKey, rowAction, rowActionHeade
     const messages = useDSMessages();
     if (!rows.length && empty)
         return <>{empty}</>;
-    return (<div ref={ref} {...rest} className={cx('dt-table', className)} style={{
-            overflowX: 'auto',
-            borderRadius: 'var(--dt-radius-card)',
-            background: 'var(--dt-surface)',
-            border: '1px solid var(--dt-border)',
-            ...style,
-        }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-text)' }}>
+    return (<div ref={ref} {...rest} className={cx('dt-table', className)} style={style}>
+      <table className="dt-table-grid">
         <thead>
-          <tr style={{ background: 'var(--dt-surface-muted)' }}>
-            {columns.map((column) => (<th key={column.key} style={{
-                textAlign: column.align || 'left',
-                padding: '11px 18px',
-                fontFamily: 'var(--dt-font-mono)',
-                fontSize: 12,
-                fontWeight: 600,
-                letterSpacing: '0.04em',
-                textTransform: 'uppercase',
-                color: 'var(--dt-text-muted)',
-                borderBottom: '1px solid var(--dt-divider)',
-                whiteSpace: 'nowrap',
-            }}>
+          <tr className="dt-table-thead-row">
+            {columns.map((column) => (<th key={column.key} className="dt-table-th" data-align={column.align || 'left'}>
                 {column.header}
               </th>))}
             {rowAction ? <th className="dt-table-row-action-header" scope="col">{rowActionHeader ?? messages.table.rowActions}</th> : null}
@@ -71,13 +54,7 @@ function TableInner({ columns = [], rows = [], rowKey, rowAction, rowActionHeade
           {rows.map((row, rowIndex) => {
             const actionState = rowAction ? rowActionState(rowAction, row) : undefined;
             return (<tr key={rowKey ? rowKey(row, rowIndex) : rowIndex} className={cx('dt-tr', actionState && 'dt-tr-actionable')} data-disabled={actionState?.disabled ? '' : undefined}>
-                {columns.map((column) => (<td key={column.key} style={{
-                        textAlign: column.align || 'left',
-                        padding: '13px 18px',
-                        fontSize: 13,
-                        borderBottom: '1px solid var(--dt-divider)',
-                        whiteSpace: column.nowrap ? 'nowrap' : 'normal',
-                    }}>
+                {columns.map((column) => (<td key={column.key} className="dt-table-td" data-align={column.align || 'left'} data-nowrap={column.nowrap || undefined}>
                     {column.render ? column.render(row[column.key], row) : row[column.key]}
                   </td>))}
                 {actionState ? <td className="dt-table-row-action-cell">{actionState.control}</td> : null}

@@ -39,10 +39,10 @@ export const FilterChip = forwardRef<HTMLSpanElement | HTMLButtonElement, Filter
         aria-pressed={active}
         style={removable ? undefined : style}
       >
-        {icon ? <span style={{ display: 'inline-flex', color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }} aria-hidden="true">{icon}</span> : null}
+        {icon ? <span className="dt-filter-chip-icon" aria-hidden="true">{icon}</span> : null}
         <span>{label}</span>
         {count != null ? (
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, fontWeight: 600, color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)', fontVariantNumeric: 'tabular-nums' }}>{count}</span>
+          <span className="dt-filter-chip-count">{count}</span>
         ) : null}
       </button>
     );
@@ -62,7 +62,6 @@ export const FilterChip = forwardRef<HTMLSpanElement | HTMLButtonElement, Filter
           className="dt-filter-chip-remove"
           aria-label={removeAriaLabel ?? messages.filterChip.removeAriaLabel(label)}
           onClick={onRemove}
-          style={{ color: active ? 'var(--dt-accent-text)' : 'var(--dt-text-muted)' }}
         >
           <Icon icon={X} size="sm" />
         </button>

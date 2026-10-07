@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 
 export interface AnnotationHotspotProps extends HTMLAttributes<HTMLDivElement> {
@@ -16,7 +16,10 @@ export const AnnotationHotspot = forwardRef<HTMLDivElement, AnnotationHotspotPro
   return (
     <div ref={ref} className={cx('dt-annotation-hotspot-wrap', className)} style={style} {...rest}>
       {children}
-      <span className="dt-annotation-hotspot" style={{ left: x, top: y }}>
+      <span
+        className="dt-annotation-hotspot"
+        style={{ '--dt-annotation-x': x, '--dt-annotation-y': y } as CSSProperties}
+      >
         <span className="dt-annotation-hotspot-dot" aria-hidden="true" />
         {label ? <span className="dt-annotation-hotspot-label">{label}</span> : null}
       </span>

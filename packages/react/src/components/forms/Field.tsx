@@ -86,26 +86,17 @@ export function Field({
       {...rest}
       className={cx('dt-field-group', className)}
       data-invalid={invalid ? '' : undefined}
-      style={{ display: 'grid', gap: 7, ...style }}
+      style={style}
     >
       {label ? (
-        <label
-          htmlFor={controlId}
-          style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-muted-strong)' }}
-        >
+        <label htmlFor={controlId} className="dt-field-label">
           {label}
-          {required ? (
-            <span aria-hidden="true" style={{ marginLeft: 4, color: 'var(--dt-accent)' }}>*</span>
-          ) : null}
+          {required ? <span aria-hidden="true" className="dt-field-required">*</span> : null}
         </label>
       ) : null}
       {control}
-      {hint ? (
-        <span id={hintId} style={{ fontSize: 12, color: 'var(--dt-muted)' }}>{hint}</span>
-      ) : null}
-      {invalid ? (
-        <span id={errorId} style={{ fontSize: 12, fontWeight: 500, color: 'var(--dt-danger)' }}>{error}</span>
-      ) : null}
+      {hint ? <span id={hintId} className="dt-field-hint">{hint}</span> : null}
+      {invalid ? <span id={errorId} className="dt-field-error">{error}</span> : null}
     </div>
   );
 }

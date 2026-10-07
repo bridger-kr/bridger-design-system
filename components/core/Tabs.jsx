@@ -27,16 +27,11 @@ export const Tabs = forwardRef(function Tabs({ tabs = [], variant = 'underline',
         onChange?.(nextValue);
     };
     return (<BaseTabs.Root ref={ref} value={value} defaultValue={defaultValue ?? tabs[0]?.id} onValueChange={handleValueChange} className={className}>
-      <BaseTabs.List activateOnFocus className={cx('dt-tabs-list', `dt-tabs-list-${resolvedVariant}`)} style={{
-            display: 'flex',
-            gap: 4,
-            borderBottom: resolvedVariant === 'underline' ? '1px solid var(--dt-border)' : '0',
-            ...style,
-        }}>
+      <BaseTabs.List activateOnFocus className={cx('dt-tabs-list', `dt-tabs-list-${resolvedVariant}`)} style={style}>
         {tabs.map((tab) => (<BaseTabs.Tab key={tab.id} value={tab.id} className={cx('dt-tabs-tab', `dt-tabs-tab-${resolvedVariant}`)}>
-            {tab.icon ? <span aria-hidden="true" style={{ display: 'inline-flex' }}>{tab.icon}</span> : null}
+            {tab.icon ? <span aria-hidden="true" className="dt-tabs-tab-icon">{tab.icon}</span> : null}
             {tab.label}
-            {tab.count != null ? (<span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>
+            {tab.count != null ? (<span className="dt-tabs-tab-count">
                 {tab.count}
               </span>) : null}
             </BaseTabs.Tab>))}

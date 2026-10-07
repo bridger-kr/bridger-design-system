@@ -13,14 +13,16 @@ export const Skeleton = forwardRef<HTMLSpanElement, SkeletonProps>(function Skel
   { width = '100%', height = 14, radius = 'var(--dt-radius-chip)', className, style, ...rest },
   ref,
 ) {
+  const sizing = {
+    '--dt-skeleton-width': typeof width === 'number' ? `${width}px` : width,
+    '--dt-skeleton-height': typeof height === 'number' ? `${height}px` : height,
+    '--dt-skeleton-radius': radius,
+  } as CSSProperties;
   return (
     <span
       ref={ref}
       className={cx('dt-skeleton', className)}
-      style={{
-        display: 'block', width, height, borderRadius: radius,
-        background: 'var(--dt-surface-sunken)', ...style,
-      }}
+      style={{ ...sizing, ...style }}
       {...rest}
     />
   );

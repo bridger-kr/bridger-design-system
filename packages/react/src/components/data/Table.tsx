@@ -118,32 +118,16 @@ function TableInner<Row extends TableRow = TableRow>(
       ref={ref}
       {...rest}
       className={cx('dt-table', className)}
-      style={{
-        overflowX: 'auto',
-        borderRadius: 'var(--dt-radius-card)',
-        background: 'var(--dt-surface)',
-        border: '1px solid var(--dt-border)',
-        ...style,
-      }}
+      style={style}
     >
-      <table style={{ width: '100%', borderCollapse: 'collapse', color: 'var(--dt-text)' }}>
+      <table className="dt-table-grid">
         <thead>
-          <tr style={{ background: 'var(--dt-surface-muted)' }}>
+          <tr className="dt-table-thead-row">
             {columns.map((column) => (
               <th
                 key={column.key}
-                style={{
-                  textAlign: column.align || 'left',
-                  padding: '11px 18px',
-                  fontFamily: 'var(--dt-font-mono)',
-                  fontSize: 12,
-                  fontWeight: 600,
-                  letterSpacing: '0.04em',
-                  textTransform: 'uppercase',
-                  color: 'var(--dt-text-muted)',
-                  borderBottom: '1px solid var(--dt-divider)',
-                  whiteSpace: 'nowrap',
-                }}
+                className="dt-table-th"
+                data-align={column.align || 'left'}
               >
                 {column.header}
               </th>
@@ -163,13 +147,9 @@ function TableInner<Row extends TableRow = TableRow>(
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    style={{
-                      textAlign: column.align || 'left',
-                      padding: '13px 18px',
-                      fontSize: 13,
-                      borderBottom: '1px solid var(--dt-divider)',
-                      whiteSpace: column.nowrap ? 'nowrap' : 'normal',
-                    }}
+                    className="dt-table-td"
+                    data-align={column.align || 'left'}
+                    data-nowrap={column.nowrap || undefined}
                   >
                     {column.render ? column.render(row[column.key], row) : row[column.key]}
                   </td>

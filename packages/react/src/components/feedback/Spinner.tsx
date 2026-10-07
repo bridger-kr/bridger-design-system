@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { LoaderCircle } from 'lucide-react';
 import type { CSSProperties, HTMLAttributes } from 'react';
+import { cx } from '../../lib/cx';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
 
 export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
@@ -23,8 +24,8 @@ export const Spinner = forwardRef<HTMLSpanElement, SpinnerProps>(function Spinne
     <span
       ref={ref}
       {...rest}
-      className={className}
-      style={{ display: 'inline-flex', ...style }}
+      className={cx('dt-spinner', className)}
+      style={style}
       role={hidden ? undefined : 'status'}
       aria-label={hidden ? undefined : resolvedLabel}
     >

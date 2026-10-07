@@ -6,9 +6,13 @@ import { cx } from '../../lib/cx';
 import { Icon } from '../../lib/icon';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
 
-const DOT = { info: 'var(--dt-cobalt)', success: 'var(--dt-success)', warning: 'var(--dt-warning)', danger: 'var(--dt-danger)' };
+const TONES = { info: true, success: true, warning: true, danger: true };
 
-export type ToastTone = keyof typeof DOT;
+export type ToastTone = keyof typeof TONES;
+
+function resolveTone(tone: ToastTone | undefined): ToastTone {
+  return tone && tone in TONES ? tone : 'success';
+}
 
 export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
   tone?: ToastTone;
@@ -31,23 +35,17 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
       ref={ref}
       role="status"
       className={cx('dt-toast', className)}
-      style={{
-        display: 'flex', alignItems: 'flex-start', gap: 11, width: 340, maxWidth: '90vw',
-        padding: '13px 15px', background: 'var(--dt-surface)',
-        border: '1px solid var(--dt-border-strong)',
-        borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-overlay)',
-        ...style,
-      }}
+      style={style}
       {...rest}
     >
-      <span style={{ width: 8, height: 8, borderRadius: 'var(--dt-radius-pill)', marginTop: 5, flex: '0 0 auto', background: DOT[tone] ?? DOT.success }} />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        {title ? <div style={{ fontSize: 14, fontWeight: 650, color: 'var(--dt-text-strong)' }}>{title}</div> : null}
-        {message ? <div style={{ marginTop: title ? 2 : 0, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-text-subtle)' }}>{message}</div> : null}
+      <span aria-hidden="true" className={cx('dt-toast-dot', `dt-toast-dot-${resolveTone(tone)}`)} />
+      <div className="dt-toast-body">
+        {title ? <div className="dt-toast-title">{title}</div> : null}
+        {message ? <div className="dt-toast-desc">{message}</div> : null}
       </div>
-      {action ? <div style={{ flex: '0 0 auto' }}>{action}</div> : null}
+      {action ? <div className="dt-toast-action">{action}</div> : null}
       {onDismiss ? (
-        <button onClick={onDismiss} aria-label={closeLabel ?? messages.common.close} style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--dt-text-muted)', padding: 2, lineHeight: 0 }}>
+        <button className="dt-toast-close" onClick={onDismiss} aria-label={closeLabel ?? messages.common.close}>
           <Icon icon={X} size="sm" />
         </button>
       ) : null}
@@ -135,13 +133,7 @@ function ToastViewport({ limit }: { limit: number }) {
   const visible = toasts.slice(0, Math.max(0, limit));
   return (
     <BaseToast.Portal>
-      <BaseToast.Viewport
-        className="dt-toast-viewport"
-        style={{
-          position: 'fixed', right: 16, bottom: 16, zIndex: 'var(--dt-z-index-toast)',
-          display: 'flex', flexDirection: 'column', gap: 8, alignItems: 'flex-end',
-        }}
-      >
+      <BaseToast.Viewport className="dt-toast-viewport">
         {visible.map((toast) => (
           <ToastCard key={toast.id} toast={toast} closeLabel={messages.common.close} />
         ))}
@@ -151,31 +143,25 @@ function ToastViewport({ limit }: { limit: number }) {
 }
 
 function ToastCard({ toast, closeLabel }: { toast: BaseToast.Root.ToastObject<ToastData>; closeLabel: string }) {
-  const tone = (toast.type as ToastTone | undefined) ?? 'success';
+  const tone = resolveTone(toast.type as ToastTone | undefined);
   return (
     <BaseToast.Root
       toast={toast}
       className="dt-toast"
-      style={{
-        display: 'flex', alignItems: 'flex-start', gap: 11, width: 340, maxWidth: '90vw',
-        padding: '13px 15px', background: 'var(--dt-surface)',
-        border: '1px solid var(--dt-border-strong)',
-        borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-overlay)',
-      }}
     >
-      <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: 9999, marginTop: 5, flex: '0 0 auto', background: DOT[tone] ?? DOT.success }} />
-      <div style={{ flex: 1, minWidth: 0 }}>
+      <span aria-hidden="true" className={cx('dt-toast-dot', `dt-toast-dot-${tone}`)} />
+      <div className="dt-toast-body">
         {toast.title ? (
-          <BaseToast.Title style={{ fontSize: 14, fontWeight: 650, color: 'var(--dt-text-strong)' }} />
+          <BaseToast.Title className="dt-toast-title" />
         ) : null}
         {toast.description ? (
-          <BaseToast.Description style={{ marginTop: toast.title ? 2 : 0, fontSize: 13, lineHeight: 1.5, color: 'var(--dt-text-subtle)' }} />
+          <BaseToast.Description className="dt-toast-desc" />
         ) : null}
       </div>
-      {toast.data?.action ? <div style={{ flex: '0 0 auto' }}>{toast.data.action}</div> : null}
+      {toast.data?.action ? <div className="dt-toast-action">{toast.data.action}</div> : null}
       <BaseToast.Close
         aria-label={closeLabel}
-        style={{ flex: '0 0 auto', border: 'none', background: 'transparent', cursor: 'pointer', color: 'var(--dt-text-muted)', padding: 2, lineHeight: 0 }}
+        className="dt-toast-close"
       >
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" /></svg>
       </BaseToast.Close>

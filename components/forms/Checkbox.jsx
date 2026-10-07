@@ -16,27 +16,9 @@ export const Checkbox = forwardRef(function Checkbox({ label, checked, defaultCh
     };
     const { className: controlClassName, style: controlStyle, ...controlRest } = slotProps?.control ?? {};
     const { className: rootClassName, style: rootStyle, ...rootRest } = slotProps?.root ?? {};
-    return (<label htmlFor={cbId} className={cx(className, rootClassName)} style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 0,
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            opacity: disabled ? 0.55 : 1,
-            ...style,
-            ...rootStyle,
-        }} {...rootRest}>
-      <BaseCheckbox.Root render={<button type="button"/>} nativeButton={true} ref={ref} id={cbId} checked={checked} defaultChecked={defaultChecked} onCheckedChange={handleCheckedChange} disabled={disabled} className={cx('dt-checkbox-control', controlClassName)} style={{
-            width: 'var(--dt-space-5)',
-            height: 'var(--dt-space-5)',
-            flex: '0 0 auto',
-            display: 'grid',
-            placeItems: 'center',
-            border: 0,
-            background: 'transparent',
-            padding: 0,
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            ...controlStyle,
-        }} aria-labelledby={labelId} {...rest} {...controlRest}>
+    const { className: labelClassName, ...labelRest } = slotProps?.label ?? {};
+    return (<label htmlFor={cbId} className={cx('dt-checkbox', className, rootClassName)} data-disabled={disabled ? '' : undefined} style={{ ...style, ...rootStyle }} {...rootRest}>
+      <BaseCheckbox.Root render={<button type="button"/>} nativeButton={true} ref={ref} id={cbId} checked={checked} defaultChecked={defaultChecked} onCheckedChange={handleCheckedChange} disabled={disabled} className={cx('dt-checkbox-control', controlClassName)} style={controlStyle} aria-labelledby={labelId} {...rest} {...controlRest}>
         <span className="dt-checkbox-box">
           <BaseCheckbox.Indicator>
             {/* 12px box needs a heavier stroke than the 1.75 icon canon. */}
@@ -44,7 +26,7 @@ export const Checkbox = forwardRef(function Checkbox({ label, checked, defaultCh
           </BaseCheckbox.Indicator>
         </span>
       </BaseCheckbox.Root>
-      {label ? (<span id={labelId} style={{ fontSize: 14, color: 'var(--dt-text)' }} {...slotProps?.label}>
+      {label ? (<span id={labelId} className={cx('dt-checkbox-label', labelClassName)} {...labelRest}>
           {label}
         </span>) : null}
     </label>);

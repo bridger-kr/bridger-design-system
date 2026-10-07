@@ -4,16 +4,15 @@ exports[`Field > matches the en snapshot 1`] = `
 <div
   class="dt-field-group"
   data-invalid=""
-  style="display: grid; gap: 7px;"
 >
   <label
+    class="dt-field-label"
     for="spec"
-    style="font-size: 13px; font-weight: 600; color: var(--dt-muted-strong);"
   >
     Spec file
     <span
       aria-hidden="true"
-      style="margin-left: 4px; color: var(--dt-accent);"
+      class="dt-field-required"
     >
       *
     </span>
@@ -26,14 +25,14 @@ exports[`Field > matches the en snapshot 1`] = `
     required=""
   />
   <span
+    class="dt-field-hint"
     id="spec-hint"
-    style="font-size: 12px; color: var(--dt-muted);"
   >
     JSON or YAML
   </span>
   <span
+    class="dt-field-error"
     id="spec-error"
-    style="font-size: 12px; font-weight: 500; color: var(--dt-danger);"
   >
     Required field
   </span>
@@ -44,16 +43,15 @@ exports[`Field > matches the ko snapshot 1`] = `
 <div
   class="dt-field-group"
   data-invalid=""
-  style="display: grid; gap: 7px;"
 >
   <label
+    class="dt-field-label"
     for="spec"
-    style="font-size: 13px; font-weight: 600; color: var(--dt-muted-strong);"
   >
     Spec file
     <span
       aria-hidden="true"
-      style="margin-left: 4px; color: var(--dt-accent);"
+      class="dt-field-required"
     >
       *
     </span>
@@ -66,14 +64,14 @@ exports[`Field > matches the ko snapshot 1`] = `
     required=""
   />
   <span
+    class="dt-field-hint"
     id="spec-hint"
-    style="font-size: 12px; color: var(--dt-muted);"
   >
     JSON or YAML
   </span>
   <span
+    class="dt-field-error"
     id="spec-error"
-    style="font-size: 12px; font-weight: 500; color: var(--dt-danger);"
   >
     Required field
   </span>
