@@ -13,3 +13,4 @@ export { StatTile } from './StatTile.jsx';
 export { StatPanel } from './StatPanel.jsx';
 export { Table } from './Table.jsx';
 export { UsageMeter } from './UsageMeter.jsx';
+export * from './DataTrust.jsx';

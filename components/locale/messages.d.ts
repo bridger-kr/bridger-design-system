@@ -81,6 +81,21 @@ export interface DSMessageCatalog {
         /** Header cell for the row-action column. */
         rowActions: string;
     };
+    /** Shared data-trust contract (DataTrustProps on data components). */
+    dataTrust: {
+        /** Readout shown when a value is unknown — never rendered as `0`. */
+        unknown: string;
+        /** Label preceding the last-confirmed timestamp. */
+        asOf: string;
+        /** Label preceding the data source. */
+        source: string;
+        /** State lines for non-ready data states. */
+        state: Record<'loading' | 'empty' | 'partial' | 'stale' | 'error' | 'unauthorized', string>;
+    };
+    logRow: {
+        /** Severity text shown next to the level icon — never color-only. */
+        level: Record<'ok' | 'warn' | 'error' | 'info', string>;
+    };
     consoleShell: {
         /** Landmark label for the primary navigation rail/drawer. */
         navLabel: string;
