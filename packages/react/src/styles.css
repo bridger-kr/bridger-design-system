@@ -2646,6 +2646,12 @@
 
 .dt-checkbox { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
 .dt-checkbox[data-disabled] { cursor: not-allowed; opacity: 0.55; }
+.dt-checkbox-control {
+  width: var(--dt-space-5); height: var(--dt-space-5); flex: 0 0 auto;
+  display: grid; place-items: center;
+  border: 0; background: transparent; padding: 0; cursor: pointer;
+}
+.dt-checkbox-control:disabled { cursor: not-allowed; }
 .dt-checkbox-label { font-size: 14px; color: var(--dt-text); }
 
 .dt-radio-group { display: grid; gap: 10px; }
