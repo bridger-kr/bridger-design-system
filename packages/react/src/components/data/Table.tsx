@@ -47,8 +47,8 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
   readonly style?: CSSProperties;
 }
 
-/** Data-trust fields are mixed into TableProps so callers pass one object. */
-export interface TableTrustProps extends TableProps<TableRow>, DataTrustProps {}
+/** @deprecated TableProps now carries the DataTrustProps fields directly. */
+export interface TableTrustProps extends TableProps<TableRow> {}
 
 interface RowActionState {
   readonly control: ReactNode;
@@ -117,7 +117,7 @@ function TableInner<Row extends TableRow = TableRow>(
     className,
     style,
     ...rest
-  }: TableProps<Row>,
+  }: TableProps<Row> & DataTrustProps,
   ref: Ref<HTMLDivElement>,
 ) {
   const messages = useDSMessages();
