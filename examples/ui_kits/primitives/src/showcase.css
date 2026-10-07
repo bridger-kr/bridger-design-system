@@ -84,3 +84,6 @@ body { margin: 0; min-width: 0; }
 .harness-head { display: flex; justify-content: space-between; align-items: center; }
 .harness-head h1 { font-size: var(--dt-h2-size); margin: 0; }
 .harness-section h2 { font-size: var(--dt-h3-size); }
+.harness-row { display: flex; gap: var(--dt-space-2); flex-wrap: wrap; }
+.harness-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: var(--dt-space-2); }
+.harness-narrow { max-width: 240px; }

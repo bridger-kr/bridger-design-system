@@ -9,8 +9,66 @@ permissions:
   pull-requests: write
 
 jobs:
+  # Every verification stage from the #31 pipeline must pass before the
+  # changesets action may create a version PR or publish. A failure in any
+  # stage blocks release — there is no publish-on-build-only path.
+  gates:
+    name: Release gates
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify generated mirror is in sync
+        run: |
+          pnpm generate
+          test -z "$(git status --porcelain)"
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Lint + slop scan
+        run: pnpm lint && pnpm check:slop
+
+      - name: Build component harness example
+        run: pnpm build:example:primitives
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: E2E (theme contract + release matrix)
+        run: pnpm test:e2e
+
+      - name: Packed package canary (install + import surface)
+        run: |
+          pnpm pack:dry-run
+          pnpm smoke:packages
+
+      - name: Validate Figma plugin (parity check)
+        run: pnpm --filter bridger-figma-plugin run validate
+
   release:
     name: Changesets release
+    needs: gates
     runs-on: ubuntu-latest
 
     steps:
