@@ -8,3 +8,4 @@ export * from './ConsolePageHeader.jsx';
 export * from './Menu.jsx';
 export * from './Sidebar.jsx';
 export * from './Stepper.jsx';
+export * from './ConsoleShell.jsx';

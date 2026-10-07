@@ -24,6 +24,11 @@ export interface SidebarProps extends Omit<HTMLAttributes<HTMLElement>, 'childre
     footer?: ReactNode;
     width?: number;
     /**
+     * Icon-only rail: labels stay in the accessibility tree and each item gets
+     * a native `title` tooltip so the collapsed rail still names destinations.
+     */
+    collapsed?: boolean;
+    /**
      * Called when an item is activated. Apps with client-side routers use this
      * to intercept plain clicks (modifier/middle clicks still open natively).
      */

@@ -81,6 +81,19 @@ export interface DSMessageCatalog {
         /** Header cell for the row-action column. */
         rowActions: string;
     };
+    consoleShell: {
+        /** Landmark label for the primary navigation rail/drawer. */
+        navLabel: string;
+        /** Accessible name of the mobile navigation trigger. */
+        openNav: string;
+        /** Accessible names of the desktop rail collapse/expand toggle. */
+        collapseNav: string;
+        expandNav: string;
+        /** Skip-link text jumping to the main content region. */
+        skipToContent: string;
+        /** Workspace-switch lifecycle lines; error keeps the previous context. */
+        workspace: Record<'pending' | 'success' | 'error', string>;
+    };
     toolCard: {
         emptyDescription: string;
         state: {
