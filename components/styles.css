@@ -1116,13 +1116,13 @@
 }
 
 .dt-product-shell {
-  --dt-product-paper: #cfecd8;
-  --dt-product-card: #edfff3;
-  --dt-product-card-strong: #f6fff9;
-  --dt-product-accent: #ec5e1f;
-  --dt-product-accent-strong: #b83c0d;
-  --dt-product-ink: #15110c;
-  --dt-product-muted: #786f63;
+  --dt-product-paper: var(--dt-surface);
+  --dt-product-card: var(--dt-surface-raised);
+  --dt-product-card-strong: var(--dt-surface-raised);
+  --dt-product-accent: var(--dt-accent);
+  --dt-product-accent-strong: var(--dt-accent-strong);
+  --dt-product-ink: var(--dt-text-strong);
+  --dt-product-muted: var(--dt-text-muted);
   --dt-product-line: transparent;
   min-height: 100vh;
   background: var(--dt-bg);
