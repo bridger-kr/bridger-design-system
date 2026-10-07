@@ -24,7 +24,8 @@
     "typecheck:example:primitives": "tsc --noEmit -p examples/ui_kits/primitives/tsconfig.json",
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "pnpm build && changeset publish"
+    "release": "pnpm build && changeset publish",
+    "pack:canary": "node scripts/pack-canary.mjs"
   },
   "dependencies": {
     "@base-ui-components/react": "1.0.0-rc.0",

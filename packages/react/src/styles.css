@@ -1248,7 +1248,8 @@
   .dt-table-row-action,
   .dt-theme-switch-option,
   .dt-tabs-tab,
-  .dt-tr {
+  .dt-tr,
+  .dt-usage-meter-fill {
     transition: none !important;
   }
 }

@@ -7,6 +7,9 @@ const exampleRoot = fileURLToPath(new URL('.', import.meta.url));
 const packageRoot = resolve(exampleRoot, '../../../packages');
 
 export default defineConfig({
+  // The e2e fixture server mounts this dist at /app — all emitted URLs must
+  // stay under that prefix (tests/e2e/serve.mjs).
+  base: '/app/',
   root: exampleRoot,
   plugins: [react()],
   resolve: {
@@ -19,5 +22,12 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        index: resolve(exampleRoot, 'index.html'),
+        harness: resolve(exampleRoot, 'harness.html'),
+        'release-harness': resolve(exampleRoot, 'release-harness.html'),
+      },
+    },
   },
 });
