@@ -53,7 +53,7 @@ function Matrix() {
       <main className="harness" data-matrix="root">
         <section data-matrix="button" className="harness-section">
           <h2>Button</h2>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+          <div className="harness-row">
             <Button>기본</Button>
             <Button variant="secondary">보조</Button>
             <Button tone="danger">위험</Button>
@@ -64,7 +64,7 @@ function Matrix() {
 
         <section data-matrix="stat-tile" className="harness-section">
           <h2>StatTile</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '8px' }}>
+          <div className="harness-grid">
             <StatTile label="일일 호출" value="1,204" delta="+8.4%" deltaDirection="up" deltaValence="positive" />
             <StatTile label="오류율" value="0.4%" delta="-0.2%p" deltaDirection="down" deltaValence="positive" />
             <StatTile label="지연" value="182ms" delta="+12ms" deltaDirection="up" deltaValence="negative" />
@@ -128,7 +128,7 @@ function Matrix() {
 
         <section data-matrix="sidebar" className="harness-section">
           <h2>Sidebar</h2>
-          <div style={{ maxWidth: '240px' }}>
+          <div className="harness-narrow">
             <Sidebar sections={NAV} />
           </div>
         </section>
