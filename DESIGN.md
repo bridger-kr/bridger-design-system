@@ -441,7 +441,7 @@ The following are invalid Bridger design decisions and must be rejected in revie
 - Adding resting or hover shadows to cards, panels, or any element in normal document flow. Shadows belong to floating overlays only.
 - Adding fake browser chrome — traffic-light dots, fake URL bars, fake tab strips — fake terminal or CLI windows, or dressing product specimens as fake operating-system windows.
 - Adding "LIVE" or "DEMO" badges, fake streaming or typing indicators, fake activity feeds, invented metrics or response times, or any realtime theatre not backed by a real connection.
-- Ending a heading with an accent-colored period or other decorative punctuation. The persimmon period belongs to the `BrandLogo` wordmark only.
+- Ending a heading or wordmark with an accent-colored period or other decorative punctuation. The persimmon period is retired along with the legacy `Bridger.` wordmark (Section 15).
 - Adding decorative motion: idle pulses, breathing elements, drifting fields, tickers, marquees, scroll-reveal, staggered entrance choreography, or any animation outside the 120–180ms band.
 - Nesting card-in-card structures without a clear code, data, or form-group semantic role.
 - Using emoji, unicode pictograms, or decorative icon sets in product UI — including decorative "AI" iconography (`Sparkles`, `Wand*`, `Stars`, `Rocket`, `Zap`, `Flame`; see Section 6).
@@ -572,3 +572,33 @@ Before merging a design-system change, confirm every item below. Items that depe
 - Accepted debt (Section 12) is either unchanged or has a new row that names the exit condition.
 - Package gates (Section 13.1), app gates (Section 13.2), and the release evidence checklist (Section 13.4) are `Captured` or `Not applicable` with a linked artifact. `Pending` items block the release.
 - Pending changesets describe the contract as it exists now; a changeset whose text predates a later canon rewrite is corrected before the next Version PR is generated (Section 13.5).
+
+## 15. Brand
+
+One brand mark, two pieces (EDD-225). Every other mark is retired: the `Bridger.` Figma vector wordmark with the persimmon period, `digitalsolveup-logo.svg`, the docs monospace-`B` badge, and the legacy og-image composition. No new surface may ship a retired mark; existing references migrate to `assets/brand/` on next touch.
+
+### 15.1 The mark
+
+- **Wordmark** — the text `Bridger` set in Pretendard Variable at weight 600 in neutral ink (`--dt-text-strong`). No period, no punctuation, never localized. In product UI it comes from the `BrandLogo` component; everywhere else from `assets/brand/logo.svg` (`logo-light.svg` / `logo-dark.svg` for fixed-theme surfaces).
+- **Symbol** — a solid persimmon square (`--dt-accent`, `#ec5e1f`) carrying the interlocking-b glyph in paper (`#ffffff`). One symbol covers every icon slot: favicon, app icon, avatar, og.
+
+### 15.2 Assets
+
+Canonical files live in `assets/brand/`. They are authored assets, not generated mirrors.
+
+| File | Use |
+| --- | --- |
+| `logo.svg` | Wordmark outlines; adapts to the viewer theme via `prefers-color-scheme` |
+| `logo-light.svg` / `logo-dark.svg` | Wordmark for light / dark surfaces (transparent background) |
+| `mark.svg` | Persimmon square-b symbol |
+| `favicon.svg`, `favicon.ico` | Favicon source and its 16/32/48px render |
+| `icon-192.png`, `icon-512.png`, `apple-touch-icon.png` | PWA and touch icons rendered from `mark.svg` (apple-touch 180px) |
+| `og-default.svg`, `og-default.png` | 1200x630 social image: flat `--dt-bg` field, mark + wordmark + headline only |
+
+### 15.3 Usage
+
+- Minimum sizes: wordmark `20px` tall; mark `16px` square.
+- Clearspace: at least a quarter of the mark's edge on every side.
+- Dark surfaces take `logo-dark.svg` (paper wordmark). The mark never inverts: persimmon square and paper glyph are identical in both themes.
+- Do not recolor, outline, round, shadow, or decompose either piece; do not set the wordmark in another weight, color, or typeface; do not pair it with a period or any other punctuation; do not place it next to competing persimmon text.
+- Section 11 applies to every brand asset: no gradients, translucency, glows, resting shadows, fake chrome, or invented metrics — including inside `og-default.*`.
