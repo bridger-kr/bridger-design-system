@@ -234,6 +234,10 @@
   pointer-events: none;
 }
 
+.dt-select-positioner {
+  z-index: var(--dt-z-index-popover);
+}
+
 .dt-select-popup {
   min-width: var(--anchor-width);
   padding: var(--dt-space-1);
@@ -295,6 +299,10 @@
   color: var(--dt-text-muted);
   font-family: var(--dt-font-mono);
   font-size: var(--dt-caption-size);
+}
+
+.dt-combobox-positioner {
+  z-index: var(--dt-z-index-popover);
 }
 
 .dt-combobox-popup {
