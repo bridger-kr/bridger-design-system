@@ -25,7 +25,7 @@ export interface TableLinkRowAction<Row extends TableRow> {
     readonly href: (row: Row) => string;
 }
 export type TableRowAction<Row extends TableRow> = TableButtonRowAction<Row> | TableLinkRowAction<Row>;
-export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'> {
+export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'>, DataTrustProps {
     readonly columns?: readonly TableColumn<Row>[];
     readonly rows?: readonly Row[];
     readonly rowKey?: (row: Row, index: number) => string | number;
@@ -40,8 +40,8 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
     readonly rowActionHeader?: ReactNode;
     readonly style?: CSSProperties;
 }
-/** Data-trust fields are mixed into TableProps so callers pass one object. */
-export interface TableTrustProps extends TableProps<TableRow>, DataTrustProps {
+/** @deprecated TableProps now carries the DataTrustProps fields directly. */
+export interface TableTrustProps extends TableProps<TableRow> {
 }
 export declare const Table: <Row extends TableRow = TableRow>(props: TableProps<Row> & {
     ref?: Ref<HTMLDivElement>;
