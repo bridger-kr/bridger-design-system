@@ -23,11 +23,11 @@ export const CODE_PANE_TONE = {
  * @deprecated Use `CodeBlock`. `CodePane` renders `CodeBlock` with
  * `showLineNumbers={false}` and maps its copy labels. Removed in v2.1.
  */
-export const CodePane = forwardRef(function CodePane({ lines = [], label, copyText, copyLabel = '복사', copiedLabel = '복사됨', copyFailedLabel, copyable = false, className, ...rest }, ref) {
+export const CodePane = forwardRef(function CodePane({ lines = [], label, copyText, copyLabel, copiedLabel, copyFailedLabel, copyable = false, className, ...rest }, ref) {
     const messages = useDSMessages();
     const resolvedCopyLabel = copyLabel ?? messages.code.copy;
     const resolvedCopiedLabel = copiedLabel ?? messages.code.copied;
     warnOnce('codepane', 'CodePane is deprecated — use `CodeBlock` (`lines`, `copy`). Removed in v2.1.');
-    return (<CodeBlock ref={ref} lines={lines} label={label} copyText={copyText} copy={copyable ? { label: copyLabel, copiedLabel, failedLabel: copyFailedLabel } : false} showLineNumbers={false} className={className} {...rest}/>);
+    return (<CodeBlock ref={ref} lines={lines} label={label} copyText={copyText} copy={copyable ? { label: resolvedCopyLabel, copiedLabel: resolvedCopiedLabel, failedLabel: copyFailedLabel } : false} showLineNumbers={false} className={className} {...rest}/>);
 });
 CodePane.displayName = 'CodePane';

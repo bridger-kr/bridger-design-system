@@ -94,6 +94,7 @@ export const CommandPalette = forwardRef<HTMLDivElement, CommandPaletteProps>(fu
       e.preventDefault();
       setActiveFlat(flatItems.length - 1);
     } else if (e.key === 'Enter') {
+      if (e.nativeEvent.isComposing) return;
       e.preventDefault();
       if (active) onSelect?.(active.item);
     } else if (e.key === 'Escape') {

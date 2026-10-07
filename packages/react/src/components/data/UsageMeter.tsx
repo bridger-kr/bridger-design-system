@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
+import { useDSLocale } from '../../locale/DSLocaleProvider';
 
 export interface UsageMeterProps extends Omit<HTMLAttributes<HTMLDivElement>, 'style'> {
   label?: ReactNode;
@@ -20,6 +21,8 @@ export const UsageMeter = forwardRef<HTMLDivElement, UsageMeterProps>(function U
   { label, value = 0, max = 100, unit = '', hint, className, style, ...rest },
   ref,
 ) {
+  const locale = useDSLocale();
+  const numberFmt = new Intl.NumberFormat(locale === 'ko' ? 'ko-KR' : 'en-US');
   const pct = Math.min(100, Math.max(0, (value / max) * 100));
   const level = pct >= 90 ? 'danger' : pct >= 75 ? 'warning' : 'accent';
 
@@ -28,8 +31,8 @@ export const UsageMeter = forwardRef<HTMLDivElement, UsageMeterProps>(function U
       <div className="dt-usage-meter-head">
         {label ? <span className="dt-usage-meter-label">{label}</span> : <span />}
         <span className="dt-usage-meter-value">
-          <b>{value.toLocaleString()}</b>
-          <span className="dt-usage-meter-max"> / {max.toLocaleString()}{unit}</span>
+          <b>{numberFmt.format(value)}</b>
+          <span className="dt-usage-meter-max"> / {numberFmt.format(max)}{unit}</span>
         </span>
       </div>
       <div className="dt-usage-meter-track">

@@ -59,6 +59,8 @@ export const CommandPalette = forwardRef(function CommandPalette({ open, default
             setActiveFlat(flatItems.length - 1);
         }
         else if (e.key === 'Enter') {
+            if (e.nativeEvent.isComposing)
+                return;
             e.preventDefault();
             if (active)
                 onSelect?.(active.item);

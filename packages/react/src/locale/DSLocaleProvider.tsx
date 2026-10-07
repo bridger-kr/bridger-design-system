@@ -33,6 +33,25 @@ export function mergeDSMessages(
 }
 
 const DSMessageContext = createContext<DSMessageCatalog>(DS_MESSAGES.ko);
+const DSLocaleContext = createContext<DSLocale>('ko');
+
+/** Dev-mode warning for override keys that don't exist in the catalog. */
+function warnUnknownOverrides(
+  base: Record<string, unknown>,
+  overrides: Record<string, unknown>,
+  path: string,
+): void {
+  for (const key of Object.keys(overrides)) {
+    const next = path ? `${path}.${key}` : key;
+    if (!(key in base)) {
+      console.warn(`[ds-locale] Unknown message override '${next}' — check for typos or a catalog version mismatch.`);
+      continue;
+    }
+    if (isPlainObject(base[key]) && isPlainObject(overrides[key])) {
+      warnUnknownOverrides(base[key] as Record<string, unknown>, overrides[key] as Record<string, unknown>, next);
+    }
+  }
+}
 
 export interface DSLocaleProviderProps {
   /** Catalog to resolve defaults from. Defaults to Korean per DESIGN.md §3.2. */
@@ -43,14 +62,28 @@ export interface DSLocaleProviderProps {
 }
 
 export function DSLocaleProvider({ locale = 'ko', messages, children }: DSLocaleProviderProps) {
-  const value = useMemo(
-    () => mergeDSMessages(DS_MESSAGES[locale] ?? DS_MESSAGES.ko, messages),
-    [locale, messages],
+  const resolvedLocale = DS_MESSAGES[locale] ? locale : 'ko';
+  const value = useMemo(() => {
+    if (typeof process === 'undefined' || process.env?.NODE_ENV !== 'production') {
+      if (messages) {
+        warnUnknownOverrides(DS_MESSAGES[resolvedLocale] as unknown as Record<string, unknown>, messages as Record<string, unknown>, '');
+      }
+    }
+    return mergeDSMessages(DS_MESSAGES[resolvedLocale], messages);
+  }, [resolvedLocale, messages]);
+  return (
+    <DSLocaleContext.Provider value={resolvedLocale}>
+      <DSMessageContext.Provider value={value}>{children}</DSMessageContext.Provider>
+    </DSLocaleContext.Provider>
   );
-  return <DSMessageContext.Provider value={value}>{children}</DSMessageContext.Provider>;
 }
 
 /** Default UI strings for the ambient locale. Falls back to Korean outside a provider. */
 export function useDSMessages(): DSMessageCatalog {
   return useContext(DSMessageContext);
+}
+
+/** The active DS locale ('ko' | 'en') for Intl formatting and locale-aware helpers. */
+export function useDSLocale(): DSLocale {
+  return useContext(DSLocaleContext);
 }

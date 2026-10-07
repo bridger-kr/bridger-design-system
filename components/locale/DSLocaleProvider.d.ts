@@ -22,4 +22,6 @@ export interface DSLocaleProviderProps {
 export declare function DSLocaleProvider({ locale, messages, children }: DSLocaleProviderProps): import("react").JSX.Element;
 /** Default UI strings for the ambient locale. Falls back to Korean outside a provider. */
 export declare function useDSMessages(): DSMessageCatalog;
+/** The active DS locale ('ko' | 'en') for Intl formatting and locale-aware helpers. */
+export declare function useDSLocale(): DSLocale;
 export {};
