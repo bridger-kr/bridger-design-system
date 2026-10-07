@@ -241,7 +241,6 @@
 }
 
 .dt-select-popup {
-  z-index: var(--dt-z-index-popover);
   min-width: var(--anchor-width);
   padding: var(--dt-space-1);
   border: 1px solid var(--dt-border-strong);
@@ -305,7 +304,6 @@
 }
 
 .dt-combobox-popup {
-  z-index: var(--dt-z-index-popover);
   max-height: 240px;
   padding: var(--dt-space-1);
   overflow-y: auto;
