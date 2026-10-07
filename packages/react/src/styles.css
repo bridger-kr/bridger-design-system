@@ -2269,7 +2269,7 @@
   display: flex; align-items: center; gap: 10px; padding: 9px 12px;
   border-bottom: 1px solid var(--dt-code-border);
 }
-.dt-code-block-lang { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-syntax-comment); }
+.dt-code-block-lang { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-syntax-punctuation); }
 .dt-code-block-lines { padding: 12px 0; overflow-x: auto; }
 .dt-code-block-line {
   display: grid; grid-template-columns: 1fr;
