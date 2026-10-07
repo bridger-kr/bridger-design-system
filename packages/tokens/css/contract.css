@@ -58,6 +58,10 @@
 
   --dt-text: light-dark(oklch(0.205 0 0), oklch(0.97 0 0));
   --dt-text-strong: light-dark(oklch(0.145 0 0), oklch(1 0 0));
+  /* §15.3 brand wordmark forced-theme inks — the pinned endpoints of
+     --dt-text-strong. Only the wordmark switches; the mark never inverts. */
+  --dt-brand-ink-light: oklch(0.145 0 0);
+  --dt-brand-ink-dark: oklch(1 0 0);
   /* Light values sit at oklch 0.50/0.52 so both reach WCAG AA 4.5:1 on
      `--dt-surface-muted` (#f5f5f5), not only on pure white. */
   --dt-text-subtle: light-dark(oklch(0.50 0 0), oklch(0.708 0 0));
@@ -101,6 +105,9 @@
   --dt-syntax-comment: color-mix(in srgb, var(--dt-code-ink) 42%, transparent);
   --dt-syntax-punctuation: color-mix(in srgb, var(--dt-code-ink) 55%, transparent);
   --dt-syntax-success: color-mix(in srgb, var(--dt-success) 60%, var(--dt-code-ink));
+  /* Fixed bright danger: the code well is dark in both themes, so this
+     mirrors the dark --dt-danger value instead of using light-dark(). */
+  --dt-syntax-danger: #f87171;
 
   --dt-tint-accent: light-dark(
     color-mix(in srgb, var(--dt-accent) 12%, transparent),

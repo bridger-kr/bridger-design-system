@@ -1194,7 +1194,7 @@
   gap: 0;
   border: 0;
   border-radius: var(--dt-radius-control);
-  background: color-mix(in srgb, #ffffff 78%, var(--dt-product-paper));
+  background: color-mix(in srgb, var(--dt-surface) 78%, var(--dt-product-paper));
   padding: 0;
   color: var(--dt-product-accent);
   cursor: pointer;
@@ -1242,7 +1242,7 @@
   gap: 8px;
   border: 1px solid color-mix(in srgb, var(--dt-product-accent) 18%, transparent);
   border-radius: var(--dt-radius-card);
-  background: color-mix(in srgb, #ffffff 84%, var(--dt-product-paper));
+  background: color-mix(in srgb, var(--dt-surface) 84%, var(--dt-product-paper));
   box-shadow: var(--dt-shadow-overlay);
   padding: 10px;
   transform-origin: top right;
@@ -1474,8 +1474,7 @@
 
 .dt-code-block .dt-copy-button[data-state='failed'],
 .dt-code-pane .dt-copy-button[data-state='failed'] {
-  /* Dark-theme --dt-danger value: the code well is dark in both themes. */
-  color: #f87171;
+  color: var(--dt-syntax-danger);
 }
 
 .dt-code-pane-pre {
@@ -2669,8 +2668,8 @@
 .dt-brand-logo svg { display: block; }
 /* §15.3 forced-theme ink — same endpoints as --dt-text-strong, pinned.
    Only the wordmark switches; the mark (rect+glyph) never inverts. */
-.dt-brand-logo[data-brand-theme='light'] { color: oklch(0.145 0 0); }
-.dt-brand-logo[data-brand-theme='dark'] { color: oklch(1 0 0); }
+.dt-brand-logo[data-brand-theme='light'] { color: var(--dt-brand-ink-light); }
+.dt-brand-logo[data-brand-theme='dark'] { color: var(--dt-brand-ink-dark); }
 .dt-brand-logo[data-variant='symbol'],
 .dt-brand-logo[data-variant='favicon'] { align-items: initial; }
 

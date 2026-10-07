@@ -39,6 +39,11 @@ const SHOWCASE_SCOPE = [/^examples[/\\]/, /^packages[/\\]figma-plugin[/\\]/];
  * legal — only plain property keys are flagged. Test/fixture files are
  * exempt: they pass style objects through props deliberately. */
 const STYLE_SCOPE = [/^packages[/\\](react|tokens)[/\\]src[/\\]/, ...SHOWCASE_SCOPE];
+/* Raw color literals are only legal where the palette itself is authored:
+   tokens sources (css + index.ts), the canonical brand mark, and tests. */
+const COLOR_EXEMPT =
+  /packages[/\\]tokens[/\\](css|src)[/\\]|BrandLogo\.tsx$|\.(test|spec)\.[jt]sx?$|\.snap$/;
+
 const STYLE_EXEMPT = /\.(test|spec|stories)\.[jt]sx?$|__tests__[/\\]|__snapshots__[/\\]/;
 
 const CSSISH = new Set(['.css', '.html']);
@@ -223,10 +228,21 @@ const RULES = [
   },
   {
     id: 'slop/no-infinite-animation',
-    message: '무한/장식 애니메이션 금지 (§11).',
-    scope: SHOWCASE_SCOPE,
+    message: '무한/장식 애니메이션 금지 (§11) — 유일한 예외는 기능적 dt-spin 스피너.',
+    scope: [...SHOWCASE_SCOPE, ...PACKAGES_SCOPE],
+    exclude: /\.(test|spec)\.[jt]sx?$|\.snap$/,
     exts: CSSISH,
     re: /animation[^;{}]*\binfinite\b|animation-iteration-count:\s*infinite/ig,
+    // dt-spin is the functional progress spinner — the only permitted loop.
+    test: (match) => !match[0].includes('dt-spin'),
+  },
+  {
+    id: 'slop/no-raw-color',
+    message: 'Raw 색상 리터럴 금지 — --dt-* semantic token 사용 (DS #28).',
+    scope: PACKAGES_SCOPE,
+    exclude: COLOR_EXEMPT,
+    exts: new Set(['.css', '.ts', '.tsx']),
+    re: /#[0-9a-fA-F]{3,8}\b|\b(?:rgb|rgba|hsl|hsla|oklch|oklab|lab|lch)\(/g,
   },
   {
     id: 'slop/no-fake-live-chrome',
