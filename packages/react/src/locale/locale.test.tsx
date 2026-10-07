@@ -112,7 +112,7 @@ describe('locale contract (EDD scope: DS #27)', () => {
     const { container } = render(
       <CommandPalette
         open
-        groups={[{ heading: 'tools', items: [{ id: 'weather', label: 'weather' }] }]}
+        groups={[{ heading: 'tools', items: [{ label: 'weather' }] }]}
         onSelect={onSelect}
       />,
     );
