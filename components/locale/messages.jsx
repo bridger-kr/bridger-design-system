@@ -23,7 +23,7 @@ export const DS_MESSAGES_KO = {
     brand: {
         wordmark: {
             ko: '브릿저',
-            en: 'Bridger.',
+            en: 'Bridger',
         },
     },
     code: {
@@ -87,7 +87,7 @@ export const DS_MESSAGES_EN = {
     brand: {
         wordmark: {
             ko: '브릿저',
-            en: 'Bridger.',
+            en: 'Bridger',
         },
     },
     code: {

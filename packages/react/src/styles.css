@@ -234,6 +234,10 @@
   pointer-events: none;
 }
 
+.dt-select-positioner {
+  z-index: var(--dt-z-index-popover);
+}
+
 .dt-select-popup {
   min-width: var(--anchor-width);
   padding: var(--dt-space-1);
@@ -295,6 +299,10 @@
   color: var(--dt-text-muted);
   font-family: var(--dt-font-mono);
   font-size: var(--dt-caption-size);
+}
+
+.dt-combobox-positioner {
+  z-index: var(--dt-z-index-popover);
 }
 
 .dt-combobox-popup {
@@ -1403,19 +1411,6 @@
   height: 100%;
 }
 
-.dt-brand-logo-dot {
-  color: var(--dt-accent-text);
-  transform-box: fill-box;
-  transform-origin: center;
-  transition:
-    transform var(--dt-duration-base) var(--dt-ease),
-    opacity var(--dt-duration-base) var(--dt-ease);
-}
-
-.dt-brand-logo[data-armed='true'] .dt-brand-logo-dot {
-  transform: translateY(-1px) scale(1.08);
-}
-
 .dt-code-pane {
   overflow: hidden;
   border: 1px solid var(--dt-code-border);
@@ -1838,11 +1833,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dt-brand-logo-dot {
-    transform: none !important;
-    transition: none !important;
-  }
-
   .dt-product-topbar-menu-panel {
     animation: none;
     transform: none;
@@ -2668,10 +2658,14 @@
   height: var(--dt-brand-logo-height, auto);
   font-family: var(--dt-font-sans); font-weight: 600;
   letter-spacing: 0; line-height: 1;
-  color: var(--dt-accent);
+  color: var(--dt-text-strong);
   user-select: none; vertical-align: middle; flex-shrink: 0;
 }
 .dt-brand-logo svg { display: block; }
+/* §15.3 forced-theme ink — same endpoints as --dt-text-strong, pinned.
+   Only the wordmark switches; the mark (rect+glyph) never inverts. */
+.dt-brand-logo[data-brand-theme='light'] { color: oklch(0.145 0 0); }
+.dt-brand-logo[data-brand-theme='dark'] { color: oklch(1 0 0); }
 .dt-brand-logo[data-variant='symbol'],
 .dt-brand-logo[data-variant='favicon'] { align-items: initial; }
 

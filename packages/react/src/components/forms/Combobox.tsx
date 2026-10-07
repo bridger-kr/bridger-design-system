@@ -165,7 +165,7 @@ export const Combobox = forwardRef<HTMLInputElement, ComboboxProps>(function Com
       <BaseCombobox.Portal>
         {/* See Select: popover z-index must sit on the positioner, not the
             static popup. */}
-        <BaseCombobox.Positioner sideOffset={6} style={{ zIndex: 'var(--dt-z-index-popover)' }}>
+        <BaseCombobox.Positioner sideOffset={6} className="dt-combobox-positioner">
           <BaseCombobox.Popup className="dt-combobox-popup">
           {filtered.length === 0 ? (
             <BaseCombobox.Empty className="dt-combobox-empty">{resolvedEmptyText}</BaseCombobox.Empty>
