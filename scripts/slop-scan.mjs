@@ -34,6 +34,12 @@ const SKIP_DIRS = new Set(['node_modules', 'dist', '.git', '.changeset', 'assets
  * "official examples". Icon rules are scoped to the published packages. */
 const PACKAGES_SCOPE = [/^packages[/\\](react|tokens)[/\\]/];
 const SHOWCASE_SCOPE = [/^examples[/\\]/, /^packages[/\\]figma-plugin[/\\]/];
+/* Inline-style hygiene (DS #37/#38/#39): no `style={{...}}` literals in shipped
+ * code. Scoped `--dt-*` custom-property objects and `...style` spreads stay
+ * legal — only plain property keys are flagged. Test/fixture files are
+ * exempt: they pass style objects through props deliberately. */
+const STYLE_SCOPE = [/^packages[/\\](react|tokens)[/\\]src[/\\]/, ...SHOWCASE_SCOPE];
+const STYLE_EXEMPT = /\.(test|spec|stories)\.[jt]sx?$|__tests__[/\\]|__snapshots__[/\\]/;
 
 const CSSISH = new Set(['.css', '.html']);
 const CODEISH = new Set(['.css', '.html', '.js', '.jsx', '.ts', '.tsx', '.mjs', '.json']);
@@ -229,6 +235,21 @@ const RULES = [
     exts: CODEISH,
     re: /\bLIVE\b|\bDEMO\b/g,
   },
+
+  /* ---- inline-style hygiene (enforced scope: shipped sources + examples) ---- */
+  {
+    id: 'style/no-inline-style-literal',
+    message:
+      'Inline style={{...}} literals are banned — move statics to .dt-* classes and dynamics to scoped --dt-* custom properties (DS #37/#38/#39).',
+    scope: STYLE_SCOPE,
+    exclude: STYLE_EXEMPT,
+    exts: new Set(['.ts', '.tsx', '.js', '.jsx']),
+    re: /style=\{\{([\s\S]*?)\}\}/g,
+    // Report only when the object contains a plain property key (`width:`,
+    // `padding:`, `'font-size':` ...). Scoped `'--dt-*':` keys, `...spread`
+    // entries and `as CSSProperties` casts stay allowed.
+    test: (match) => /(?:^|[,{])\s*(?:[a-zA-Z_$][\w$]*|'(?!-)[^']*'|"(?!-)[^"]*")\s*:/.test(match[1]),
+  },
 ];
 
 function* walk(dir) {
@@ -274,6 +295,7 @@ for (const root of roots) {
     const content = readFileSync(file, 'utf8');
     for (const rule of RULES) {
       if (rule.exts && !rule.exts.has(ext)) continue;
+      if (rule.exclude && rule.exclude.test(rel)) continue;
       rule.re.lastIndex = 0;
       let match;
       while ((match = rule.re.exec(content)) !== null) {

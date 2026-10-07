@@ -31,18 +31,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   const cls = cx(TONE_CLASS[tone] ?? TONE_CLASS.neutral, className);
   return (
     <span ref={ref} className={cls} style={style} {...rest}>
-      {dot ? (
-        <span
-          aria-hidden="true"
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: 'var(--dt-radius-pill)',
-            background: 'currentColor',
-            display: 'inline-block',
-          }}
-        />
-      ) : null}
+      {dot ? <span aria-hidden="true" className="dt-badge-dot" /> : null}
       {children}
     </span>
   );

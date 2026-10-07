@@ -4,26 +4,19 @@
 
 import { ChevronRight } from 'lucide-react';
 import { forwardRef } from 'react';
+import { cx } from '../lib/cx.jsx';
 import { Icon } from '../lib/icon.jsx';
 /** Breadcrumb trail — last item is the current page. */
-export const Breadcrumb = forwardRef(function Breadcrumb({ items = [], style, ...rest }, ref) {
-    return (<nav ref={ref} {...rest} aria-label="breadcrumb" style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap', ...style }}>
-      <ol style={{
-            margin: 0,
-            padding: 0,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            flexWrap: 'wrap',
-            listStyle: 'none',
-        }}>
+export const Breadcrumb = forwardRef(function Breadcrumb({ items = [], className, style, ...rest }, ref) {
+    return (<nav ref={ref} {...rest} aria-label="breadcrumb" className={cx('dt-breadcrumb', className)} style={style}>
+      <ol className="dt-breadcrumb-list">
         {items.map((it, i) => {
             const last = i === items.length - 1;
-            return (<li key={i}>
-              {last ? (<span aria-current="page" style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-strong)' }}>{it.label}</span>) : (<a href={it.href || '#'} style={{ fontSize: 13, fontWeight: 500, color: 'var(--dt-text-muted)', textDecoration: 'none' }}>
+            return (<li key={i} className="dt-breadcrumb-item">
+              {last ? (<span aria-current="page" className="dt-breadcrumb-current">{it.label}</span>) : (<a href={it.href || '#'} className="dt-breadcrumb-link">
                   {it.label}
                 </a>)}
-              {!last ? (<Icon icon={ChevronRight} size="sm" style={{ color: 'var(--dt-border-strong)' }}/>) : null}
+              {!last ? (<Icon icon={ChevronRight} size="sm" className="dt-breadcrumb-sep"/>) : null}
             </li>);
         })}
       </ol>

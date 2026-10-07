@@ -26,10 +26,7 @@ export const Input = forwardRef(function Input({ label, hint, mono = false, id, 
         {prefix ? (<span className="dt-input-prefix" {...slotProps?.prefix}>
             {prefix}
           </span>) : null}
-        <input id={controlId} ref={ref} type={type} className={cx('dt-input-control', inputClassName)} disabled={disabled} aria-invalid={invalid || undefined} aria-describedby={describedBy} style={{
-            fontFamily: mono ? 'var(--dt-font-mono)' : 'var(--dt-font-sans)',
-            ...inputStyle,
-        }} {...rest} {...inputRest}/>
+        <input id={controlId} ref={ref} type={type} className={cx('dt-input-control', inputClassName)} disabled={disabled} aria-invalid={invalid || undefined} aria-describedby={describedBy} data-mono={mono || undefined} style={inputStyle} {...rest} {...inputRest}/>
       </div>
       {hint ? (<span id={hintId} className="dt-input-hint" {...slotProps?.hint}>
           {hint}

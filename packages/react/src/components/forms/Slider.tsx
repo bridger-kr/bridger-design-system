@@ -2,6 +2,7 @@ import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { forwardRef, useId } from 'react';
 import type { CSSProperties, HTMLAttributes, Ref } from 'react';
 import { warnOnce } from '../../lib/deprecate';
+import { cx } from '../../lib/cx';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
 import type { SlotPropsFor } from '../../lib/slot';
 
@@ -75,6 +76,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   }
   const v = value ?? defaultValue ?? min;
   const pct = ((v - min) / (max - min)) * 100;
+  const { className: labelClassName, ...labelRest } = slotProps?.label ?? {};
+  const { className: hintClassName, ...hintRest } = slotProps?.hint ?? {};
   const handleValueChange = (nextValue: number | readonly number[]) => {
     if (typeof nextValue === 'number') {
       onValueChange?.(nextValue);
@@ -95,63 +98,38 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       name={name}
       disabled={disabled}
       aria-describedby={hintId}
-      className={className}
-      style={{ display: 'grid', gap: 9, ...style }}
+      className={cx('dt-slider', className)}
+      style={style}
       {...rest}
     >
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
+      <div className="dt-slider-head">
           {label ? (
-            <label htmlFor={sId} style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }} {...slotProps?.label}>
+            <label htmlFor={sId} className={cx('dt-slider-label', labelClassName)} {...labelRest}>
               {label}
             </label>
           ) : (
             <span />
           )}
-          <span
-            style={{
-              fontFamily: 'var(--dt-font-mono)',
-              fontSize: 13,
-              fontWeight: 600,
-              color: 'var(--dt-text-strong)',
-              fontVariantNumeric: 'tabular-nums',
-            }}
-          >
+          <span className="dt-slider-value">
             {v}
-            {unit ? <span style={{ color: 'var(--dt-text-muted)', fontWeight: 400 }}>{unit}</span> : null}
+            {unit ? <span className="dt-slider-unit">{unit}</span> : null}
           </span>
         </div>
       <BaseSlider.Control
         className="dt-slider-control"
-        style={{ position: 'relative', height: 20, display: 'flex', alignItems: 'center', cursor: 'pointer' }}
       >
-        <BaseSlider.Track
-          style={{
-            position: 'absolute',
-            left: 0,
-            right: 0,
-            height: 4,
-            borderRadius: 'var(--dt-radius-sm)',
-            background: 'var(--dt-surface-sunken)',
-            boxShadow: 'inset 0 0 0 1px var(--dt-border-strong)',
-          }}
+        <BaseSlider.Track className="dt-slider-track" />
+        <BaseSlider.Indicator
+          className="dt-slider-indicator"
+          style={{ '--dt-slider-pct': `${pct}%` } as CSSProperties}
         />
-        <BaseSlider.Indicator style={{ position: 'absolute', left: 0, width: `${pct}%`, height: 4, borderRadius: 2, background: 'var(--dt-accent)' }} />
         <BaseSlider.Thumb
           className="dt-slider-thumb"
           getAriaLabel={() => inputLabel}
-          style={{
-            position: 'absolute',
-            width: 16,
-            height: 16,
-            borderRadius: 'var(--dt-radius-sm)',
-            background: 'var(--dt-surface)',
-            boxShadow: '0 0 0 1.5px var(--dt-accent)',
-            border: '3px solid var(--dt-surface)',
-          }}
         />
       </BaseSlider.Control>
       {hint ? (
-        <span id={hintId} style={{ fontSize: 12, color: 'var(--dt-text-muted)' }} {...slotProps?.hint}>
+        <span id={hintId} className={cx('dt-slider-hint', hintClassName)} {...hintRest}>
           {hint}
         </span>
       ) : null}

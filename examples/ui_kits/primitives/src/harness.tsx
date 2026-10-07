@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Button, Combobox, CommandPalette, Select } from '@bridger-kr/react';
 import '@bridger-kr/react/styles.css';
 import '@bridger-kr/tokens/css';
+import './showcase.css';
 
 const SELECT_OPTIONS = [
   { value: 'kma', label: '기상청' },
@@ -40,26 +41,26 @@ function Harness() {
   }, [theme]);
 
   return (
-    <main style={{ padding: '40px', display: 'grid', gap: '36px', maxWidth: '760px', fontFamily: 'var(--dt-font-sans)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h1 style={{ fontSize: 'var(--dt-h2-size)', margin: 0 }}>EDD-233 component CSS harness</h1>
+    <main className="harness">
+      <div className="harness-head">
+        <h1>EDD-233 component CSS harness</h1>
         <Button onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}>
           {theme === 'light' ? 'Dark 대비 보기' : 'Light 기본 보기'}
         </Button>
       </div>
 
-      <section id="select-section">
-        <h2 style={{ fontSize: 'var(--dt-h3-size)' }}>Select (trigger click opens popup)</h2>
+      <section id="select-section" className="harness-section">
+        <h2>Select (trigger click opens popup)</h2>
         <Select label="기관" value={selVal} onChange={setSelVal} options={SELECT_OPTIONS} />
       </section>
 
-      <section id="combobox-section">
-        <h2 style={{ fontSize: 'var(--dt-h3-size)' }}>Combobox (focus input opens popup)</h2>
+      <section id="combobox-section" className="harness-section">
+        <h2>Combobox (focus input opens popup)</h2>
         <Combobox label="연동할 공공 API" value={cbVal} onChange={setCbVal} options={COMBOBOX_OPTIONS} hint="230+ API 검색" />
       </section>
 
-      <section id="palette-section">
-        <h2 style={{ fontSize: 'var(--dt-h3-size)' }}>CommandPalette (always open)</h2>
+      <section id="palette-section" className="harness-section">
+        <h2>CommandPalette (always open)</h2>
         <CommandPalette open groups={COMMAND_GROUPS} />
       </section>
     </main>

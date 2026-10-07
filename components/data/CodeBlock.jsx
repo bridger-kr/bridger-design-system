@@ -40,18 +40,20 @@ export const CODE_SEGMENT_TONE = {
     Punctuation: 'punctuation',
     Success: 'success',
 };
-const SEGMENT_COLOR = {
-    plain: '#cdd0d8',
-    key: '#7fd1c0',
-    str: '#e0a96d',
-    num: '#8fb3ff',
-    kw: '#c98aff',
-    pun: '#8a91a3',
-    string: '#e0a96d',
-    number: '#8fb3ff',
-    comment: '#8a91a3',
-    punctuation: '#8a91a3',
-    success: '#4ade80',
+/** Segment-tone → token class (replaces the old hardcoded hex palette —
+    tones resolve through the canonical `--dt-syntax-*` contract). */
+const SEGMENT_CLASS = {
+    plain: 'dt-code-seg-plain',
+    key: 'dt-code-seg-key',
+    str: 'dt-code-seg-string',
+    num: 'dt-code-seg-number',
+    kw: 'dt-code-seg-key',
+    pun: 'dt-code-seg-punctuation',
+    string: 'dt-code-seg-string',
+    number: 'dt-code-seg-number',
+    comment: 'dt-code-seg-comment',
+    punctuation: 'dt-code-seg-punctuation',
+    success: 'dt-code-seg-success',
 };
 /**
  * Dark code surface for the light page (Stripe-style). Header + copy + line numbers.
@@ -73,26 +75,20 @@ export const CodeBlock = forwardRef(function CodeBlock({ code = '', lines, label
     const showCopy = copy === false ? false : (copyable ?? (typeof copy === 'boolean' ? copy : true));
     const codeText = lines ? lines.map((l) => l.segments.map((s) => s.text).join('')).join('\n') : String(code).replace(/\n$/, '');
     const textLines = codeText.split('\n');
-    return (<div ref={ref} {...rest} className={cx('dt-code-block', className)} style={{
-            background: 'var(--dt-code-bg)', border: '1px solid var(--dt-code-border)',
-            borderRadius: 'var(--dt-radius-card)', overflow: 'hidden', ...style,
-        }}>
-      {(label || showCopy) ? (<div style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '9px 12px',
-                borderBottom: '1px solid var(--dt-code-border)',
-            }}>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: '#8a91a3' }}>{label || language}</span>
+    return (<div ref={ref} {...rest} className={cx('dt-code-block', className)} style={style}>
+      {(label || showCopy) ? (<div className="dt-code-block-head">
+          <span className="dt-code-block-lang">{label || language}</span>
           {showCopy ? (<CopyButton className="dt-code-block-copy" value={copyText ?? codeText} label={copyLabels.label} copiedLabel={copyLabels.copiedLabel} failedLabel={copyLabels.failedLabel}/>) : null}
         </div>) : null}
-      <div style={{ padding: '12px 0', overflowX: 'auto' }}>
-        {textLines.map((line, index) => (<div key={index} style={{ display: 'grid', gridTemplateColumns: showLineNumbers ? '38px 1fr' : '1fr', fontFamily: 'var(--dt-font-mono)', fontSize: 12.5, lineHeight: 1.75 }}>
-            {showLineNumbers ? <span style={{ textAlign: 'right', paddingRight: 14, color: '#5a6273', userSelect: 'none' }}>{index + 1}</span> : null}
-            <code style={{ color: SEGMENT_COLOR.plain, whiteSpace: 'pre', paddingRight: 14 }}>
+      <div className="dt-code-block-lines">
+        {textLines.map((line, index) => (<div key={index} className={cx('dt-code-block-line', showLineNumbers && 'dt-code-block-line-numbered')}>
+            {showLineNumbers ? <span className="dt-code-block-lineno">{index + 1}</span> : null}
+            <code className="dt-code-block-code">
               {lines
-                ? lines[index]?.segments.map((segment, segmentIndex) => (<span key={segmentIndex} className={cx('dt-code-pane-token', segment.tone && `dt-code-pane-token-${segment.tone}`)} style={segment.tone ? undefined : { color: SEGMENT_COLOR.plain }}>
+                ? lines[index]?.segments.map((segment, segmentIndex) => (<span key={segmentIndex} className={segment.tone ? cx('dt-code-pane-token', `dt-code-pane-token-${segment.tone}`) : 'dt-code-seg-plain'}>
                       {segment.text}
                     </span>))
-                : highlight(line).map((segment, segmentIndex) => <span key={segmentIndex} style={{ color: SEGMENT_COLOR[segment.c] }}>{segment.t}</span>)}
+                : highlight(line).map((segment, segmentIndex) => <span key={segmentIndex} className={SEGMENT_CLASS[segment.c]}>{segment.t}</span>)}
             </code>
           </div>))}
       </div>

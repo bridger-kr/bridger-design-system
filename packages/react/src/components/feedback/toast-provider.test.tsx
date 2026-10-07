@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
@@ -31,7 +33,11 @@ describe('ToastProvider', () => {
 
     const viewport = document.querySelector('.dt-toast-viewport');
     expect(viewport?.getAttribute('aria-live')).toBe('polite');
-    expect(viewport?.getAttribute('style')).toContain('z-index: var(--dt-z-index-toast)');
+    expect(viewport?.getAttribute('style') ?? '').not.toContain('z-index');
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+    expect(stylesheet).toContain('.dt-toast-viewport');
+    expect(stylesheet).toContain('z-index: var(--dt-z-index-toast)');
     expect(document.querySelector('.dt-toast')).not.toBeNull();
     expect(screen.getByText('Saved')).toBeTruthy();
     expect(screen.getByText('Changes applied')).toBeTruthy();

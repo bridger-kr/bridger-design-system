@@ -1,16 +1,17 @@
 import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
+import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
 
 export type StatusPillTone = 'neutral' | 'accent' | 'success' | 'warning' | 'danger' | 'info';
 
-const TONE_STYLE: Record<StatusPillTone, { bg: string; fg: string }> = {
-  neutral: { bg: 'var(--dt-tint-text)', fg: 'var(--dt-text-subtle)' },
-  accent: { bg: 'var(--dt-tint-accent)', fg: 'var(--dt-accent-text)' },
-  success: { bg: 'var(--dt-tint-success)', fg: 'var(--dt-success)' },
-  warning: { bg: 'var(--dt-tint-warning)', fg: 'var(--dt-warning)' },
-  danger: { bg: 'var(--dt-tint-danger)', fg: 'var(--dt-danger)' },
-  info: { bg: 'var(--dt-tint-cobalt)', fg: 'var(--dt-info)' },
+const TONE_CLASS: Record<StatusPillTone, string> = {
+  neutral: 'dt-status-pill',
+  accent: 'dt-status-pill dt-status-pill-accent',
+  success: 'dt-status-pill dt-status-pill-success',
+  warning: 'dt-status-pill dt-status-pill-warning',
+  danger: 'dt-status-pill dt-status-pill-danger',
+  info: 'dt-status-pill dt-status-pill-info',
 };
 
 /** @deprecated v1 connection states — use `tone`. Removed in v2.1. */
@@ -57,7 +58,7 @@ export interface StatusPillProps extends Omit<HTMLAttributes<HTMLSpanElement>, '
  * default; pass `pulse={false}` when a steady marker is more appropriate.
  */
 export const StatusPill = forwardRef<HTMLSpanElement, StatusPillProps>(function StatusPill(
-  { tone, label, children, status, pulse, style, ...rest },
+  { tone, label, children, status, pulse, className, style, ...rest },
   ref,
 ) {
   let resolvedTone: StatusPillTone = tone ?? 'neutral';
@@ -68,36 +69,11 @@ export const StatusPill = forwardRef<HTMLSpanElement, StatusPillProps>(function 
     );
     if (tone === undefined) resolvedTone = LEGACY_STATUS_MAP[status];
   }
-  const toneStyle = TONE_STYLE[resolvedTone];
   const shouldPulse = pulse ?? (status === 'connected' || status === 'reconnecting');
   return (
-    <span
-      ref={ref}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        gap: 6,
-        borderRadius: 'var(--dt-radius-pill)',
-        background: toneStyle.bg,
-        padding: '4px 10px',
-        fontSize: 12,
-        fontWeight: 600,
-        color: toneStyle.fg,
-        ...style,
-      }}
-      {...rest}
-    >
+    <span ref={ref} className={cx(TONE_CLASS[resolvedTone], className)} style={style} {...rest}>
       {shouldPulse ? (
-        <span
-          className="dt-status-pulse"
-          aria-hidden="true"
-          style={{
-            width: 7,
-            height: 7,
-            borderRadius: 'var(--dt-radius-pill)',
-            background: toneStyle.fg,
-          }}
-        />
+        <span className="dt-status-pulse dt-status-pill-dot" aria-hidden="true" />
       ) : null}
       {label ?? children}
     </span>

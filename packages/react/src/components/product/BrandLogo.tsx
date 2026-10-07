@@ -88,7 +88,6 @@ function renderBrandWordmark() {
       viewBox={BRAND_WORDMARK_VIEW_BOX}
       aria-hidden="true"
       focusable="false"
-      style={{ display: 'block' }}
     >
       {BRAND_WORDMARK_PATHS.map((path, index) => (
         <path
@@ -178,16 +177,13 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
       <span
         aria-label={wordmarkLabel}
         role="img"
+        className="dt-brand-logo"
+        data-variant={isFavicon ? 'favicon' : 'symbol'}
         style={{
-          display: 'inline-flex',
-          width: symbolSize.width,
-          height: symbolSize.height,
-          color: 'var(--dt-accent)',
-          userSelect: 'none',
-          verticalAlign: 'middle',
-          flexShrink: 0,
+          '--dt-brand-logo-width': `${symbolSize.width}px`,
+          '--dt-brand-logo-height': `${symbolSize.height}px`,
           ...style,
-        }}
+        } as CSSProperties}
       >
         <svg
           width="100%"
@@ -195,7 +191,6 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
           viewBox={isFavicon ? BRAND_SYMBOL_VIEW_BOX.favicon : BRAND_SYMBOL_VIEW_BOX.symbol}
           aria-hidden="true"
           focusable="false"
-          style={{ display: 'block' }}
         >
           {renderBrandSymbol({ isFavicon })}
         </svg>
@@ -212,20 +207,10 @@ export const BrandLogo = forwardRef<BrandLogoHandle, BrandLogoProps>(function Br
       className="dt-brand-logo"
       data-armed={armed ? 'true' : 'false'}
       style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        width: wordmarkSize.width,
-        height: wordmarkSize.height,
-        fontFamily: 'var(--dt-font-sans)',
-        fontWeight: 600,
-        letterSpacing: 0,
-        lineHeight: 1,
-        color: 'var(--dt-accent)',
-        userSelect: 'none',
-        verticalAlign: 'middle',
-        flexShrink: 0,
+        '--dt-brand-logo-width': `${wordmarkSize.width}px`,
+        '--dt-brand-logo-height': `${wordmarkSize.height}px`,
         ...style,
-      }}
+      } as CSSProperties}
     >
       <span className="dt-brand-logo-wordmark" aria-hidden="true">
         {renderBrandWordmark()}

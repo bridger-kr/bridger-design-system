@@ -17,43 +17,15 @@ export const Switch = forwardRef(function Switch({ checked, defaultChecked, onCh
     const handleCheckedChange = (nextChecked) => {
         setIsOn(nextChecked);
     };
-    const sw = (<BaseSwitch.Root render={<button type="button" disabled={disabled}/>} nativeButton={true} ref={ref} id={id} name={name} uncheckedValue={uncheckedValue} required={required} checked={on} onCheckedChange={handleCheckedChange} disabled={disabled} className={cx('dt-switch-control', !label && className)} style={{
-            position: 'relative',
-            width: 'var(--dt-space-5)',
-            height: 'var(--dt-space-5)',
-            flex: '0 0 auto',
-            borderRadius: 'var(--dt-radius-pill)',
-            border: 'none',
-            padding: 0,
-            background: 'transparent',
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            opacity: disabled ? 0.55 : 1,
-            display: 'inline-flex',
-            alignItems: 'center',
-            ...(!label ? style : undefined),
-        }} {...rest}>
+    const sw = (<BaseSwitch.Root render={<button type="button" disabled={disabled}/>} nativeButton={true} ref={ref} id={id} name={name} uncheckedValue={uncheckedValue} required={required} checked={on} onCheckedChange={handleCheckedChange} disabled={disabled} className={cx('dt-switch-control', !label && className)} style={!label ? style : undefined} {...rest}>
       <span aria-hidden="true" className="dt-switch-track"/>
-      <BaseSwitch.Thumb className="dt-switch-thumb" style={{
-            position: 'relative',
-            width: 18,
-            height: 18,
-            marginLeft: 3,
-            borderRadius: 9999,
-            background: 'var(--dt-surface)',
-            transition: 'transform var(--dt-duration-fast) var(--dt-ease)',
-        }}/>
+      <BaseSwitch.Thumb className="dt-switch-thumb"/>
     </BaseSwitch.Root>);
     if (!label)
         return sw;
-    return (<label className={className} style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 10,
-            cursor: disabled ? 'not-allowed' : 'pointer',
-            ...style,
-        }}>
+    return (<label className={cx('dt-switch-row', className)} data-disabled={disabled ? '' : undefined} style={style}>
       {sw}
-      <span style={{ fontSize: 14, color: 'var(--dt-text)' }}>{label}</span>
+      <span className="dt-switch-label">{label}</span>
     </label>);
 });
 Switch.displayName = 'Switch';

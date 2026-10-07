@@ -8,27 +8,27 @@ exports[`ToastProvider > matches the en snapshot for a queued toast 1`] = `
   class="dt-toast"
   data-type="warning"
   role="dialog"
-  style="--toast-swipe-movement-x: 0px; --toast-swipe-movement-y: 0px; --toast-index: 0; --toast-offset-y: 0px; display: flex; align-items: flex-start; gap: 11px; width: 340px; max-width: 90vw; padding: 13px 15px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); box-shadow: var(--dt-shadow-overlay);"
+  style="--toast-swipe-movement-x: 0px; --toast-swipe-movement-y: 0px; --toast-index: 0; --toast-offset-y: 0px;"
   tabindex="0"
 >
   <span
     aria-hidden="true"
-    style="width: 8px; height: 8px; border-radius: 9999px; margin-top: 5px; flex: 0 0 auto; background: var(--dt-warning);"
+    class="dt-toast-dot dt-toast-dot-warning"
   />
   <div
-    style="flex: 1 1 0%; min-width: 0px;"
+    class="dt-toast-body"
   >
     <h2
+      class="dt-toast-title"
       data-type="warning"
       id="_r_r_"
-      style="font-size: 14px; font-weight: 650; color: var(--dt-text-strong);"
     >
       Saved
     </h2>
     <p
+      class="dt-toast-desc"
       data-type="warning"
       id="_r_s_"
-      style="margin-top: 2px; font-size: 13px; line-height: 1.5; color: var(--dt-text-subtle);"
     >
       Changes applied
     </p>
@@ -36,8 +36,8 @@ exports[`ToastProvider > matches the en snapshot for a queued toast 1`] = `
   <button
     aria-hidden="true"
     aria-label="Close"
+    class="dt-toast-close"
     data-type="warning"
-    style="flex: 0 0 auto; border: medium; background: transparent; cursor: pointer; color: var(--dt-text-muted); padding: 2px; line-height: 0;"
     tabindex="0"
     type="button"
   >
@@ -67,27 +67,27 @@ exports[`ToastProvider > matches the ko snapshot for a queued toast 1`] = `
   class="dt-toast"
   data-type="warning"
   role="dialog"
-  style="--toast-swipe-movement-x: 0px; --toast-swipe-movement-y: 0px; --toast-index: 0; --toast-offset-y: 0px; display: flex; align-items: flex-start; gap: 11px; width: 340px; max-width: 90vw; padding: 13px 15px; background: var(--dt-surface); border: 1px solid var(--dt-border-strong); border-radius: var(--dt-radius-card); box-shadow: var(--dt-shadow-overlay);"
+  style="--toast-swipe-movement-x: 0px; --toast-swipe-movement-y: 0px; --toast-index: 0; --toast-offset-y: 0px;"
   tabindex="0"
 >
   <span
     aria-hidden="true"
-    style="width: 8px; height: 8px; border-radius: 9999px; margin-top: 5px; flex: 0 0 auto; background: var(--dt-warning);"
+    class="dt-toast-dot dt-toast-dot-warning"
   />
   <div
-    style="flex: 1 1 0%; min-width: 0px;"
+    class="dt-toast-body"
   >
     <h2
+      class="dt-toast-title"
       data-type="warning"
       id="_r_o_"
-      style="font-size: 14px; font-weight: 650; color: var(--dt-text-strong);"
     >
       Saved
     </h2>
     <p
+      class="dt-toast-desc"
       data-type="warning"
       id="_r_p_"
-      style="margin-top: 2px; font-size: 13px; line-height: 1.5; color: var(--dt-text-subtle);"
     >
       Changes applied
     </p>
@@ -95,8 +95,8 @@ exports[`ToastProvider > matches the ko snapshot for a queued toast 1`] = `
   <button
     aria-hidden="true"
     aria-label="닫기"
+    class="dt-toast-close"
     data-type="warning"
-    style="flex: 0 0 auto; border: medium; background: transparent; cursor: pointer; color: var(--dt-text-muted); padding: 2px; line-height: 0;"
     tabindex="0"
     type="button"
   >

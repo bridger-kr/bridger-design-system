@@ -9,16 +9,12 @@ export const Tooltip = forwardRef(function Tooltip({ label, position = 'top', ch
     const [open, setOpen] = useState(false);
     return (<BaseTooltip.Provider>
       <BaseTooltip.Root open={open} onOpenChange={setOpen}>
-        <BaseTooltip.Trigger ref={ref} render={<span className="dt-tooltip-trigger" style={{ display: 'inline-flex' }} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}/>}>
+        <BaseTooltip.Trigger ref={ref} render={<span className="dt-tooltip-trigger" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}/>}>
           {children}
         </BaseTooltip.Trigger>
         <BaseTooltip.Portal>
-          <BaseTooltip.Positioner side={position} sideOffset={7} className="dt-tooltip-positioner" style={{ zIndex: 'var(--dt-z-index-popover)' }}>
-            <BaseTooltip.Popup id={tooltipId} role="tooltip" className="dt-tooltip-popup" style={{
-            whiteSpace: 'nowrap', pointerEvents: 'none', padding: '6px 9px', fontSize: 12, fontWeight: 500, lineHeight: 1.2,
-            color: 'var(--dt-bg)', background: 'var(--dt-text-strong)', borderRadius: 'var(--dt-radius-chip)', boxShadow: 'var(--dt-shadow-overlay)',
-            transition: 'opacity var(--dt-duration-fast) var(--dt-ease), visibility var(--dt-duration-fast) var(--dt-ease)',
-        }}>
+          <BaseTooltip.Positioner side={position} sideOffset={7} className="dt-tooltip-positioner">
+            <BaseTooltip.Popup id={tooltipId} role="tooltip" className="dt-tooltip-popup">
               {label}
             </BaseTooltip.Popup>
           </BaseTooltip.Positioner>

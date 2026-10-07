@@ -62,12 +62,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
       <BaseTabs.List
         activateOnFocus
         className={cx('dt-tabs-list', `dt-tabs-list-${resolvedVariant}`)}
-        style={{
-          display: 'flex',
-          gap: 4,
-          borderBottom: resolvedVariant === 'underline' ? '1px solid var(--dt-border)' : '0',
-          ...style,
-        }}
+        style={style}
       >
         {tabs.map((tab) => (
           <BaseTabs.Tab
@@ -75,10 +70,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(function Tabs(
             value={tab.id}
             className={cx('dt-tabs-tab', `dt-tabs-tab-${resolvedVariant}`)}
           >
-            {tab.icon ? <span aria-hidden="true" style={{ display: 'inline-flex' }}>{tab.icon}</span> : null}
+            {tab.icon ? <span aria-hidden="true" className="dt-tabs-tab-icon">{tab.icon}</span> : null}
             {tab.label}
             {tab.count != null ? (
-              <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>
+              <span className="dt-tabs-tab-count">
                 {tab.count}
               </span>
             ) : null}

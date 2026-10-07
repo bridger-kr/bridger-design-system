@@ -4,13 +4,13 @@
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
-declare const DOT: {
-    info: string;
-    success: string;
-    warning: string;
-    danger: string;
+declare const TONES: {
+    info: boolean;
+    success: boolean;
+    warning: boolean;
+    danger: boolean;
 };
-export type ToastTone = keyof typeof DOT;
+export type ToastTone = keyof typeof TONES;
 export interface ToastProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'> {
     tone?: ToastTone;
     title?: ReactNode;

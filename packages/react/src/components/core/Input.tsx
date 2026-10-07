@@ -80,10 +80,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           disabled={disabled}
           aria-invalid={invalid || undefined}
           aria-describedby={describedBy}
-          style={{
-            fontFamily: mono ? 'var(--dt-font-mono)' : 'var(--dt-font-sans)',
-            ...inputStyle,
-          }}
+          data-mono={mono || undefined}
+          style={inputStyle}
           {...rest}
           {...inputRest}
         />

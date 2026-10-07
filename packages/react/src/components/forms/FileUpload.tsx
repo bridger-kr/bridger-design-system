@@ -1,6 +1,7 @@
 import { File, Upload, X } from 'lucide-react';
 import { forwardRef, useId, useRef, useState } from 'react';
 import type { CSSProperties, DragEvent, HTMLAttributes } from 'react';
+import { cx } from '../../lib/cx';
 import { Icon } from '../../lib/icon';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
 
@@ -67,50 +68,19 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
   };
 
   return (
-    <div className={className} style={{ display: 'grid', gap: 7, ...style }} {...rest}>
-      {label ? <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--dt-text-subtle)' }}>{label}</span> : null}
+    <div className={cx('dt-file-upload', className)} style={style} {...rest}>
+      {label ? <span className="dt-file-upload-label">{label}</span> : null}
 
       {file ? (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-            padding: '12px 14px',
-            background: 'var(--dt-surface)',
-            border: '1px solid var(--dt-border-strong)',
-            borderRadius: 'var(--dt-radius-card)',
-          }}
-        >
-          <span
-            style={{
-              width: 34,
-              height: 34,
-              flex: '0 0 auto',
-              display: 'grid',
-              placeItems: 'center',
-              borderRadius: 'var(--dt-radius-control)',
-              background: 'var(--dt-tint-accent)',
-              color: 'var(--dt-accent-text)',
-            }}
-          >
+        <div className="dt-file-upload-file">
+          <span className="dt-file-upload-file-icon">
             <Icon icon={File} />
           </span>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div
-              style={{
-                fontFamily: 'var(--dt-font-mono)',
-                fontSize: 13,
-                fontWeight: 600,
-                color: 'var(--dt-text-strong)',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                whiteSpace: 'nowrap',
-              }}
-            >
+          <div className="dt-file-upload-file-body">
+            <div className="dt-file-upload-file-name">
               {file.name}
             </div>
-            <div style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)', marginTop: 2 }}>
+            <div className="dt-file-upload-file-meta">
               {fmtSize(file.size)} · {uploadedLabel ?? messages.fileUpload.uploaded}
             </div>
           </div>
@@ -119,16 +89,6 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
             onClick={onRemove}
             aria-label={removeLabel ?? messages.fileUpload.remove}
             className="dt-file-upload-remove"
-            style={{
-              flex: '0 0 auto',
-              display: 'grid',
-              placeItems: 'center',
-              border: 'none',
-              background: 'var(--dt-surface-sunken)',
-              borderRadius: 'var(--dt-radius-chip)',
-              color: 'var(--dt-text-subtle)',
-              cursor: 'pointer',
-            }}
           >
             <Icon icon={X} size="sm" />
           </button>
@@ -149,20 +109,20 @@ export const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(function
             handle(e.dataTransfer.files);
           }}
         >
-          <span style={{ color: drag ? 'var(--dt-accent)' : 'var(--dt-text-muted)' }}>
+          <span className="dt-file-upload-dropicon">
             <Icon icon={Upload} size="lg" />
           </span>
-          <span style={{ fontSize: 13.5, color: 'var(--dt-text-strong)' }}>
-            <span style={{ fontWeight: 600, color: 'var(--dt-accent-text)' }}>{chooseFileLabel ?? messages.fileUpload.chooseFile}</span> {dropHintLabel ?? messages.fileUpload.dropHint}
+          <span className="dt-file-upload-cta">
+            <span className="dt-file-upload-cta-strong">{chooseFileLabel ?? messages.fileUpload.chooseFile}</span> {dropHintLabel ?? messages.fileUpload.dropHint}
           </span>
-          <span style={{ fontFamily: 'var(--dt-font-mono)', fontSize: 11, color: 'var(--dt-text-muted)' }}>{hint ?? messages.fileUpload.specHint}</span>
+          <span className="dt-file-upload-hint">{hint ?? messages.fileUpload.specHint}</span>
           <input
             ref={ref}
             id={fId}
             type="file"
             accept={accept}
             onChange={(e) => handle(e.target.files)}
-            style={{ display: 'none' }}
+            className="dt-file-upload-input"
           />
         </label>
       )}

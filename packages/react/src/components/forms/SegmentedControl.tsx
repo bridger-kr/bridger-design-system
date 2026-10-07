@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes } from 'react';
+import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
 import { useControllableState } from '../../lib/useControllableState';
 
@@ -38,19 +39,12 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
         onChange?.(next);
       },
     });
-    const pad = size === 'sm' ? '5px 11px' : '7px 14px';
     return (
       <div
         ref={ref}
-        className={className}
-        style={{
-          display: 'inline-flex',
-          padding: 3,
-          gap: 2,
-          background: 'var(--dt-surface-sunken)',
-          borderRadius: 'var(--dt-radius-control)',
-          ...style,
-        }}
+        className={cx('dt-segmented', className)}
+        data-size={size}
+        style={style}
         {...rest}
       >
         {options.map((o) => {
@@ -61,19 +55,8 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
               key={opt.value}
               type="button"
               onClick={() => select(opt.value)}
-              style={{
-                border: on ? '1px solid var(--dt-border)' : '1px solid transparent',
-                cursor: 'pointer',
-                padding: pad,
-                borderRadius: 'var(--dt-radius-chip)',
-                fontSize: size === 'sm' ? 12 : 13,
-                fontWeight: 600,
-                fontFamily: 'inherit',
-                whiteSpace: 'nowrap',
-                color: on ? 'var(--dt-text-strong)' : 'var(--dt-text-muted)',
-                background: on ? 'var(--dt-surface)' : 'transparent',
-                transition: 'color var(--dt-duration-fast) var(--dt-ease), background-color var(--dt-duration-fast) var(--dt-ease)',
-              }}
+              className="dt-segmented-item"
+              data-active={on ? '' : undefined}
             >
               {opt.label}
             </button>

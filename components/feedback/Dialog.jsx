@@ -19,22 +19,15 @@ export const Dialog = forwardRef(function Dialog({ open, defaultOpen, onOpenChan
     };
     return (<BaseDialog.Root open={open} defaultOpen={defaultOpen} onOpenChange={handleOpenChange}>
       <BaseDialog.Portal>
-        <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay" style={{
-            position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-overlay)', background: 'color-mix(in srgb, var(--dt-text-strong) 32%, transparent)',
-        }}/>
-        <div data-dt-dialog-content style={{ position: 'fixed', inset: 0, zIndex: 'var(--dt-z-index-modal)', display: 'grid', placeItems: 'center', padding: 20, pointerEvents: 'none' }}>
-          <BaseDialog.Popup ref={ref} className={cx('dt-dialog-popup', className)} aria-labelledby={title ? titleId : undefined} aria-label={title ? undefined : ariaLabel} style={{
-            width: '100%', maxWidth: width, background: 'var(--dt-surface)', pointerEvents: 'auto',
-            borderRadius: 'var(--dt-radius-card)', boxShadow: 'var(--dt-shadow-overlay)',
-            overflow: 'hidden',
-            ...style,
-        }}>
-            <div style={{ padding: '22px 24px' }}>
-              {title ? <BaseDialog.Title id={titleId} render={<h3 style={{ fontSize: 18, fontWeight: 700, letterSpacing: '-0.01em', color: 'var(--dt-text-strong)' }}/>}>{title}</BaseDialog.Title> : null}
-              {description ? <BaseDialog.Description render={<p style={{ marginTop: 8, fontSize: 14, lineHeight: 1.55, color: 'var(--dt-text-subtle)' }}/>}>{description}</BaseDialog.Description> : null}
-              {children ? <div style={{ marginTop: title || description ? 16 : 0 }}>{children}</div> : null}
+        <BaseDialog.Backdrop data-dt-dialog-overlay className="dt-dialog-overlay"/>
+        <div data-dt-dialog-content className="dt-dialog-viewport">
+          <BaseDialog.Popup ref={ref} className={cx('dt-dialog-popup', className)} aria-labelledby={title ? titleId : undefined} aria-label={title ? undefined : ariaLabel} style={{ '--dt-dialog-width': `${width}px`, ...style }}>
+            <div className="dt-dialog-body">
+              {title ? <BaseDialog.Title id={titleId} render={<h3 className="dt-dialog-title"/>}>{title}</BaseDialog.Title> : null}
+              {description ? <BaseDialog.Description render={<p className="dt-dialog-desc"/>}>{description}</BaseDialog.Description> : null}
+              {children ? <div className="dt-dialog-children">{children}</div> : null}
             </div>
-            {footer ? <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8, padding: '14px 24px', background: 'var(--dt-surface-sunken)' }}>{footer}</div> : null}
+            {footer ? <div className="dt-dialog-footer">{footer}</div> : null}
           </BaseDialog.Popup>
         </div>
       </BaseDialog.Portal>

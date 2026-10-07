@@ -19,13 +19,7 @@ const TONE_CLASS = {
 export const Badge = forwardRef(function Badge({ children, tone = 'neutral', dot = false, className, style, ...rest }, ref) {
     const cls = cx(TONE_CLASS[tone] ?? TONE_CLASS.neutral, className);
     return (<span ref={ref} className={cls} style={style} {...rest}>
-      {dot ? (<span aria-hidden="true" style={{
-                width: 6,
-                height: 6,
-                borderRadius: 'var(--dt-radius-pill)',
-                background: 'currentColor',
-                display: 'inline-block',
-            }}/>) : null}
+      {dot ? <span aria-hidden="true" className="dt-badge-dot"/> : null}
       {children}
     </span>);
 });

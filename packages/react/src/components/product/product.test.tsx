@@ -50,23 +50,27 @@ describe('Product components', () => {
       const { container, rerender } = render(<BrandLogo size="lg" lang="en" />);
       const largeLogo = screen.getByLabelText('Bridger.');
 
-      expect(largeLogo.style.width).toBe('148.484px');
-      expect(largeLogo.style.height).toBe('43px');
+      expect(largeLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('148.484px');
+      expect(largeLogo.style.getPropertyValue('--dt-brand-logo-height')).toBe('43px');
       expect(BRAND_WORDMARK_SIZE.lg).toEqual({ width: 148.484, height: 43 });
       expect(container.querySelector('svg[viewBox="0 0 148.484 43"]')).toBeTruthy();
 
       rerender(<BrandLogo size="md" lang="en" />);
-      expect(screen.getByLabelText('Bridger.').style.width).toBe('69.062px');
-      expect(screen.getByLabelText('Bridger.').style.height).toBe('20px');
+      expect(screen.getByLabelText('Bridger.').style.getPropertyValue('--dt-brand-logo-width')).toBe('69.062px');
+      expect(screen.getByLabelText('Bridger.').style.getPropertyValue('--dt-brand-logo-height')).toBe('20px');
 
       rerender(<BrandLogo size="symbol" lang="en" />);
-      expect(screen.getByLabelText('Bridger.').style.width).toBe('15px');
-      expect(screen.getByLabelText('Bridger.').style.height).toBe('14px');
+      const symbolLogo = screen.getByLabelText('Bridger.');
+      expect(symbolLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('15px');
+      expect(symbolLogo.style.getPropertyValue('--dt-brand-logo-height')).toBe('14px');
+      expect(symbolLogo.getAttribute('data-variant')).toBe('symbol');
       expect(container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX.symbol}"]`)).toBeTruthy();
 
       rerender(<BrandLogo size="favicon" lang="en" />);
-      expect(screen.getByLabelText('Bridger.').style.width).toBe('45px');
-      expect(screen.getByLabelText('Bridger.').style.height).toBe('45px');
+      const faviconLogo = screen.getByLabelText('Bridger.');
+      expect(faviconLogo.style.getPropertyValue('--dt-brand-logo-width')).toBe('45px');
+      expect(faviconLogo.style.getPropertyValue('--dt-brand-logo-height')).toBe('45px');
+      expect(faviconLogo.getAttribute('data-variant')).toBe('favicon');
       expect(container.querySelector(`svg[viewBox="${BRAND_SYMBOL_VIEW_BOX.favicon}"]`)).toBeTruthy();
     });
 

@@ -1,4 +1,6 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { axe } from 'vitest-axe';
@@ -97,7 +99,10 @@ describe('feedback a11y', () => {
     expect(tip?.getAttribute('id')).toBeTruthy();
     expect(tip?.className).toContain('dt-tooltip-popup');
     expect(tip?.parentElement?.className).toContain('dt-tooltip-positioner');
-    expect(tip?.parentElement?.getAttribute('style')).toContain('z-index: var(--dt-z-index-popover)');
+    expect(tip?.parentElement?.getAttribute('style') ?? '').not.toContain('z-index');
+    const packageRoot = process.cwd().endsWith('packages/react') ? process.cwd() : resolve(process.cwd(), 'packages/react');
+    const stylesheet = readFileSync(resolve(packageRoot, 'src/styles.css'), 'utf8');
+    expect(stylesheet).toContain('.dt-tooltip-positioner { z-index: var(--dt-z-index-popover); }');
   });
 
   it('feedback motion classes render through package stylesheet hooks', () => {

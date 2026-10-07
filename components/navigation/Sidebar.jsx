@@ -9,10 +9,7 @@ import { cx } from '../lib/cx.jsx';
  * @startingPoint section="Navigation" subtitle="Console nav rail" viewport="260x440"
  */
 export const Sidebar = forwardRef(function Sidebar({ brand, sections = [], footer, width = 240, onNavigate, className, style, ...rest }, ref) {
-    return (<nav ref={ref} {...rest} className={cx('dt-sidebar', className)} style={{
-            width,
-            ...style,
-        }}>
+    return (<nav ref={ref} {...rest} className={cx('dt-sidebar', className)} style={{ '--dt-sidebar-width': `${width}px`, ...style }}>
       {brand ? (<div className="dt-sidebar-brand">{brand}</div>) : null}
 
       <div className="dt-sidebar-body">

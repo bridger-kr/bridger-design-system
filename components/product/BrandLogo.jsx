@@ -35,7 +35,7 @@ function renderBrandSymbol({ isFavicon }) {
 }
 function renderBrandWordmark() {
     const dotIndex = BRAND_WORDMARK_PATHS.length - 1;
-    return (<svg width="100%" height="100%" viewBox={BRAND_WORDMARK_VIEW_BOX} aria-hidden="true" focusable="false" style={{ display: 'block' }}>
+    return (<svg width="100%" height="100%" viewBox={BRAND_WORDMARK_VIEW_BOX} aria-hidden="true" focusable="false">
       {BRAND_WORDMARK_PATHS.map((path, index) => (<path key={path} className={index === dotIndex ? 'dt-brand-logo-dot' : undefined} d={path} fill="currentColor"/>))}
     </svg>);
 }
@@ -92,35 +92,20 @@ export const BrandLogo = forwardRef(function BrandLogo({ size = BRAND_LOGO_SIZE_
     }, [loop]);
     if (isSymbol || isFavicon) {
         const symbolSize = resolveSymbolSize({ isFavicon });
-        return (<span aria-label={wordmarkLabel} role="img" style={{
-                display: 'inline-flex',
-                width: symbolSize.width,
-                height: symbolSize.height,
-                color: 'var(--dt-accent)',
-                userSelect: 'none',
-                verticalAlign: 'middle',
-                flexShrink: 0,
+        return (<span aria-label={wordmarkLabel} role="img" className="dt-brand-logo" data-variant={isFavicon ? 'favicon' : 'symbol'} style={{
+                '--dt-brand-logo-width': `${symbolSize.width}px`,
+                '--dt-brand-logo-height': `${symbolSize.height}px`,
                 ...style,
             }}>
-        <svg width="100%" height="100%" viewBox={isFavicon ? BRAND_SYMBOL_VIEW_BOX.favicon : BRAND_SYMBOL_VIEW_BOX.symbol} aria-hidden="true" focusable="false" style={{ display: 'block' }}>
+        <svg width="100%" height="100%" viewBox={isFavicon ? BRAND_SYMBOL_VIEW_BOX.favicon : BRAND_SYMBOL_VIEW_BOX.symbol} aria-hidden="true" focusable="false">
           {renderBrandSymbol({ isFavicon })}
         </svg>
       </span>);
     }
     const wordmarkSize = resolveWordmarkSize(size);
     return (<span aria-label={wordmarkLabel} role="img" className="dt-brand-logo" data-armed={armed ? 'true' : 'false'} style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            width: wordmarkSize.width,
-            height: wordmarkSize.height,
-            fontFamily: 'var(--dt-font-sans)',
-            fontWeight: 600,
-            letterSpacing: 0,
-            lineHeight: 1,
-            color: 'var(--dt-accent)',
-            userSelect: 'none',
-            verticalAlign: 'middle',
-            flexShrink: 0,
+            '--dt-brand-logo-width': `${wordmarkSize.width}px`,
+            '--dt-brand-logo-height': `${wordmarkSize.height}px`,
             ...style,
         }}>
       <span className="dt-brand-logo-wordmark" aria-hidden="true">
