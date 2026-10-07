@@ -123,15 +123,16 @@ encoded throughout this system.
 
 ---
 
-## Brand mark (v3)
+## Brand mark (v4)
 
-The logo is the **Bridger. Figma vector wordmark plus a single persimmon period**.
-The wordmark renders in persimmon across product and marketing surfaces; `lg`
-matches the 148.484x43 Figma frame, `md` matches the 69.062x20 Figma frame, and
-`symbol` / `favicon` variants are reserved for tight icon slots. Korean/English
-only change the accessible label (`브릿저` / `Bridger.`) and surrounding product
-copy. Render it with the `BrandLogo` component from `@bridger-kr/react`; do not
-recreate a page-local logo.
+The logo is a **text wordmark — `Bridger` in Pretendard Variable, weight 600,
+neutral ink** — paired with the **persimmon square-b mark**. No period, no other
+punctuation. In product UI render the wordmark with `BrandLogo` from
+`@bridger-kr/react`; for everything else use the canonical files in
+`assets/brand/` (`logo.svg`, `mark.svg`, `favicon.svg`, icons, og image). Do not
+recreate a page-local logo, and do not ship the retired marks (the `Bridger.`
+persimmon-period Figma wordmark, `digitalsolveup-logo.svg`, or the docs
+monospace-`B` badge). See `DESIGN.md` §15 for the full canon.
 
 ---
 
