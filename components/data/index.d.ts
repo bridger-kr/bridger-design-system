@@ -24,3 +24,4 @@ export { Table } from './Table';
 export type { TableAlign, TableColumn, TableProps, TableRow } from './Table';
 export { UsageMeter } from './UsageMeter';
 export type { UsageMeterProps } from './UsageMeter';
+export * from './DataTrust';

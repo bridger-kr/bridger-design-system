@@ -2338,10 +2338,15 @@
   font-variant-numeric: tabular-nums;
 }
 .dt-stat-tile-foot { margin-top: 6px; display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dt-text-muted); }
-.dt-stat-tile-delta { font-weight: 600; font-variant-numeric: tabular-nums; }
+.dt-stat-tile-delta { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; font-variant-numeric: tabular-nums; }
+/* Valence classes (canonical): business meaning, independent of direction. */
+.dt-stat-tile-delta-positive { color: var(--dt-success); }
+.dt-stat-tile-delta-negative { color: var(--dt-danger); }
+/* Legacy direction-as-tone aliases kept for the deprecated deltaTone prop. */
 .dt-stat-tile-delta-up { color: var(--dt-success); }
 .dt-stat-tile-delta-down { color: var(--dt-danger); }
 .dt-stat-tile-delta-neutral { color: var(--dt-text-muted); }
+.dt-stat-tile-unknown { color: var(--dt-text-muted); font-size: var(--dt-body-size); font-weight: 500; }
 
 .dt-usage-meter { display: grid; gap: 8px; }
 .dt-usage-meter-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -2361,7 +2366,27 @@
 .dt-usage-meter-fill-accent { background: var(--dt-accent); }
 .dt-usage-meter-fill-warning { background: var(--dt-warning); }
 .dt-usage-meter-fill-danger { background: var(--dt-danger); }
+.dt-usage-meter-fill-unknown { background: var(--dt-border-strong); }
+.dt-usage-meter-unknown { color: var(--dt-text-muted); font-weight: 500; }
 .dt-usage-meter-hint { font-size: 12px; color: var(--dt-text-muted); }
+
+/* Shared data-trust provenance footer (asOf · source · refresh · reason). */
+.dt-data-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 12px; color: var(--dt-text-muted); }
+.dt-data-meta-key { color: var(--dt-text-subtle); margin-right: 4px; }
+.dt-data-meta-reason { color: var(--dt-text-subtle); }
+.dt-data-meta-refresh { margin-left: auto; }
+.dt-data-meta-refresh:only-child { margin-left: 0; }
+
+/* LogRow severity chip: icon + text, never color-only. */
+.dt-logrow-level { display: inline-flex; align-items: center; gap: 4px; margin-right: 8px; font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.dt-logrow-level-ok { color: var(--dt-success); }
+.dt-logrow-level-warn { color: var(--dt-warning); }
+.dt-logrow-level-error { color: var(--dt-danger); }
+.dt-logrow-level-info { color: var(--dt-text-muted); }
+
+/* Table state rows (loading/partial/error/unauthorized) span all columns. */
+.dt-table-state-row td { padding: var(--dt-space-3); color: var(--dt-text-subtle); text-align: center; font-size: var(--dt-small-size); }
+.dt-table-state-error td { color: var(--dt-danger); }
 
 .dt-table {
   overflow-x: auto; border-radius: var(--dt-radius-card);
