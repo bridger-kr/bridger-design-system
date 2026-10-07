@@ -18,8 +18,16 @@ const categoryEntries = globSync('src/components/*/index.ts', {
   cwd: import.meta.dirname,
 });
 
+// One entry per component file so consumer bundlers can tree-shake at
+// component granularity: `import { Alert }` resolves to Alert's module
+// alone instead of dragging the whole family bundle (and the positioned
+// components' usePositioner runtime) into the entry chunk.
+const componentEntries = globSync('src/components/*/*.tsx', {
+  cwd: import.meta.dirname,
+}).filter((file) => !file.endsWith('.test.tsx'));
+
 export default libConfig({
-  entry: ['src/index.ts', ...categoryEntries],
+  entry: ['src/index.ts', ...categoryEntries, ...componentEntries],
   splitting: true,
   // Keep treeshake off: tsup's rollup treeshake pass rewrites every chunk and
   // would strip the "use client" banner. esbuild still drops unreferenced
