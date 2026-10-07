@@ -3,6 +3,7 @@
 // Regenerate: pnpm generate
 
 import type { CSSProperties, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
+import type { DataTrustProps } from './DataTrust';
 export type TableAlign = 'left' | 'center' | 'right';
 export type TableRow = Record<string, ReactNode>;
 export interface TableColumn<Row extends TableRow = TableRow> {
@@ -38,6 +39,9 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
     /** Header cell for the row-action column; defaults to the ambient locale. */
     readonly rowActionHeader?: ReactNode;
     readonly style?: CSSProperties;
+}
+/** Data-trust fields are mixed into TableProps so callers pass one object. */
+export interface TableTrustProps extends TableProps<TableRow>, DataTrustProps {
 }
 export declare const Table: <Row extends TableRow = TableRow>(props: TableProps<Row> & {
     ref?: Ref<HTMLDivElement>;
