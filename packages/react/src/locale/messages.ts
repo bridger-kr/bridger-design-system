@@ -80,6 +80,21 @@ export interface DSMessageCatalog {
     /** Header cell for the row-action column. */
     rowActions: string;
   };
+  /** Shared data-trust contract (DataTrustProps on data components). */
+  dataTrust: {
+    /** Readout shown when a value is unknown — never rendered as `0`. */
+    unknown: string;
+    /** Label preceding the last-confirmed timestamp. */
+    asOf: string;
+    /** Label preceding the data source. */
+    source: string;
+    /** State lines for non-ready data states. */
+    state: Record<'loading' | 'empty' | 'partial' | 'stale' | 'error' | 'unauthorized', string>;
+  };
+  logRow: {
+    /** Severity text shown next to the level icon — never color-only. */
+    level: Record<'ok' | 'warn' | 'error' | 'info', string>;
+  };
   consoleShell: {
     /** Landmark label for the primary navigation rail/drawer. */
     navLabel: string;
@@ -158,6 +173,22 @@ export const DS_MESSAGES_KO: DSMessageCatalog = {
   table: {
     rowActions: '행 작업',
   },
+  dataTrust: {
+    unknown: '확인 안 됨',
+    asOf: '기준 시각',
+    source: '출처',
+    state: {
+      loading: '불러오는 중…',
+      empty: '표시할 데이터가 없어요',
+      partial: '일부 데이터만 표시하고 있어요',
+      stale: '오래된 데이터예요',
+      error: '데이터를 불러오지 못했어요',
+      unauthorized: '이 데이터를 볼 권한이 없어요',
+    },
+  },
+  logRow: {
+    level: { ok: '정상', warn: '경고', error: '오류', info: '정보' },
+  },
   consoleShell: {
     navLabel: '기본 탐색',
     openNav: '탐색 열기',
@@ -234,6 +265,22 @@ export const DS_MESSAGES_EN: DSMessageCatalog = {
   },
   table: {
     rowActions: 'Actions',
+  },
+  dataTrust: {
+    unknown: 'Unknown',
+    asOf: 'As of',
+    source: 'Source',
+    state: {
+      loading: 'Loading…',
+      empty: 'No data to show',
+      partial: 'Showing partial data',
+      stale: 'Stale data',
+      error: 'Failed to load data',
+      unauthorized: 'You do not have access to this data',
+    },
+  },
+  logRow: {
+    level: { ok: 'OK', warn: 'WARN', error: 'ERR', info: 'INFO' },
   },
   consoleShell: {
     navLabel: 'Primary navigation',

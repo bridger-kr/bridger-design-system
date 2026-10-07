@@ -109,3 +109,69 @@ describe('data exports', () => {
     expect(screen.getByRole('link', { name: '서울 상세' }).getAttribute('href')).toBe('/regions/seoul');
   });
 });
+
+describe('data-trust contract (#29)', () => {
+  it('UsageMeter renders unknown as text, never as 0, with meter ARIA', () => {
+    const { container } = render(<UsageMeter label="일일 호출" max={1000} unit="req" />);
+    const meter = container.querySelector('[role="meter"]');
+    expect(meter).not.toBeNull();
+    expect(meter?.getAttribute('aria-valuetext')).toBe('확인 안 됨');
+    expect(meter?.getAttribute('aria-valuenow')).toBeNull();
+    expect(container.textContent).not.toContain('0 /');
+    expect(container.querySelector('.dt-usage-meter-fill-unknown')).not.toBeNull();
+  });
+
+  it('UsageMeter reports value + limit source when known', () => {
+    const { container } = render(<UsageMeter label="일일 호출" value={420} max={1000} unit="req" limitSource="무료 체험" />);
+    const meter = container.querySelector('[role="meter"]');
+    expect(meter?.getAttribute('aria-valuenow')).toBe('420');
+    expect(container.textContent).toContain('무료 체험');
+  });
+
+  it('StatTile splits direction icon from business valence', () => {
+    const { container } = render(<StatTile label="지연" value="182ms" delta="-12ms" deltaDirection="down" deltaValence="positive" />);
+    const el = container.querySelector('.dt-stat-tile-delta');
+    expect(el?.className).toContain('delta-positive');
+    expect(el?.getAttribute('data-direction')).toBe('down');
+    expect(el?.querySelector('svg')).not.toBeNull();
+  });
+
+  it('StatTile renders unknown instead of the value for error states', () => {
+    const { container } = render(<StatTile label="호출 수" value="0" state="error" reason="API 500" />);
+    expect(container.querySelector('.dt-stat-tile-unknown')?.textContent).toBe('확인 안 됨');
+    expect(container.textContent).toContain('API 500');
+  });
+
+  it('LogRow renders severity icon + text, not color only', () => {
+    const { container } = render(<LogRow entries={[{ time: '12:00:01', level: 'error', tool: 'weather_get' }]} />);
+    const chip = container.querySelector('.dt-logrow-level');
+    expect(chip?.textContent).toContain('오류');
+    expect(chip?.querySelector('svg')).not.toBeNull();
+  });
+
+  it('Table renders a localized state row for loading and keeps headers scoped', () => {
+    const { container } = render(
+      <Table columns={[{ key: 'name', header: '이름' }]} rows={[]} state="loading" />,
+    );
+    const stateCell = container.querySelector('.dt-table-state-row td');
+    expect(stateCell?.textContent).toContain('불러오는 중');
+    expect(container.querySelector('th')?.getAttribute('scope')).toBe('col');
+  });
+
+  it('Table renders rows plus a partial notice and meta footer', () => {
+    const { container } = render(
+      <Table
+        columns={[{ key: 'name', header: '이름' }]}
+        rows={[{ name: 'weather' }]}
+        state="partial"
+        asOf="12:00"
+        source="publicdata_federation"
+      />,
+    );
+    expect(container.querySelector('.dt-table-state-row')).not.toBeNull();
+    expect(container.querySelectorAll('tbody tr.dt-tr').length).toBe(1);
+    const meta = container.querySelector('.dt-data-meta');
+    expect(meta?.textContent).toContain('기준 시각');
+    expect(meta?.textContent).toContain('publicdata_federation');
+  });
+});

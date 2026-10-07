@@ -2,6 +2,8 @@ import { forwardRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
 import { cx } from '../../lib/cx';
 import { useDSMessages } from '../../locale/DSLocaleProvider';
+import { DataTrustMeta } from './DataTrust';
+import type { DataTrustProps } from './DataTrust';
 
 export type TableAlign = 'left' | 'center' | 'right';
 export type TableRow = Record<string, ReactNode>;
@@ -29,7 +31,7 @@ export interface TableLinkRowAction<Row extends TableRow> {
 
 export type TableRowAction<Row extends TableRow> = TableButtonRowAction<Row> | TableLinkRowAction<Row>;
 
-export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'> {
+export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAttributes<HTMLDivElement>, 'children' | 'style'>, DataTrustProps {
   readonly columns?: readonly TableColumn<Row>[];
   readonly rows?: readonly Row[];
   readonly rowKey?: (row: Row, index: number) => string | number;
@@ -44,6 +46,9 @@ export interface TableProps<Row extends TableRow = TableRow> extends Omit<HTMLAt
   readonly rowActionHeader?: ReactNode;
   readonly style?: CSSProperties;
 }
+
+/** @deprecated TableProps now carries the DataTrustProps fields directly. */
+export interface TableTrustProps extends TableProps<TableRow> {}
 
 interface RowActionState {
   readonly control: ReactNode;
@@ -104,14 +109,30 @@ function TableInner<Row extends TableRow = TableRow>(
     rowAction,
     rowActionHeader,
     empty,
+    state,
+    asOf,
+    source,
+    refresh,
+    reason,
     className,
     style,
     ...rest
-  }: TableProps<Row>,
+  }: TableProps<Row> & DataTrustProps,
   ref: Ref<HTMLDivElement>,
 ) {
   const messages = useDSMessages();
-  if (!rows.length && empty) return <>{empty}</>;
+  const colSpan = columns.length + (rowAction ? 1 : 0);
+  const stateRow =
+    state && state !== 'ready' ? (
+      <tr className={cx('dt-table-state-row', (state === 'error' || state === 'unauthorized') && 'dt-table-state-error')}>
+        <td colSpan={colSpan} role={state === 'error' || state === 'unauthorized' ? 'alert' : 'status'}>
+          {reason ?? messages.dataTrust.state[state]}
+        </td>
+      </tr>
+    ) : null;
+  const hasMeta = Boolean(asOf || source || refresh || reason);
+
+  if (!rows.length && empty && (!state || state === 'empty')) return <>{empty}</>;
 
   return (
     <div
@@ -126,6 +147,7 @@ function TableInner<Row extends TableRow = TableRow>(
             {columns.map((column) => (
               <th
                 key={column.key}
+                scope="col"
                 className="dt-table-th"
                 data-align={column.align || 'left'}
               >
@@ -136,7 +158,10 @@ function TableInner<Row extends TableRow = TableRow>(
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, rowIndex) => {
+          {stateRow}
+          {state === 'loading' || state === 'error' || state === 'unauthorized'
+            ? null
+            : rows.map((row, rowIndex) => {
             const actionState = rowAction ? rowActionState(rowAction, row) : undefined;
             return (
               <tr
@@ -160,6 +185,7 @@ function TableInner<Row extends TableRow = TableRow>(
           })}
         </tbody>
       </table>
+      {hasMeta ? <DataTrustMeta state={state} asOf={asOf} source={source} refresh={refresh} reason={reason} /> : null}
     </div>
   );
 }
