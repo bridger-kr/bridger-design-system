@@ -1,5 +1,13 @@
 # @bridger-kr/tokens
 
+## 2.0.1
+
+### Patch Changes
+
+- [#88](https://github.com/bridger-kr/bridger-design-system/pull/88) [`c14a3a9`](https://github.com/bridger-kr/bridger-design-system/commit/c14a3a98e97ee1c59d0cc5e1e1011e35965bc49b) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Anti-slop burn-down (DS [#28](https://github.com/bridger-kr/bridger-design-system/issues/28)): every raw color literal in shipped source is replaced with a semantic token — new `--dt-syntax-danger` (fixed bright danger for dark code wells), `--dt-brand-ink-light`/`--dt-brand-ink-dark` (§15.3 pinned wordmark inks), and `var(--dt-surface)` blends for product topbar chrome. slop-scan gains `slop/no-raw-color` (packages scope; palette sources, BrandLogo, and tests exempt) and `slop/no-infinite-animation` now covers shipped packages too (functional `dt-spin` spinner exempt).
+
+- [#78](https://github.com/bridger-kr/bridger-design-system/pull/78) [`c846615`](https://github.com/bridger-kr/bridger-design-system/commit/c8466158fe73f0a1877d2d544aaedbc0b3f8f033) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Darken light-mode `--dt-text-subtle` (oklch 0.556 → 0.50) and `--dt-text-muted` (oklch 0.54 → 0.52) so both reach WCAG AA 4.5:1 on `--dt-surface-muted` (#f5f5f5), not only on pure white. Dark values unchanged.
+
 ## 2.0.0
 
 ### Major Changes

@@ -1,5 +1,57 @@
 # @bridger-kr/react
 
+## 2.1.0
+
+### Minor Changes
+
+- [#89](https://github.com/bridger-kr/bridger-design-system/pull/89) [`512ab85`](https://github.com/bridger-kr/bridger-design-system/commit/512ab85e57d038c84ebd2ac472c6c03f49299d32) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - feat(navigation): add ConsoleShell — responsive nav rail/drawer, skip link, route-focus, workspace status, prioritized banners ([#33](https://github.com/bridger-kr/bridger-design-system/issues/33)). Sidebar gains a `collapsed` icon-rail mode with tooltips.
+
+- [#91](https://github.com/bridger-kr/bridger-design-system/pull/91) [`cf0bb85`](https://github.com/bridger-kr/bridger-design-system/commit/cf0bb85dece9c4751074dd0f021a4e3c592dc321) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - feat(data): shared data-trust contract ([#29](https://github.com/bridger-kr/bridger-design-system/issues/29)) — `DataTrustProps` (state/asOf/source/refresh/reason) on Table/StatTile/UsageMeter; unknown values render `확인 안 됨`/`Unknown` never `0`; UsageMeter gains `role="meter"` + `limitSource`; LogRow renders severity icon+text; StatTile splits `deltaDirection` (arrow) from `deltaValence` (color), `deltaTone` deprecated.
+
+### Patch Changes
+
+- [#87](https://github.com/bridger-kr/bridger-design-system/pull/87) [`3d3361b`](https://github.com/bridger-kr/bridger-design-system/commit/3d3361b141dfd9af43b6d8610ef9aa443308fe5b) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Action-safety contract (DS [#30](https://github.com/bridger-kr/bridger-design-system/issues/30)): `Button` gains `loading` — width-preserving spinner overlay, `aria-busy`, and duplicate-activation blocking; `ConfirmDialog` gains `pending` — confirm shows the loading state and keeps the dialog open while cancel stays safe; `Toast` maps `danger`/`warning` tones to `role="alert"` (other tones stay `status`) on both the standalone component and provider-rendered cards.
+
+- [#88](https://github.com/bridger-kr/bridger-design-system/pull/88) [`c14a3a9`](https://github.com/bridger-kr/bridger-design-system/commit/c14a3a98e97ee1c59d0cc5e1e1011e35965bc49b) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Anti-slop burn-down (DS [#28](https://github.com/bridger-kr/bridger-design-system/issues/28)): every raw color literal in shipped source is replaced with a semantic token — new `--dt-syntax-danger` (fixed bright danger for dark code wells), `--dt-brand-ink-light`/`--dt-brand-ink-dark` (§15.3 pinned wordmark inks), and `var(--dt-surface)` blends for product topbar chrome. slop-scan gains `slop/no-raw-color` (packages scope; palette sources, BrandLogo, and tests exempt) and `slop/no-infinite-animation` now covers shipped packages too (functional `dt-spin` spinner exempt).
+
+- [#85](https://github.com/bridger-kr/bridger-design-system/pull/85) [`dcb40e9`](https://github.com/bridger-kr/bridger-design-system/commit/dcb40e977f41fe8363edaa976455613bb385267c) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - BrandLogo renders the canonical brand mark (DESIGN.md §15): `Bridger` wordmark without the retired persimmon period, neutral ink in both themes, and the square-b mark (persimmon square + paper glyph) for symbol/favicon variants. Adds `theme` prop for fixed-theme surfaces; the mark never inverts. `autoplay`/`loop` props and the `play()` handle remain as deprecated no-ops.
+
+- [#95](https://github.com/bridger-kr/bridger-design-system/pull/95) [`6134d2e`](https://github.com/bridger-kr/bridger-design-system/commit/6134d2ec4845af48d0a9526719754e4a2fca857f) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Restore the `.dt-checkbox-control` base sizing rule dropped in the inline-style removal: the control collapsed from `--dt-space-5` (40px) to content size (~18px), shrinking the checkbox touch target below the 40px contract.
+
+- [#86](https://github.com/bridger-kr/bridger-design-system/pull/86) [`2510e6a`](https://github.com/bridger-kr/bridger-design-system/commit/2510e6a0a9dcfbd4cbfe733088a19b1994054ffa) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Locale contract tightenings (DS [#27](https://github.com/bridger-kr/bridger-design-system/issues/27)): `useDSLocale()` exposes the ambient 'ko'|'en' for Intl-aware formatting (UsageMeter now groups numbers through `Intl.NumberFormat`); `DSLocaleProvider` warns in development when a `messages` override references a key not in the catalog; `CommandPalette` ignores an Enter fired mid-IME composition so Korean input doesn't select early; `CodePane` copy labels resolve through the message catalog (the previous Korean literals shadowed the fallback and the resolved values were never passed on).
+
+- [#83](https://github.com/bridger-kr/bridger-design-system/pull/83) [`cdfc538`](https://github.com/bridger-kr/bridger-design-system/commit/cdfc538efff27df308f1c5f85e27032d81f4edfa) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Remove all `style={{...}}` literals from shipped components ([#37](https://github.com/bridger-kr/bridger-design-system/issues/37) [#38](https://github.com/bridger-kr/bridger-design-system/issues/38) [#39](https://github.com/bridger-kr/bridger-design-system/issues/39)).
+
+  Statics moved to `.dt-*` classes in `packages/react/src/styles.css`; dynamic
+  values now flow through scoped CSS custom properties (`--dt-slider-pct`,
+  `--dt-drawer-width`, `--dt-menu-width`, `--dt-sidebar-width`,
+  `--dt-brand-logo-*`, `--dt-annotation-*`, `--dt-usage-pct`, `--dt-avatar-*`,
+  `--dt-skeleton-*`, `--dt-step-*`). State styling moved to `data-*` attributes.
+
+  Also adds a `style/no-inline-style-literal` rule to `scripts/slop-scan.mjs`
+  (error in `packages/*/src` + `examples/`; test fixtures exempt) so the pattern
+  cannot regress, and drops the decorative uppercase treatment from
+  `StatTile`/`SectionCard` eyebrows per §11.
+
+- [#94](https://github.com/bridger-kr/bridger-design-system/pull/94) [`1cb3091`](https://github.com/bridger-kr/bridger-design-system/commit/1cb30914a714ecfb223bc64edcd6f7eb40bbc4ca) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Per-component build entries (bridger-web budgets gate): tsup now emits one dist module per component file in addition to the root and family barrels. Consumer bundlers tree-shake at component granularity — `import { Alert }` resolves to Alert's module graph alone instead of a family bundle that dragged positioned components' `usePositioner` runtime into app entry chunks (dashboard /login initial JS −52 KiB gzip, landing initial JS −72 KiB gzip).
+
+- [#82](https://github.com/bridger-kr/bridger-design-system/pull/82) [`170f9b6`](https://github.com/bridger-kr/bridger-design-system/commit/170f9b6defdff6f48055b2cab6198d1f53ea7933) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Fix `Select` and `Combobox` popups painting under in-page stacking contexts. Their
+  `z-index: var(--dt-z-index-popover)` sat on the static popup element where it is
+  ignored; it now lives on the positioned Base UI `Positioner` (same pattern as
+  `Tooltip`), so listboxes layer correctly above app-level contexts such as
+  `.dashboard-page { z-index: 1 }`.
+
+- [#97](https://github.com/bridger-kr/bridger-design-system/pull/97) [`5d9c434`](https://github.com/bridger-kr/bridger-design-system/commit/5d9c434a3b5cdc84c732c54094a0de8acf349aec) Thanks [@devin-ai-integration](https://github.com/apps/devin-ai-integration)! - Clean up `.dt-sidebar` toward a quieter console rail (litellm/OpenAI-style):
+  remove the brand-block divider, drop section headings to caption size, and
+  keep the active row's icon neutral (`--dt-text-strong`) instead of persimmon
+  so accent stays limited to brand/focus/selection roles. Sidebar items now
+  also carry the §7 3px accent `:focus-visible` ring (they previously fell back
+  to the UA outline, which was invisible on the dark rail), and item
+  transitions are suppressed under `prefers-reduced-motion` like the other
+  console chrome.
+- Updated dependencies [[`c14a3a9`](https://github.com/bridger-kr/bridger-design-system/commit/c14a3a98e97ee1c59d0cc5e1e1011e35965bc49b), [`c846615`](https://github.com/bridger-kr/bridger-design-system/commit/c8466158fe73f0a1877d2d544aaedbc0b3f8f033)]:
+  - @bridger-kr/tokens@2.0.1
+
 ## 2.0.0
 
 ### Major Changes
