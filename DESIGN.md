@@ -519,27 +519,27 @@ This checklist is the explicit, reproducible record for each release. Every row 
 
 | Dimension | Sub-axis | Required evidence | Status |
 | --- | --- | --- | --- |
-| Viewport width | `375px` mobile | Playwright screenshot per changed surface at `375x812` viewport | Not applicable |
-| Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Not applicable |
-| Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Not applicable |
-| Theme | Light (default) | Screenshot in light theme per changed surface | Not applicable |
-| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']` or `.dark`) | Not applicable |
-| Interaction state | Rest | Default screenshot for the surface | Not applicable |
-| Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Not applicable |
-| Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Not applicable |
-| Interaction state | Disabled | Screenshot of an intentionally disabled control on the surface | Not applicable |
-| Interaction state | Loading | Screenshot of the loading state (spinner or skeleton) | Not applicable |
-| Interaction state | Press | Playwright pressed-state screenshot (`scale(0.97)`) | Not applicable |
-| Motion | Reduced motion | Screenshot with `prefers-reduced-motion: reduce` emulated; confirm transforms are removed | Not applicable |
-| CJK content | Korean label rendering | Korean copy renders without mid-word breaks (`word-break: keep-all`) | Not applicable |
-| Locale parity | ko/en | Korean (default) and English `/en` render the same surface with matching structure and copy meaning | Not applicable |
-| Contrast | WCAG AA text | Automated contrast check (axe / Playwright `toHaveAccessibleName` and contrast assertion) | Not applicable |
-| Contrast | WCAG AA non-text | Border, focus, and interactive control contrast against their surface | Not applicable |
-| Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable |
-| Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Not applicable |
-| Layering | Focus trap | Tab inside an open dialog and confirm focus does not escape | Not applicable |
-| Component contract | 65-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Not applicable |
-| Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Not applicable |
+| Viewport width | `375px` mobile | Playwright screenshot per changed surface at `375x812` viewport | Captured — `ds97-portal-375-{light,dark}-drawer.png` in [#97 evidence](https://github.com/bridger-kr/bridger-design-system/pull/97#issuecomment-6056608551) (mobile drawer) |
+| Viewport width | `768px` tablet | Playwright screenshot per changed surface at `768x1024` viewport | Captured — `ds97-{portal,admin}-768-{light,dark}.png` in [#97 evidence](https://github.com/bridger-kr/bridger-design-system/pull/97#issuecomment-6056231272) |
+| Viewport width | `1280px` desktop | Playwright screenshot per changed surface at `1280x800` viewport | Captured — `ds97-portal-1280-*.png` in [#97 evidence](https://github.com/bridger-kr/bridger-design-system/pull/97#issuecomment-6056231272) |
+| Theme | Light (default) | Screenshot in light theme per changed surface | Captured — light captures in both #97 evidence comments |
+| Theme | Dark | Screenshot in dark theme per changed surface (`:root[data-theme='dark']` or `.dark`) | Captured — dark captures in both #97 evidence comments |
+| Interaction state | Rest | Default screenshot for the surface | Captured — default-state rail in the 768 and 1280 captures |
+| Interaction state | Hover | Playwright hover screenshot on the primary interactive element | Captured — `ds97-portal-1280-{light,dark}-hover.png` + computed `oklch(0.975)`/`oklch(0.19)` muted hover in [#97 evidence](https://github.com/bridger-kr/bridger-design-system/pull/97#issuecomment-6056231272) |
+| Interaction state | Focus visible | Playwright focus screenshot showing the 3px accent ring | Captured — `ds97-portal-1280-{light,dark}-focus.png`, computed `3px solid` accent in both themes (surfaced by this evidence; fixed in `8085d8e`) |
+| Interaction state | Disabled | Screenshot of an intentionally disabled control on the surface | Not applicable — `.dt-sidebar-item` nav rows have no disabled state |
+| Interaction state | Loading | Screenshot of the loading state (spinner or skeleton) | Not applicable — the console rail is static chrome with no loading state |
+| Interaction state | Press | Playwright pressed-state screenshot (`scale(0.97)`) | Not applicable — nav rows carry no press transform; `scale(0.97)` applies to buttons (Section 7) |
+| Motion | Reduced motion | Screenshot with `prefers-reduced-motion: reduce` emulated; confirm transforms are removed | Captured — all 7 items `transition-duration: 0s` / `transition-property: none` in both themes, nav still works; `ds97-computed-dump.txt` in [#97 evidence](https://github.com/bridger-kr/bridger-design-system/pull/97#issuecomment-6056608551) |
+| CJK content | Korean label rendering | Korean copy renders without mid-word breaks (`word-break: keep-all`) | Captured — computed `word-break: keep-all`; longest label `AI 앱 연결 가이드` does not wrap mid-word at 768px |
+| Locale parity | ko/en | Korean (default) and English `/en` render the same surface with matching structure and copy meaning | Captured — `?lng=en` renders translated labels with identical structure (`ds97-portal-1280-en.png`) |
+| Contrast | WCAG AA text | Automated contrast check (axe / Playwright `toHaveAccessibleName` and contrast assertion) | Captured — computed ratios: label 17.28:1 light / 17.53:1 dark, heading 5.31/7.71, icon 19.10/19.12 (>=4.5:1) |
+| Contrast | WCAG AA non-text | Border, focus, and interactive control contrast against their surface | Captured — `--dt-accent` focus ring vs rail 3.27:1 light / 6.90:1 dark (>=3:1; corrected from 6.18/7.57, which mixed an sRGB-parsed accent with an OKLCH-parsed rail) |
+| Layering | Z-index stack | Verify dialogs, menus, toasts, drawers use the shared `--dt-z-index-*` tokens | Not applicable — no overlay or z-index change in this patch |
+| Layering | Focus return | Open and dismiss a dialog/menu/drawer, confirm focus returns to the trigger | Captured — `Escape` on the 375px drawer returns focus to `#dashboard-menu-open` in both themes |
+| Layering | Focus trap | Tab inside an open dialog and confirm focus does not escape | Captured — 0 escapes across 15 Tab presses inside the open `aria-modal` drawer, both themes |
+| Component contract | 65-component parity | `pnpm build` regenerates `dist/` and the public API matches Section 9 | Captured — `pnpm build` green; Quality gate + build-validate pass on `8085d8e` |
+| Component contract | Aliases present | `ToggleSwitch`, `cx`, and token enums from Section 9.1 are present in `dist/index.d.ts` | Captured — `ToggleSwitch`, `cx`, `CardTone`, `ButtonVariant` all present in `packages/react/dist/index.d.ts` |
 
 This table is reset to `Not applicable` between releases and filled in per release. A row is `Not applicable` only when the release does not touch that dimension; rows covering touched surfaces must become `Captured` with a linked artifact path or the command that produced the evidence.
 

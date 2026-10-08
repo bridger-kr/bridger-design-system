@@ -826,7 +826,6 @@
 }
 
 .dt-sidebar-brand {
-  border-bottom: 1px solid var(--dt-border);
   padding: var(--dt-space-3);
 }
 
@@ -844,7 +843,7 @@
 .dt-sidebar-heading {
   padding: var(--dt-space-1) var(--dt-space-2);
   color: var(--dt-text-muted);
-  font-size: var(--dt-small-size);
+  font-size: var(--dt-caption-size);
   font-weight: 600;
 }
 
@@ -869,9 +868,15 @@
 }
 
 .dt-sidebar-item:hover { background: var(--dt-surface-muted); color: var(--dt-text-strong); }
+/* §7 contract: visible 3px accent ring on keyboard focus, inset so the row
+   keeps its rounded silhouette (same idiom as .dt-action-list-item-interactive). */
+.dt-sidebar-item:focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
+}
 .dt-sidebar-item-active { background: var(--dt-surface-sunken); color: var(--dt-text-strong); font-weight: 600; }
 .dt-sidebar-item-icon { display: inline-flex; flex: 0 0 auto; color: var(--dt-text-muted); }
-.dt-sidebar-item-active .dt-sidebar-item-icon { color: var(--dt-accent-strong); }
+.dt-sidebar-item-active .dt-sidebar-item-icon { color: var(--dt-text-strong); }
 .dt-sidebar-item-label { min-width: 0; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .dt-sidebar-item-badge { color: var(--dt-text-muted); font-size: 12px; font-variant-numeric: tabular-nums; }
 .dt-sidebar-footer { border-top: 1px solid var(--dt-border); padding: var(--dt-space-2) var(--dt-space-3); }
@@ -1006,7 +1011,8 @@
 @media (prefers-reduced-motion: reduce) {
   .dt-console-shell-main,
   .dt-console-shell-drawer-layer .dt-drawer-popup,
-  .dt-skip-link { transition: none; }
+  .dt-skip-link,
+  .dt-sidebar-item { transition: none; }
 }
 
 /* Tab base styles moved out of inline styles so selected-state rules
