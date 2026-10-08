@@ -1011,7 +1011,8 @@
 @media (prefers-reduced-motion: reduce) {
   .dt-console-shell-main,
   .dt-console-shell-drawer-layer .dt-drawer-popup,
-  .dt-skip-link { transition: none; }
+  .dt-skip-link,
+  .dt-sidebar-item { transition: none; }
 }
 
 /* Tab base styles moved out of inline styles so selected-state rules
