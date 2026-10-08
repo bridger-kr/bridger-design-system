@@ -868,6 +868,12 @@
 }
 
 .dt-sidebar-item:hover { background: var(--dt-surface-muted); color: var(--dt-text-strong); }
+/* §7 contract: visible 3px accent ring on keyboard focus, inset so the row
+   keeps its rounded silhouette (same idiom as .dt-action-list-item-interactive). */
+.dt-sidebar-item:focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: -3px;
+}
 .dt-sidebar-item-active { background: var(--dt-surface-sunken); color: var(--dt-text-strong); font-weight: 600; }
 .dt-sidebar-item-icon { display: inline-flex; flex: 0 0 auto; color: var(--dt-text-muted); }
 .dt-sidebar-item-active .dt-sidebar-item-icon { color: var(--dt-text-strong); }
