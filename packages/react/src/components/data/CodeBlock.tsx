@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { cx } from '../../lib/cx';
 import { warnOnce } from '../../lib/deprecate';
@@ -110,6 +110,7 @@ export const CodeBlock = forwardRef<HTMLDivElement, CodeBlockProps>(function Cod
   { code = '', lines, label, language = 'json', showLineNumbers = true, copy, copyable, copyText, copyLabel, copiedLabel, copyFailedLabel, className, style, ...rest },
   ref,
 ) {
+  const codeRegion = useRef<HTMLDivElement>(null);
 
   if (copyable !== undefined) {
     warnOnce('codeblock-copyable', 'CodeBlock: `copyable` is deprecated — use `copy`. Removed in v2.1.');
@@ -141,11 +142,22 @@ export const CodeBlock = forwardRef<HTMLDivElement, CodeBlockProps>(function Cod
               label={copyLabels.label}
               copiedLabel={copyLabels.copiedLabel}
               failedLabel={copyLabels.failedLabel}
+              onCopy={(result) => {
+                const region = codeRegion.current;
+                if (result !== 'failed' || !region) return;
+                const selection = region.ownerDocument.getSelection();
+                if (!selection) return;
+                region.focus();
+                const range = region.ownerDocument.createRange();
+                range.selectNodeContents(region);
+                selection.removeAllRanges();
+                selection.addRange(range);
+              }}
             />
           ) : null}
         </div>
       ) : null}
-      <div className="dt-code-block-lines" role="region" aria-label={typeof label === 'string' ? label : language} tabIndex={0}>
+      <div ref={codeRegion} className="dt-code-block-lines" role="region" aria-label={typeof label === 'string' ? label : language} tabIndex={0}>
         {textLines.map((line, index) => (
           <div key={index} className={cx('dt-code-block-line', showLineNumbers && 'dt-code-block-line-numbered')}>
             {showLineNumbers ? <span className="dt-code-block-lineno">{index + 1}</span> : null}

@@ -105,18 +105,21 @@ describe('data a11y', () => {
       expect(container.querySelector('[role="status"]')?.textContent).toBe('복사하지 못했어요');
     });
     expect(container.querySelector('button')?.textContent).toContain('복사하지 못했어요');
+    expect(document.activeElement).toBe(container.querySelector('.dt-code-block-lines'));
   });
 
   it('CodeBlock fails visibly when the clipboard API is unavailable', async () => {
     const user = userEvent.setup();
     Object.defineProperty(window.navigator, 'clipboard', { value: undefined, configurable: true });
 
-    const { container } = render(<CodeBlock code={'x'} />);
+    const { container } = render(<CodeBlock code={'x'} showLineNumbers={false} />);
     await user.click(container.querySelector('button') as HTMLElement);
 
     await waitFor(() => {
       expect(container.querySelector('button')?.textContent).toContain('복사하지 못했어요');
     });
+    expect(window.getSelection()?.toString()).toBe('x');
+    expect(document.activeElement).toBe(container.querySelector('.dt-code-block-lines'));
   });
 
   it('CodePane announces copy success and failure through a live region', async () => {
