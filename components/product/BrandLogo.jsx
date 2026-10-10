@@ -3,7 +3,7 @@
 // Regenerate: pnpm generate
 
 import { forwardRef, useImperativeHandle } from 'react';
-import { BRAND_MARK_GLYPH_PATH, BRAND_SYMBOL_SIZE, BRAND_SYMBOL_VIEW_BOX, BRAND_WORDMARK_ASPECT_RATIO, BRAND_WORDMARK_PATHS, BRAND_WORDMARK_SIZE, BRAND_WORDMARK_TRANSFORM, BRAND_WORDMARK_VIEW_BOX, } from './brandLogoGeometry.jsx';
+import { BRAND_MARK_GLYPH_PATH, BRAND_SYMBOL_SIZE, BRAND_SYMBOL_VIEW_BOX, BRAND_WORDMARK_ASPECT_RATIO, BRAND_WORDMARK_PATHS, BRAND_WORDMARK_PATH_TRANSFORMS, BRAND_WORDMARK_SIZE, BRAND_WORDMARK_TRANSFORM, BRAND_WORDMARK_VIEW_BOX, } from './brandLogoGeometry.jsx';
 import { useDSMessages } from '../locale/DSLocaleProvider.jsx';
 export const BRAND_LOGO_LANGUAGE = {
     Korean: 'ko',
@@ -35,7 +35,7 @@ function renderBrandSymbol() {
 function renderBrandWordmark() {
     return (<svg width="100%" height="100%" viewBox={BRAND_WORDMARK_VIEW_BOX} aria-hidden="true" focusable="false">
       <g transform={BRAND_WORDMARK_TRANSFORM} fill="currentColor">
-        {BRAND_WORDMARK_PATHS.map((path, index) => (<path key={index} d={path}/>))}
+        {BRAND_WORDMARK_PATHS.map((path, index) => (<path key={index} d={path} transform={BRAND_WORDMARK_PATH_TRANSFORMS[index]}/>))}
       </g>
     </svg>);
 }
