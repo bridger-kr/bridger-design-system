@@ -80,7 +80,7 @@ export const CodeBlock = forwardRef(function CodeBlock({ code = '', lines, label
           <span className="dt-code-block-lang">{label || language}</span>
           {showCopy ? (<CopyButton className="dt-code-block-copy" value={copyText ?? codeText} label={copyLabels.label} copiedLabel={copyLabels.copiedLabel} failedLabel={copyLabels.failedLabel}/>) : null}
         </div>) : null}
-      <div className="dt-code-block-lines">
+      <div className="dt-code-block-lines" role="region" aria-label={typeof label === 'string' ? label : language} tabIndex={0}>
         {textLines.map((line, index) => (<div key={index} className={cx('dt-code-block-line', showLineNumbers && 'dt-code-block-line-numbered')}>
             {showLineNumbers ? <span className="dt-code-block-lineno">{index + 1}</span> : null}
             <code className="dt-code-block-code">

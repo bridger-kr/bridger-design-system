@@ -20,11 +20,11 @@ export const SegmentedControl = forwardRef(function SegmentedControl({ options =
             onChange?.(next);
         },
     });
-    return (<div ref={ref} className={cx('dt-segmented', className)} data-size={size} style={style} {...rest}>
+    return (<div ref={ref} role="group" className={cx('dt-segmented', className)} data-size={size} style={style} {...rest}>
         {options.map((o) => {
             const opt = typeof o === 'string' ? { value: o, label: o } : o;
             const on = opt.value === current;
-            return (<button key={opt.value} type="button" onClick={() => select(opt.value)} className="dt-segmented-item" data-active={on ? '' : undefined}>
+            return (<button key={opt.value} type="button" aria-pressed={on} onClick={() => select(opt.value)} className="dt-segmented-item" data-active={on ? '' : undefined}>
               {opt.label}
             </button>);
         })}

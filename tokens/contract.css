@@ -18,11 +18,11 @@
    Do not import this file into those apps in the design-foundation
    lane. Update the app-local mirrors when changing this contract.
 
-   Theme contract: the theme follows the OS (`prefers-color-scheme`) by
-   default — :root carries `color-scheme: light dark` and themed tokens
-   are single `light-dark()` definitions. An explicit
+   Theme contract: light is the default — :root carries `color-scheme: light`
+   and themed tokens are single `light-dark()` definitions. An explicit
    :root[data-theme='light'|'dark'] (written by ThemeSwitch or the
-   pre-paint script) pins `color-scheme` and wins over the OS. `.dark`
+   pre-paint script) pins `color-scheme`; system follows the OS only when
+   explicitly selected. `.dark`
    is a deprecated alias for the same dark scope. Only colors plus the
    single overlay shadow change across themes; spacing, radius, type,
    and motion are shared.
@@ -55,7 +55,7 @@
 
 @layer dt.tokens {
 :root {
-  color-scheme: light dark;
+  color-scheme: light;
   --dt-bg: light-dark(#ffffff, oklch(0.145 0 0));
   --dt-surface: light-dark(oklch(0.9875 0 0), oklch(0.17 0 0));
   --dt-surface-raised: light-dark(#ffffff, oklch(0.24 0 0));
@@ -241,17 +241,6 @@
   --dt-shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55),
                        0 0 0 1px rgba(255, 255, 255, 0.03);
 }
-}
-
-/* light-dark() only resolves colors, so the one themed non-color token —
-   the overlay shadow — is restated for the OS-dark trigger. Keep this
-   declaration identical to the explicit dark block above (theme-parity
-   test enforces it). */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    --dt-shadow-overlay: 0 12px 32px rgba(0, 0, 0, 0.55),
-                         0 0 0 1px rgba(255, 255, 255, 0.03);
-  }
 }
 
 /*

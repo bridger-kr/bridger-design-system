@@ -199,11 +199,9 @@ function typographyValues(): TokenRecord {
 }
 
 describe('@bridger-kr/tokens', () => {
-  it('follows the OS theme by default and lets explicit data-theme choices win', () => {
-    // DS #44 — system default: :root opts into both schemes, so
-    // prefers-color-scheme resolves light-dark() with no JS involved.
-    expect(contractCss).toContain('color-scheme: light dark');
-    expect(contractCss).toContain('@media (prefers-color-scheme: dark)');
+  it('defaults to light and lets explicit data-theme choices win', () => {
+    expect(contractCss).toContain('color-scheme: light;');
+    expect(contractCss).not.toContain('@media (prefers-color-scheme: dark)');
     // Explicit selectors pin the scheme; they restate no token values.
     expect(lightContract.size).toBe(0);
     expect(themeValue(lightDefaultContract.get('--dt-bg'), 'light')).toBe('#ffffff');

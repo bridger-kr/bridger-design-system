@@ -26,21 +26,21 @@ const DEFAULT_THEME_SWITCH_LABELS = {
 } as const;
 
 function readStoredPreference(storageKey: string): ThemePreference {
-  if (typeof window === 'undefined') return THEME_PREFERENCE.System;
+  if (typeof window === 'undefined') return THEME_PREFERENCE.Light;
   try {
     const stored = window.localStorage.getItem(storageKey);
-    if (stored === THEME_PREFERENCE.Light || stored === THEME_PREFERENCE.Dark) return stored;
+    if (stored === THEME_PREFERENCE.Light || stored === THEME_PREFERENCE.Dark || stored === THEME_PREFERENCE.System) return stored;
   } catch {
-    // localStorage can be unavailable (private mode); fall through to system.
+    // Storage is optional; use the light default.
   }
-  return THEME_PREFERENCE.System;
+  return THEME_PREFERENCE.Light;
 }
 
 function systemTheme(): ResolvedTheme {
   if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
     return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   }
-  return 'dark';
+  return 'light';
 }
 
 export interface ThemeSwitchLabels {
@@ -56,7 +56,7 @@ export interface ThemeSwitchProps {
   labels?: Partial<ThemeSwitchLabels>;
   /** Optional icon per option (for example Lucide Monitor / Sun / Moon glyphs). */
   icons?: Partial<Record<ThemePreference, ReactNode>>;
-  /** Storage key holding an explicit 'light' | 'dark' choice; absent means follow the OS. */
+  /** Storage key holding light, dark, or system; absent defaults to light. */
   storageKey?: string;
   className?: string;
   style?: CSSProperties;
@@ -100,11 +100,7 @@ export const ThemeSwitch = forwardRef<HTMLDivElement, ThemeSwitchProps>(function
     const previousResolved = resolved;
     setPreference(next);
     try {
-      if (next === THEME_PREFERENCE.System) {
-        window.localStorage.removeItem(storageKey);
-      } else {
-        window.localStorage.setItem(storageKey, next);
-      }
+      window.localStorage.setItem(storageKey, next);
     } catch {
       // Storage is optional; the in-memory choice still applies for this session.
     }

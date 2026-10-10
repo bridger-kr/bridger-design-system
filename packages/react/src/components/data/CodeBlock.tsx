@@ -145,7 +145,7 @@ export const CodeBlock = forwardRef<HTMLDivElement, CodeBlockProps>(function Cod
           ) : null}
         </div>
       ) : null}
-      <div className="dt-code-block-lines">
+      <div className="dt-code-block-lines" role="region" aria-label={typeof label === 'string' ? label : language} tabIndex={0}>
         {textLines.map((line, index) => (
           <div key={index} className={cx('dt-code-block-line', showLineNumbers && 'dt-code-block-line-numbered')}>
             {showLineNumbers ? <span className="dt-code-block-lineno">{index + 1}</span> : null}

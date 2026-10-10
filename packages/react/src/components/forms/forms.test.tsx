@@ -129,6 +129,17 @@ describe('forms exports', () => {
   });
 });
 
+describe('SegmentedControl', () => {
+  it('names the group and exposes selection independently of color', () => {
+    const { getByRole } = render(<SegmentedControl aria-label="Status" options={['All', 'Active']} />);
+    expect(getByRole('group', { name: 'Status' })).toBeDefined();
+    expect(getByRole('button', { name: 'All' }).getAttribute('aria-pressed')).toBe('true');
+    fireEvent.click(getByRole('button', { name: 'Active' }));
+    expect(getByRole('button', { name: 'All' }).getAttribute('aria-pressed')).toBe('false');
+    expect(getByRole('button', { name: 'Active' }).getAttribute('aria-pressed')).toBe('true');
+  });
+});
+
 describe('ThemeSwitch', () => {
   const labels = { group: '테마', system: '시스템', light: '라이트', dark: '다크' };
 
@@ -190,12 +201,12 @@ describe('ThemeSwitch', () => {
     document.documentElement.removeAttribute('data-theme');
   });
 
-  it('follows the OS theme on first load when nothing is stored', () => {
+  it('defaults to light on first load even when the OS is dark', () => {
     stubSystemTheme(false);
     const { container } = render(<ThemeSwitch labels={labels} />);
 
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(container.querySelector('button[aria-label="라이트"]')?.getAttribute('aria-pressed')).toBe('true');
     expect(window.localStorage.getItem('bridger-theme')).toBeNull();
   });
 
@@ -207,7 +218,7 @@ describe('ThemeSwitch', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
   });
 
-  it('persists explicit picks and clears storage when returning to system', () => {
+  it('persists explicit picks including system', () => {
     stubSystemTheme(true);
     const { container, getByRole } = render(<ThemeSwitch labels={labels} />);
 
@@ -216,9 +227,24 @@ describe('ThemeSwitch', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
 
     fireEvent.click(getByRole('button', { name: '시스템' }));
-    expect(window.localStorage.getItem('bridger-theme')).toBeNull();
+    expect(window.localStorage.getItem('bridger-theme')).toBe('system');
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('restores an explicit system preference on a dark OS', () => {
+    stubSystemTheme(false);
+    window.localStorage.setItem('bridger-theme', 'system');
+    const { getByRole } = render(<ThemeSwitch labels={labels} />);
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(getByRole('button', { name: '시스템' }).getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('defaults invalid preferences to light', () => {
+    stubSystemTheme(false);
+    window.localStorage.setItem('bridger-theme', 'invalid');
+    render(<ThemeSwitch labels={labels} />);
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
   });
 
   it('keeps the group semantics and option order stable', () => {

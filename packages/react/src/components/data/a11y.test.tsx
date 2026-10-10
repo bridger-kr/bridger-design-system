@@ -58,6 +58,13 @@ describe('data a11y', () => {
     await expectNoViolations(container);
   });
 
+  it('labels and keyboard-focuses an overflowing code sample', () => {
+    const { getByRole } = render(<CodeBlock code="curl https://example.invalid" label="Request example" />);
+    const region = getByRole('region', { name: 'Request example' });
+    expect(region.getAttribute('tabindex')).toBe('0');
+    expect(region.classList.contains('dt-code-block-lines')).toBe(true);
+  });
+
   it('Pagination exposes a labelled nav, aria-current page, and keyboard activation', async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();

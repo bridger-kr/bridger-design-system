@@ -38,7 +38,7 @@
   text-decoration: none; cursor: pointer;
   transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
 }
-.dt-button-solid:not(:disabled):hover { background: var(--dt-text); border-color: var(--dt-text); transform: translateY(-1px); }
+.dt-button-solid:not(:disabled):hover { background: var(--dt-text); border-color: var(--dt-text); }
 .dt-button-solid:active { transform: scale(var(--dt-press-scale)); }
 .dt-button-solid[data-tone='danger'] { border-color: var(--dt-danger); background: var(--dt-danger); }
 .dt-button-solid[data-tone='danger']:not(:disabled):hover {
@@ -54,7 +54,7 @@
   text-decoration: none; cursor: pointer;
   transition: background-color var(--dt-duration-fast) var(--dt-ease), border-color var(--dt-duration-fast) var(--dt-ease), transform var(--dt-duration-fast) var(--dt-ease);
 }
-.dt-button-outline:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); transform: translateY(-1px); }
+.dt-button-outline:not(:disabled):hover { background: var(--dt-surface-muted); border-color: var(--dt-border-strong); }
 .dt-button-outline:active { transform: scale(var(--dt-press-scale)); }
 
 .dt-button-ghost {
@@ -68,7 +68,11 @@
 .dt-button-ghost:not(:disabled):hover { background: var(--dt-tint-text); border-color: var(--dt-border); color: var(--dt-text-strong); }
 .dt-button-ghost:active { transform: scale(var(--dt-press-scale)); }
 
-.dt-button { min-height: var(--dt-space-5); }
+.dt-button { position: relative; min-height: var(--dt-space-5); }
+:is(.dt-button, .dt-button-solid, .dt-button-outline, .dt-button-ghost):focus-visible {
+  outline: 3px solid var(--dt-accent);
+  outline-offset: 2px;
+}
 .dt-button-sm {
   height: var(--dt-space-5); min-height: var(--dt-space-5);
   padding-inline: calc(var(--dt-space-2) + var(--dt-space-1));
@@ -90,7 +94,7 @@
 
 /* loading: content stays laid out for width, spinner overlays centered */
 .dt-button-content { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
-.dt-button[aria-busy] .dt-button-content { visibility: hidden; }
+.dt-button[aria-busy='true'] .dt-button-content { opacity: 0; }
 .dt-button-spinner { position: absolute; inset: 0; display: inline-flex; align-items: center; justify-content: center; }
 
 .dt-button-icon { display: inline-flex; }
@@ -1245,6 +1249,10 @@
     animation: none;
   }
 
+  .dt-button,
+  .dt-button-solid,
+  .dt-button-outline,
+  .dt-button-ghost,
   .dt-card-action,
   .dt-checkbox-box,
   .dt-chip-interactive,
@@ -1593,8 +1601,8 @@
    override above the base `.dt-copy-button` rules regardless of file order. */
 .dt-code-block .dt-copy-button,
 .dt-code-pane .dt-copy-button {
-  min-width: 28px;
-  min-height: 28px;
+  min-width: var(--dt-space-5);
+  min-height: var(--dt-space-5);
   margin-left: auto;
   padding: 0;
   border: 0;
@@ -2283,6 +2291,7 @@
 }
 .dt-code-block-lang { font-family: var(--dt-font-mono); font-size: 11px; color: var(--dt-syntax-punctuation); }
 .dt-code-block-lines { padding: 12px 0; overflow-x: auto; }
+.dt-code-block-lines:focus-visible { outline: 3px solid var(--dt-accent); outline-offset: -3px; }
 .dt-code-block-line {
   display: grid; grid-template-columns: 1fr;
   font-family: var(--dt-font-mono); font-size: 12.5px; line-height: 1.75;

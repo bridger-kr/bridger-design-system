@@ -22,22 +22,22 @@ const DEFAULT_THEME_SWITCH_LABELS = {
 };
 function readStoredPreference(storageKey) {
     if (typeof window === 'undefined')
-        return THEME_PREFERENCE.System;
+        return THEME_PREFERENCE.Light;
     try {
         const stored = window.localStorage.getItem(storageKey);
-        if (stored === THEME_PREFERENCE.Light || stored === THEME_PREFERENCE.Dark)
+        if (stored === THEME_PREFERENCE.Light || stored === THEME_PREFERENCE.Dark || stored === THEME_PREFERENCE.System)
             return stored;
     }
     catch {
-        // localStorage can be unavailable (private mode); fall through to system.
+        // Storage is optional; use the light default.
     }
-    return THEME_PREFERENCE.System;
+    return THEME_PREFERENCE.Light;
 }
 function systemTheme() {
     if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
         return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
-    return 'dark';
+    return 'light';
 }
 /**
  * Three-state theme switch (system / light / dark). It is the single owner of
@@ -67,12 +67,7 @@ export const ThemeSwitch = forwardRef(function ThemeSwitch({ labels, icons, stor
         const previousResolved = resolved;
         setPreference(next);
         try {
-            if (next === THEME_PREFERENCE.System) {
-                window.localStorage.removeItem(storageKey);
-            }
-            else {
-                window.localStorage.setItem(storageKey, next);
-            }
+            window.localStorage.setItem(storageKey, next);
         }
         catch {
             // Storage is optional; the in-memory choice still applies for this session.
