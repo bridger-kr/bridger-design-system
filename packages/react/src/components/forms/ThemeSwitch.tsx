@@ -11,6 +11,7 @@ export type ThemePreference = (typeof THEME_PREFERENCE)[keyof typeof THEME_PREFE
 export type ResolvedTheme = 'light' | 'dark';
 
 export const DEFAULT_THEME_STORAGE_KEY = 'bridger-theme';
+const THEME_PREFERENCE_EVENT = 'bridger-theme-preference-change';
 
 const THEME_SWITCH_ORDER: readonly ThemePreference[] = [
   THEME_PREFERENCE.System,
@@ -25,11 +26,15 @@ const DEFAULT_THEME_SWITCH_LABELS = {
   dark: 'Dark',
 } as const;
 
+function isThemePreference(value: unknown): value is ThemePreference {
+  return value === THEME_PREFERENCE.Light || value === THEME_PREFERENCE.Dark || value === THEME_PREFERENCE.System;
+}
+
 function readStoredPreference(storageKey: string): ThemePreference {
   if (typeof window === 'undefined') return THEME_PREFERENCE.Light;
   try {
     const stored = window.localStorage.getItem(storageKey);
-    if (stored === THEME_PREFERENCE.Light || stored === THEME_PREFERENCE.Dark || stored === THEME_PREFERENCE.System) return stored;
+    if (isThemePreference(stored)) return stored;
   } catch {
     // Storage is optional; use the light default.
   }
@@ -87,6 +92,24 @@ export const ThemeSwitch = forwardRef<HTMLDivElement, ThemeSwitchProps>(function
   }, [resolved]);
 
   useEffect(() => {
+    const onPreferenceChange = (event: Event) => {
+      if (!(event instanceof CustomEvent)) return;
+      const detail: unknown = event.detail;
+      if (!detail || typeof detail !== 'object' || !('storageKey' in detail) || detail.storageKey !== storageKey) return;
+      if ('preference' in detail && isThemePreference(detail.preference)) setPreference(detail.preference);
+    };
+    const onStorageChange = (event: StorageEvent) => {
+      if (event.key === storageKey || event.key === null) setPreference(readStoredPreference(storageKey));
+    };
+    window.addEventListener(THEME_PREFERENCE_EVENT, onPreferenceChange);
+    window.addEventListener('storage', onStorageChange);
+    return () => {
+      window.removeEventListener(THEME_PREFERENCE_EVENT, onPreferenceChange);
+      window.removeEventListener('storage', onStorageChange);
+    };
+  }, [storageKey]);
+
+  useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
     const mql = window.matchMedia('(prefers-color-scheme: light)');
     const onMediaChange = (event: MediaQueryListEvent) => {
@@ -104,6 +127,7 @@ export const ThemeSwitch = forwardRef<HTMLDivElement, ThemeSwitchProps>(function
     } catch {
       // Storage is optional; the in-memory choice still applies for this session.
     }
+    window.dispatchEvent(new CustomEvent(THEME_PREFERENCE_EVENT, { detail: { storageKey, preference: next } }));
     onChange?.(next, next === THEME_PREFERENCE.System ? system : next, previousResolved);
   };
 
