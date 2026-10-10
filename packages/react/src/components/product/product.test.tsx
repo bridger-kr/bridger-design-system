@@ -1,4 +1,7 @@
 // @vitest-environment jsdom
+import { readFileSync } from 'node:fs';
+import { dirname, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { createRef } from 'react';
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
@@ -31,6 +34,20 @@ import type { BrandLogoHandle } from './index';
 
 describe('Product components', () => {
   describe('BrandLogo', () => {
+    it('preserves every letter position from the canonical SVG instead of stacking the paths', () => {
+      const source = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '../../../../../assets/brand/logo.svg'), 'utf8');
+      const canonical = new DOMParser().parseFromString(source, 'image/svg+xml');
+      const { container } = render(<BrandLogo />);
+      const paths = [...container.querySelectorAll('.dt-brand-logo-wordmark path')];
+      const canonicalPaths = [...canonical.querySelectorAll('path')];
+
+      expect(paths).toHaveLength(canonicalPaths.length);
+      expect(paths.map((path) => path.getAttribute('transform')))
+        .toEqual(canonicalPaths.map((path) => path.getAttribute('transform')));
+      expect(paths.map((path) => path.getAttribute('d')))
+        .toEqual(canonicalPaths.map((path) => path.getAttribute('d')));
+    });
+
     it('renders the canonical Bridger wordmark without the retired persimmon period', () => {
       const { container } = render(<BrandLogo lang="ko" />);
 

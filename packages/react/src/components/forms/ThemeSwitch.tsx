@@ -11,6 +11,7 @@ export type ThemePreference = (typeof THEME_PREFERENCE)[keyof typeof THEME_PREFE
 export type ResolvedTheme = 'light' | 'dark';
 
 export const DEFAULT_THEME_STORAGE_KEY = 'bridger-theme';
+const THEME_PREFERENCE_EVENT = 'bridger-theme-preference-change';
 
 const THEME_SWITCH_ORDER: readonly ThemePreference[] = [
   THEME_PREFERENCE.System,
@@ -25,22 +26,26 @@ const DEFAULT_THEME_SWITCH_LABELS = {
   dark: 'Dark',
 } as const;
 
+function isThemePreference(value: unknown): value is ThemePreference {
+  return value === THEME_PREFERENCE.Light || value === THEME_PREFERENCE.Dark || value === THEME_PREFERENCE.System;
+}
+
 function readStoredPreference(storageKey: string): ThemePreference {
-  if (typeof window === 'undefined') return THEME_PREFERENCE.System;
+  if (typeof window === 'undefined') return THEME_PREFERENCE.Light;
   try {
     const stored = window.localStorage.getItem(storageKey);
-    if (stored === THEME_PREFERENCE.Light || stored === THEME_PREFERENCE.Dark) return stored;
+    if (isThemePreference(stored)) return stored;
   } catch {
-    // localStorage can be unavailable (private mode); fall through to system.
+    // Storage is optional; use the light default.
   }
-  return THEME_PREFERENCE.System;
+  return THEME_PREFERENCE.Light;
 }
 
 function systemTheme(): ResolvedTheme {
   if (typeof window !== 'undefined' && typeof window.matchMedia === 'function') {
     return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   }
-  return 'dark';
+  return 'light';
 }
 
 export interface ThemeSwitchLabels {
@@ -56,7 +61,7 @@ export interface ThemeSwitchProps {
   labels?: Partial<ThemeSwitchLabels>;
   /** Optional icon per option (for example Lucide Monitor / Sun / Moon glyphs). */
   icons?: Partial<Record<ThemePreference, ReactNode>>;
-  /** Storage key holding an explicit 'light' | 'dark' choice; absent means follow the OS. */
+  /** Storage key holding light, dark, or system; absent defaults to light. */
   storageKey?: string;
   className?: string;
   style?: CSSProperties;
@@ -87,6 +92,24 @@ export const ThemeSwitch = forwardRef<HTMLDivElement, ThemeSwitchProps>(function
   }, [resolved]);
 
   useEffect(() => {
+    const onPreferenceChange = (event: Event) => {
+      if (!(event instanceof CustomEvent)) return;
+      const detail: unknown = event.detail;
+      if (!detail || typeof detail !== 'object' || !('storageKey' in detail) || detail.storageKey !== storageKey) return;
+      if ('preference' in detail && isThemePreference(detail.preference)) setPreference(detail.preference);
+    };
+    const onStorageChange = (event: StorageEvent) => {
+      if (event.key === storageKey || event.key === null) setPreference(readStoredPreference(storageKey));
+    };
+    window.addEventListener(THEME_PREFERENCE_EVENT, onPreferenceChange);
+    window.addEventListener('storage', onStorageChange);
+    return () => {
+      window.removeEventListener(THEME_PREFERENCE_EVENT, onPreferenceChange);
+      window.removeEventListener('storage', onStorageChange);
+    };
+  }, [storageKey]);
+
+  useEffect(() => {
     if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
     const mql = window.matchMedia('(prefers-color-scheme: light)');
     const onMediaChange = (event: MediaQueryListEvent) => {
@@ -100,14 +123,11 @@ export const ThemeSwitch = forwardRef<HTMLDivElement, ThemeSwitchProps>(function
     const previousResolved = resolved;
     setPreference(next);
     try {
-      if (next === THEME_PREFERENCE.System) {
-        window.localStorage.removeItem(storageKey);
-      } else {
-        window.localStorage.setItem(storageKey, next);
-      }
+      window.localStorage.setItem(storageKey, next);
     } catch {
       // Storage is optional; the in-memory choice still applies for this session.
     }
+    window.dispatchEvent(new CustomEvent(THEME_PREFERENCE_EVENT, { detail: { storageKey, preference: next } }));
     onChange?.(next, next === THEME_PREFERENCE.System ? system : next, previousResolved);
   };
 

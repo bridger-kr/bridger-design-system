@@ -301,7 +301,7 @@ Each form control owns its label, hint, error message, and focus ring. Disabled 
 | `Combobox` | input + popover list | size, error | Searchable single-select; option list virtualization expected. |
 | `SegmentedControl` | segmented button group | size, error | Roving tabindex; arrow keys move between segments. |
 | `Slider` | track + thumb, value bubble | range, min/max/step | Numeric range; arrow keys nudge, `Home`/`End` jump. |
-| `ThemeSwitch` | three-option segmented group | `system` / `light` / `dark`, labels, icons | Owns `:root[data-theme]` and the stored preference; `system` follows `prefers-color-scheme` and clears the storage key. |
+| `ThemeSwitch` | three-option segmented group | `system` / `light` / `dark`, labels, icons | Owns `:root[data-theme]` and the stored preference; light is the default, and an explicit `system` choice is stored and follows `prefers-color-scheme`. |
 | `Textarea` | multi-line input with label, hint, mono toggle | rows, mono | Mono toggle is for technical content. |
 | `FileUpload` | dropzone + file list | size, accept list | OpenAPI-spec dropzone role. |
 

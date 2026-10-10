@@ -9,6 +9,18 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { Icon } from '../../lib/icon';
 
+describe('button interaction styles', () => {
+  it('keeps the loading label accessible, centers its spinner, and avoids hover lift', () => {
+    const css = readFileSync(resolve(process.cwd(), 'packages/react/src/styles.css'), 'utf8');
+    expect(css).toMatch(/\.dt-button\s*\{[^}]*position:\s*relative/);
+    expect(css).toMatch(/\.dt-button\[aria-busy='true'\] \.dt-button-content\s*\{\s*opacity:\s*0;/);
+    expect(css).not.toMatch(/\.dt-button\[aria-busy[^}]*visibility:\s*hidden/);
+    expect(css).toMatch(/:is\(\.dt-button[^}]*:focus-visible\s*\{\s*outline:\s*3px solid var\(--dt-accent\)/);
+    expect(css).not.toMatch(/\.dt-button-(?:solid|outline)[^{]*:hover\s*\{[^}]*transform:/);
+    expect(css).toMatch(/prefers-reduced-motion: reduce[\s\S]*\.dt-button-solid,[\s\S]*transition: none !important/);
+  });
+});
+
 import {
   Badge,
   BUTTON_SIZE,

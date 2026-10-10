@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { createRef } from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
@@ -129,6 +129,17 @@ describe('forms exports', () => {
   });
 });
 
+describe('SegmentedControl', () => {
+  it('names the group and exposes selection independently of color', () => {
+    const { getByRole } = render(<SegmentedControl aria-label="Status" options={['All', 'Active']} />);
+    expect(getByRole('group', { name: 'Status' })).toBeDefined();
+    expect(getByRole('button', { name: 'All' }).getAttribute('aria-pressed')).toBe('true');
+    fireEvent.click(getByRole('button', { name: 'Active' }));
+    expect(getByRole('button', { name: 'All' }).getAttribute('aria-pressed')).toBe('false');
+    expect(getByRole('button', { name: 'Active' }).getAttribute('aria-pressed')).toBe('true');
+  });
+});
+
 describe('ThemeSwitch', () => {
   const labels = { group: '테마', system: '시스템', light: '라이트', dark: '다크' };
 
@@ -190,12 +201,12 @@ describe('ThemeSwitch', () => {
     document.documentElement.removeAttribute('data-theme');
   });
 
-  it('follows the OS theme on first load when nothing is stored', () => {
+  it('defaults to light on first load even when the OS is dark', () => {
     stubSystemTheme(false);
     const { container } = render(<ThemeSwitch labels={labels} />);
 
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
-    expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(container.querySelector('button[aria-label="라이트"]')?.getAttribute('aria-pressed')).toBe('true');
     expect(window.localStorage.getItem('bridger-theme')).toBeNull();
   });
 
@@ -207,7 +218,7 @@ describe('ThemeSwitch', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
   });
 
-  it('persists explicit picks and clears storage when returning to system', () => {
+  it('persists explicit picks including system', () => {
     stubSystemTheme(true);
     const { container, getByRole } = render(<ThemeSwitch labels={labels} />);
 
@@ -216,9 +227,84 @@ describe('ThemeSwitch', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
 
     fireEvent.click(getByRole('button', { name: '시스템' }));
-    expect(window.localStorage.getItem('bridger-theme')).toBeNull();
+    expect(window.localStorage.getItem('bridger-theme')).toBe('system');
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
     expect(container.querySelector('button[aria-label="시스템"]')?.getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('restores an explicit system preference on a dark OS', () => {
+    stubSystemTheme(false);
+    window.localStorage.setItem('bridger-theme', 'system');
+    const { getByRole } = render(<ThemeSwitch labels={labels} />);
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(getByRole('button', { name: '시스템' }).getAttribute('aria-pressed')).toBe('true');
+  });
+
+  it('keeps mounted switches synchronized after the selected control unmounts', () => {
+    const listeners = new Set<(event: MediaQueryListEvent) => void>();
+    vi.stubGlobal('matchMedia', vi.fn(() => ({
+      matches: true,
+      addEventListener: (_type: string, listener: (event: MediaQueryListEvent) => void) => { listeners.add(listener); },
+      removeEventListener: (_type: string, listener: (event: MediaQueryListEvent) => void) => { listeners.delete(listener); },
+    })));
+    window.localStorage.setItem('bridger-theme', 'dark');
+    const onChange = vi.fn();
+    const desktopLabels = { ...labels, system: 'Desktop system' };
+    const mobileLabels = { ...labels, system: 'Mobile system' };
+    const { getByRole, rerender } = render(<div>
+      <ThemeSwitch labels={desktopLabels} />
+      <ThemeSwitch labels={mobileLabels} onChange={onChange} />
+    </div>);
+
+    fireEvent.click(getByRole('button', { name: 'Mobile system' }));
+    expect(getByRole('button', { name: 'Desktop system' }).getAttribute('aria-pressed')).toBe('true');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(onChange).toHaveBeenCalledExactlyOnceWith('system', 'light', 'dark');
+    rerender(<div><ThemeSwitch labels={desktopLabels} /></div>);
+
+    act(() => {
+      const event = new Event('change');
+      Object.defineProperty(event, 'matches', { value: false });
+      listeners.forEach((listener) => listener(event as MediaQueryListEvent));
+    });
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(window.localStorage.getItem('bridger-theme')).toBe('system');
+    expect(listeners.size).toBe(1);
+  });
+
+  it('synchronizes cross-tab storage changes and resets removed preferences to light', () => {
+    stubSystemTheme(false);
+    const onChange = vi.fn();
+    const { getByRole } = render(<ThemeSwitch labels={labels} onChange={onChange} />);
+    window.localStorage.setItem('bridger-theme', 'dark');
+    fireEvent(window, new StorageEvent('storage', { key: 'bridger-theme', newValue: 'dark' }));
+    expect(getByRole('button', { name: '다크' }).getAttribute('aria-pressed')).toBe('true');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+
+    window.localStorage.removeItem('bridger-theme');
+    fireEvent(window, new StorageEvent('storage', { key: 'bridger-theme', newValue: null }));
+    expect(getByRole('button', { name: '라이트' }).getAttribute('aria-pressed')).toBe('true');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
+  it('does not synchronize preferences between different storage keys', () => {
+    stubSystemTheme(true);
+    const { getByRole } = render(<div>
+      <ThemeSwitch labels={{ ...labels, dark: 'First dark' }} storageKey="first-theme" />
+      <ThemeSwitch labels={{ ...labels, dark: 'Second dark' }} storageKey="second-theme" />
+    </div>);
+    fireEvent.click(getByRole('button', { name: 'First dark' }));
+    expect(getByRole('button', { name: 'First dark' }).getAttribute('aria-pressed')).toBe('true');
+    expect(getByRole('button', { name: 'Second dark' }).getAttribute('aria-pressed')).toBe('false');
+    expect(window.localStorage.getItem('second-theme')).toBeNull();
+  });
+
+  it('defaults invalid preferences to light', () => {
+    stubSystemTheme(false);
+    window.localStorage.setItem('bridger-theme', 'invalid');
+    render(<ThemeSwitch labels={labels} />);
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
   });
 
   it('keeps the group semantics and option order stable', () => {

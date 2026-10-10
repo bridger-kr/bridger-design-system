@@ -8,6 +8,7 @@ export interface BrandLogoFrameSize {
 }
 export declare const BRAND_WORDMARK_VIEW_BOX = "0 0 6958 2444";
 export declare const BRAND_WORDMARK_TRANSFORM = "translate(0,1950) scale(1,-1)";
+export declare const BRAND_WORDMARK_PATH_TRANSFORMS: readonly [undefined, "translate(1291.000,-0.000)", "translate(2062.000,-0.000)", "translate(2562.000,-0.000)", "translate(3800.000,-0.000)", "translate(5026.000,-0.000)", "translate(6187.000,-0.000)"];
 export declare const BRAND_WORDMARK_SIZE: {
     readonly sm: {
         readonly width: number;
