@@ -42,6 +42,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
     return (
       <div
         ref={ref}
+        role="group"
         className={cx('dt-segmented', className)}
         data-size={size}
         style={style}
@@ -54,6 +55,7 @@ export const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps
             <button
               key={opt.value}
               type="button"
+              aria-pressed={on}
               onClick={() => select(opt.value)}
               className="dt-segmented-item"
               data-active={on ? '' : undefined}

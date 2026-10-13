@@ -5,6 +5,7 @@ import {
   BRAND_SYMBOL_VIEW_BOX,
   BRAND_WORDMARK_ASPECT_RATIO,
   BRAND_WORDMARK_PATHS,
+  BRAND_WORDMARK_PATH_TRANSFORMS,
   BRAND_WORDMARK_SIZE,
   BRAND_WORDMARK_TRANSFORM,
   BRAND_WORDMARK_VIEW_BOX,
@@ -82,7 +83,7 @@ function renderBrandWordmark() {
     >
       <g transform={BRAND_WORDMARK_TRANSFORM} fill="currentColor">
         {BRAND_WORDMARK_PATHS.map((path, index) => (
-          <path key={index} d={path} />
+          <path key={index} d={path} transform={BRAND_WORDMARK_PATH_TRANSFORMS[index]} />
         ))}
       </g>
     </svg>

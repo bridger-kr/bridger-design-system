@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 /**
  * DS #44 — dark-mode contract parity.
  *
- * The contract follows `prefers-color-scheme` by default and lets an explicit
+ * The contract defaults to light and lets an explicit
  * `:root[data-theme='light'|'dark']` win. Themed colors are single light-dark()
  * definitions on :root; the overlay shadow is restated under the OS-dark media
  * query and the explicit dark selector, so the two must never drift.
@@ -59,8 +59,6 @@ const rootVars = varsOf(blockBody(':root {'));
 const explicitLight = blockBody(":root[data-theme='light']");
 const explicitDarkBody = blockBody(":root[data-theme='dark']");
 const explicitDark = varsOf(explicitDarkBody);
-const mediaDarkBody = blockBody('@media (prefers-color-scheme: dark)');
-const mediaDark = varsOf(mediaDarkBody);
 
 // ---------- color resolution (hex + oklch arms only) -------------------------
 
@@ -124,12 +122,9 @@ const contrast = (fg: Rgba, bg: Rgba) =>
 // ---------- assertions -------------------------------------------------------
 
 describe('theme contract (DS #44)', () => {
-  it('follows the OS by default and lets an explicit choice win', () => {
-    // :root opts into both schemes; prefers-color-scheme resolves light-dark()
-    // with no JavaScript involved.
-    expect(blockBody(':root {')).toContain('color-scheme: light dark');
-    expect(css).toContain("@media (prefers-color-scheme: dark)");
-    expect(mediaDarkBody).toContain(":root:not([data-theme='light'])");
+  it('defaults to light and lets an explicit choice win', () => {
+    expect(blockBody(':root {')).toContain('color-scheme: light;');
+    expect(css).not.toContain('@media (prefers-color-scheme: dark)');
 
     // Explicit selectors pin color-scheme; they restate no token values.
     expect(explicitLight).toContain('color-scheme: light');
@@ -142,12 +137,11 @@ describe('theme contract (DS #44)', () => {
     expect(contractCss).not.toContain('explicit user choice');
   });
 
-  it('keeps OS-dark and explicit-dark overrides identical', () => {
+  it('keeps non-color overrides on the explicit dark scope', () => {
     expect(explicitDark.size, 'explicit dark block should only carry overrides').toBeGreaterThan(0);
     for (const name of explicitDark.keys()) {
       expect(name, `${name} is a non-color themed token outside the shadow`).toBe('--dt-shadow-overlay');
     }
-    expect([...mediaDark.entries()].sort()).toEqual([...explicitDark.entries()].sort());
   });
 
   it('keeps light and dark key sets identical', () => {

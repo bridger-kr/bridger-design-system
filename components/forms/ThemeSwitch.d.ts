@@ -23,7 +23,7 @@ export interface ThemeSwitchProps {
     labels?: Partial<ThemeSwitchLabels>;
     /** Optional icon per option (for example Lucide Monitor / Sun / Moon glyphs). */
     icons?: Partial<Record<ThemePreference, ReactNode>>;
-    /** Storage key holding an explicit 'light' | 'dark' choice; absent means follow the OS. */
+    /** Storage key holding light, dark, or system; absent defaults to light. */
     storageKey?: string;
     className?: string;
     style?: CSSProperties;
