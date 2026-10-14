@@ -51,8 +51,8 @@ describe('Product components', () => {
     it('renders the canonical Bridger wordmark without the retired persimmon period', () => {
       const { container } = render(<BrandLogo lang="ko" />);
 
-      expect(screen.getByLabelText('브릿저')).toBeTruthy();
-      expect(screen.getByRole('img', { name: '브릿저' })).toBeTruthy();
+      expect(screen.getByLabelText('Bridger')).toBeTruthy();
+      expect(screen.getByRole('img', { name: 'Bridger' })).toBeTruthy();
       expect(
         container.querySelector(`.dt-brand-logo-wordmark svg[viewBox="${BRAND_WORDMARK_VIEW_BOX}"]`),
       ).toBeTruthy();
