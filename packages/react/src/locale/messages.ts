@@ -125,7 +125,7 @@ export const DS_MESSAGES_KO: DSMessageCatalog = {
   },
   brand: {
     wordmark: {
-      ko: '브릿저',
+      ko: 'Bridger',
       en: 'Bridger',
     },
   },
@@ -218,7 +218,7 @@ export const DS_MESSAGES_EN: DSMessageCatalog = {
   },
   brand: {
     wordmark: {
-      ko: '브릿저',
+      ko: 'Bridger',
       en: 'Bridger',
     },
   },
