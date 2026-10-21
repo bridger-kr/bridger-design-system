@@ -91,7 +91,7 @@ Two surfaces share one token contract:
 | Surface | What it is | Tone |
 | --- | --- | --- |
 | **Console / Portal** (`portal.bridger.kr`) | The core product. Dashboard, government-API catalog, tool list, execution logs, API keys, usage. A dense, scannable operations console. | Quiet, tabular, work-focused |
-| **Landing** (`bridger.kr`) | Korean-first marketing site (English under `/en`). Cinematic hero, tool categories, examples, connector guides. | Confident, technical, still restrained |
+| **Landing** (`bridger.kr`) | Korean-first marketing site (English under `/en`). Flat, left-aligned product hero, tool categories, examples, connector guides. | Confident, technical, still restrained |
 
 Operational identifiers stay unchanged in copy: `bridger.kr`, `api.bridger.kr`,
 `mcp.bridger.kr/mcp`, `portal.bridger.kr`. User-facing brand name is **Bridger**
