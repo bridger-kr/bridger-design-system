@@ -59,7 +59,7 @@ complete state coverage, restrained type rhythm, zero decorative chrome.
 - **Pretendard** for Korean + UI; **JetBrains Mono** for code/API/paths/IDs/timestamps. Tracking 0em (negative only on large display headings).
 - **Korean-first, terse, operational copy.** No emoji. Lucide line icons only.
 - **Quiet depth:** tonal surfaces + hairline 1px borders, no resting shadow (shadows only for genuinely floating layers), restrained radii (4px chips/tags · 6px controls · 8px cards/overlays · full pills). No gradient blobs, no glow, no card-in-card.
-- Build cinematic, detailed surfaces (Stripe / channel.io level of craft) — never generic AI-slop Tailwind.
+- Build structured, dense, legible surfaces (Kumo / Open WebUI level of discipline, `DESIGN.md` §10.2) — never generic AI-slop Tailwind.
 
 ## Working rules
 
